@@ -164,6 +164,15 @@
                             </select>
                             <small class="text-muted">{{ 'New clients will be added to this group.'|trans }}</small>
                         </div>
+                        <div class="col-md-6">
+                            <label class="form-label">{{ 'If client email already exists'|trans }}</label>
+                            <select class="form-select" id="accountsDuplicateAction">
+                                <option value="use_existing">{{ 'Use existing client'|trans }}</option>
+                                <option value="update_existing">{{ 'Update existing client data'|trans }}</option>
+                                <option value="create_new">{{ 'Create new client (add suffix to email)'|trans }}</option>
+                            </select>
+                            <small class="text-muted">{{ 'Action to take when a client with the same email already exists.'|trans }}</small>
+                        </div>
                     </div>
 
                     <div class="mb-3">
@@ -507,6 +516,7 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('btnDoImportAccounts').addEventListener('click', function() {
         const serverId = document.getElementById('accountsServerId').value;
         const clientGroupId = document.getElementById('accountsClientGroup').value;
+        const duplicateAction = document.getElementById('accountsDuplicateAction').value;
 
         const selectedAccounts = [];
         document.querySelectorAll('.account-checkbox:checked').forEach(cb => {
@@ -524,7 +534,8 @@ document.addEventListener('DOMContentLoaded', function() {
         API.admin.post('whmimporter/import_accounts', {
             server_id: serverId,
             usernames: JSON.stringify(selectedAccounts),
-            client_group_id: clientGroupId
+            client_group_id: clientGroupId,
+            duplicate_action: duplicateAction
         }, function(result) {
             importAccountsModal.hide();
 

@@ -100,9 +100,10 @@ class Admin extends \Api_Abstract
      * Each account is automatically associated with its cPanel package.
      * If the package doesn't exist in FOSSBilling, it will be created.
      *
-     * @param int   $server_id       Server ID
-     * @param array $usernames       Array of usernames to import
-     * @param int   $client_group_id Client group ID (optional, default: 1)
+     * @param int    $server_id        Server ID
+     * @param array  $usernames        Array of usernames to import
+     * @param int    $client_group_id  Client group ID (optional, default: 1)
+     * @param string $duplicate_action Action for duplicate clients: use_existing, update_existing, create_new (optional, default: use_existing)
      *
      * @return array Import results with imported, skipped, errors, and plans_created
      */
@@ -124,11 +125,19 @@ class Admin extends \Api_Abstract
         }
 
         $clientGroupId = isset($data['client_group_id']) ? (int) $data['client_group_id'] : 1;
+        $duplicateAction = $data['duplicate_action'] ?? 'use_existing';
+
+        // Validate duplicate_action
+        $validActions = ['use_existing', 'update_existing', 'create_new'];
+        if (!in_array($duplicateAction, $validActions, true)) {
+            $duplicateAction = 'use_existing';
+        }
 
         return $this->getService()->importAccounts(
             (int) $data['server_id'],
             $usernames,
-            $clientGroupId
+            $clientGroupId,
+            $duplicateAction
         );
     }
 

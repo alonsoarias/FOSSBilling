@@ -486,8 +486,13 @@ class Service implements InjectionAwareInterface
      * Import accounts from WHM server.
      * Each account is automatically associated with its cPanel package.
      * If the package doesn't exist in FOSSBilling, it will be created.
+     *
+     * @param int    $serverId        Server ID
+     * @param array  $usernames       Array of usernames to import
+     * @param int    $clientGroupId   Client group ID
+     * @param string $duplicateAction Action for duplicate clients: use_existing, update_existing, create_new
      */
-    public function importAccounts(int $serverId, array $usernames, int $clientGroupId = 1): array
+    public function importAccounts(int $serverId, array $usernames, int $clientGroupId = 1, string $duplicateAction = 'use_existing'): array
     {
         $server = $this->getServer($serverId);
         $remoteAccounts = $this->getRemoteAccounts($serverId);
@@ -528,8 +533,8 @@ class Service implements InjectionAwareInterface
                 // Parse domain into SLD and TLD
                 [$sld, $tld] = $this->parseDomain($acct['domain']);
 
-                // Find or create client
-                $client = $this->findOrCreateClient($acct, $clientGroupId);
+                // Find or create client based on duplicate action
+                $client = $this->findOrCreateClient($acct, $clientGroupId, $duplicateAction);
 
                 // Determine if account is a reseller
                 $isReseller = $acct['is_reseller'] ?? false;
@@ -633,19 +638,75 @@ class Service implements InjectionAwareInterface
 
     /**
      * Find existing client by email or create a new one.
+     *
+     * @param array  $acct            Account data from WHM
+     * @param int    $clientGroupId   Client group ID
+     * @param string $duplicateAction Action for duplicate clients: use_existing, update_existing, create_new
      */
-    protected function findOrCreateClient(array $acct, int $clientGroupId): \Model_Client
+    protected function findOrCreateClient(array $acct, int $clientGroupId, string $duplicateAction = 'use_existing'): \Model_Client
     {
         $email = !empty($acct['email']) ? $acct['email'] : $acct['user'] . '@' . $acct['domain'];
 
         // Try to find existing client by email
-        $client = $this->di['db']->findOne('Client', 'email = ?', [$email]);
+        $existingClient = $this->di['db']->findOne('Client', 'email = ?', [$email]);
 
-        if ($client) {
-            return $client;
+        if ($existingClient) {
+            switch ($duplicateAction) {
+                case 'update_existing':
+                    // Update existing client with WHM data
+                    $existingClient->first_name = ucfirst($acct['user']);
+                    $existingClient->updated_at = date('Y-m-d H:i:s');
+                    $this->di['db']->store($existingClient);
+                    $this->di['logger']->info('Updated existing client :email during WHM import', [':email' => $email]);
+
+                    return $existingClient;
+
+                case 'create_new':
+                    // Create new client with modified email
+                    $newEmail = $this->generateUniqueEmail($email);
+                    $client = $this->createNewClient($newEmail, $acct, $clientGroupId);
+                    $this->di['logger']->info('Created new client :email (original: :original) during WHM import', [
+                        ':email' => $newEmail,
+                        ':original' => $email,
+                    ]);
+
+                    return $client;
+
+                case 'use_existing':
+                default:
+                    // Use existing client as-is
+                    return $existingClient;
+            }
         }
 
         // Create new client
+        return $this->createNewClient($email, $acct, $clientGroupId);
+    }
+
+    /**
+     * Generate a unique email by adding a suffix.
+     */
+    protected function generateUniqueEmail(string $email): string
+    {
+        $parts = explode('@', $email);
+        $localPart = $parts[0];
+        $domain = $parts[1] ?? 'localhost';
+
+        $counter = 1;
+        do {
+            $newEmail = $localPart . '_imported' . $counter . '@' . $domain;
+            $existing = $this->di['db']->findOne('Client', 'email = ?', [$newEmail]);
+            $counter++;
+        } while ($existing && $counter < 100);
+
+        return $newEmail;
+    }
+
+    /**
+     * Create a new client record.
+     */
+    protected function createNewClient(string $email, array $acct, int $clientGroupId): \Model_Client
+    {
         $client = $this->di['db']->dispense('Client');
         $client->email = $email;
         $client->first_name = ucfirst($acct['user']);
