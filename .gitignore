@@ -6,7 +6,7 @@
 /src/data/log/*
 /src/data/cache/*
 !/src/data/cache/.gitkeep
-/src/vendor/*
+# /src/vendor/* - Uncomment to exclude vendor from git (requires composer install on deployment)
 build
 
 
