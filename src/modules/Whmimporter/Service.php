@@ -92,48 +92,42 @@ class Service implements InjectionAwareInterface
     }
 
     /**
-     * Make a request to WHM API using the Server_Manager.
-     *
-     * WHM API supports multiple response formats. This method handles:
-     * - Legacy format: status/statusmsg at root level
-     * - Modern format: metadata.result/metadata.reason
-     * - cPanel result format: result[0].status/result[0].statusmsg
-     * - Data result format: data.result/data.reason
+     * Make a request to WHM API.
+     * Uses the same authentication logic as Server_Manager_Whm for consistency.
      *
      * @see https://api.docs.cpanel.net/whm/introduction/
      */
     protected function whmRequest(\Model_ServiceHostingServer $server, string $action, array $params = []): mixed
     {
+        // Build config exactly like Server_Manager does
+        $config = [
+            'host' => $server->hostname,
+            'port' => $server->port ?: '2087',
+            'secure' => $server->secure,
+            'username' => $server->username,
+            'password' => $server->password,
+            'accesshash' => $server->accesshash,
+        ];
+
         $client = $this->di['http_client']->withOptions([
             'verify_peer' => false,
             'verify_host' => false,
-            'timeout' => 120,
+            'timeout' => 90,
         ]);
 
-        $port = $server->port ?: '2087';
-        $protocol = $server->secure ? 'https' : 'http';
-        $url = "{$protocol}://{$server->hostname}:{$port}/json-api/{$action}";
+        // Construct URL exactly like Server_Manager_Whm
+        $url = ($config['secure'] ? 'https' : 'http') . '://' . $config['host'] . ':' . $config['port'] . '/json-api/' . $action;
 
-        // Add API version parameter for consistent behavior
-        if (!isset($params['api.version'])) {
-            $params['api.version'] = 1;
-        }
+        // Construct auth header exactly like Server_Manager_Whm
+        $username = $config['username'];
+        $accessHash = $config['accesshash'];
+        $password = $config['password'];
 
-        $username = $server->username;
-        $accessHash = $server->accesshash;
-        $password = $server->password;
+        $authHeader = (!empty($accessHash))
+            ? 'WHM ' . $username . ':' . $accessHash
+            : 'Basic ' . $username . ':' . $password;
 
-        // WHM supports two authentication methods:
-        // 1. Access Hash: "WHM username:accesshash" (recommended)
-        // 2. Basic Auth: "Basic base64(username:password)"
-        if (!empty($accessHash)) {
-            // Remove any whitespace from access hash (may contain newlines)
-            $authHeader = 'WHM ' . $username . ':' . preg_replace('/\s+/', '', $accessHash);
-        } else {
-            $authHeader = 'Basic ' . base64_encode($username . ':' . $password);
-        }
-
-        $this->di['logger']->debug('WHM API Request: :action', [':action' => $action]);
+        $this->di['logger']->debug('WHM API Request: :action to :url', [':action' => $action, ':url' => $url]);
 
         try {
             $response = $client->request('POST', $url, [
