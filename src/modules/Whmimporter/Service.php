@@ -699,12 +699,15 @@ class Service implements InjectionAwareInterface
             'tld' => $service->tld,
             'import' => true,
         ]);
-        $order->created_at = $acct['startdate'] ?? date('Y-m-d H:i:s');
+
+        // Parse WHM date format to MySQL datetime format
+        $createdAt = $this->parseWhmDate($acct['startdate'] ?? null);
+        $order->created_at = $createdAt;
         $order->updated_at = date('Y-m-d H:i:s');
 
         // Set activation date if account is active
         if (!$acct['suspended']) {
-            $order->activated_at = $acct['startdate'] ?? date('Y-m-d H:i:s');
+            $order->activated_at = $createdAt;
         }
 
         return $this->di['db']->store($order);
@@ -740,6 +743,56 @@ class Service implements InjectionAwareInterface
         $this->di['db']->store($product);
 
         return $product;
+    }
+
+    /**
+     * Parse WHM date format to MySQL datetime format.
+     * WHM returns dates like '25 May 19 01:00' (YY Mon DD HH:MM).
+     *
+     * @param string|null $whmDate Date string from WHM
+     *
+     * @return string MySQL datetime format (Y-m-d H:i:s)
+     */
+    protected function parseWhmDate(?string $whmDate): string
+    {
+        if (empty($whmDate)) {
+            return date('Y-m-d H:i:s');
+        }
+
+        // Try to parse the WHM date format: "YY Mon DD HH:MM" (e.g., "25 May 19 01:00")
+        // or unix timestamp
+        if (is_numeric($whmDate)) {
+            return date('Y-m-d H:i:s', (int) $whmDate);
+        }
+
+        // Try standard parsing first
+        $timestamp = strtotime($whmDate);
+        if ($timestamp !== false) {
+            return date('Y-m-d H:i:s', $timestamp);
+        }
+
+        // Try to parse WHM format: "YY Mon DD HH:MM"
+        // Example: "25 May 19 01:00" -> "19 May 2025 01:00"
+        if (preg_match('/^(\d{2})\s+(\w+)\s+(\d{2})\s+(\d{2}:\d{2})$/', $whmDate, $matches)) {
+            $year = (int) $matches[1];
+            $month = $matches[2];
+            $day = $matches[3];
+            $time = $matches[4];
+
+            // Convert 2-digit year to 4-digit (assume 2000s)
+            $fullYear = $year < 70 ? 2000 + $year : 1900 + $year;
+
+            $dateStr = "$day $month $fullYear $time";
+            $timestamp = strtotime($dateStr);
+            if ($timestamp !== false) {
+                return date('Y-m-d H:i:s', $timestamp);
+            }
+        }
+
+        // Fallback to current date
+        $this->di['logger']->warning('Could not parse WHM date: :date', [':date' => $whmDate]);
+
+        return date('Y-m-d H:i:s');
     }
 
     /**
