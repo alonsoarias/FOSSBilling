@@ -239,45 +239,23 @@ class Service implements InjectionAwareInterface
     public function getRemotePackages(int $serverId): array
     {
         $server = $this->getServer($serverId);
-        $response = $this->whmRequest($server, 'listpkgs');
 
-        // Handle both legacy and modern API response formats
-        $packageList = [];
-        if (isset($response->package) && is_array($response->package)) {
-            // Legacy format: $response->package
-            $packageList = $response->package;
-        } elseif (isset($response->data->pkg) && is_array($response->data->pkg)) {
-            // Modern format: $response->data->pkg
-            $packageList = $response->data->pkg;
+        try {
+            $manager = $this->getServerManager($server);
+
+            // Use Server_Manager's getPackages method which handles auth correctly
+            $packages = $manager->getPackages();
+
+            $this->di['logger']->info('Retrieved :count packages from WHM server :server', [
+                ':count' => count($packages),
+                ':server' => $server->name,
+            ]);
+
+            return $packages;
+        } catch (\Exception $e) {
+            $this->di['logger']->error('Failed to get packages from WHM server: :error', [':error' => $e->getMessage()]);
+            throw new Exception('Failed to get packages: :error', [':error' => $e->getMessage()]);
         }
-
-        $packages = [];
-        foreach ($packageList as $pkg) {
-            $packages[] = [
-                'name' => $pkg->name ?? '',
-                'quota' => $this->normalizeLimit($pkg->QUOTA ?? 'unlimited'),
-                'bandwidth' => $this->normalizeLimit($pkg->BWLIMIT ?? 'unlimited'),
-                'max_ftp' => $this->normalizeLimit($pkg->MAXFTP ?? 'unlimited'),
-                'max_sql' => $this->normalizeLimit($pkg->MAXSQL ?? 'unlimited'),
-                'max_pop' => $this->normalizeLimit($pkg->MAXPOP ?? 'unlimited'),
-                'max_sub' => $this->normalizeLimit($pkg->MAXSUB ?? 'unlimited'),
-                'max_park' => $this->normalizeLimit($pkg->MAXPARK ?? 'unlimited'),
-                'max_addon' => $this->normalizeLimit($pkg->MAXADDON ?? 'unlimited'),
-                'max_email_lists' => $this->normalizeLimit($pkg->MAXLST ?? 'unlimited'),
-                'has_shell' => $this->normalizeBoolean($pkg->HASSHELL ?? 'n'),
-                'has_cgi' => $this->normalizeBoolean($pkg->CGI ?? 'n'),
-                'has_ip' => $this->normalizeBoolean($pkg->IP ?? 'n'),
-                'feature_list' => $pkg->FEATURELIST ?? 'default',
-                'theme' => $pkg->CPMOD ?? 'paper_lantern',
-            ];
-        }
-
-        $this->di['logger']->info('Retrieved :count packages from WHM server :server', [
-            ':count' => count($packages),
-            ':server' => $server->name,
-        ]);
-
-        return $packages;
     }
 
     /**
