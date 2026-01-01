@@ -484,17 +484,25 @@ class Service implements InjectionAwareInterface
 
     /**
      * Import accounts from WHM server.
+     * Each account is automatically associated with its cPanel package.
+     * If the package doesn't exist in FOSSBilling, it will be created.
      */
-    public function importAccounts(int $serverId, array $usernames, int $hostingPlanId, int $clientGroupId = 1): array
+    public function importAccounts(int $serverId, array $usernames, int $clientGroupId = 1): array
     {
         $server = $this->getServer($serverId);
         $remoteAccounts = $this->getRemoteAccounts($serverId);
 
-        $hostingPlan = $this->di['db']->getExistingModelById('ServiceHostingHp', $hostingPlanId, 'Hosting plan not found');
+        // Get remote packages to have full package data for creating hosting plans
+        $remotePackages = $this->getRemotePackages($serverId);
+        $packagesByName = [];
+        foreach ($remotePackages as $pkg) {
+            $packagesByName[$pkg['name']] = $pkg;
+        }
 
         $imported = [];
         $skipped = [];
         $errors = [];
+        $plansCreated = [];
 
         foreach ($remoteAccounts as $acct) {
             if (!in_array($acct['user'], $usernames)) {
@@ -513,6 +521,10 @@ class Service implements InjectionAwareInterface
                     continue;
                 }
 
+                // Get or create hosting plan based on cPanel package name
+                $planName = $acct['plan'] ?? 'default';
+                $hostingPlan = $this->findOrCreateHostingPlanFromPackage($planName, $packagesByName, $plansCreated);
+
                 // Parse domain into SLD and TLD
                 [$sld, $tld] = $this->parseDomain($acct['domain']);
 
@@ -526,7 +538,7 @@ class Service implements InjectionAwareInterface
                 $model = $this->di['db']->dispense('ServiceHosting');
                 $model->client_id = $client->id;
                 $model->service_hosting_server_id = $serverId;
-                $model->service_hosting_hp_id = $hostingPlanId;
+                $model->service_hosting_hp_id = $hostingPlan->id;
                 $model->sld = $sld;
                 $model->tld = $tld;
                 $model->ip = $acct['ip'];
@@ -543,6 +555,7 @@ class Service implements InjectionAwareInterface
                 $imported[] = [
                     'username' => $acct['user'],
                     'domain' => $acct['domain'],
+                    'plan' => $planName,
                     'client_id' => $client->id,
                     'service_id' => $serviceId,
                     'order_id' => $orderId,
@@ -565,7 +578,57 @@ class Service implements InjectionAwareInterface
             'imported' => $imported,
             'skipped' => $skipped,
             'errors' => $errors,
+            'plans_created' => array_values($plansCreated),
         ];
+    }
+
+    /**
+     * Find or create a hosting plan based on cPanel package name.
+     */
+    protected function findOrCreateHostingPlanFromPackage(string $planName, array $packagesByName, array &$plansCreated): \Model_ServiceHostingHp
+    {
+        // Check if we already processed this plan in this import
+        if (isset($plansCreated[$planName])) {
+            return $this->di['db']->load('ServiceHostingHp', $plansCreated[$planName]);
+        }
+
+        // Try to find existing hosting plan by name
+        $existingPlan = $this->di['db']->findOne('ServiceHostingHp', 'name = ?', [$planName]);
+        if ($existingPlan) {
+            return $existingPlan;
+        }
+
+        // Create new hosting plan using package data from cPanel
+        $hostingService = $this->di['mod_service']('servicehosting');
+
+        $pkgData = $packagesByName[$planName] ?? [];
+
+        // Convert 'unlimited' to a high number
+        $quota = $this->parseLimit($pkgData['quota'] ?? 'unlimited', 1024 * 1024);
+        $bandwidth = $this->parseLimit($pkgData['bandwidth'] ?? 'unlimited', 1024 * 1024);
+        $maxFtp = $this->parseLimit($pkgData['max_ftp'] ?? 'unlimited', 999);
+        $maxSql = $this->parseLimit($pkgData['max_sql'] ?? 'unlimited', 999);
+        $maxPop = $this->parseLimit($pkgData['max_pop'] ?? 'unlimited', 999);
+        $maxSub = $this->parseLimit($pkgData['max_sub'] ?? 'unlimited', 999);
+        $maxPark = $this->parseLimit($pkgData['max_park'] ?? 'unlimited', 999);
+        $maxAddon = $this->parseLimit($pkgData['max_addon'] ?? 'unlimited', 999);
+
+        $hpId = $hostingService->createHp($planName, [
+            'quota' => $quota,
+            'bandwidth' => $bandwidth,
+            'max_ftp' => $maxFtp,
+            'max_sql' => $maxSql,
+            'max_pop' => $maxPop,
+            'max_sub' => $maxSub,
+            'max_park' => $maxPark,
+            'max_addon' => $maxAddon,
+        ]);
+
+        $plansCreated[$planName] = $hpId;
+
+        $this->di['logger']->info('Created hosting plan :name during WHM account import', [':name' => $planName]);
+
+        return $this->di['db']->load('ServiceHostingHp', $hpId);
     }
 
     /**

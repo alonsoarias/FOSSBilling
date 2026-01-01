@@ -97,20 +97,20 @@ class Admin extends \Api_Abstract
 
     /**
      * Import accounts from WHM server.
+     * Each account is automatically associated with its cPanel package.
+     * If the package doesn't exist in FOSSBilling, it will be created.
      *
      * @param int   $server_id       Server ID
      * @param array $usernames       Array of usernames to import
-     * @param int   $hosting_plan_id Hosting plan ID to assign
      * @param int   $client_group_id Client group ID (optional, default: 1)
      *
-     * @return array Import results with imported, skipped, and errors
+     * @return array Import results with imported, skipped, errors, and plans_created
      */
     public function import_accounts(array $data): array
     {
         $required = [
             'server_id' => 'Server ID is required',
             'usernames' => 'Usernames are required',
-            'hosting_plan_id' => 'Hosting plan ID is required',
         ];
         $this->di['validator']->checkRequiredParamsForArray($required, $data);
 
@@ -128,7 +128,6 @@ class Admin extends \Api_Abstract
         return $this->getService()->importAccounts(
             (int) $data['server_id'],
             $usernames,
-            (int) $data['hosting_plan_id'],
             $clientGroupId
         );
     }

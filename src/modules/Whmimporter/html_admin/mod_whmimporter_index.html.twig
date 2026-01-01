@@ -153,17 +153,10 @@
                 <div id="accountsContent" style="display: none;">
                     <div class="alert alert-info mb-3">
                         <svg class="icon"><use xlink:href="#info-circle" /></svg>
-                        {{ 'Select the accounts you want to import. Clients will be created automatically if they do not exist.'|trans }}
+                        {{ 'Select the accounts you want to import. Each account will be automatically assigned to its corresponding cPanel package. If the package does not exist in FOSSBilling, it will be created.'|trans }}
                     </div>
 
                     <div class="row mb-3">
-                        <div class="col-md-6">
-                            <label class="form-label">{{ 'Assign to Hosting Plan'|trans }} <span class="text-danger">*</span></label>
-                            <select class="form-select" id="accountsHostingPlan" required>
-                                <option value="">{{ 'Select a hosting plan...'|trans }}</option>
-                            </select>
-                            <small class="text-muted">{{ 'All imported accounts will be assigned to this hosting plan.'|trans }}</small>
-                        </div>
                         <div class="col-md-6">
                             <label class="form-label">{{ 'Client Group'|trans }}</label>
                             <select class="form-select" id="accountsClientGroup">
@@ -471,15 +464,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
             importAccountsModal.show();
 
-            // Load hosting plans
-            API.admin.post('whmimporter/get_hosting_plans', {}, function(plans) {
-                const select = document.getElementById('accountsHostingPlan');
-                select.innerHTML = '<option value="">Select a hosting plan...</option>';
-                plans.forEach(plan => {
-                    select.innerHTML += `<option value="${plan.id}">${plan.name}</option>`;
-                });
-            });
-
             // Load client groups
             API.admin.post('whmimporter/get_client_groups', {}, function(groups) {
                 const select = document.getElementById('accountsClientGroup');
@@ -522,13 +506,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Do Import Accounts
     document.getElementById('btnDoImportAccounts').addEventListener('click', function() {
         const serverId = document.getElementById('accountsServerId').value;
-        const hostingPlanId = document.getElementById('accountsHostingPlan').value;
         const clientGroupId = document.getElementById('accountsClientGroup').value;
-
-        if (!hostingPlanId) {
-            alert('Please select a hosting plan.');
-            return;
-        }
 
         const selectedAccounts = [];
         document.querySelectorAll('.account-checkbox:checked').forEach(cb => {
@@ -546,19 +524,28 @@ document.addEventListener('DOMContentLoaded', function() {
         API.admin.post('whmimporter/import_accounts', {
             server_id: serverId,
             usernames: JSON.stringify(selectedAccounts),
-            hosting_plan_id: hostingPlanId,
             client_group_id: clientGroupId
         }, function(result) {
             importAccountsModal.hide();
 
             let html = '<div class="mb-3">';
 
+            if (result.plans_created && result.plans_created.length > 0) {
+                html += '<h6 class="text-info"><svg class="icon"><use xlink:href="#package" /></svg> Hosting Plans Created (' + result.plans_created.length + ')</h6>';
+                html += '<ul class="list-unstyled">';
+                result.plans_created.forEach(planId => {
+                    html += '<li>Plan ID: ' + planId + '</li>';
+                });
+                html += '</ul>';
+            }
+
             if (result.imported.length > 0) {
                 html += '<h6 class="text-success"><svg class="icon"><use xlink:href="#check" /></svg> Imported (' + result.imported.length + ')</h6>';
                 html += '<ul class="list-unstyled">';
                 result.imported.forEach(acct => {
                     const resellerBadge = acct.is_reseller ? ' <span class="badge bg-purple">Reseller</span>' : '';
-                    html += '<li><strong>' + acct.username + '</strong> - ' + acct.domain + resellerBadge + '</li>';
+                    const planBadge = acct.plan ? ' <span class="badge bg-info">' + acct.plan + '</span>' : '';
+                    html += '<li><strong>' + acct.username + '</strong> - ' + acct.domain + resellerBadge + planBadge + '</li>';
                 });
                 html += '</ul>';
             }
