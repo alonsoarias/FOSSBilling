@@ -1,0 +1,1844 @@
+# Spanish (Spain) translation for FOSSBilling
+# Copyright (C) 2022-2025 FOSSBilling
+# This file is distributed under the Apache-2.0 license.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: FOSSBilling 1.0\n"
+"Report-Msgid-Bugs-To: https://github.com/FOSSBilling/FOSSBilling/issues\n"
+"POT-Creation-Date: 2025-01-01 00:00+0000\n"
+"PO-Revision-Date: 2025-01-01 00:00+0000\n"
+"Last-Translator: FOSSBilling Team\n"
+"Language-Team: Spanish <es@fossbilling.org>\n"
+"Language: es_ES\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+# Navigation & Menu
+msgid "Dashboard"
+msgstr "Panel de Control"
+
+msgid "Home"
+msgstr "Inicio"
+
+msgid "Orders"
+msgstr "Pedidos"
+
+msgid "Invoices"
+msgstr "Facturas"
+
+msgid "Support"
+msgstr "Soporte"
+
+msgid "Clients"
+msgstr "Clientes"
+
+msgid "Products"
+msgstr "Productos"
+
+msgid "Extensions"
+msgstr "Extensiones"
+
+msgid "System"
+msgstr "Sistema"
+
+msgid "Settings"
+msgstr "Configuración"
+
+msgid "Profile"
+msgstr "Perfil"
+
+msgid "Logout"
+msgstr "Cerrar Sesión"
+
+msgid "Login"
+msgstr "Iniciar Sesión"
+
+msgid "Register"
+msgstr "Registrarse"
+
+msgid "Sign out"
+msgstr "Cerrar Sesión"
+
+# Common Actions
+msgid "Save"
+msgstr "Guardar"
+
+msgid "Cancel"
+msgstr "Cancelar"
+
+msgid "Delete"
+msgstr "Eliminar"
+
+msgid "Edit"
+msgstr "Editar"
+
+msgid "Update"
+msgstr "Actualizar"
+
+msgid "Create"
+msgstr "Crear"
+
+msgid "Add"
+msgstr "Añadir"
+
+msgid "Remove"
+msgstr "Eliminar"
+
+msgid "Search"
+msgstr "Buscar"
+
+msgid "Filter"
+msgstr "Filtrar"
+
+msgid "Reset"
+msgstr "Restablecer"
+
+msgid "Submit"
+msgstr "Enviar"
+
+msgid "Apply"
+msgstr "Aplicar"
+
+msgid "Close"
+msgstr "Cerrar"
+
+msgid "Back"
+msgstr "Atrás"
+
+msgid "Next"
+msgstr "Siguiente"
+
+msgid "Previous"
+msgstr "Anterior"
+
+msgid "Continue"
+msgstr "Continuar"
+
+msgid "Confirm"
+msgstr "Confirmar"
+
+msgid "Yes"
+msgstr "Sí"
+
+msgid "No"
+msgstr "No"
+
+msgid "Enable"
+msgstr "Habilitar"
+
+msgid "Disable"
+msgstr "Deshabilitar"
+
+msgid "Activate"
+msgstr "Activar"
+
+msgid "Deactivate"
+msgstr "Desactivar"
+
+msgid "View"
+msgstr "Ver"
+
+msgid "Download"
+msgstr "Descargar"
+
+msgid "Upload"
+msgstr "Subir"
+
+msgid "Print"
+msgstr "Imprimir"
+
+msgid "Copy"
+msgstr "Copiar"
+
+msgid "Refresh"
+msgstr "Actualizar"
+
+msgid "Install"
+msgstr "Instalar"
+
+msgid "Uninstall"
+msgstr "Desinstalar"
+
+# Status
+msgid "Active"
+msgstr "Activo"
+
+msgid "Inactive"
+msgstr "Inactivo"
+
+msgid "Pending"
+msgstr "Pendiente"
+
+msgid "Suspended"
+msgstr "Suspendido"
+
+msgid "Canceled"
+msgstr "Cancelado"
+
+msgid "Enabled"
+msgstr "Habilitado"
+
+msgid "Disabled"
+msgstr "Deshabilitado"
+
+msgid "Paid"
+msgstr "Pagado"
+
+msgid "Unpaid"
+msgstr "No Pagado"
+
+msgid "Refunded"
+msgstr "Reembolsado"
+
+msgid "Open"
+msgstr "Abierto"
+
+msgid "Closed"
+msgstr "Cerrado"
+
+msgid "Solved"
+msgstr "Resuelto"
+
+msgid "Draft"
+msgstr "Borrador"
+
+msgid "Approved"
+msgstr "Aprobado"
+
+msgid "Failed"
+msgstr "Fallido"
+
+msgid "Processed"
+msgstr "Procesado"
+
+msgid "Expired"
+msgstr "Expirado"
+
+# Client Management
+msgid "Client"
+msgstr "Cliente"
+
+msgid "Client details"
+msgstr "Detalles del cliente"
+
+msgid "New Client"
+msgstr "Nuevo Cliente"
+
+msgid "Client Group"
+msgstr "Grupo de Clientes"
+
+msgid "Client Groups"
+msgstr "Grupos de Clientes"
+
+msgid "Create client"
+msgstr "Crear cliente"
+
+msgid "Client settings"
+msgstr "Configuración del cliente"
+
+msgid "Account"
+msgstr "Cuenta"
+
+msgid "Account balance"
+msgstr "Saldo de la cuenta"
+
+msgid "Email Address"
+msgstr "Dirección de Correo"
+
+msgid "Email address"
+msgstr "Dirección de correo"
+
+msgid "First Name"
+msgstr "Nombre"
+
+msgid "First name"
+msgstr "Nombre"
+
+msgid "Last Name"
+msgstr "Apellido"
+
+msgid "Last name"
+msgstr "Apellido"
+
+msgid "Phone"
+msgstr "Teléfono"
+
+msgid "Phone Number"
+msgstr "Número de Teléfono"
+
+msgid "Phone number"
+msgstr "Número de teléfono"
+
+msgid "Company"
+msgstr "Empresa"
+
+msgid "Company Name"
+msgstr "Nombre de la Empresa"
+
+msgid "Company name"
+msgstr "Nombre de la empresa"
+
+msgid "Address"
+msgstr "Dirección"
+
+msgid "Address 1"
+msgstr "Dirección 1"
+
+msgid "Address 2"
+msgstr "Dirección 2"
+
+msgid "City"
+msgstr "Ciudad"
+
+msgid "State"
+msgstr "Estado/Provincia"
+
+msgid "Country"
+msgstr "País"
+
+msgid "Postcode"
+msgstr "Código Postal"
+
+msgid "Zip"
+msgstr "Código Postal"
+
+msgid "Zip/Postal Code"
+msgstr "Código Postal"
+
+# Orders
+msgid "Order"
+msgstr "Pedido"
+
+msgid "Order ID"
+msgstr "ID de Pedido"
+
+msgid "Order Date"
+msgstr "Fecha del Pedido"
+
+msgid "Order status"
+msgstr "Estado del Pedido"
+
+msgid "New Order"
+msgstr "Nuevo Pedido"
+
+msgid "Order now"
+msgstr "Pedir ahora"
+
+msgid "Order Management"
+msgstr "Gestión de Pedidos"
+
+msgid "Order activated"
+msgstr "Pedido activado"
+
+msgid "Order canceled"
+msgstr "Pedido cancelado"
+
+msgid "Order suspended"
+msgstr "Pedido suspendido"
+
+msgid "Order renewed"
+msgstr "Pedido renovado"
+
+msgid "Order created"
+msgstr "Pedido creado"
+
+msgid "Place new order"
+msgstr "Realizar nuevo pedido"
+
+msgid "Recent orders"
+msgstr "Pedidos recientes"
+
+msgid "Latest orders"
+msgstr "Últimos pedidos"
+
+# Invoices
+msgid "Invoice"
+msgstr "Factura"
+
+msgid "Invoice ID"
+msgstr "ID de Factura"
+
+msgid "Invoice Date"
+msgstr "Fecha de Factura"
+
+msgid "Invoice Status"
+msgstr "Estado de Factura"
+
+msgid "New Invoice"
+msgstr "Nueva Factura"
+
+msgid "Invoice number"
+msgstr "Número de factura"
+
+msgid "Invoice date"
+msgstr "Fecha de factura"
+
+msgid "Invoice items"
+msgstr "Artículos de factura"
+
+msgid "Invoice settings"
+msgstr "Configuración de facturas"
+
+msgid "Invoice management"
+msgstr "Gestión de facturas"
+
+msgid "Issue invoice"
+msgstr "Emitir factura"
+
+msgid "Mark as paid"
+msgstr "Marcar como pagado"
+
+msgid "Due Date"
+msgstr "Fecha de Vencimiento"
+
+msgid "Due at"
+msgstr "Vence el"
+
+msgid "Amount"
+msgstr "Importe"
+
+msgid "Total"
+msgstr "Total"
+
+msgid "Subtotal"
+msgstr "Subtotal"
+
+msgid "Tax"
+msgstr "Impuesto"
+
+msgid "Discount"
+msgstr "Descuento"
+
+msgid "Price"
+msgstr "Precio"
+
+# Products & Services
+msgid "Product"
+msgstr "Producto"
+
+msgid "Products & Services"
+msgstr "Productos y Servicios"
+
+msgid "New Product"
+msgstr "Nuevo Producto"
+
+msgid "Product name"
+msgstr "Nombre del producto"
+
+msgid "Product configuration"
+msgstr "Configuración del producto"
+
+msgid "Product Upgrades"
+msgstr "Mejoras de Producto"
+
+msgid "Product Promotions"
+msgstr "Promociones de Producto"
+
+msgid "Product Addons"
+msgstr "Complementos de Producto"
+
+msgid "Service details"
+msgstr "Detalles del servicio"
+
+msgid "My Products & Services"
+msgstr "Mis Productos y Servicios"
+
+# Domains
+msgid "Domain"
+msgstr "Dominio"
+
+msgid "Domain name"
+msgstr "Nombre de dominio"
+
+msgid "Domain registrars"
+msgstr "Registradores de dominios"
+
+msgid "Register domain"
+msgstr "Registrar dominio"
+
+msgid "Transfer domain"
+msgstr "Transferir dominio"
+
+msgid "New domain"
+msgstr "Nuevo dominio"
+
+msgid "Domain registration"
+msgstr "Registro de dominio"
+
+msgid "Domain transfer"
+msgstr "Transferencia de dominio"
+
+msgid "Domain Protection"
+msgstr "Protección de Dominio"
+
+msgid "Domain Privacy Settings"
+msgstr "Configuración de Privacidad del Dominio"
+
+msgid "Domain locked"
+msgstr "Dominio bloqueado"
+
+msgid "Domain unlocked"
+msgstr "Dominio desbloqueado"
+
+msgid "Nameservers"
+msgstr "Servidores de Nombres"
+
+msgid "Nameserver 1"
+msgstr "Servidor de Nombres 1"
+
+msgid "Nameserver 2"
+msgstr "Servidor de Nombres 2"
+
+msgid "Nameserver 3"
+msgstr "Servidor de Nombres 3"
+
+msgid "Nameserver 4"
+msgstr "Servidor de Nombres 4"
+
+msgid "Transfer code"
+msgstr "Código de transferencia"
+
+msgid "Registration date"
+msgstr "Fecha de registro"
+
+msgid "Expiration date"
+msgstr "Fecha de expiración"
+
+# Hosting
+msgid "Hosting"
+msgstr "Hosting"
+
+msgid "Hosting plan"
+msgstr "Plan de hosting"
+
+msgid "Hosting plans"
+msgstr "Planes de hosting"
+
+msgid "Hosting servers"
+msgstr "Servidores de hosting"
+
+msgid "New hosting plan"
+msgstr "Nuevo plan de hosting"
+
+msgid "New server"
+msgstr "Nuevo servidor"
+
+msgid "Server"
+msgstr "Servidor"
+
+msgid "Servers"
+msgstr "Servidores"
+
+msgid "Server Name"
+msgstr "Nombre del Servidor"
+
+msgid "Server Hostname"
+msgstr "Nombre de Host del Servidor"
+
+msgid "Server IP"
+msgstr "IP del Servidor"
+
+msgid "Username"
+msgstr "Nombre de usuario"
+
+msgid "Password"
+msgstr "Contraseña"
+
+msgid "Disk space"
+msgstr "Espacio en disco"
+
+msgid "Bandwidth"
+msgstr "Ancho de banda"
+
+msgid "Change password"
+msgstr "Cambiar contraseña"
+
+msgid "New Password"
+msgstr "Nueva Contraseña"
+
+msgid "New password"
+msgstr "Nueva contraseña"
+
+msgid "Confirm Password"
+msgstr "Confirmar Contraseña"
+
+msgid "Confirm password"
+msgstr "Confirmar contraseña"
+
+msgid "Current Password"
+msgstr "Contraseña Actual"
+
+# Support
+msgid "Support Tickets"
+msgstr "Tickets de Soporte"
+
+msgid "New Support Ticket"
+msgstr "Nuevo Ticket de Soporte"
+
+msgid "New ticket"
+msgstr "Nuevo ticket"
+
+msgid "Open ticket"
+msgstr "Abrir ticket"
+
+msgid "Close ticket"
+msgstr "Cerrar ticket"
+
+msgid "Ticket"
+msgstr "Ticket"
+
+msgid "Ticket ID"
+msgstr "ID del Ticket"
+
+msgid "Ticket Subject"
+msgstr "Asunto del Ticket"
+
+msgid "Subject"
+msgstr "Asunto"
+
+msgid "Message"
+msgstr "Mensaje"
+
+msgid "Messages"
+msgstr "Mensajes"
+
+msgid "Reply"
+msgstr "Responder"
+
+msgid "Helpdesk"
+msgstr "Centro de Ayuda"
+
+msgid "Helpdesks"
+msgstr "Centros de Ayuda"
+
+msgid "Priority"
+msgstr "Prioridad"
+
+msgid "Knowledge Base"
+msgstr "Base de Conocimientos"
+
+msgid "Contact us"
+msgstr "Contáctenos"
+
+msgid "Need an answer? We are here to help!"
+msgstr "¿Necesita una respuesta? ¡Estamos aquí para ayudar!"
+
+# Payments
+msgid "Payment"
+msgstr "Pago"
+
+msgid "Payments"
+msgstr "Pagos"
+
+msgid "Payment gateway"
+msgstr "Pasarela de pago"
+
+msgid "Payment gateways"
+msgstr "Pasarelas de pago"
+
+msgid "Payment method"
+msgstr "Método de pago"
+
+msgid "Transaction"
+msgstr "Transacción"
+
+msgid "Transactions"
+msgstr "Transacciones"
+
+msgid "Pay"
+msgstr "Pagar"
+
+msgid "Checkout"
+msgstr "Finalizar Compra"
+
+msgid "Cart"
+msgstr "Carrito"
+
+msgid "Add to cart"
+msgstr "Añadir al carrito"
+
+msgid "Remove from cart"
+msgstr "Eliminar del carrito"
+
+msgid "Balance"
+msgstr "Saldo"
+
+msgid "Add funds"
+msgstr "Añadir fondos"
+
+msgid "Currency"
+msgstr "Moneda"
+
+msgid "Currencies"
+msgstr "Monedas"
+
+# Promotions
+msgid "Promo code"
+msgstr "Código promocional"
+
+msgid "Promo Code"
+msgstr "Código Promocional"
+
+msgid "Promo codes"
+msgstr "Códigos promocionales"
+
+msgid "Promotions"
+msgstr "Promociones"
+
+msgid "New Promotion"
+msgstr "Nueva Promoción"
+
+msgid "Have a coupon code?"
+msgstr "¿Tiene un código de cupón?"
+
+# User Management
+msgid "Staff"
+msgstr "Personal"
+
+msgid "Staff members"
+msgstr "Miembros del personal"
+
+msgid "Admin"
+msgstr "Administrador"
+
+msgid "Administrators"
+msgstr "Administradores"
+
+msgid "Permissions"
+msgstr "Permisos"
+
+msgid "Group"
+msgstr "Grupo"
+
+msgid "Groups"
+msgstr "Grupos"
+
+msgid "Role"
+msgstr "Rol"
+
+msgid "User"
+msgstr "Usuario"
+
+# Time & Date
+msgid "Date"
+msgstr "Fecha"
+
+msgid "Time"
+msgstr "Hora"
+
+msgid "Created at"
+msgstr "Creado el"
+
+msgid "Updated at"
+msgstr "Actualizado el"
+
+msgid "Expires at"
+msgstr "Expira el"
+
+msgid "Today"
+msgstr "Hoy"
+
+msgid "Yesterday"
+msgstr "Ayer"
+
+msgid "Tomorrow"
+msgstr "Mañana"
+
+msgid "Last month"
+msgstr "Último mes"
+
+msgid "This month so far"
+msgstr "Este mes hasta ahora"
+
+msgid "Daily"
+msgstr "Diario"
+
+msgid "Weekly"
+msgstr "Semanal"
+
+msgid "Monthly"
+msgstr "Mensual"
+
+msgid "Yearly"
+msgstr "Anual"
+
+msgid "Every year"
+msgstr "Cada año"
+
+msgid "Every month"
+msgstr "Cada mes"
+
+msgid "Every week"
+msgstr "Cada semana"
+
+msgid "One time"
+msgstr "Una vez"
+
+msgid "Recurring"
+msgstr "Recurrente"
+
+# Periods
+msgid "Period"
+msgstr "Período"
+
+msgid "day"
+msgstr "día"
+
+msgid "week"
+msgstr "semana"
+
+msgid "month"
+msgstr "mes"
+
+msgid "year"
+msgstr "año"
+
+msgid "hour"
+msgstr "hora"
+
+msgid "minute"
+msgstr "minuto"
+
+msgid "second"
+msgstr "segundo"
+
+# Messages & Notifications
+msgid "Success"
+msgstr "Éxito"
+
+msgid "Error"
+msgstr "Error"
+
+msgid "Warning"
+msgstr "Advertencia"
+
+msgid "Info"
+msgstr "Información"
+
+msgid "Information"
+msgstr "Información"
+
+msgid "Note"
+msgstr "Nota"
+
+msgid "Notification"
+msgstr "Notificación"
+
+msgid "Notifications"
+msgstr "Notificaciones"
+
+msgid "Alert"
+msgstr "Alerta"
+
+msgid "Danger!"
+msgstr "¡Peligro!"
+
+msgid "Warning!"
+msgstr "¡Advertencia!"
+
+msgid "Are you sure?"
+msgstr "¿Está seguro?"
+
+msgid "Are you sure you want to delete?"
+msgstr "¿Está seguro de que desea eliminar?"
+
+msgid "Are you sure you want to delete the selected item?"
+msgstr "¿Está seguro de que desea eliminar el elemento seleccionado?"
+
+msgid "Are you sure you want to delete the selected items?"
+msgstr "¿Está seguro de que desea eliminar los elementos seleccionados?"
+
+# Authentication
+msgid "Log into your account"
+msgstr "Inicie sesión en su cuenta"
+
+msgid "Login to your account"
+msgstr "Inicie sesión en su cuenta"
+
+msgid "Login to client area"
+msgstr "Iniciar sesión en el área de clientes"
+
+msgid "Create a new account"
+msgstr "Crear una nueva cuenta"
+
+msgid "Create account"
+msgstr "Crear cuenta"
+
+msgid "Forgot password?"
+msgstr "¿Olvidó su contraseña?"
+
+msgid "Reset password"
+msgstr "Restablecer contraseña"
+
+msgid "Reset your password"
+msgstr "Restablecer su contraseña"
+
+msgid "Already a user?"
+msgstr "¿Ya tiene una cuenta?"
+
+msgid "Enter your email address"
+msgstr "Ingrese su dirección de correo electrónico"
+
+msgid "Enter your password"
+msgstr "Ingrese su contraseña"
+
+msgid "Remember me"
+msgstr "Recordarme"
+
+msgid "Send me the link"
+msgstr "Envíame el enlace"
+
+msgid "You logged in successfully"
+msgstr "Ha iniciado sesión correctamente"
+
+# Email
+msgid "Email"
+msgstr "Correo electrónico"
+
+msgid "Email settings"
+msgstr "Configuración de correo"
+
+msgid "Email templates"
+msgstr "Plantillas de correo"
+
+msgid "Email history"
+msgstr "Historial de correos"
+
+msgid "Email subject"
+msgstr "Asunto del correo"
+
+msgid "Send"
+msgstr "Enviar"
+
+msgid "Resend"
+msgstr "Reenviar"
+
+# System
+msgid "General Settings"
+msgstr "Configuración General"
+
+msgid "General settings"
+msgstr "Configuración general"
+
+msgid "System settings"
+msgstr "Configuración del sistema"
+
+msgid "Configuration"
+msgstr "Configuración"
+
+msgid "Configuration updated"
+msgstr "Configuración actualizada"
+
+msgid "Cache"
+msgstr "Caché"
+
+msgid "Invalidate cache"
+msgstr "Invalidar caché"
+
+msgid "Cron settings"
+msgstr "Configuración de cron"
+
+msgid "Security"
+msgstr "Seguridad"
+
+msgid "Security dashboard"
+msgstr "Panel de seguridad"
+
+msgid "API Key"
+msgstr "Clave API"
+
+msgid "API key"
+msgstr "Clave API"
+
+msgid "Update FOSSBilling"
+msgstr "Actualizar FOSSBilling"
+
+msgid "Check for Updates"
+msgstr "Buscar Actualizaciones"
+
+msgid "About FOSSBilling"
+msgstr "Acerca de FOSSBilling"
+
+msgid "Version"
+msgstr "Versión"
+
+msgid "Documentation"
+msgstr "Documentación"
+
+msgid "License"
+msgstr "Licencia"
+
+# Themes
+msgid "Theme"
+msgstr "Tema"
+
+msgid "Themes"
+msgstr "Temas"
+
+msgid "Look and Feel"
+msgstr "Apariencia"
+
+msgid "Dark mode"
+msgstr "Modo oscuro"
+
+msgid "Light mode"
+msgstr "Modo claro"
+
+# Tables & Lists
+msgid "ID"
+msgstr "ID"
+
+msgid "Name"
+msgstr "Nombre"
+
+msgid "Title"
+msgstr "Título"
+
+msgid "Description"
+msgstr "Descripción"
+
+msgid "Status"
+msgstr "Estado"
+
+msgid "Actions"
+msgstr "Acciones"
+
+msgid "Options"
+msgstr "Opciones"
+
+msgid "Type"
+msgstr "Tipo"
+
+msgid "Value"
+msgstr "Valor"
+
+msgid "Details"
+msgstr "Detalles"
+
+msgid "Created At"
+msgstr "Creado El"
+
+msgid "Last Updated"
+msgstr "Última Actualización"
+
+msgid "The list is empty"
+msgstr "La lista está vacía"
+
+msgid "No results found"
+msgstr "No se encontraron resultados"
+
+msgid "No results found for:"
+msgstr "No se encontraron resultados para:"
+
+msgid "All"
+msgstr "Todos"
+
+msgid "None"
+msgstr "Ninguno"
+
+msgid "Select All"
+msgstr "Seleccionar Todo"
+
+msgid "Default"
+msgstr "Por defecto"
+
+# Forms
+msgid "Required"
+msgstr "Requerido"
+
+msgid "Optional"
+msgstr "Opcional"
+
+msgid "Select"
+msgstr "Seleccionar"
+
+msgid "Choose"
+msgstr "Elegir"
+
+msgid "Enter"
+msgstr "Ingresar"
+
+msgid "Custom"
+msgstr "Personalizado"
+
+msgid "Custom field"
+msgstr "Campo personalizado"
+
+msgid "Custom fields"
+msgstr "Campos personalizados"
+
+msgid "Text"
+msgstr "Texto"
+
+msgid "Textarea"
+msgstr "Área de texto"
+
+msgid "Checkbox"
+msgstr "Casilla de verificación"
+
+msgid "Radio"
+msgstr "Radio"
+
+msgid "Dropdown"
+msgstr "Desplegable"
+
+msgid "File"
+msgstr "Archivo"
+
+# News & Announcements
+msgid "News"
+msgstr "Noticias"
+
+msgid "News & Announcements"
+msgstr "Noticias y Anuncios"
+
+msgid "Announcements"
+msgstr "Anuncios"
+
+msgid "New Announcement"
+msgstr "Nuevo Anuncio"
+
+msgid "Latest news and announcements"
+msgstr "Últimas noticias y anuncios"
+
+# Miscellaneous
+msgid "Help"
+msgstr "Ayuda"
+
+msgid "About"
+msgstr "Acerca de"
+
+msgid "Contact"
+msgstr "Contacto"
+
+msgid "Terms and Conditions"
+msgstr "Términos y Condiciones"
+
+msgid "Terms of service"
+msgstr "Términos de servicio"
+
+msgid "Privacy Policy"
+msgstr "Política de Privacidad"
+
+msgid "Website"
+msgstr "Sitio Web"
+
+msgid "Loading..."
+msgstr "Cargando..."
+
+msgid "Please wait..."
+msgstr "Por favor espere..."
+
+msgid "Processing..."
+msgstr "Procesando..."
+
+msgid "ago"
+msgstr "hace"
+
+msgid "Hello"
+msgstr "Hola"
+
+msgid "Welcome"
+msgstr "Bienvenido"
+
+msgid "Thank you"
+msgstr "Gracias"
+
+msgid "Powered by"
+msgstr "Desarrollado por"
+
+msgid "Learn more"
+msgstr "Saber más"
+
+msgid "Read more"
+msgstr "Leer más"
+
+msgid "More information"
+msgstr "Más información"
+
+msgid "Show"
+msgstr "Mostrar"
+
+msgid "Hide"
+msgstr "Ocultar"
+
+msgid "Expand"
+msgstr "Expandir"
+
+msgid "Collapse"
+msgstr "Contraer"
+
+msgid "Free"
+msgstr "Gratis"
+
+msgid "Unlimited"
+msgstr "Ilimitado"
+
+msgid "N/A"
+msgstr "N/D"
+
+msgid "Unknown"
+msgstr "Desconocido"
+
+msgid "Other"
+msgstr "Otro"
+
+msgid "Total:"
+msgstr "Total:"
+
+msgid "Quantity"
+msgstr "Cantidad"
+
+msgid "Image"
+msgstr "Imagen"
+
+msgid "Icon"
+msgstr "Icono"
+
+msgid "Logo"
+msgstr "Logo"
+
+msgid "URL"
+msgstr "URL"
+
+msgid "Link"
+msgstr "Enlace"
+
+msgid "Code"
+msgstr "Código"
+
+msgid "Preview"
+msgstr "Vista previa"
+
+msgid "Export"
+msgstr "Exportar"
+
+msgid "Import"
+msgstr "Importar"
+
+msgid "Generate"
+msgstr "Generar"
+
+msgid "Manage"
+msgstr "Gestionar"
+
+# WHM Importer Module
+msgid "WHM/cPanel Importer"
+msgstr "Importador WHM/cPanel"
+
+msgid "WHM Importer"
+msgstr "Importador WHM"
+
+msgid "Import Packages"
+msgstr "Importar Paquetes"
+
+msgid "Import Accounts"
+msgstr "Importar Cuentas"
+
+msgid "Test Connection"
+msgstr "Probar Conexión"
+
+msgid "Import Packages from WHM"
+msgstr "Importar Paquetes desde WHM"
+
+msgid "Import Accounts from WHM"
+msgstr "Importar Cuentas desde WHM"
+
+msgid "Loading packages from WHM server..."
+msgstr "Cargando paquetes del servidor WHM..."
+
+msgid "Loading accounts from WHM server..."
+msgstr "Cargando cuentas del servidor WHM..."
+
+msgid "Select the packages you want to import as hosting plans in FOSSBilling."
+msgstr "Seleccione los paquetes que desea importar como planes de hosting en FOSSBilling."
+
+msgid "Select the accounts you want to import. Clients will be created automatically if they do not exist."
+msgstr "Seleccione las cuentas que desea importar. Los clientes se crearán automáticamente si no existen."
+
+msgid "Import Selected Packages"
+msgstr "Importar Paquetes Seleccionados"
+
+msgid "Import Selected Accounts"
+msgstr "Importar Cuentas Seleccionadas"
+
+msgid "Import Results"
+msgstr "Resultados de Importación"
+
+msgid "No WHM Servers Found"
+msgstr "No se Encontraron Servidores WHM"
+
+msgid "You need to configure a WHM/cPanel server in the hosting module before you can import packages and accounts."
+msgstr "Necesita configurar un servidor WHM/cPanel en el módulo de hosting antes de poder importar paquetes y cuentas."
+
+msgid "Configure Servers"
+msgstr "Configurar Servidores"
+
+msgid "All Accounts"
+msgstr "Todas las Cuentas"
+
+msgid "Resellers Only"
+msgstr "Solo Revendedores"
+
+msgid "Regular Accounts"
+msgstr "Cuentas Regulares"
+
+msgid "Assign to Hosting Plan"
+msgstr "Asignar a Plan de Hosting"
+
+msgid "Select a hosting plan..."
+msgstr "Seleccionar un plan de hosting..."
+
+msgid "All imported accounts will be assigned to this hosting plan."
+msgstr "Todas las cuentas importadas se asignarán a este plan de hosting."
+
+msgid "New clients will be added to this group."
+msgstr "Los nuevos clientes se añadirán a este grupo."
+
+msgid "Owner"
+msgstr "Propietario"
+
+msgid "Reseller"
+msgstr "Revendedor"
+
+msgid "Hostname"
+msgstr "Nombre de Host"
+
+msgid "IP Address"
+msgstr "Dirección IP"
+
+msgid "Plan"
+msgstr "Plan"
+
+# Error messages
+msgid "Oops... You just found an error page"
+msgstr "Ups... Has encontrado una página de error"
+
+msgid "You do not have permission to perform this action"
+msgstr "No tiene permiso para realizar esta acción"
+
+msgid "Incorrect please try again"
+msgstr "Incorrecto, por favor intente de nuevo"
+
+msgid "You must fill in your email."
+msgstr "Debe ingresar su correo electrónico."
+
+msgid "You must fill in your password."
+msgstr "Debe ingresar su contraseña."
+
+msgid "You must verify your email address before you may access our services."
+msgstr "Debe verificar su dirección de correo electrónico antes de poder acceder a nuestros servicios."
+
+msgid "You must first login / create an account before you can checkout."
+msgstr "Debe iniciar sesión o crear una cuenta antes de poder finalizar la compra."
+
+# Additional common strings
+msgid "Back to Dashboard"
+msgstr "Volver al Panel"
+
+msgid "Go Back"
+msgstr "Volver"
+
+msgid "Go back"
+msgstr "Volver"
+
+msgid "Read the documentation"
+msgstr "Leer la documentación"
+
+msgid "This tool allows you to import packages and accounts from your cPanel/WHM servers into FOSSBilling. Select a server to begin."
+msgstr "Esta herramienta le permite importar paquetes y cuentas desde sus servidores cPanel/WHM a FOSSBilling. Seleccione un servidor para comenzar."
+
+msgid "Email was successfully sent"
+msgstr "El correo electrónico fue enviado correctamente"
+
+msgid "Item was removed from cart"
+msgstr "El artículo fue eliminado del carrito"
+
+msgid "Staff member password changed"
+msgstr "Contraseña del miembro del personal cambiada"
+
+msgid "Staff member details updated."
+msgstr "Detalles del miembro del personal actualizados."
+
+msgid "Permissions updated"
+msgstr "Permisos actualizados"
+
+msgid "Template updated"
+msgstr "Plantilla actualizada"
+
+msgid "Post created"
+msgstr "Publicación creada"
+
+msgid "Account was synced"
+msgstr "La cuenta fue sincronizada"
+
+msgid "Server connected"
+msgstr "Servidor conectado"
+
+msgid "New API key generated. Applications using old key are now not working."
+msgstr "Nueva clave API generada. Las aplicaciones que usan la clave antigua ya no funcionarán."
+
+msgid "Email address was confirmed"
+msgstr "La dirección de correo electrónico fue confirmada"
+
+msgid "Verification email has been resent"
+msgstr "El correo de verificación ha sido reenviado"
+
+msgid "Funds added"
+msgstr "Fondos añadidos"
+
+msgid "Order invoices"
+msgstr "Facturas del pedido"
+
+msgid "Order notes"
+msgstr "Notas del pedido"
+
+msgid "Support tickets regarding this order"
+msgstr "Tickets de soporte relacionados con este pedido"
+
+msgid "Addons you have ordered with this service"
+msgstr "Complementos que ha pedido con este servicio"
+
+msgid "All information about your service"
+msgstr "Toda la información sobre su servicio"
+
+msgid "Keep your personal data up to date."
+msgstr "Mantenga sus datos personales actualizados."
+
+msgid "Here you can manage and track your account balance."
+msgstr "Aquí puede gestionar y seguir el saldo de su cuenta."
+
+msgid "All of your invoices can be found here. You can choose to see either paid or unpaid invoices by clicking corresponding button."
+msgstr "Todas sus facturas se encuentran aquí. Puede elegir ver las facturas pagadas o no pagadas haciendo clic en el botón correspondiente."
+
+msgid "All of your orders are displayed here. Click on any service to get full information about it."
+msgstr "Todos sus pedidos se muestran aquí. Haga clic en cualquier servicio para obtener información completa sobre él."
+
+msgid "Explore our knowledge base categories and their associated articles below."
+msgstr "Explore las categorías de nuestra base de conocimientos y sus artículos asociados a continuación."
+
+msgid "Find answers to frequent questions"
+msgstr "Encuentre respuestas a preguntas frecuentes"
+
+msgid "Track our latest information."
+msgstr "Siga nuestra información más reciente."
+
+# Countries
+msgid "-- Select country --"
+msgstr "-- Seleccionar país --"
+
+# Gender
+msgid "Gender"
+msgstr "Género"
+
+msgid "Male"
+msgstr "Masculino"
+
+msgid "Female"
+msgstr "Femenino"
+
+msgid "Non-binary"
+msgstr "No binario"
+
+msgid "Other/Unknown"
+msgstr "Otro/Desconocido"
+
+# Date of birth
+msgid "Birthdate"
+msgstr "Fecha de nacimiento"
+
+msgid "Date of birth"
+msgstr "Fecha de nacimiento"
+
+msgid "Birthday"
+msgstr "Cumpleaños"
+
+# VAT
+msgid "VAT"
+msgstr "IVA"
+
+msgid "VAT ID"
+msgstr "ID de IVA"
+
+msgid "VAT Number"
+msgstr "Número de IVA"
+
+msgid "VAT number"
+msgstr "Número de IVA"
+
+# Subscription
+msgid "Subscription"
+msgstr "Suscripción"
+
+msgid "Subscriptions"
+msgstr "Suscripciones"
+
+msgid "Subscription ID"
+msgstr "ID de Suscripción"
+
+# Refund
+msgid "Refund"
+msgstr "Reembolso"
+
+msgid "Refunds"
+msgstr "Reembolsos"
+
+# Suspend
+msgid "Suspend"
+msgstr "Suspender"
+
+msgid "Unsuspend"
+msgstr "Reactivar"
+
+msgid "Suspension reason"
+msgstr "Razón de suspensión"
+
+# Renew
+msgid "Renew"
+msgstr "Renovar"
+
+msgid "Renew now"
+msgstr "Renovar ahora"
+
+msgid "Renewal Date"
+msgstr "Fecha de Renovación"
+
+msgid "Renewal date"
+msgstr "Fecha de renovación"
+
+msgid "Renewal price"
+msgstr "Precio de renovación"
+
+# Credit
+msgid "Credit"
+msgstr "Crédito"
+
+msgid "Add fund"
+msgstr "Añadir fondos"
+
+msgid "Add funds for client"
+msgstr "Añadir fondos para el cliente"
+
+# Wallet
+msgid "Wallet"
+msgstr "Billetera"
+
+msgid "Fund balance"
+msgstr "Saldo de fondos"
+
+# Statistics
+msgid "Statistics"
+msgstr "Estadísticas"
+
+msgid "Income"
+msgstr "Ingresos"
+
+msgid "Overview"
+msgstr "Resumen"
+
+# Activity
+msgid "Activity"
+msgstr "Actividad"
+
+msgid "Recent client activity"
+msgstr "Actividad reciente del cliente"
+
+msgid "Recent staff activity"
+msgstr "Actividad reciente del personal"
+
+msgid "System activity"
+msgstr "Actividad del sistema"
+
+msgid "Activity log retention"
+msgstr "Retención del registro de actividad"
+
+# Login history
+msgid "Login history"
+msgstr "Historial de inicio de sesión"
+
+msgid "Client login history"
+msgstr "Historial de inicio de sesión de clientes"
+
+msgid "Staff login history"
+msgstr "Historial de inicio de sesión del personal"
+
+msgid "Logins"
+msgstr "Inicios de sesión"
+
+# Footer
+msgid "Footer"
+msgstr "Pie de página"
+
+msgid "About us"
+msgstr "Sobre nosotros"
+
+# Sidebar
+msgid "Sidebar"
+msgstr "Barra lateral"
+
+# Breadcrumbs
+msgid "Breadcrumbs"
+msgstr "Migas de pan"
+
+# Signature
+msgid "Signature"
+msgstr "Firma"
+
+# Canned responses
+msgid "Canned response"
+msgstr "Respuesta predefinida"
+
+msgid "Canned Responses"
+msgstr "Respuestas Predefinidas"
+
+msgid "Canned Category"
+msgstr "Categoría Predefinida"
+
+# Public tickets
+msgid "Public Tickets"
+msgstr "Tickets Públicos"
+
+msgid "New Public Ticket"
+msgstr "Nuevo Ticket Público"
+
+# Categories
+msgid "Categories"
+msgstr "Categorías"
+
+msgid "Category"
+msgstr "Categoría"
+
+msgid "New Category"
+msgstr "Nueva Categoría"
+
+# Articles
+msgid "Articles"
+msgstr "Artículos"
+
+msgid "New Article"
+msgstr "Nuevo Artículo"
+
+# Redirects
+msgid "Redirects"
+msgstr "Redirecciones"
+
+# Languages
+msgid "Language"
+msgstr "Idioma"
+
+msgid "Languages"
+msgstr "Idiomas"
+
+msgid "Manage translations"
+msgstr "Gestionar traducciones"
+
+msgid "Enabled translations"
+msgstr "Traducciones habilitadas"
+
+msgid "Disabled translations"
+msgstr "Traducciones deshabilitadas"
+
+# Timezone
+msgid "Timezone"
+msgstr "Zona horaria"
+
+# Error Reporting
+msgid "Error reporting"
+msgstr "Reporte de errores"
+
+msgid "Enable error reporting"
+msgstr "Habilitar reporte de errores"
+
+msgid "Disable error reporting"
+msgstr "Deshabilitar reporte de errores"
+
+# Mass mailer
+msgid "Mass mailer"
+msgstr "Correo masivo"
+
+msgid "Send message to clients"
+msgstr "Enviar mensaje a clientes"
+
+# CAPTCHA
+msgid "CAPTCHA settings"
+msgstr "Configuración de CAPTCHA"
+
+msgid "Enable CAPTCHA"
+msgstr "Habilitar CAPTCHA"
+
+# Cookie consent
+msgid "Cookie consent settings"
+msgstr "Configuración de consentimiento de cookies"
+
+# Terms
+msgid "Terms"
+msgstr "Términos"
+
+# Last
+msgid "First"
+msgstr "Primero"
+
+msgid "Last"
+msgstr "Último"
+
+# Select product
+msgid "Select Product"
+msgstr "Seleccionar Producto"
+
+# Order form
+msgid "Order Form"
+msgstr "Formulario de Pedido"
+
+# Confirm
+msgid "Password Confirm"
+msgstr "Confirmar Contraseña"
+
+msgid "Password confirm"
+msgstr "Confirmar contraseña"
+
+msgid "Password confirmation"
+msgstr "Confirmación de contraseña"
+
+msgid "Repeat Password"
+msgstr "Repetir Contraseña"
+
+msgid "Repeat new password"
+msgstr "Repetir nueva contraseña"
+
+# Setup
+msgid "Setup"
+msgstr "Configuración"
+
+msgid "Setup Price"
+msgstr "Precio de Configuración"
+
+msgid "Setup price"
+msgstr "Precio de configuración"
+
+msgid "Free Setup"
+msgstr "Configuración Gratis"
+
+# Transfer
+msgid "Transfer"
+msgstr "Transferencia"
+
+msgid "Transfer price"
+msgstr "Precio de transferencia"
+
+# Registration
+msgid "Registration"
+msgstr "Registro"
+
+msgid "Registration price"
+msgstr "Precio de registro"
+
+# Upgrade
+msgid "Upgrade"
+msgstr "Mejorar"
+
+msgid "Upgrades"
+msgstr "Mejoras"
+
+msgid "Upgrade to"
+msgstr "Mejorar a"
+
+msgid "Request Upgrade"
+msgstr "Solicitar Mejora"
+
+msgid "I would like to upgrade"
+msgstr "Me gustaría mejorar"
+
+# Addons
+msgid "Addons"
+msgstr "Complementos"
+
+msgid "Addons & extras"
+msgstr "Complementos y extras"
+
+msgid "New Addon"
+msgstr "Nuevo Complemento"
+
+# Custom pages
+msgid "Custom Pages"
+msgstr "Páginas Personalizadas"
+
+msgid "New Custom Page"
+msgstr "Nueva Página Personalizada"
+
+msgid "Edit Custom Page"
+msgstr "Editar Página Personalizada"
+
+# Content
+msgid "Content"
+msgstr "Contenido"
+
+# Slug
+msgid "Slug"
+msgstr "Slug"
+
+# Meta
+msgid "Meta Description"
+msgstr "Meta Descripción"
+
+msgid "Meta Keywords"
+msgstr "Meta Palabras Clave"
+
+msgid "Meta title"
+msgstr "Meta título"
+
+msgid "Meta description"
+msgstr "Meta descripción"
+
+msgid "Meta keywords"
+msgstr "Meta palabras clave"
+
+# SEO
+msgid "SEO settings"
+msgstr "Configuración SEO"
+
+# Document
+msgid "Document"
+msgstr "Documento"
+
+msgid "Document format"
+msgstr "Formato del documento"
+
+msgid "Document settings"
+msgstr "Configuración de documentos"
+
+# PDF
+msgid "PDF"
+msgstr "PDF"
+
+# Format
+msgid "Format"
+msgstr "Formato"
+
+# Tax
+msgid "Tax rate"
+msgstr "Tasa de impuesto"
+
+msgid "Tax rules"
+msgstr "Reglas de impuestos"
+
+msgid "Tax settings"
+msgstr "Configuración de impuestos"
+
+msgid "Tax title"
+msgstr "Título del impuesto"
+
+msgid "New tax rule"
+msgstr "Nueva regla de impuesto"
+
+msgid "Enable tax support"
+msgstr "Habilitar soporte de impuestos"
+
+msgid "Exempt from tax"
+msgstr "Exento de impuestos"
+
+# Pagination
+msgid "Pagination"
+msgstr "Paginación"
