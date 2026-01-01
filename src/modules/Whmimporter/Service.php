@@ -13,6 +13,7 @@ namespace Box\Mod\Whmimporter;
 use FOSSBilling\Exception;
 use FOSSBilling\InformationException;
 use FOSSBilling\InjectionAwareInterface;
+use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Contracts\HttpClient\Exception\HttpExceptionInterface;
 
 class Service implements InjectionAwareInterface
@@ -109,7 +110,8 @@ class Service implements InjectionAwareInterface
             'accesshash' => $server->accesshash,
         ];
 
-        $client = $this->di['http_client']->withOptions([
+        $client = HttpClient::create([
+            'bindto' => BIND_TO,
             'verify_peer' => false,
             'verify_host' => false,
             'timeout' => 90,
