@@ -1,0 +1,538 @@
+{% extends request.ajax ? 'layout_blank.html.twig' : 'layout_default.html.twig' %}
+
+{% import 'macro_functions.html.twig' as mf %}
+
+{% block meta_title %}{{ 'WHM/cPanel Importer'|trans }}{% endblock %}
+
+{% set active_menu = 'system' %}
+
+{% block breadcrumbs %}
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="{{ '/'|alink }}">
+                <svg class="icon"><use xlink:href="#home" /></svg>
+            </a>
+        </li>
+        <li class="breadcrumb-item">
+            <a href="{{ 'system'|alink }}">{{ 'System'|trans }}</a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">{{ 'WHM Importer'|trans }}</li>
+    </ol>
+{% endblock %}
+
+{% block content %}
+<div class="card mb-3">
+    <div class="card-header">
+        <h3 class="card-title">{{ 'WHM/cPanel Importer'|trans }}</h3>
+    </div>
+    <div class="card-body">
+        <p class="text-muted">
+            {{ 'This tool allows you to import packages and accounts from your cPanel/WHM servers into FOSSBilling. Select a server to begin.'|trans }}
+        </p>
+    </div>
+</div>
+
+{% set servers = admin.whmimporter_get_servers %}
+
+{% if servers|length == 0 %}
+<div class="alert alert-warning">
+    <svg class="icon"><use xlink:href="#alert-triangle" /></svg>
+    <div>
+        <h4 class="alert-title">{{ 'No WHM Servers Found'|trans }}</h4>
+        <div class="text-secondary">
+            {{ 'You need to configure a WHM/cPanel server in the hosting module before you can import packages and accounts.'|trans }}
+            <a href="{{ 'servicehosting'|alink }}">{{ 'Configure Servers'|trans }}</a>
+        </div>
+    </div>
+</div>
+{% else %}
+
+<div class="row row-cards">
+    {% for server in servers %}
+    <div class="col-md-6 col-lg-4">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">
+                    <svg class="icon me-2"><use xlink:href="#server" /></svg>
+                    {{ server.name }}
+                </h3>
+                <div class="card-actions">
+                    {% if server.active %}
+                        <span class="badge bg-success">{{ 'Active'|trans }}</span>
+                    {% else %}
+                        <span class="badge bg-secondary">{{ 'Inactive'|trans }}</span>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="card-body">
+                <dl class="row mb-0">
+                    <dt class="col-5">{{ 'Hostname'|trans }}:</dt>
+                    <dd class="col-7">{{ server.hostname }}</dd>
+                    <dt class="col-5">{{ 'IP Address'|trans }}:</dt>
+                    <dd class="col-7">{{ server.ip }}</dd>
+                </dl>
+            </div>
+            <div class="card-footer">
+                <div class="btn-list">
+                    <a href="#" class="btn btn-outline-primary btn-test-connection" data-server-id="{{ server.id }}">
+                        <svg class="icon"><use xlink:href="#activity" /></svg>
+                        {{ 'Test Connection'|trans }}
+                    </a>
+                </div>
+            </div>
+            <div class="card-footer">
+                <div class="btn-list">
+                    <a href="#" class="btn btn-primary btn-import-packages" data-server-id="{{ server.id }}" data-server-name="{{ server.name }}">
+                        <svg class="icon"><use xlink:href="#package" /></svg>
+                        {{ 'Import Packages'|trans }}
+                    </a>
+                    <a href="#" class="btn btn-success btn-import-accounts" data-server-id="{{ server.id }}" data-server-name="{{ server.name }}">
+                        <svg class="icon"><use xlink:href="#users" /></svg>
+                        {{ 'Import Accounts'|trans }}
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<!-- Import Packages Modal -->
+<div class="modal modal-blur fade" id="importPackagesModal" tabindex="-1">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">{{ 'Import Packages from WHM'|trans }}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div id="packagesLoading" class="text-center py-5">
+                    <div class="spinner-border text-primary" role="status"></div>
+                    <p class="mt-2">{{ 'Loading packages from WHM server...'|trans }}</p>
+                </div>
+                <div id="packagesContent" style="display: none;">
+                    <div class="alert alert-info mb-3">
+                        <svg class="icon"><use xlink:href="#info-circle" /></svg>
+                        {{ 'Select the packages you want to import as hosting plans in FOSSBilling.'|trans }}
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-check">
+                            <input type="checkbox" class="form-check-input" id="selectAllPackages">
+                            <span class="form-check-label fw-bold">{{ 'Select All'|trans }}</span>
+                        </label>
+                    </div>
+                    <div id="packagesList" class="list-group list-group-flush"></div>
+                </div>
+                <div id="packagesError" class="alert alert-danger" style="display: none;"></div>
+                <input type="hidden" id="packagesServerId" value="">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ 'Cancel'|trans }}</button>
+                <button type="button" class="btn btn-primary" id="btnDoImportPackages">
+                    <svg class="icon"><use xlink:href="#download" /></svg>
+                    {{ 'Import Selected Packages'|trans }}
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Import Accounts Modal -->
+<div class="modal modal-blur fade" id="importAccountsModal" tabindex="-1">
+    <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">{{ 'Import Accounts from WHM'|trans }}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div id="accountsLoading" class="text-center py-5">
+                    <div class="spinner-border text-primary" role="status"></div>
+                    <p class="mt-2">{{ 'Loading accounts from WHM server...'|trans }}</p>
+                </div>
+                <div id="accountsContent" style="display: none;">
+                    <div class="alert alert-info mb-3">
+                        <svg class="icon"><use xlink:href="#info-circle" /></svg>
+                        {{ 'Select the accounts you want to import. Clients will be created automatically if they do not exist.'|trans }}
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label">{{ 'Assign to Hosting Plan'|trans }} <span class="text-danger">*</span></label>
+                            <select class="form-select" id="accountsHostingPlan" required>
+                                <option value="">{{ 'Select a hosting plan...'|trans }}</option>
+                            </select>
+                            <small class="text-muted">{{ 'All imported accounts will be assigned to this hosting plan.'|trans }}</small>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">{{ 'Client Group'|trans }}</label>
+                            <select class="form-select" id="accountsClientGroup">
+                                <option value="1">{{ 'Default'|trans }}</option>
+                            </select>
+                            <small class="text-muted">{{ 'New clients will be added to this group.'|trans }}</small>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-check">
+                            <input type="checkbox" class="form-check-input" id="selectAllAccounts">
+                            <span class="form-check-label fw-bold">{{ 'Select All'|trans }}</span>
+                        </label>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="table table-vcenter card-table">
+                            <thead>
+                                <tr>
+                                    <th class="w-1"></th>
+                                    <th>{{ 'Domain'|trans }}</th>
+                                    <th>{{ 'Username'|trans }}</th>
+                                    <th>{{ 'Email'|trans }}</th>
+                                    <th>{{ 'Plan'|trans }}</th>
+                                    <th>{{ 'IP'|trans }}</th>
+                                    <th>{{ 'Status'|trans }}</th>
+                                </tr>
+                            </thead>
+                            <tbody id="accountsList"></tbody>
+                        </table>
+                    </div>
+                </div>
+                <div id="accountsError" class="alert alert-danger" style="display: none;"></div>
+                <input type="hidden" id="accountsServerId" value="">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ 'Cancel'|trans }}</button>
+                <button type="button" class="btn btn-success" id="btnDoImportAccounts">
+                    <svg class="icon"><use xlink:href="#download" /></svg>
+                    {{ 'Import Selected Accounts'|trans }}
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Results Modal -->
+<div class="modal modal-blur fade" id="resultsModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="resultsModalTitle">{{ 'Import Results'|trans }}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body" id="resultsModalBody"></div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">{{ 'Close'|trans }}</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endif %}
+{% endblock %}
+
+{% block js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const importPackagesModal = new bootstrap.Modal(document.getElementById('importPackagesModal'));
+    const importAccountsModal = new bootstrap.Modal(document.getElementById('importAccountsModal'));
+    const resultsModal = new bootstrap.Modal(document.getElementById('resultsModal'));
+
+    // Test Connection
+    document.querySelectorAll('.btn-test-connection').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            e.preventDefault();
+            const serverId = this.dataset.serverId;
+            const button = this;
+
+            button.disabled = true;
+            button.innerHTML = '<span class="spinner-border spinner-border-sm"></span> Testing...';
+
+            API.admin.post('whmimporter/test_connection', { server_id: serverId }, function(result) {
+                button.disabled = false;
+                button.innerHTML = '<svg class="icon"><use xlink:href="#check" /></svg> Connected!';
+                button.classList.remove('btn-outline-primary');
+                button.classList.add('btn-success');
+                setTimeout(() => {
+                    button.innerHTML = '<svg class="icon"><use xlink:href="#activity" /></svg> Test Connection';
+                    button.classList.remove('btn-success');
+                    button.classList.add('btn-outline-primary');
+                }, 3000);
+            }, function(error) {
+                button.disabled = false;
+                button.innerHTML = '<svg class="icon"><use xlink:href="#x" /></svg> Failed';
+                button.classList.remove('btn-outline-primary');
+                button.classList.add('btn-danger');
+                setTimeout(() => {
+                    button.innerHTML = '<svg class="icon"><use xlink:href="#activity" /></svg> Test Connection';
+                    button.classList.remove('btn-danger');
+                    button.classList.add('btn-outline-primary');
+                }, 3000);
+            });
+        });
+    });
+
+    // Import Packages - Open Modal
+    document.querySelectorAll('.btn-import-packages').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            e.preventDefault();
+            const serverId = this.dataset.serverId;
+
+            document.getElementById('packagesServerId').value = serverId;
+            document.getElementById('packagesLoading').style.display = 'block';
+            document.getElementById('packagesContent').style.display = 'none';
+            document.getElementById('packagesError').style.display = 'none';
+            document.getElementById('packagesList').innerHTML = '';
+
+            importPackagesModal.show();
+
+            API.admin.post('whmimporter/get_remote_packages', { server_id: serverId }, function(packages) {
+                document.getElementById('packagesLoading').style.display = 'none';
+                document.getElementById('packagesContent').style.display = 'block';
+
+                let html = '';
+                packages.forEach(pkg => {
+                    html += `
+                        <label class="list-group-item">
+                            <input class="form-check-input me-2 package-checkbox" type="checkbox" value="${pkg.name}">
+                            <span class="fw-bold">${pkg.name}</span>
+                            <small class="text-muted ms-2">
+                                Quota: ${pkg.quota} | BW: ${pkg.bandwidth} | FTP: ${pkg.max_ftp} | SQL: ${pkg.max_sql}
+                            </small>
+                        </label>
+                    `;
+                });
+
+                if (packages.length === 0) {
+                    html = '<div class="text-center text-muted py-3">No packages found on this server.</div>';
+                }
+
+                document.getElementById('packagesList').innerHTML = html;
+            }, function(error) {
+                document.getElementById('packagesLoading').style.display = 'none';
+                document.getElementById('packagesError').style.display = 'block';
+                document.getElementById('packagesError').textContent = error;
+            });
+        });
+    });
+
+    // Select All Packages
+    document.getElementById('selectAllPackages').addEventListener('change', function() {
+        document.querySelectorAll('.package-checkbox').forEach(cb => {
+            cb.checked = this.checked;
+        });
+    });
+
+    // Do Import Packages
+    document.getElementById('btnDoImportPackages').addEventListener('click', function() {
+        const serverId = document.getElementById('packagesServerId').value;
+        const selectedPackages = [];
+
+        document.querySelectorAll('.package-checkbox:checked').forEach(cb => {
+            selectedPackages.push(cb.value);
+        });
+
+        if (selectedPackages.length === 0) {
+            alert('Please select at least one package to import.');
+            return;
+        }
+
+        this.disabled = true;
+        this.innerHTML = '<span class="spinner-border spinner-border-sm"></span> Importing...';
+
+        API.admin.post('whmimporter/import_packages', {
+            server_id: serverId,
+            packages: JSON.stringify(selectedPackages)
+        }, function(result) {
+            importPackagesModal.hide();
+
+            let html = '<div class="mb-3">';
+
+            if (result.imported.length > 0) {
+                html += '<h6 class="text-success"><svg class="icon"><use xlink:href="#check" /></svg> Imported (' + result.imported.length + ')</h6>';
+                html += '<ul class="list-unstyled">';
+                result.imported.forEach(pkg => {
+                    html += '<li>' + pkg.name + '</li>';
+                });
+                html += '</ul>';
+            }
+
+            if (result.skipped.length > 0) {
+                html += '<h6 class="text-warning"><svg class="icon"><use xlink:href="#alert-triangle" /></svg> Skipped (already exist)</h6>';
+                html += '<ul class="list-unstyled">';
+                result.skipped.forEach(name => {
+                    html += '<li>' + name + '</li>';
+                });
+                html += '</ul>';
+            }
+
+            html += '</div>';
+
+            document.getElementById('resultsModalTitle').textContent = 'Package Import Results';
+            document.getElementById('resultsModalBody').innerHTML = html;
+            resultsModal.show();
+
+            document.getElementById('btnDoImportPackages').disabled = false;
+            document.getElementById('btnDoImportPackages').innerHTML = '<svg class="icon"><use xlink:href="#download" /></svg> Import Selected Packages';
+        }, function(error) {
+            alert('Import failed: ' + error);
+            document.getElementById('btnDoImportPackages').disabled = false;
+            document.getElementById('btnDoImportPackages').innerHTML = '<svg class="icon"><use xlink:href="#download" /></svg> Import Selected Packages';
+        });
+    });
+
+    // Import Accounts - Open Modal
+    document.querySelectorAll('.btn-import-accounts').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            e.preventDefault();
+            const serverId = this.dataset.serverId;
+
+            document.getElementById('accountsServerId').value = serverId;
+            document.getElementById('accountsLoading').style.display = 'block';
+            document.getElementById('accountsContent').style.display = 'none';
+            document.getElementById('accountsError').style.display = 'none';
+            document.getElementById('accountsList').innerHTML = '';
+
+            importAccountsModal.show();
+
+            // Load hosting plans
+            API.admin.post('whmimporter/get_hosting_plans', {}, function(plans) {
+                const select = document.getElementById('accountsHostingPlan');
+                select.innerHTML = '<option value="">Select a hosting plan...</option>';
+                plans.forEach(plan => {
+                    select.innerHTML += `<option value="${plan.id}">${plan.name}</option>`;
+                });
+            });
+
+            // Load client groups
+            API.admin.post('whmimporter/get_client_groups', {}, function(groups) {
+                const select = document.getElementById('accountsClientGroup');
+                select.innerHTML = '';
+                groups.forEach(group => {
+                    select.innerHTML += `<option value="${group.id}">${group.title}</option>`;
+                });
+            });
+
+            // Load accounts
+            API.admin.post('whmimporter/get_remote_accounts', { server_id: serverId }, function(accounts) {
+                document.getElementById('accountsLoading').style.display = 'none';
+                document.getElementById('accountsContent').style.display = 'block';
+
+                let html = '';
+                accounts.forEach(acct => {
+                    const statusBadge = acct.suspended
+                        ? '<span class="badge bg-danger">Suspended</span>'
+                        : '<span class="badge bg-success">Active</span>';
+
+                    html += `
+                        <tr>
+                            <td>
+                                <input class="form-check-input account-checkbox" type="checkbox" value="${acct.user}">
+                            </td>
+                            <td>${acct.domain}</td>
+                            <td><code>${acct.user}</code></td>
+                            <td>${acct.email || '-'}</td>
+                            <td>${acct.plan}</td>
+                            <td>${acct.ip}</td>
+                            <td>${statusBadge}</td>
+                        </tr>
+                    `;
+                });
+
+                if (accounts.length === 0) {
+                    html = '<tr><td colspan="7" class="text-center text-muted">No accounts found on this server.</td></tr>';
+                }
+
+                document.getElementById('accountsList').innerHTML = html;
+            }, function(error) {
+                document.getElementById('accountsLoading').style.display = 'none';
+                document.getElementById('accountsError').style.display = 'block';
+                document.getElementById('accountsError').textContent = error;
+            });
+        });
+    });
+
+    // Select All Accounts
+    document.getElementById('selectAllAccounts').addEventListener('change', function() {
+        document.querySelectorAll('.account-checkbox').forEach(cb => {
+            cb.checked = this.checked;
+        });
+    });
+
+    // Do Import Accounts
+    document.getElementById('btnDoImportAccounts').addEventListener('click', function() {
+        const serverId = document.getElementById('accountsServerId').value;
+        const hostingPlanId = document.getElementById('accountsHostingPlan').value;
+        const clientGroupId = document.getElementById('accountsClientGroup').value;
+
+        if (!hostingPlanId) {
+            alert('Please select a hosting plan.');
+            return;
+        }
+
+        const selectedAccounts = [];
+        document.querySelectorAll('.account-checkbox:checked').forEach(cb => {
+            selectedAccounts.push(cb.value);
+        });
+
+        if (selectedAccounts.length === 0) {
+            alert('Please select at least one account to import.');
+            return;
+        }
+
+        this.disabled = true;
+        this.innerHTML = '<span class="spinner-border spinner-border-sm"></span> Importing...';
+
+        API.admin.post('whmimporter/import_accounts', {
+            server_id: serverId,
+            usernames: JSON.stringify(selectedAccounts),
+            hosting_plan_id: hostingPlanId,
+            client_group_id: clientGroupId
+        }, function(result) {
+            importAccountsModal.hide();
+
+            let html = '<div class="mb-3">';
+
+            if (result.imported.length > 0) {
+                html += '<h6 class="text-success"><svg class="icon"><use xlink:href="#check" /></svg> Imported (' + result.imported.length + ')</h6>';
+                html += '<ul class="list-unstyled">';
+                result.imported.forEach(acct => {
+                    html += '<li><strong>' + acct.username + '</strong> - ' + acct.domain + '</li>';
+                });
+                html += '</ul>';
+            }
+
+            if (result.skipped.length > 0) {
+                html += '<h6 class="text-warning"><svg class="icon"><use xlink:href="#alert-triangle" /></svg> Skipped (already exist)</h6>';
+                html += '<ul class="list-unstyled">';
+                result.skipped.forEach(username => {
+                    html += '<li>' + username + '</li>';
+                });
+                html += '</ul>';
+            }
+
+            if (result.errors.length > 0) {
+                html += '<h6 class="text-danger"><svg class="icon"><use xlink:href="#x" /></svg> Errors</h6>';
+                html += '<ul class="list-unstyled">';
+                result.errors.forEach(err => {
+                    html += '<li><strong>' + err.username + '</strong>: ' + err.error + '</li>';
+                });
+                html += '</ul>';
+            }
+
+            html += '</div>';
+
+            document.getElementById('resultsModalTitle').textContent = 'Account Import Results';
+            document.getElementById('resultsModalBody').innerHTML = html;
+            resultsModal.show();
+
+            document.getElementById('btnDoImportAccounts').disabled = false;
+            document.getElementById('btnDoImportAccounts').innerHTML = '<svg class="icon"><use xlink:href="#download" /></svg> Import Selected Accounts';
+        }, function(error) {
+            alert('Import failed: ' + error);
+            document.getElementById('btnDoImportAccounts').disabled = false;
+            document.getElementById('btnDoImportAccounts').innerHTML = '<svg class="icon"><use xlink:href="#download" /></svg> Import Selected Accounts';
+        });
+    });
+});
+</script>
+{% endblock %}

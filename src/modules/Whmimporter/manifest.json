@@ -1,0 +1,14 @@
+{
+  "id": "whmimporter",
+  "type": "mod",
+  "name": "WHM/cPanel Importer",
+  "description": "Import packages and accounts from cPanel/WHM servers into FOSSBilling. Allows bulk importing of hosting plans and customer accounts.",
+  "homepage_url": "https://fossbilling.org",
+  "author": "FOSSBilling",
+  "author_url": "https://fossbilling.org",
+  "license": "Apache-2.0",
+  "version": "1.0.0",
+  "icon_url": "icon.svg",
+  "minimum_boxbilling_version": "0.6.0",
+  "required_extensions": []
+}
