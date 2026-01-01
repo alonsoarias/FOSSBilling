@@ -58,7 +58,8 @@ class Service implements InjectionAwareInterface
     {
         $server = $this->di['db']->getExistingModelById('ServiceHostingServer', $serverId, 'Server not found');
 
-        if ($server->manager !== 'Whm') {
+        // Case-insensitive check for WHM manager
+        if (strtolower($server->manager) !== 'whm') {
             throw new InformationException('Selected server is not a WHM/cPanel server');
         }
 
@@ -66,7 +67,32 @@ class Service implements InjectionAwareInterface
     }
 
     /**
-     * Make a request to WHM API.
+     * Get the Server_Manager instance for a server model.
+     * Uses the same approach as the Servicehosting module.
+     */
+    protected function getServerManager(\Model_ServiceHostingServer $model): \Server_Manager
+    {
+        $config = [];
+        $config['ip'] = $model->ip;
+        $config['host'] = $model->hostname;
+        $config['port'] = $model->port;
+        $config['config'] = json_decode($model->config ?? '', true) ?? [];
+        $config['secure'] = $model->secure;
+        $config['username'] = $model->username;
+        $config['password'] = $model->password;
+        $config['accesshash'] = $model->accesshash;
+
+        $manager = $this->di['server_manager']($model->manager, $config);
+
+        if (!$manager instanceof \Server_Manager) {
+            throw new Exception('Server manager :adapter is invalid.', [':adapter' => $model->manager]);
+        }
+
+        return $manager;
+    }
+
+    /**
+     * Make a request to WHM API using the Server_Manager.
      *
      * WHM API supports multiple response formats. This method handles:
      * - Legacy format: status/statusmsg at root level
@@ -750,15 +776,16 @@ class Service implements InjectionAwareInterface
 
     /**
      * Test connection to WHM server.
+     * Uses the Server_Manager for consistent connection handling with Servicehosting module.
      */
     public function testConnection(int $serverId): bool
     {
         $server = $this->getServer($serverId);
 
         try {
-            $response = $this->whmRequest($server, 'version');
+            $manager = $this->getServerManager($server);
 
-            return isset($response->version);
+            return $manager->testConnection();
         } catch (\Exception $e) {
             throw new Exception('Connection failed: :error', [':error' => $e->getMessage()]);
         }
