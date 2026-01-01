@@ -618,6 +618,20 @@ class Service implements InjectionAwareInterface
             $tld = $data['domain']['transfer_tld'];
         }
 
+        // Subdomain action: allows using a subdomain like client.orioncloud.com.co
+        if ($data['domain']['action'] == 'subdomain') {
+            $required = [
+                'subdomain_sld' => 'Subdomain name is required',
+                'subdomain_base' => 'Base domain is required',
+            ];
+            $this->di['validator']->checkRequiredParamsForArray($required, $data['domain']);
+
+            $sld = $data['domain']['subdomain_sld'];
+            // Base domain becomes the TLD (e.g., ".orioncloud.com.co")
+            $baseDomain = $data['domain']['subdomain_base'];
+            $tld = str_contains($baseDomain, '.') ? '.' . ltrim($baseDomain, '.') : '.' . $baseDomain;
+        }
+
         return [$sld, $tld];
     }
 

@@ -1967,3 +1967,168 @@ msgstr "por página"
 
 msgid "Go to page"
 msgstr "Ir a página"
+
+# Order Form - Domain Configuration
+msgid "Domain configuration"
+msgstr "Configuración de dominio"
+
+msgid "I will use my existing domain and update nameservers"
+msgstr "Usaré mi dominio existente y actualizaré los nameservers"
+
+msgid "I want to use a subdomain"
+msgstr "Quiero usar un subdominio"
+
+msgid "I want to register a new domain"
+msgstr "Quiero registrar un nuevo dominio"
+
+msgid "Your existing domain"
+msgstr "Tu dominio existente"
+
+msgid "Your new domain"
+msgstr "Tu nuevo dominio"
+
+msgid "Subdomain"
+msgstr "Subdominio"
+
+msgid "Base domain (e.g., example.com)"
+msgstr "Dominio base (ej: example.com)"
+
+msgid "Example: mysite.orioncloud.com.co"
+msgstr "Ejemplo: misitio.orioncloud.com.co"
+
+msgid "Check"
+msgstr "Verificar"
+
+# Order Form - Billing
+msgid "Billing"
+msgstr "Facturación"
+
+msgid "Billing cycle"
+msgstr "Ciclo de facturación"
+
+msgid "Every"
+msgstr "Cada"
+
+msgid " year @ "
+msgstr " año @ "
+
+msgid " years @ "
+msgstr " años @ "
+
+msgid "Next"
+msgstr "Siguiente"
+
+msgid "Continue"
+msgstr "Continuar"
+
+msgid "Add to Cart"
+msgstr "Añadir al Carrito"
+
+msgid "Order"
+msgstr "Pedido"
+
+msgid "Checkout"
+msgstr "Finalizar Compra"
+
+msgid "Complete Order"
+msgstr "Completar Pedido"
+
+# Order Form - Periods
+msgid "Weekly"
+msgstr "Semanal"
+
+msgid "Monthly"
+msgstr "Mensual"
+
+msgid "Quarterly"
+msgstr "Trimestral"
+
+msgid "Semi-annually"
+msgstr "Semestral"
+
+msgid "Annually"
+msgstr "Anual"
+
+msgid "Biennially"
+msgstr "Bienal"
+
+msgid "Triennially"
+msgstr "Trienal"
+
+msgid "1W"
+msgstr "1 Semana"
+
+msgid "1M"
+msgstr "1 Mes"
+
+msgid "3M"
+msgstr "3 Meses"
+
+msgid "6M"
+msgstr "6 Meses"
+
+msgid "1Y"
+msgstr "1 Año"
+
+msgid "2Y"
+msgstr "2 Años"
+
+msgid "3Y"
+msgstr "3 Años"
+
+# Cart
+msgid "Shopping Cart"
+msgstr "Carrito de Compras"
+
+msgid "Your cart is empty"
+msgstr "Tu carrito está vacío"
+
+msgid "View Cart"
+msgstr "Ver Carrito"
+
+msgid "Proceed to Checkout"
+msgstr "Proceder al Pago"
+
+msgid "Remove from cart"
+msgstr "Eliminar del carrito"
+
+msgid "Coupon code"
+msgstr "Código de cupón"
+
+msgid "Apply"
+msgstr "Aplicar"
+
+msgid "Total"
+msgstr "Total"
+
+msgid "Subtotal"
+msgstr "Subtotal"
+
+msgid "Discount"
+msgstr "Descuento"
+
+msgid "Tax"
+msgstr "Impuesto"
+
+# Addons
+msgid "Available addons"
+msgstr "Complementos disponibles"
+
+msgid "Select addons"
+msgstr "Seleccionar complementos"
+
+# General Order
+msgid "Free"
+msgstr "Gratis"
+
+msgid "Setup fee"
+msgstr "Tarifa de configuración"
+
+msgid "Price"
+msgstr "Precio"
+
+msgid "per month"
+msgstr "por mes"
+
+msgid "per year"
+msgstr "por año"

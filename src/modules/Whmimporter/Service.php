@@ -1115,7 +1115,7 @@ class Service implements InjectionAwareInterface
 
     /**
      * Parse WHM date format to MySQL datetime format.
-     * WHM returns dates like '25 May 19 01:00' (YY Mon DD HH:MM).
+     * WHM returns dates in format: 'DD Mon YY HH:MM' (e.g., "01 May 25 01:00" = May 1, 2025).
      *
      * @param string|null $whmDate Date string from WHM
      *
@@ -1127,27 +1127,20 @@ class Service implements InjectionAwareInterface
             return date('Y-m-d H:i:s');
         }
 
-        // Try to parse the WHM date format: "YY Mon DD HH:MM" (e.g., "25 May 19 01:00")
-        // or unix timestamp
+        // Handle unix timestamp
         if (is_numeric($whmDate)) {
             return date('Y-m-d H:i:s', (int) $whmDate);
         }
 
-        // Try standard parsing first
-        $timestamp = strtotime($whmDate);
-        if ($timestamp !== false) {
-            return date('Y-m-d H:i:s', $timestamp);
-        }
-
-        // Try to parse WHM format: "YY Mon DD HH:MM"
-        // Example: "25 May 19 01:00" -> "19 May 2025 01:00"
-        if (preg_match('/^(\d{2})\s+(\w+)\s+(\d{2})\s+(\d{2}:\d{2})$/', $whmDate, $matches)) {
-            $year = (int) $matches[1];
+        // Try to parse WHM format: "DD Mon YY HH:MM"
+        // Example: "01 May 25 01:00" -> 1 May 2025 01:00:00
+        if (preg_match('/^(\d{1,2})\s+(\w+)\s+(\d{2})\s+(\d{2}:\d{2})$/', $whmDate, $matches)) {
+            $day = (int) $matches[1];
             $month = $matches[2];
-            $day = $matches[3];
+            $year = (int) $matches[3];
             $time = $matches[4];
 
-            // Convert 2-digit year to 4-digit (assume 2000s)
+            // Convert 2-digit year to 4-digit (assume 2000s for years < 70)
             $fullYear = $year < 70 ? 2000 + $year : 1900 + $year;
 
             $dateStr = "$day $month $fullYear $time";
@@ -1155,6 +1148,12 @@ class Service implements InjectionAwareInterface
             if ($timestamp !== false) {
                 return date('Y-m-d H:i:s', $timestamp);
             }
+        }
+
+        // Try standard parsing as fallback
+        $timestamp = strtotime($whmDate);
+        if ($timestamp !== false) {
+            return date('Y-m-d H:i:s', $timestamp);
         }
 
         // Fallback to current date

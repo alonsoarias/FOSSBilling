@@ -8,8 +8,12 @@
         <span class="text-muted">{{ 'Domain configuration'|trans }}</span>
         <div class="mb-2">
             <div class="form-check">
-                <input class="form-check-input" type="radio" name="domain[action]" value="owndomain"id="own-domain-check" onclick="selectDomainAction(this);" {% if tlds is empty %} checked {% endif %}>
+                <input class="form-check-input" type="radio" name="domain[action]" value="owndomain" id="own-domain-check" onclick="selectDomainAction(this);" {% if tlds is empty %} checked {% endif %}>
                 <label class="form-check-label" for="own-domain-check">{{ 'I will use my existing domain and update nameservers'|trans }}</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="domain[action]" value="subdomain" id="subdomain-check" onclick="selectDomainAction(this);">
+                <label class="form-check-label" for="subdomain-check">{{ 'I want to use a subdomain'|trans }}</label>
             </div>
             {% if tlds is not empty %}
                 <div class="form-check">
@@ -30,6 +34,23 @@
                                        value="{{ request.owndomain_tld|default('.com') }}">
                             </div>
                         </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="subdomain" class="mt-2 domain_action" style="display: none;">
+                <div class="row">
+                    <div class="col-md-10">
+                        <div class="input-group mb-3">
+                            <input class="form-control" type="text" name="domain[subdomain_sld]"
+                                   value="{{ request.subdomain_sld }}"
+                                   placeholder="{{ 'Subdomain'|trans }}" style="max-width: 150px;">
+                            <span class="input-group-text">.</span>
+                            <input class="form-control" type="text" name="domain[subdomain_base]"
+                                   value="{{ request.subdomain_base }}"
+                                   placeholder="{{ 'Base domain (e.g., example.com)'|trans }}">
+                        </div>
+                        <small class="text-muted">{{ 'Example: mysite.orioncloud.com.co'|trans }}</small>
                     </div>
                 </div>
             </div>
