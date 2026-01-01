@@ -32,17 +32,18 @@ use PhpMyAdmin\MoTranslator\Cache\InMemoryCache;
 use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
 use Throwable;
 
-use function array_key_exists;
+use function chr;
 use function count;
 use function explode;
-use function is_numeric;
+use function get_class;
+use function implode;
+use function intval;
 use function ltrim;
 use function preg_replace;
 use function rtrim;
 use function sprintf;
-use function str_contains;
-use function str_starts_with;
 use function stripos;
+use function strpos;
 use function strtolower;
 use function substr;
 use function trim;
@@ -60,17 +61,14 @@ class Translator
      * None error.
      */
     public const ERROR_NONE = 0;
-
     /**
      * File does not exist.
      */
     public const ERROR_DOES_NOT_EXIST = 1;
-
     /**
      * File has bad magic number.
      */
     public const ERROR_BAD_MAGIC = 2;
-
     /**
      * Error while reading file, probably too short.
      */
@@ -80,7 +78,6 @@ class Translator
      * Big endian mo file magic bytes.
      */
     public const MAGIC_BE = "\x95\x04\x12\xde";
-
     /**
      * Little endian mo file magic bytes.
      */
@@ -88,28 +85,31 @@ class Translator
 
     /**
      * Parse error code (0 if no error).
+     *
+     * @var int
      */
-    public int $error = self::ERROR_NONE;
+    public $error = self::ERROR_NONE;
 
     /**
      * Cache header field for plural forms.
+     *
+     * @var string|null
      */
-    private string|null $pluralEquation = null;
+    private $pluralEquation = null;
+
+    /** @var ExpressionLanguage|null Evaluator for plurals */
+    private $pluralExpression = null;
+
+    /** @var int|null number of plurals */
+    private $pluralCount = null;
+
+    /** @var CacheInterface */
+    private $cache;
 
     /**
-     * Evaluator for plurals
+     * @param CacheInterface|string|null $cache Mo file to load (null for no file) or a CacheInterface implementation
      */
-    private ExpressionLanguage|null $pluralExpression = null;
-
-    /**
-     * number of plurals
-     */
-    private int|null $pluralCount = null;
-
-    private CacheInterface $cache;
-
-    /** @param CacheInterface|string|null $cache Mo file to load (null for no file) or a CacheInterface implementation */
-    public function __construct(CacheInterface|string|null $cache)
+    public function __construct($cache)
     {
         if (! $cache instanceof CacheInterface) {
             $cache = new InMemoryCache(new MoParser($cache));
@@ -151,16 +151,20 @@ class Translator
     {
         // Parse equation
         $expr = explode(';', $expr);
-        $expr = count($expr) >= 2 ? $expr[1] : $expr[0];
+        if (count($expr) >= 2) {
+            $expr = $expr[1];
+        } else {
+            $expr = $expr[0];
+        }
 
         $expr = trim(strtolower($expr));
         // Strip plural prefix
-        if (str_starts_with($expr, 'plural')) {
+        if (substr($expr, 0, 6) === 'plural') {
             $expr = ltrim(substr($expr, 6));
         }
 
         // Strip equals
-        if (str_starts_with($expr, '=')) {
+        if (substr($expr, 0, 1) === '=') {
             $expr = ltrim(substr($expr, 1));
         }
 
@@ -189,7 +193,7 @@ class Translator
             return 1;
         }
 
-        return (int) $nplurals[1];
+        return intval($nplurals[1]);
     }
 
     /**
@@ -228,9 +232,9 @@ class Translator
         if ($this->pluralEquation === null) {
             $header = $this->cache->get('');
 
-            $expr = self::extractPluralsForms($header);
-            $this->pluralEquation = self::sanitizePluralExpression($expr);
-            $this->pluralCount = self::extractPluralCount($expr);
+            $expr = $this->extractPluralsForms($header);
+            $this->pluralEquation = $this->sanitizePluralExpression($expr);
+            $this->pluralCount = $this->extractPluralCount($expr);
         }
 
         return $this->pluralEquation;
@@ -250,9 +254,11 @@ class Translator
         }
 
         try {
-            $evaluatedPlural = $this->pluralExpression->evaluate($this->getPluralForms(), ['n' => $n]);
-            $plural = is_numeric($evaluatedPlural) ? (int) $evaluatedPlural : 0;
-        } catch (Throwable) {
+            $plural = (int) $this->pluralExpression->evaluate(
+                $this->getPluralForms(),
+                ['n' => $n]
+            );
+        } catch (Throwable $e) {
             $plural = 0;
         }
 
@@ -275,7 +281,7 @@ class Translator
     public function ngettext(string $msgid, string $msgidPlural, int $number): string
     {
         // this should contains all strings separated by NULLs
-        $key = $msgid . "\u{0}" . $msgidPlural;
+        $key = implode(chr(0), [$msgid, $msgidPlural]);
         if (! $this->cache->has($key)) {
             return $number !== 1 ? $msgidPlural : $msgid;
         }
@@ -285,13 +291,21 @@ class Translator
         // find out the appropriate form
         $select = $this->selectString($number);
 
-        $list = explode("\u{0}", $result);
-
-        if (array_key_exists($select, $list)) {
-            return $list[$select];
+        $list = explode(chr(0), $result);
+        // @codeCoverageIgnoreStart
+        if ($list === false) {
+            // This was added in 3ff2c63bcf85f81b3a205ce7222de11b33e2bf56 for phpstan
+            // But according to the php manual it should never happen
+            return '';
         }
 
-        return $list[0];
+        // @codeCoverageIgnoreEnd
+
+        if (! isset($list[$select])) {
+            return $list[0];
+        }
+
+        return $list[$select];
     }
 
     /**
@@ -304,9 +318,9 @@ class Translator
      */
     public function pgettext(string $msgctxt, string $msgid): string
     {
-        $key = $msgctxt . "\u{4}" . $msgid;
+        $key = implode(chr(4), [$msgctxt, $msgid]);
         $ret = $this->gettext($key);
-        if ($ret === $key) {
+        if (strpos($ret, chr(4)) !== false) {
             return $msgid;
         }
 
@@ -325,9 +339,9 @@ class Translator
      */
     public function npgettext(string $msgctxt, string $msgid, string $msgidPlural, int $number): string
     {
-        $key = $msgctxt . "\u{4}" . $msgid;
+        $key = implode(chr(4), [$msgctxt, $msgid]);
         $ret = $this->ngettext($key, $msgidPlural, $number);
-        if (str_contains($ret, "\u{4}")) {
+        if (strpos($ret, chr(4)) !== false) {
             return $msgid;
         }
 
@@ -368,7 +382,7 @@ class Translator
 
         throw new CacheException(sprintf(
             "Cache '%s' does not support getting translations",
-            $this->cache::class,
+            get_class($this->cache)
         ));
     }
 }

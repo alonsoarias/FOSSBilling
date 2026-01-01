@@ -1,13 +1,14 @@
 {
   "name": "wysiwyg",
   "files": [
-    "assets"
+    "build"
   ],
   "scripts": {
-    "build": "node ./esbuild.mjs"
+    "build": "webpack --mode production"
   },
   "devDependencies": {
-    "ckeditor5": "47.3.0",
-    "esbuild": "0.27.2"
+    "@ckeditor/ckeditor5-dev-translations": "^43.0.0",
+    "@ckeditor/ckeditor5-dev-utils": "^43.0.0",
+    "ckeditor5": "^46.0.0"
   }
 }

@@ -18,9 +18,9 @@ namespace Symfony\Component\DependencyInjection\Argument;
  */
 class TaggedIteratorArgument extends IteratorArgument
 {
-    private mixed $indexAttribute = null;
-    private ?string $defaultIndexMethod = null;
-    private ?string $defaultPriorityMethod = null;
+    private mixed $indexAttribute;
+    private ?string $defaultIndexMethod;
+    private ?string $defaultPriorityMethod;
 
     /**
      * @param string      $tag                   The name of the tag identifying the target services

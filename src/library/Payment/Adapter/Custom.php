@@ -21,7 +21,7 @@ class Payment_Adapter_Custom
         $this->di = $di;
     }
 
-    public static function getConfig(): array
+    public static function getConfig()
     {
         return [
             'can_load_in_iframe' => true,

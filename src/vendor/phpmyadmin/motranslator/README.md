@@ -2,7 +2,7 @@
 
 Translation API for PHP using Gettext MO files.
 
-[![Test-suite](https://github.com/phpmyadmin/motranslator/actions/workflows/tests.yml/badge.svg?branch=master)](https://github.com/phpmyadmin/motranslator/actions/workflows/tests.yml?query=branch%3Amaster)
+![Test-suite](https://github.com/phpmyadmin/motranslator/workflows/Run%20tests/badge.svg?branch=master)
 [![codecov.io](https://codecov.io/github/phpmyadmin/motranslator/coverage.svg?branch=master)](https://codecov.io/github/phpmyadmin/motranslator?branch=master)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/phpmyadmin/motranslator/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/phpmyadmin/motranslator/?branch=master)
 [![Packagist](https://img.shields.io/packagist/dt/phpmyadmin/motranslator.svg)](https://packagist.org/packages/phpmyadmin/motranslator)
@@ -134,7 +134,7 @@ If you are using `Loader`, pass it an `ApcuCacheFactory` _before_ getting the tr
 
 ```php
 PhpMyAdmin\MoTranslator\Loader::setCacheFactory(
-    new PhpMyAdmin\MoTranslator\Cache\ApcuCacheFactory()
+    new PhpMyAdmin\MoTranslator\Cache\AcpuCacheFactory()
 );
 $loader = new PhpMyAdmin\MoTranslator\Loader();
 
@@ -160,7 +160,7 @@ to the `ApcuCacheFactory` or when instantiating `ApcuCache`:
 
 ```php
 PhpMyAdmin\MoTranslator\Loader::setCacheFactory(
-    new PhpMyAdmin\MoTranslator\Cache\ApcuCacheFactory(
+    new PhpMyAdmin\MoTranslator\Cache\AcpuCacheFactory(
         3600,     // cache for 1 hour
         true,     // reload on cache miss
         'custom_' // custom prefix for cache entries

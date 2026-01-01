@@ -11,8 +11,6 @@
 
 namespace Box\Mod\Servicedomain\Api;
 
-use FOSSBilling\Validation\Api\RequiredParams;
-
 /**
  * Domain service management.
  */
@@ -58,9 +56,13 @@ class Guest extends \Api_Abstract
      *
      * @return array
      */
-    #[RequiredParams(['tld' => 'TLD is missing'])]
     public function pricing($data)
     {
+        $required = [
+            'tld' => 'TLD is missing',
+        ];
+        $this->di['validator']->checkRequiredParamsForArray($required, $data);
+
         $model = $this->getService()->tldFindOneByTld($data['tld']);
         if (!$model instanceof \Model_Tld) {
             throw new \FOSSBilling\Exception('TLD not found');
@@ -75,12 +77,14 @@ class Guest extends \Api_Abstract
      *
      * @return true
      */
-    #[RequiredParams([
-        'tld' => 'TLD is missing',
-        'sld' => 'SLD is missing',
-    ])]
     public function check($data)
     {
+        $required = [
+            'tld' => 'TLD is missing',
+            'sld' => 'SLD is missing',
+        ];
+        $this->di['validator']->checkRequiredParamsForArray($required, $data);
+
         $sld = htmlspecialchars($data['sld'], ENT_QUOTES | ENT_HTML5, 'UTF-8');
         $validator = $this->di['validator'];
         if (!$validator->isSldValid($sld)) {
@@ -105,12 +109,14 @@ class Guest extends \Api_Abstract
      *
      * @return true
      */
-    #[RequiredParams([
-        'tld' => 'TLD is missing',
-        'sld' => 'SLD is missing',
-    ])]
     public function can_be_transferred($data)
     {
+        $required = [
+            'tld' => 'TLD is missing',
+            'sld' => 'SLD is missing',
+        ];
+        $this->di['validator']->checkRequiredParamsForArray($required, $data);
+
         $tld = $this->getService()->tldFindOneByTld($data['tld']);
         if (!$tld instanceof \Model_Tld) {
             throw new \FOSSBilling\InformationException('TLD is not active.');

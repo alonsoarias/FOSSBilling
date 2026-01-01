@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace Sentry\Attributes;
 
-use Sentry\Serializer\SerializableInterface;
-use Sentry\Util\JSON;
-
 /**
  * @phpstan-type AttributeType 'string'|'boolean'|'integer'|'double'
  * @phpstan-type AttributeValue string|bool|int|float
@@ -71,7 +68,7 @@ class Attribute
     public static function tryFromValue($value): ?self
     {
         if ($value === null) {
-            return new self('null', 'string');
+            return null;
         }
 
         if (\is_bool($value)) {
@@ -86,22 +83,14 @@ class Attribute
             return new self($value, 'double');
         }
 
-        if ($value instanceof SerializableInterface) {
-            try {
-                return new self(JSON::encode($value->toSentry()), 'string');
-            } catch (\Throwable $e) {
-                // Ignore the exception and continue trying other methods
-            }
-        }
-
         if (\is_string($value) || (\is_object($value) && method_exists($value, '__toString'))) {
-            return new self((string) $value, 'string');
-        }
+            $stringValue = (string) $value;
 
-        try {
-            return new self(JSON::encode($value), 'string');
-        } catch (\Throwable $e) {
-            // Ignore the exception
+            if (empty($stringValue)) {
+                return null;
+            }
+
+            return new self($stringValue, 'string');
         }
 
         return null;

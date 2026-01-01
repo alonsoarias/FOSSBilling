@@ -21,18 +21,21 @@ use Gaufrette\File;
  */
 class GaufretteAdapter implements AdapterInterface
 {
-    /**
-     * @var string[]
-     */
     protected $domains;
 
+    /**
+     * @param File $file
+     */
     public function __construct(File $file)
     {
         $this->domains = Utilities::parseLines($file->getContent());
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function isThrowawayDomain($domain)
     {
-        return in_array($domain, $this->domains, true);
+        return in_array($domain, $this->domains);
     }
 }

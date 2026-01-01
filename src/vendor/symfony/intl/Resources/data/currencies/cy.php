@@ -958,10 +958,6 @@ return [
             'EC$',
             'Doler Dwyrain y Caribî',
         ],
-        'XCG' => [
-            'Cg.',
-            'guilder Caribïaidd',
-        ],
         'XEU' => [
             'XEU',
             'Uned Arian Cyfred Ewropeaidd',
@@ -1009,10 +1005,6 @@ return [
         'ZWD' => [
             'ZWD',
             'Doler Zimbabwe (1980–2008)',
-        ],
-        'ZWG' => [
-            'ZWG',
-            'Zimbabwean Gold',
         ],
         'ZWL' => [
             'ZWL',

@@ -25,7 +25,7 @@ class Admin implements \FOSSBilling\InjectionAwareInterface
         return $this->di;
     }
 
-    public function fetchNavigation(): array
+    public function fetchNavigation()
     {
         return [
             'group' => [
@@ -61,7 +61,7 @@ class Admin implements \FOSSBilling\InjectionAwareInterface
         ];
     }
 
-    public function register(\Box_App &$app): void
+    public function register(\Box_App &$app)
     {
         $app->get('/client', 'get_index', [], static::class);
         $app->get('/client/', 'get_index', [], static::class);
@@ -73,14 +73,14 @@ class Admin implements \FOSSBilling\InjectionAwareInterface
         $app->get('/client/logins', 'get_history', [], static::class);
     }
 
-    public function get_index(\Box_App $app): string
+    public function get_index(\Box_App $app)
     {
         $this->di['is_admin_logged'];
 
         return $app->render('mod_client_index');
     }
 
-    public function get_manage(\Box_App $app, $id): string
+    public function get_manage(\Box_App $app, $id)
     {
         $api = $this->di['api_admin'];
         $client = $api->client_get(['id' => $id]);
@@ -88,7 +88,7 @@ class Admin implements \FOSSBilling\InjectionAwareInterface
         return $app->render('mod_client_manage', ['client' => $client]);
     }
 
-    public function get_group(\Box_App $app, $id): string
+    public function get_group(\Box_App $app, $id)
     {
         $api = $this->di['api_admin'];
         $model = $api->client_group_get(['id' => $id]);
@@ -96,14 +96,14 @@ class Admin implements \FOSSBilling\InjectionAwareInterface
         return $app->render('mod_client_group', ['group' => $model]);
     }
 
-    public function get_history(\Box_App $app): string
+    public function get_history(\Box_App $app)
     {
         $api = $this->di['api_admin'];
 
         return $app->render('mod_client_login_history');
     }
 
-    public function get_login(\Box_App $app, $id): void
+    public function get_login(\Box_App $app, $id)
     {
         $api = $this->di['api_admin'];
         $api->client_login(['id' => $id]);
@@ -113,7 +113,7 @@ class Admin implements \FOSSBilling\InjectionAwareInterface
         $query = $_GET['r'] ?? null;
         if ($query) {
             $r = $query;
-            $redirect_to = '/' . trim((string) $r, '/');
+            $redirect_to = '/' . trim($r, '/');
         }
 
         header('HTTP/1.1 301 Moved Permanently');

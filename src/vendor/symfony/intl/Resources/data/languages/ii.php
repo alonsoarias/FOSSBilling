@@ -19,5 +19,7 @@ return [
         'sw' => 'ꌖꑟꆺꉙ',
         'zh' => 'ꍏꇩꉙ',
     ],
-    'LocalizedNames' => [],
+    'LocalizedNames' => [
+        'ar_001' => 'ꀊꇁꀨꉙ（ꋧꃅ）',
+    ],
 ];

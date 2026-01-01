@@ -1,9 +1,6 @@
 <?php
 
 return [
-    'UserAssignedNames' => [
-        'XK' => 'Kosovo',
-    ],
     'Names' => [
         'AD' => 'Andorra',
         'AE' => 'Emiradau Arabaidd Unedig',
@@ -182,7 +179,7 @@ return [
         'PF' => 'Polynesia Ffrengig',
         'PG' => 'Papua Guinea Newydd',
         'PH' => 'Y Philipinau',
-        'PK' => 'Pacistan',
+        'PK' => 'Pakistan',
         'PL' => 'Gwlad Pwyl',
         'PM' => 'Saint-Pierre-et-Miquelon',
         'PN' => 'Ynysoedd Pitcairn',

@@ -12,8 +12,6 @@ class Box_EventManager implements FOSSBilling\InjectionAwareInterface
 {
     protected ?Pimple\Container $di = null;
 
-    public const GLOBAL_LISTENER_NAME = 'onEveryEvent';
-
     public function setDi(Pimple\Container $di): void
     {
         $this->di = $di;
@@ -36,15 +34,12 @@ class Box_EventManager implements FOSSBilling\InjectionAwareInterface
         $subject = $data['subject'] ?? null;
         $params = $data['params'] ?? null;
 
-        $this->di['logger']->setChannel('event')->debug('Fired event: ' . $event, $params);
+        $this->di['logger']->setChannel('event')->debug($event, $params);
 
         $e = new Box_Event($subject, $event, $params);
         $e->setDi($this->di);
         $disp = new Box_EventDispatcher();
-        
         $this->_connectDatabaseHooks($disp, $e->getName());
-        $this->_connectDatabaseHooks($disp, self::GLOBAL_LISTENER_NAME); // Also connect the global listeners (onEveryEvent)
-        
         $disp->notify($e);
 
         return $e->getReturnValue();
@@ -54,7 +49,7 @@ class Box_EventManager implements FOSSBilling\InjectionAwareInterface
      * @param Box_EventDispatcher $disp
      * @param string              $event
      */
-    private function _connectDatabaseHooks(&$disp, $event): void
+    private function _connectDatabaseHooks(&$disp, $event)
     {
         $sql = "SELECT id, rel_id, meta_value
             FROM extension_meta

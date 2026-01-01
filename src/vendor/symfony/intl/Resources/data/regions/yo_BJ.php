@@ -1,7 +1,6 @@
 <?php
 
 return [
-    'UserAssignedNames' => [],
     'Names' => [
         'AE' => 'Ɛmirate ti Awɔn Arabu',
         'AS' => 'Sámóánì ti Orílɛ́ède Àméríkà',
@@ -16,6 +15,7 @@ return [
         'BQ' => 'Kàríbíánì ti Nɛ́dálándì',
         'BW' => 'Bɔ̀tìsúwánà',
         'BZ' => 'Bèlísɛ̀',
+        'CH' => 'switishilandi',
         'CL' => 'Shílè',
         'CN' => 'Sháínà',
         'CZ' => 'Shɛ́ɛ́kì',

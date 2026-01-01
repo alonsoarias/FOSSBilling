@@ -658,10 +658,6 @@ return [
             'EC$',
             'Doolarka Iist Kaaribyan',
         ],
-        'XCG' => [
-            'Cg.',
-            'Caribbean guilder',
-        ],
         'XOF' => [
             'F CFA',
             'Faranka CFA Galbeedka Afrika',
@@ -681,10 +677,6 @@ return [
         'ZMW' => [
             'ZMW',
             'Kawajada Sambiya',
-        ],
-        'ZWG' => [
-            'ZWG',
-            'Dahabka Zimbabwe',
         ],
     ],
 ];

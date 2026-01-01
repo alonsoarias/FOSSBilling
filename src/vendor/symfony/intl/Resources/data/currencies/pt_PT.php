@@ -666,10 +666,6 @@ return [
             'EC$',
             'dólar das Caraíbas Orientais',
         ],
-        'XCG' => [
-            'Cg.',
-            'florim caribenho',
-        ],
         'XOF' => [
             'F CFA',
             'franco CFA (BCEAO)',
@@ -693,10 +689,6 @@ return [
         'ZMW' => [
             'ZMW',
             'kwacha zambiano',
-        ],
-        'ZWG' => [
-            'ZWG',
-            'ouro zimbabuense',
         ],
     ],
 ];

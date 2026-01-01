@@ -610,10 +610,6 @@ return [
             'EC$',
             'Tāra Karapīana Rāwhiti',
         ],
-        'XCG' => [
-            'Cg.',
-            'Guilder Karapīana',
-        ],
         'XOF' => [
             'F CFA',
             'Franc CFA Āwherika ki te Uru',
@@ -633,10 +629,6 @@ return [
         'ZMW' => [
             'ZMW',
             'Kwacha Tāmipia',
-        ],
-        'ZWG' => [
-            'ZWG',
-            'Kōura Timuwawe',
         ],
     ],
 ];

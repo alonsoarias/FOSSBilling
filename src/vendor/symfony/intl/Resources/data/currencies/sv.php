@@ -1082,10 +1082,6 @@ return [
             'EC$',
             'östkaribisk dollar',
         ],
-        'XCG' => [
-            'XCG',
-            'karibisk gulden',
-        ],
         'XEU' => [
             'XEU',
             'europeisk valutaenhet',
@@ -1161,10 +1157,6 @@ return [
         'ZWD' => [
             'ZWD',
             'Zimbabwe-dollar',
-        ],
-        'ZWG' => [
-            'ZWG',
-            'zimbabwiskt guld',
         ],
         'ZWL' => [
             'ZWL',

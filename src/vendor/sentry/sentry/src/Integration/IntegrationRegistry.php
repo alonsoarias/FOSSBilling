@@ -147,7 +147,7 @@ final class IntegrationRegistry
             new ModulesIntegration(),
         ];
 
-        if ($options->getDsn() !== null || $options->isSpotlightEnabled()) {
+        if ($options->getDsn() !== null) {
             array_unshift($integrations, new ExceptionListenerIntegration(), new ErrorListenerIntegration(), new FatalErrorListenerIntegration());
         }
 

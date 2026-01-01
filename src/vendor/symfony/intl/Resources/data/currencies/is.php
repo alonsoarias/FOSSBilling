@@ -858,10 +858,6 @@ return [
             'EC$',
             'austurkarabískur dalur',
         ],
-        'XCG' => [
-            'XCG',
-            'Karíbahafsgyllini',
-        ],
         'XFO' => [
             'XFO',
             'Franskur gullfranki',
@@ -909,10 +905,6 @@ return [
         'ZWD' => [
             'ZWD',
             'Simbabveskur dalur',
-        ],
-        'ZWG' => [
-            'ZWG',
-            'simbabveskt gold',
         ],
     ],
 ];

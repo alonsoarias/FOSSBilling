@@ -39,7 +39,7 @@ class Model_ClientPasswordResetTable implements FOSSBilling\InjectionAwareInterf
         return $r;
     }
 
-    public function rmByClient(Model_Client $client): void
+    public function rmByClient(Model_Client $client)
     {
         $models = $this->di['db']->find('ClientPasswordReset', 'client_id = ?', [$client->id]);
         foreach ($models as $model) {

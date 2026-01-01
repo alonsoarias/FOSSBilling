@@ -20,8 +20,6 @@ use Symfony\Component\DependencyInjection\Exception\InvalidArgumentException;
  */
 class ServiceClosureArgument implements ArgumentInterface
 {
-    use ArgumentTrait;
-
     private array $values;
 
     public function __construct(mixed $value)

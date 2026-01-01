@@ -1086,10 +1086,6 @@ return [
             'EC$',
             'dòllaru de sos Caràibes orientales',
         ],
-        'XCG' => [
-            'Cg.',
-            'fiorinu caraìbicu',
-        ],
         'XEU' => [
             'XEU',
             'unidade de contu europea',

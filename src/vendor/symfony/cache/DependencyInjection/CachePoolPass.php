@@ -16,7 +16,6 @@ use Symfony\Component\Cache\Adapter\ArrayAdapter;
 use Symfony\Component\Cache\Adapter\ChainAdapter;
 use Symfony\Component\Cache\Adapter\NullAdapter;
 use Symfony\Component\Cache\Adapter\ParameterNormalizer;
-use Symfony\Component\Cache\Adapter\TagAwareAdapter;
 use Symfony\Component\Cache\Messenger\EarlyExpirationDispatcher;
 use Symfony\Component\DependencyInjection\ChildDefinition;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
@@ -154,7 +153,7 @@ class CachePoolPass implements CompilerPassInterface
                         ),
                     ]);
                     $pool->addTag('container.reversible');
-                } elseif ('namespace' !== $attr || !\in_array($class, [ArrayAdapter::class, NullAdapter::class, TagAwareAdapter::class], true)) {
+                } elseif ('namespace' !== $attr || !\in_array($class, [ArrayAdapter::class, NullAdapter::class], true)) {
                     $argument = $tags[0][$attr];
 
                     if ('default_lifetime' === $attr && !is_numeric($argument)) {

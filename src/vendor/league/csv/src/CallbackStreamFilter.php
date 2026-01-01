@@ -25,6 +25,8 @@ use ValueError;
 
 use function array_keys;
 use function in_array;
+use function restore_error_handler;
+use function set_error_handler;
 use function stream_bucket_append;
 use function stream_bucket_make_writeable;
 use function stream_bucket_new;
@@ -76,9 +78,9 @@ final class CallbackStreamFilter extends php_user_filter
             return PSFS_ERR_FATAL;
         }
 
-        Warning::cloak(function () use ($out, $data) {
-            stream_bucket_append($out, stream_bucket_new($this->stream, $data));
-        });
+        set_error_handler(fn (int $errno, string $errstr, string $errfile, int $errline) => true);
+        stream_bucket_append($out, stream_bucket_new($this->stream, $data));
+        restore_error_handler();
 
         return PSFS_PASS_ON;
     }

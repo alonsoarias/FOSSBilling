@@ -37,7 +37,6 @@ enum HttpMethod: string {
     case Propfind = 'PROPFIND';
     case Proppatch = 'PROPPATCH';
     case Put = 'PUT';
-    case Query = 'QUERY';
     case Rebind = 'REBIND';
     case Report = 'REPORT';
     case Search = 'SEARCH';

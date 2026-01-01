@@ -3,6 +3,7 @@
 declare(strict_types=1);
 /**
  * Copyright 2022-2025 FOSSBilling
+ * Copyright 2011-2021 BoxBilling, Inc.
  * SPDX-License-Identifier: Apache-2.0.
  *
  * @copyright FOSSBilling (https://www.fossbilling.org)
@@ -171,12 +172,14 @@ class Reader
     /**
      * Downloads a database file and saves it to the provided location.
      *
+     * @return void
+     *
      * @throws TransportExceptionInterface
      * @throws RedirectionExceptionInterface
      * @throws ClientExceptionInterface
      * @throws ServerExceptionInterface
      */
-    private static function downloadDb(string $path, string $url): void
+    private static function downloadDb(string $path, string $url)
     {
         $httpClient = HttpClient::create();
         $response = $httpClient->request('GET', $url);

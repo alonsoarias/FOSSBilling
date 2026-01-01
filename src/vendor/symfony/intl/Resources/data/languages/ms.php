@@ -331,7 +331,6 @@ return [
         'om' => 'Oromo',
         'or' => 'Odia',
         'os' => 'Ossete',
-        'osa' => 'Osage',
         'pa' => 'Punjabi',
         'pag' => 'Pangasinan',
         'pam' => 'Pampanga',

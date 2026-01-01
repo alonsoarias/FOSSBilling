@@ -15,8 +15,6 @@
 
 namespace Box\Mod\Support\Api;
 
-use FOSSBilling\Validation\Api\RequiredParams;
-
 class Client extends \Api_Abstract
 {
     /**
@@ -28,7 +26,7 @@ class Client extends \Api_Abstract
      *
      * @return array
      */
-    public function ticket_get_list(array $data): array
+    public function ticket_get_list($data)
     {
         $identity = $this->getIdentity();
         $data['client_id'] = $identity->id;
@@ -49,9 +47,13 @@ class Client extends \Api_Abstract
      *
      * @return array
      */
-    #[RequiredParams(['id' => 'Ticket ID was not passed'])]
-    public function ticket_get(array $data): array
+    public function ticket_get($data)
     {
+        $required = [
+            'id' => 'Ticket id required',
+        ];
+        $this->di['validator']->checkRequiredParamsForArray($required, $data);
+
         $ticket = $this->getService()->findOneByClient($this->getIdentity(), $data['id']);
 
         return $this->getService()->toApiArray($ticket);
@@ -62,7 +64,7 @@ class Client extends \Api_Abstract
      *
      * @return array
      */
-    public function helpdesk_get_pairs(): array
+    public function helpdesk_get_pairs()
     {
         return $this->getService()->helpdeskGetPairs();
     }
@@ -78,15 +80,16 @@ class Client extends \Api_Abstract
      *
      * @return int $id - ticket id
      */
-    #[RequiredParams([
-        'content' => 'Ticket content required',
-        'subject' => 'Ticket subject required',
-        'support_helpdesk_id' => 'Ticket support_helpdesk_id required',
-    ])]
-    public function ticket_create(array $data): int
+    public function ticket_create($data)
     {
-        // Sanitize content to prevent XSS attacks
-        $data['content'] = \FOSSBilling\Tools::sanitizeContent($data['content'], true);
+        $required = [
+            'content' => 'Ticket content required',
+            'subject' => 'Ticket subject required',
+            'support_helpdesk_id' => 'Ticket support_helpdesk_id required',
+        ];
+        $this->di['validator']->checkRequiredParamsForArray($required, $data);
+
+        $data['content'] = preg_replace('/javascript:\/\/|\%0(d|a)/i', '', $data['content']);
 
         $helpdesk = $this->di['db']->getExistingModelById('SupportHelpdesk', $data['support_helpdesk_id'], 'Helpdesk invalid');
 
@@ -97,12 +100,18 @@ class Client extends \Api_Abstract
 
     /**
      * Add new conversation message to ticket. Ticket will be reopened if closed.
+     *
+     * @return bool
      */
-    #[RequiredParams(['id' => 'Ticket ID was not passed', 'content' => 'Ticket content required'])]
-    public function ticket_reply(array $data): bool
+    public function ticket_reply($data)
     {
-        // Sanitize content to prevent XSS attacks
-        $data['content'] = \FOSSBilling\Tools::sanitizeContent($data['content'], true);
+        $required = [
+            'id' => 'Ticket ID required',
+            'content' => 'Ticket content required',
+        ];
+        $this->di['validator']->checkRequiredParamsForArray($required, $data);
+
+        $data['content'] = preg_replace('/javascript:\/\/|\%0(d|a)/i', '', $data['content']);
 
         $client = $this->getIdentity();
 
@@ -130,9 +139,13 @@ class Client extends \Api_Abstract
      *
      * @return bool
      */
-    #[RequiredParams(['id' => 'Ticket ID was not passed'])]
-    public function ticket_close(array $data): bool
+    public function ticket_close($data)
     {
+        $required = [
+            'id' => 'Ticket ID required',
+        ];
+        $this->di['validator']->checkRequiredParamsForArray($required, $data);
+
         $client = $this->getIdentity();
 
         $ticket = $this->getService()->findOneByClient($client, $data['id']);

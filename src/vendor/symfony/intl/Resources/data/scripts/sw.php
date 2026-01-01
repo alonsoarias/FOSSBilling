@@ -27,6 +27,7 @@ return [
         'Hebr' => 'Kiebrania',
         'Hira' => 'Hiragana',
         'Hrkt' => 'Hati za Kijapani',
+        'Jamo' => 'Jamo',
         'Jpan' => 'Kijapani',
         'Kana' => 'Kikatakana',
         'Khmr' => 'Kikambodia',

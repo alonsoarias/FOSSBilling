@@ -35,7 +35,7 @@ class Service implements InjectionAwareInterface
         return $this->di;
     }
 
-    public function changeAdminPassword(\Model_Admin $admin, $new_password): bool
+    public function changeAdminPassword(\Model_Admin $admin, $new_password)
     {
         $event_params = [];
         $event_params['password'] = $new_password;
@@ -55,7 +55,7 @@ class Service implements InjectionAwareInterface
         return true;
     }
 
-    public function generateNewApiKey(\Model_Admin $admin): bool
+    public function generateNewApiKey(\Model_Admin $admin)
     {
         $event_params = [];
         $event_params['id'] = $admin->id;
@@ -72,7 +72,7 @@ class Service implements InjectionAwareInterface
         return true;
     }
 
-    public function updateAdmin(\Model_Admin $admin, array $data): bool
+    public function updateAdmin(\Model_Admin $admin, array $data)
     {
         $event_params = $data;
         $event_params['id'] = $admin->id;
@@ -93,7 +93,7 @@ class Service implements InjectionAwareInterface
         return true;
     }
 
-    public function getAdminIdentityArray(\Model_Admin $identity): array
+    public function getAdminIdentityArray(\Model_Admin $identity)
     {
         return [
             'id' => $identity->id,
@@ -109,7 +109,7 @@ class Service implements InjectionAwareInterface
         ];
     }
 
-    public function updateClient(\Model_Client $client, array $data = []): bool
+    public function updateClient(\Model_Client $client, array $data = [])
     {
         $event_params = $data;
         $event_params['id'] = $client->id;
@@ -139,8 +139,19 @@ class Service implements InjectionAwareInterface
 
         $client->first_name = $data['first_name'] ?? $client->first_name;
         $client->last_name = $data['last_name'] ?? $client->last_name;
-        $client->gender = ClientValidator::validateGender($data['gender'] ?? $client->gender);
-        $client->birthday = ClientValidator::validateBirthday($data['birthday'] ?? $client->birthday);
+        $client->gender = $data['gender'] ?? $client->gender;
+
+        $birthday = $data['birthday'] ?? null;
+
+        // Special handling for the birthday field
+        if (is_string($birthday) && strlen(trim($birthday)) === 0) {
+            $birthday = null;
+        } elseif ($birthday !== null && strtotime($birthday) === false) {
+            throw new \FOSSBilling\InformationException('Invalid birthdate value');
+        }
+
+        $client->birthday = $birthday ?? $client->birthday;
+
         $client->company = $data['company'] ?? $client->company;
         $client->company_vat = $data['company_vat'] ?? $client->company_vat;
         $client->company_number = $data['company_number'] ?? $client->company_number;
@@ -157,9 +168,7 @@ class Service implements InjectionAwareInterface
         $client->document_nr = $data['document_nr'] ?? $client->document_nr;
 
         if (isset($client->document_nr)) {
-            $client->document_type = ClientValidator::validateDocument(
-                $data['document_type'] ?? \Model_Client::DOC_PASSPORT,
-            );
+            $client->document_type = $data['document_type'] ?? 'passport';
         }
         $client->lang = $data['lang'] ?? $client->lang;
         $client->notes = $data['notes'] ?? $client->notes;
@@ -197,7 +206,7 @@ class Service implements InjectionAwareInterface
         return $client->api_token;
     }
 
-    public function changeClientPassword(\Model_Client $client, $new_password): bool
+    public function changeClientPassword(\Model_Client $client, $new_password)
     {
         $event_params = [];
         $event_params['password'] = $new_password;
@@ -214,7 +223,7 @@ class Service implements InjectionAwareInterface
         return true;
     }
 
-    public function logoutClient(): bool
+    public function logoutClient()
     {
         $this->di['session']->destroy('client');
         $this->di['logger']->info('Logged out');
@@ -271,7 +280,7 @@ class Service implements InjectionAwareInterface
     private function deleteSessionIfMatching(array $session, string $type, int $id): void
     {
         // Decode the data for the current session and then verify it is for the selected type
-        $data = base64_decode((string) $session['content']);
+        $data = base64_decode($session['content']);
         $stringStart = ($type === 'admin') ? 'admin|' : 'client_id|';
         if (!str_starts_with($data, $stringStart)) {
             return;

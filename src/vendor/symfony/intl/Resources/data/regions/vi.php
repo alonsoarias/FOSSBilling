@@ -1,9 +1,6 @@
 <?php
 
 return [
-    'UserAssignedNames' => [
-        'XK' => 'Kosovo',
-    ],
     'Names' => [
         'AD' => 'Andorra',
         'AE' => 'Các Tiểu Vương quốc Ả Rập Thống nhất',
@@ -17,7 +14,7 @@ return [
         'AR' => 'Argentina',
         'AS' => 'Samoa thuộc Mỹ',
         'AT' => 'Áo',
-        'AU' => 'Úc',
+        'AU' => 'Australia',
         'AW' => 'Aruba',
         'AX' => 'Quần đảo Åland',
         'AZ' => 'Azerbaijan',

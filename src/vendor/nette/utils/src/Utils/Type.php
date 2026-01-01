@@ -10,13 +10,14 @@ declare(strict_types=1);
 namespace Nette\Utils;
 
 use Nette;
-use function array_map, array_search, array_splice, count, explode, implode, is_a, is_resource, is_string, strcasecmp, strtolower, substr, trim;
+use function array_map, array_search, array_splice, count, explode, implode, is_a, is_string, strcasecmp, strtolower, substr, trim;
+use const PHP_VERSION_ID;
 
 
 /**
  * PHP type reflection.
  */
-final readonly class Type
+final class Type
 {
 	/** @var array<int, string|self> */
 	private array $types;
@@ -33,7 +34,7 @@ final readonly class Type
 	): ?self
 	{
 		$type = $reflection instanceof \ReflectionFunctionAbstract
-			? $reflection->getReturnType() ?? ($reflection instanceof \ReflectionMethod ? $reflection->getTentativeReturnType() : null)
+			? $reflection->getReturnType() ?? (PHP_VERSION_ID >= 80100 && $reflection instanceof \ReflectionMethod ? $reflection->getTentativeReturnType() : null)
 			: $reflection->getType();
 
 		return $type ? self::fromReflectionType($type, $reflection, asObject: true) : null;
@@ -86,23 +87,6 @@ final readonly class Type
 
 
 	/**
-	 * Creates a Type object based on the actual type of value.
-	 */
-	public static function fromValue(mixed $value): self
-	{
-		$type = get_debug_type($value);
-		if (is_resource($value)) {
-			$type = 'mixed';
-		} elseif (str_ends_with($type, '@anonymous')) {
-			$parent = substr($type, 0, -10);
-			$type = $parent === 'class' ? 'object' : $parent;
-		}
-
-		return new self([$type]);
-	}
-
-
-	/**
 	 * Resolves 'self', 'static' and 'parent' to the actual class name.
 	 */
 	public static function resolve(
@@ -151,23 +135,6 @@ final readonly class Type
 			$res[] = $type instanceof self && $multi ? "($type)" : $type;
 		}
 		return implode($this->kind, $res);
-	}
-
-
-	/**
-	 * Returns a type that accepts both the current type and the given type.
-	 */
-	public function with(string|self $type): self
-	{
-		$type = is_string($type) ? self::fromString($type) : $type;
-		return match (true) {
-			$this->allows($type) => $this,
-			$type->allows($this) => $type,
-			default => new self(array_unique(
-				array_merge($this->isIntersection() ? [$this] : $this->types, $type->isIntersection() ? [$type] : $type->types),
-				SORT_REGULAR,
-			), '|'),
-		};
 	}
 
 
@@ -229,7 +196,7 @@ final readonly class Type
 	}
 
 
-	#[\Deprecated('use isSimple()')]
+	/** @deprecated use isSimple() */
 	public function isSingle(): bool
 	{
 		return $this->simple;
@@ -266,36 +233,36 @@ final readonly class Type
 	/**
 	 * Verifies type compatibility. For example, it checks if a value of a certain type could be passed as a parameter.
 	 */
-	public function allows(string|self $type): bool
+	public function allows(string $subtype): bool
 	{
 		if ($this->types === ['mixed']) {
 			return true;
 		}
 
-		$type = is_string($type) ? self::fromString($type) : $type;
-		return $type->isUnion()
-			? Arrays::every($type->types, fn($t) => $this->allowsAny($t instanceof self ? $t->types : [$t]))
-			: $this->allowsAny($type->types);
+		$subtype = self::fromString($subtype);
+		return $subtype->isUnion()
+			? Arrays::every($subtype->types, fn($t) => $this->allows2($t instanceof self ? $t->types : [$t]))
+			: $this->allows2($subtype->types);
 	}
 
 
-	private function allowsAny(array $givenTypes): bool
+	private function allows2(array $subtypes): bool
 	{
 		return $this->isUnion()
-			? Arrays::some($this->types, fn($t) => $this->allowsAll($t instanceof self ? $t->types : [$t], $givenTypes))
-			: $this->allowsAll($this->types, $givenTypes);
+			? Arrays::some($this->types, fn($t) => $this->allows3($t instanceof self ? $t->types : [$t], $subtypes))
+			: $this->allows3($this->types, $subtypes);
 	}
 
 
-	private function allowsAll(array $ourTypes, array $givenTypes): bool
+	private function allows3(array $types, array $subtypes): bool
 	{
 		return Arrays::every(
-			$ourTypes,
-			fn($ourType) => Arrays::some(
-				$givenTypes,
-				fn($givenType) => Validators::isBuiltinType($ourType)
-					? strcasecmp($ourType, $givenType) === 0
-					: is_a($givenType, $ourType, allow_string: true),
+			$types,
+			fn($type) => Arrays::some(
+				$subtypes,
+				fn($subtype) => Validators::isBuiltinType($type)
+					? strcasecmp($type, $subtype) === 0
+					: is_a($subtype, $type, allow_string: true),
 			),
 		);
 	}

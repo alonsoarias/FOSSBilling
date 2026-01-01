@@ -29,7 +29,6 @@ return [
         'ay' => 'Èdè Amara',
         'az' => 'Èdè Asabaijani',
         'ba' => 'Èdè Bashiri',
-        'bal' => 'Èdè Belúṣì',
         'ban' => 'Èdè Balini',
         'bas' => 'Èdè Basaa',
         'be' => 'Èdè Belarusi',
@@ -423,6 +422,7 @@ return [
         'zza' => 'Èdè Sasa',
     ],
     'LocalizedNames' => [
+        'ar_001' => 'Èdè Lárúbáwá (Agbáyé)',
         'de_AT' => 'Èdè Jámánì (Ọ́síríà )',
         'de_CH' => 'Èdè Ilẹ̀ Jámánì (Orílẹ́ède swítsàlandì)',
         'en_AU' => 'Èdè Gẹ̀ẹ́sì (órílẹ̀-èdè Ọsirélíà)',

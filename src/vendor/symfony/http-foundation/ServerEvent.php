@@ -132,12 +132,14 @@ class ServerEvent implements \IteratorAggregate
         }
         yield $head;
 
-        if (is_iterable($this->data)) {
-            foreach ($this->data as $data) {
-                yield \sprintf('data: %s', $data)."\n";
+        if ($this->data) {
+            if (is_iterable($this->data)) {
+                foreach ($this->data as $data) {
+                    yield \sprintf('data: %s', $data)."\n";
+                }
+            } else {
+                yield \sprintf('data: %s', $this->data)."\n";
             }
-        } elseif ('' !== $this->data) {
-            yield \sprintf('data: %s', $this->data)."\n";
         }
 
         yield "\n";

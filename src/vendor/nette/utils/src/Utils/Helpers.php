@@ -106,16 +106,4 @@ class Helpers
 			default => throw new Nette\InvalidArgumentException("Unknown operator '$operator'"),
 		};
 	}
-
-
-	/**
-	 * Splits a class name into namespace and short class name.
-	 * @return array{string, string}
-	 */
-	public static function splitClassName(string $name): array
-	{
-		return ($pos = strrpos($name, '\\')) === false
-			? ['', $name]
-			: [substr($name, 0, $pos), substr($name, $pos + 1)];
-	}
 }

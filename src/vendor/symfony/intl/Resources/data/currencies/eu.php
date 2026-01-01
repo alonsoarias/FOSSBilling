@@ -1086,10 +1086,6 @@ return [
             'EC$',
             'dolar ekikaribearra',
         ],
-        'XCG' => [
-            'Cg.',
-            'florin karibetarra',
-        ],
         'XEU' => [
             'XEU',
             'Europako dibisa-unitatea',
@@ -1165,10 +1161,6 @@ return [
         'ZWD' => [
             'ZWD',
             'dolar zimbabwetarra (1980–2008)',
-        ],
-        'ZWG' => [
-            'ZWG',
-            'urre zimbabwetarra',
         ],
         'ZWL' => [
             'ZWL',

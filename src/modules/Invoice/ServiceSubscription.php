@@ -51,7 +51,7 @@ class ServiceSubscription implements InjectionAwareInterface
         return $newId;
     }
 
-    public function update(\Model_Subscription $model, array $data): bool
+    public function update(\Model_Subscription $model, array $data)
     {
         $model->status = $data['status'] ?? $model->status;
         $model->sid = $data['sid'] ?? $model->sid;
@@ -97,7 +97,7 @@ class ServiceSubscription implements InjectionAwareInterface
         return $result;
     }
 
-    public function delete(\Model_Subscription $model): bool
+    public function delete(\Model_Subscription $model)
     {
         $id = $model->id;
         $this->di['db']->trash($model);
@@ -109,7 +109,7 @@ class ServiceSubscription implements InjectionAwareInterface
         return true;
     }
 
-    public function getSearchQuery(array $data): array
+    public function getSearchQuery(array $data)
     {
         $sql = 'SELECT *
             FROM subscription
@@ -183,7 +183,7 @@ class ServiceSubscription implements InjectionAwareInterface
         return [$sql, $params];
     }
 
-    public function isSubscribable($invoice_id): bool
+    public function isSubscribable($invoice_id)
     {
         $query = 'SELECT COUNT(id) as cc
             FROM invoice_item
@@ -229,7 +229,7 @@ class ServiceSubscription implements InjectionAwareInterface
         return $this->di['db']->getCell($query, ['id' => $invoice->id]);
     }
 
-    public function unsubscribe(\Model_Subscription $model): void
+    public function unsubscribe(\Model_Subscription $model)
     {
         $model->status = 'canceled';
         $model->updated_at = date('Y-m-d H:i:s');

@@ -30,10 +30,14 @@ use function is_resource;
 use function mb_convert_encoding;
 use function mb_list_encodings;
 use function preg_match;
+use function restore_error_handler;
+use function set_error_handler;
 use function sprintf;
 use function stream_bucket_append;
 use function stream_bucket_make_writeable;
 use function stream_bucket_new;
+use function stream_filter_append;
+use function stream_filter_prepend;
 use function stream_filter_register;
 use function stream_get_filters;
 use function strtolower;
@@ -146,9 +150,10 @@ class CharsetConverter extends php_user_filter
     {
         self::register();
         $filtername = self::getFiltername($input_encoding, $output_encoding);
+        set_error_handler(fn (int $errno, string $errstr, string $errfile, int $errline) => true);
+        $filter = stream_filter_append(self::filterStream($stream), $filtername, $mode);
+        restore_error_handler();
 
-        /** @var resource|false $filter */
-        $filter = Warning::cloak(stream_filter_append(...), self::filterStream($stream), $filtername, $mode);
         is_resource($filter) || throw new RuntimeException('Could not append the registered stream filter: '.$filtername);
 
         return $filter;
@@ -165,9 +170,10 @@ class CharsetConverter extends php_user_filter
     {
         self::register();
         $filtername = self::getFiltername($input_encoding, $output_encoding);
+        set_error_handler(fn (int $errno, string $errstr, string $errfile, int $errline) => true);
+        $filter = stream_filter_prepend(self::filterStream($stream), $filtername, $mode);
+        restore_error_handler();
 
-        /** @var resource|false $filter */
-        $filter = Warning::cloak(stream_filter_prepend(...), self::filterStream($stream), $filtername, $mode);
         is_resource($filter) || throw new RuntimeException('Could not append the registered stream filter: '.$filtername);
 
         return $filter;
@@ -265,17 +271,17 @@ class CharsetConverter extends php_user_filter
         }
 
         try {
-            Warning::cloak(function () use ($inputBuffer, $out) {
-                $outputBuffer = (string) mb_convert_encoding($inputBuffer, $this->output_encoding, $this->input_encoding);
-                $streamBucket = stream_bucket_new($this->stream, $outputBuffer);
+            set_error_handler(fn (int $errno, string $errstr, string $errfile, int $errline) => true);
+            $outputBuffer = (string) mb_convert_encoding($inputBuffer, $this->output_encoding, $this->input_encoding);
+            $streamBucket = stream_bucket_new($this->stream, $outputBuffer);
+            stream_bucket_append($out, $streamBucket);
 
-                stream_bucket_append($out, $streamBucket);
-            });
             return PSFS_PASS_ON;
         } catch (Throwable) {
             return PSFS_ERR_FATAL;
         } finally {
             $this->buffer = '';
+            restore_error_handler();
         }
     }
 

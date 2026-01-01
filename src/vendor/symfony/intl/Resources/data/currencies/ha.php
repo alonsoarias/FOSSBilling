@@ -4,7 +4,7 @@ return [
     'Names' => [
         'AED' => [
             'AED',
-            'Dirham na Haɗaɗɗiyar Daular Larabawa',
+            'Kuɗin Haɗaɗɗiyar Daular Larabawa',
         ],
         'AFN' => [
             'AFN',
@@ -12,11 +12,11 @@ return [
         ],
         'ALL' => [
             'ALL',
-            'Lek na Albania',
+            'Kuɗin Albania',
         ],
         'AMD' => [
             'AMD',
-            'Dram na Armeniya',
+            'Kuɗin Armenia',
         ],
         'ANG' => [
             'ANG',
@@ -24,7 +24,7 @@ return [
         ],
         'AOA' => [
             'AOA',
-            'Kwanza na Angola',
+            'Kuɗin Angola',
         ],
         'ARS' => [
             'ARS',
@@ -40,7 +40,7 @@ return [
         ],
         'AZN' => [
             'AZN',
-            'Manat na Azebaijan',
+            'Kuɗin Azerbaijani',
         ],
         'BAM' => [
             'BAM',
@@ -56,15 +56,15 @@ return [
         ],
         'BGN' => [
             'BGN',
-            'Lev na Bulgeria',
+            'Kuɗin Bulgeria',
         ],
         'BHD' => [
             'BHD',
-            'Zinaren Bahrain',
+            'Kuɗin Baharan',
         ],
         'BIF' => [
             'BIF',
-            'Franc na Burundi',
+            'Kuɗin Burundi',
         ],
         'BMD' => [
             'BMD',
@@ -92,11 +92,11 @@ return [
         ],
         'BWP' => [
             'BWP',
-            'Pula na Batsuwana',
+            'Kuɗin Baswana',
         ],
         'BYN' => [
             'BYN',
-            'Ruble na Belarus',
+            'Kuɗin Belarus',
         ],
         'BZD' => [
             'BZD',
@@ -108,11 +108,11 @@ return [
         ],
         'CDF' => [
             'CDF',
-            'Franc na Kongo',
+            'Kuɗin Kongo',
         ],
         'CHF' => [
             'CHF',
-            'Franc na Suwizilan',
+            'Kuɗin Suwizalan',
         ],
         'CLP' => [
             'CLP',
@@ -144,15 +144,15 @@ return [
         ],
         'CVE' => [
             'CVE',
-            'Escudo na Cape Verde',
+            'Kuɗin Tsibiran Kap Barde',
         ],
         'CZK' => [
             'CZK',
-            'Koruna na Czech',
+            'Kuɗin Czech',
         ],
         'DJF' => [
             'DJF',
-            'Franc na Djibouti',
+            'Kuɗin Jibuti',
         ],
         'DKK' => [
             'DKK',
@@ -164,11 +164,11 @@ return [
         ],
         'DZD' => [
             'DZD',
-            'Dinarin Aljeriya',
+            'Kuɗin Aljeriya',
         ],
         'EGP' => [
             'EGP',
-            'Fam na Masar',
+            'Fam kin Masar',
         ],
         'ERN' => [
             'ERN',
@@ -176,7 +176,7 @@ return [
         ],
         'ETB' => [
             'ETB',
-            'Birr na Habasha',
+            'Kuɗin Habasha',
         ],
         'EUR' => [
             '€',
@@ -196,7 +196,7 @@ return [
         ],
         'GEL' => [
             'GEL',
-            'Lari na Georgia',
+            'Kuɗin Georgia',
         ],
         'GHC' => [
             'GHC',
@@ -208,15 +208,15 @@ return [
         ],
         'GIP' => [
             'GIP',
-            'Fam na Gibraltar',
+            'Kuɗin Gibraltal',
         ],
         'GMD' => [
             'GMD',
-            'Dalasi na Gambiya',
+            'Kuɗin Gambiya',
         ],
         'GNF' => [
             'GNF',
-            'Franc na Guinea',
+            'Kuɗin Guinea',
         ],
         'GNS' => [
             'GNS',
@@ -240,7 +240,7 @@ return [
         ],
         'HRK' => [
             'HRK',
-            'Kuna na Croatia',
+            'Kuɗin Croatia',
         ],
         'HTG' => [
             'HTG',
@@ -248,7 +248,7 @@ return [
         ],
         'HUF' => [
             'HUF',
-            'Forint na Hungary',
+            'Kuɗin Hungary',
         ],
         'IDR' => [
             'IDR',
@@ -256,11 +256,11 @@ return [
         ],
         'ILS' => [
             '₪',
-            'Sabon shekel na Israʼila',
+            'Sabbin Kuɗin Israʼila',
         ],
         'INR' => [
             '₹',
-            'Rupee na ƙasar Indiya',
+            'Kuɗin Indiya',
         ],
         'IQD' => [
             'IQD',
@@ -300,7 +300,7 @@ return [
         ],
         'KMF' => [
             'KMF',
-            'Franc na Kwamoras',
+            'Kuɗin Kwamoras',
         ],
         'KPW' => [
             'KPW',
@@ -324,11 +324,11 @@ return [
         ],
         'LAK' => [
             'LAK',
-            'Kip na ƙasar Laos',
+            'Kuɗin Laos',
         ],
         'LBP' => [
             'LBP',
-            'Fam na Lebanon',
+            'Kuɗin Lebanon',
         ],
         'LKR' => [
             'LKR',
@@ -340,23 +340,23 @@ return [
         ],
         'LSL' => [
             'LSL',
-            'Loti na Lesoto',
+            'Kuɗin Lesoto',
         ],
         'LYD' => [
             'LYD',
-            'Dinarin Libya',
+            'Kuɗin Libiya',
         ],
         'MAD' => [
             'MAD',
-            'Dirhamin Moroko',
+            'Kuɗin Maroko',
         ],
         'MDL' => [
             'MDL',
-            'Leu na Moldova',
+            'Kuɗaɗen Moldova',
         ],
         'MGA' => [
             'MGA',
-            'Ariary na Malagasy',
+            'Kuɗin Madagaskar',
         ],
         'MKD' => [
             'MKD',
@@ -364,7 +364,7 @@ return [
         ],
         'MMK' => [
             'MMK',
-            'Kyat na ƙasar Myanmar',
+            'Kuɗin Myanmar',
         ],
         'MNT' => [
             'MNT',
@@ -380,19 +380,19 @@ return [
         ],
         'MRU' => [
             'MRU',
-            'Ouguiya na Moritaniya',
+            'Kuɗin Moritaniya',
         ],
         'MUR' => [
             'MUR',
-            'Rupee na Moritus',
+            'Kuɗin Moritus',
         ],
         'MVR' => [
             'MVR',
-            'Rufiyaa na ƙasar Maldives',
+            'Rufiyaa na ɓasar Maldives',
         ],
         'MWK' => [
             'MWK',
-            'Kwacha na Malawi',
+            'Kuɗin Malawi',
         ],
         'MXN' => [
             'MX$',
@@ -400,7 +400,7 @@ return [
         ],
         'MYR' => [
             'MYR',
-            'Ringgit na ƙasar Malaysia',
+            'Kuɗin Malaysia',
         ],
         'MZM' => [
             'MZM',
@@ -448,11 +448,11 @@ return [
         ],
         'PGK' => [
             'PGK',
-            'Kina na ƙasar Papua New Guinea',
+            'Kina na ƙasar Papua Sabon Guinea',
         ],
         'PHP' => [
             '₱',
-            'Peso na ƙasar Philippine',
+            'Kuɗin Philippine',
         ],
         'PKR' => [
             'PKR',
@@ -460,7 +460,7 @@ return [
         ],
         'PLN' => [
             'PLN',
-            'Zloty na Polan',
+            'Kuɗin Polan',
         ],
         'PYG' => [
             'PYG',
@@ -472,7 +472,7 @@ return [
         ],
         'RON' => [
             'RON',
-            'Leu na Romania',
+            'Kuɗin Romania',
         ],
         'RSD' => [
             'RSD',
@@ -484,19 +484,19 @@ return [
         ],
         'RWF' => [
             'RWF',
-            'Franc na Ruwanda',
+            'Kuɗin Ruwanda',
         ],
         'SAR' => [
             'SAR',
-            'Riyal ɗin Saudiyya',
+            'Riyal',
         ],
         'SBD' => [
             'SBD',
-            'Dalar Tsibiran Solomon',
+            'Dalar Tsibirai na Solomon',
         ],
         'SCR' => [
             'SCR',
-            'Rupee na Seychellois',
+            'Kuɗin Saishal',
         ],
         'SDG' => [
             'SDG',
@@ -512,15 +512,15 @@ return [
         ],
         'SHP' => [
             'SHP',
-            'Fam na San Helena',
+            'Fam kin San Helena',
         ],
         'SLE' => [
             'SLE',
-            'Leone na Saliyo',
+            'Kuɗin Salewo',
         ],
         'SLL' => [
             'SLL',
-            'Leone na Saliyo (1964—2022)',
+            'Kuɗin Salewo (1964—2022)',
         ],
         'SOS' => [
             'SOS',
@@ -540,15 +540,15 @@ return [
         ],
         'STN' => [
             'STN',
-            'Dobra na Sawo Tome',
+            'Kuɗin Sawo Tome da Paransip',
         ],
         'SYP' => [
             'SYP',
-            'Fam ɗin Siriya',
+            'Kuɗin Siriya',
         ],
         'SZL' => [
             'SZL',
-            'Emalangeni na Swazi',
+            'Kuɗin Lilangeni',
         ],
         'THB' => [
             'THB',
@@ -564,7 +564,7 @@ return [
         ],
         'TND' => [
             'TND',
-            'Dinarin Tunusiya',
+            'Kuɗin Tunisiya',
         ],
         'TOP' => [
             'TOP',
@@ -572,7 +572,7 @@ return [
         ],
         'TRY' => [
             'TRY',
-            'Lira na Turkiyya',
+            'Kuɗin Turkiyya',
         ],
         'TTD' => [
             'TTD',
@@ -588,11 +588,11 @@ return [
         ],
         'UAH' => [
             'UAH',
-            'Hryvnia na Ukrain',
+            'Kudin Ukrainian',
         ],
         'UGX' => [
             'UGX',
-            'Sulen Yuganda',
+            'Sule Yuganda',
         ],
         'USD' => [
             '$',
@@ -612,7 +612,7 @@ return [
         ],
         'VND' => [
             '₫',
-            'Dong na ƙasar Vietnam',
+            'Kuɗin Vietnam',
         ],
         'VUV' => [
             'VUV',
@@ -630,10 +630,6 @@ return [
             'EC$',
             'Dalar Gabashin Karebiyan',
         ],
-        'XCG' => [
-            'Cg.',
-            'Guilder na Caribbean',
-        ],
         'XOF' => [
             'F CFA',
             'Kuɗin Sefa na Afirka Ta Yamma',
@@ -648,7 +644,7 @@ return [
         ],
         'ZAR' => [
             'ZAR',
-            'Rand na Afirka ta Kudu',
+            'Kuɗin Afirka Ta Kudu',
         ],
         'ZMK' => [
             'ZMK',
@@ -656,15 +652,11 @@ return [
         ],
         'ZMW' => [
             'ZMW',
-            'Kwacha na Zambiya',
+            'Kuɗin Zambiya',
         ],
         'ZWD' => [
             'ZWD',
             'Dalar zimbabuwe',
-        ],
-        'ZWG' => [
-            'ZWG',
-            'Zinaren Zimbabwe',
         ],
     ],
 ];

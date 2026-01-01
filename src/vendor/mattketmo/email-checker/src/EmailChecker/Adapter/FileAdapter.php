@@ -20,9 +20,6 @@ use EmailChecker\Utilities;
  */
 class FileAdapter implements AdapterInterface
 {
-    /**
-     * @var string[]
-     */
     protected $domains;
 
     /**
@@ -30,16 +27,18 @@ class FileAdapter implements AdapterInterface
      */
     public function __construct($filename)
     {
-        $content = file_get_contents($filename);
-        if (false === $content) {
+        if (!file_exists($filename)) {
             throw new \InvalidArgumentException(sprintf('File "%s" not found', $filename));
         }
 
-        $this->domains = Utilities::parseLines($content);
+        $this->domains = Utilities::parseLines(file_get_contents($filename));
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function isThrowawayDomain($domain)
     {
-        return in_array($domain, $this->domains, true);
+        return in_array($domain, $this->domains);
     }
 }

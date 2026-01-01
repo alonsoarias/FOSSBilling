@@ -25,7 +25,7 @@ class Client implements \FOSSBilling\InjectionAwareInterface
         return $this->di;
     }
 
-    public function register(\Box_App &$app): void
+    public function register(\Box_App &$app)
     {
         $app->get('/client/reset-password-confirm/:hash', 'get_reset_password_confirm', ['hash' => '[a-z0-9]+'], static::class);
         $app->get('/client', 'get_client_index', [], static::class);
@@ -34,7 +34,7 @@ class Client implements \FOSSBilling\InjectionAwareInterface
         $app->get('/client/confirm-email/:hash', 'get_client_confirmation', ['page' => '[a-z0-9-]+'], static::class);
     }
 
-    public function get_client_index(\Box_App $app): string
+    public function get_client_index(\Box_App $app)
     {
         $this->di['is_client_logged'];
 
@@ -57,7 +57,7 @@ class Client implements \FOSSBilling\InjectionAwareInterface
         $app->redirect('/');
     }
 
-    public function get_client_page(\Box_App $app, $page): string
+    public function get_client_page(\Box_App $app, $page)
     {
         $this->di['is_client_logged'];
         $template = 'mod_client_' . $page;
@@ -65,7 +65,7 @@ class Client implements \FOSSBilling\InjectionAwareInterface
         return $app->render($template);
     }
 
-    public function get_reset_password_confirm(\Box_App $app, $hash): string
+    public function get_reset_password_confirm(\Box_App $app, $hash)
     {
         $service = $this->di['mod_service']('client');
         $this->di['events_manager']->fire(['event' => 'onBeforePasswordResetClient']);

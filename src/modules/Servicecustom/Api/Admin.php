@@ -18,8 +18,10 @@ class Admin extends \Api_Abstract
 {
     /**
      * Update custom service configuration.
+     *
+     * @return bool
      */
-    public function update($data): bool
+    public function update($data)
     {
         if (!isset($data['order_id'])) {
             throw new \FOSSBilling\Exception('Order ID is required');

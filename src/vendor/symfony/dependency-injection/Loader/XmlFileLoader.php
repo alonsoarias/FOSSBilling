@@ -34,8 +34,6 @@ use Symfony\Component\ExpressionLanguage\Expression;
  * XmlFileLoader loads XML files service definitions.
  *
  * @author Fabien Potencier <fabien@symfony.com>
- *
- * @deprecated since Symfony 7.4, use another loader instead
  */
 class XmlFileLoader extends FileLoader
 {
@@ -45,8 +43,6 @@ class XmlFileLoader extends FileLoader
 
     public function load(mixed $resource, ?string $type = null): mixed
     {
-        trigger_deprecation('symfony/dependency-injection', '7.4', 'XML configuration format is deprecated, use YAML or PHP instead.');
-
         $path = $this->locator->locate($resource);
 
         $xml = $this->parseFileToDOM($path);
@@ -55,17 +51,18 @@ class XmlFileLoader extends FileLoader
 
         $this->loadXml($xml, $path);
 
-        $xpath = new \DOMXPath($xml);
-        $xpath->registerNamespace('container', self::NS);
-
         if ($this->env) {
+            $xpath = new \DOMXPath($xml);
+            $xpath->registerNamespace('container', self::NS);
             foreach ($xpath->query(\sprintf('//container:when[@env="%s"]', $this->env)) ?: [] as $root) {
-                $this->loadXml($xml, $path, $root);
+                $env = $this->env;
+                $this->env = null;
+                try {
+                    $this->loadXml($xml, $path, $root);
+                } finally {
+                    $this->env = $env;
+                }
             }
-        }
-        foreach ($xpath->query('//container:when') ?: [] as $root) {
-            $knownEnvs = $this->container->hasParameter('.container.known_envs') ? array_flip($this->container->getParameter('.container.known_envs')) : [];
-            $this->container->setParameter('.container.known_envs', array_keys($knownEnvs + [$root->getAttribute('env') => true]));
         }
 
         return null;
@@ -349,31 +346,28 @@ class XmlFileLoader extends FileLoader
             );
         }
 
-        foreach (['tag', 'resource-tag'] as $type) {
-            foreach ($this->getChildren($service, $type) as $tag) {
-                $tagNameComesFromAttribute = $tag->childElementCount || '' === $tag->nodeValue;
-                if ('' === $tagName = $tagNameComesFromAttribute ? $tag->getAttribute('name') : $tag->nodeValue) {
-                    throw new InvalidArgumentException(\sprintf('The tag name for service "%s" in "%s" must be a non-empty string.', $service->getAttribute('id'), $file));
-                }
+        $tags = $this->getChildren($service, 'tag');
 
-                $parameters = $this->getTagAttributes($tag, \sprintf('The attribute name of tag "%s" for service "%s" in %s must be a non-empty string.', $tagName, $service->getAttribute('id'), $file));
-                foreach ($tag->attributes as $name => $node) {
-                    if ($tagNameComesFromAttribute && 'name' === $name) {
-                        continue;
-                    }
-
-                    if (str_contains($name, '-') && !str_contains($name, '_') && !\array_key_exists($normalizedName = str_replace('-', '_', $name), $parameters)) {
-                        $parameters[$normalizedName] = XmlUtils::phpize($node->nodeValue);
-                    }
-                    // keep not normalized key
-                    $parameters[$name] = XmlUtils::phpize($node->nodeValue);
-                }
-
-                match ($type) {
-                    'tag' => $definition->addTag($tagName, $parameters),
-                    'resource-tag' => $definition->addResourceTag($tagName, $parameters),
-                };
+        foreach ($tags as $tag) {
+            $tagNameComesFromAttribute = $tag->childElementCount || '' === $tag->nodeValue;
+            if ('' === $tagName = $tagNameComesFromAttribute ? $tag->getAttribute('name') : $tag->nodeValue) {
+                throw new InvalidArgumentException(\sprintf('The tag name for service "%s" in "%s" must be a non-empty string.', $service->getAttribute('id'), $file));
             }
+
+            $parameters = $this->getTagAttributes($tag, \sprintf('The attribute name of tag "%s" for service "%s" in %s must be a non-empty string.', $tagName, $service->getAttribute('id'), $file));
+            foreach ($tag->attributes as $name => $node) {
+                if ($tagNameComesFromAttribute && 'name' === $name) {
+                    continue;
+                }
+
+                if (str_contains($name, '-') && !str_contains($name, '_') && !\array_key_exists($normalizedName = str_replace('-', '_', $name), $parameters)) {
+                    $parameters[$normalizedName] = XmlUtils::phpize($node->nodeValue);
+                }
+                // keep not normalized key
+                $parameters[$name] = XmlUtils::phpize($node->nodeValue);
+            }
+
+            $definition->addTag($tagName, $parameters);
         }
 
         $definition->setTags(array_merge_recursive($definition->getTags(), $defaults->getTags()));
@@ -779,16 +773,16 @@ class XmlFileLoader extends FileLoader
         }
 
         $source = <<<EOF
-            <?xml version="1.0" encoding="utf-8" ?>
-            <xsd:schema xmlns="http://symfony.com/schema"
-                xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-                targetNamespace="http://symfony.com/schema"
-                elementFormDefault="qualified">
+<?xml version="1.0" encoding="utf-8" ?>
+<xsd:schema xmlns="http://symfony.com/schema"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    targetNamespace="http://symfony.com/schema"
+    elementFormDefault="qualified">
 
-                <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
-            $imports
-            </xsd:schema>
-            EOF
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
+$imports
+</xsd:schema>
+EOF
         ;
 
         if ($this->shouldEnableEntityLoader()) {
@@ -833,7 +827,7 @@ class XmlFileLoader extends FileLoader
     private function validateAlias(\DOMElement $alias, string $file): void
     {
         foreach ($alias->attributes as $name => $node) {
-            if (!\in_array($name, ['alias', 'id', 'public'], true)) {
+            if (!\in_array($name, ['alias', 'id', 'public'])) {
                 throw new InvalidArgumentException(\sprintf('Invalid attribute "%s" defined for alias "%s" in "%s".', $name, $alias->getAttribute('id'), $file));
             }
         }

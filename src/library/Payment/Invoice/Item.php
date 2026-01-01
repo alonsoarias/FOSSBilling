@@ -156,7 +156,7 @@ class Payment_Invoice_Item
      *
      * @return int the quantity of the item
      */
-    public function getQuantity(): int
+    public function getQuantity()
     {
         return $this->qty;
     }

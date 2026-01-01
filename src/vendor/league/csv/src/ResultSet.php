@@ -56,6 +56,8 @@ class ResultSet implements TabularDataReader, JsonSerializable
     protected Iterator $records;
 
     /**
+     * @internal
+     *
      * @see self::from() for public API usage
      *
      * @param Iterator|array<array-key, array<array-key, mixed>> $records
@@ -91,7 +93,7 @@ class ResultSet implements TabularDataReader, JsonSerializable
      *
      * @throws RuntimeException|SyntaxError If the column names can not be found
      */
-    public static function tryFrom(PDOStatement|Result|mysqli_result|SQLite3Result|TabularData|TabularDataProvider $tabularData): ?self
+    public static function tryFrom(PDOStatement|Result|mysqli_result|SQLite3Result|TabularData $tabularData): ?self
     {
         try {
             return self::from($tabularData);
@@ -105,12 +107,8 @@ class ResultSet implements TabularDataReader, JsonSerializable
      *
      * @throws RuntimeException|SyntaxError If the column names can not be found
      */
-    public static function from(PDOStatement|Result|mysqli_result|SQLite3Result|TabularData|TabularDataProvider $tabularData): self
+    public static function from(PDOStatement|Result|mysqli_result|SQLite3Result|TabularData $tabularData): self
     {
-        if ($tabularData instanceof TabularDataProvider) {
-            $tabularData = $tabularData->getTabularData();
-        }
-
         if (!$tabularData instanceof TabularData) {
             /** @var ArrayIterator<array-key, array<array-key, mixed>> $data */
             $data = new ArrayIterator();
@@ -604,7 +602,7 @@ class ResultSet implements TabularDataReader, JsonSerializable
     {
         yield from new MapIterator(
             new CallbackFilterIterator($this->records, fn (array $record): bool => isset($record[$offset])),
-            fn (array $record) => $record[$offset]
+            fn (array $record): string => $record[$offset]
         );
     }
 

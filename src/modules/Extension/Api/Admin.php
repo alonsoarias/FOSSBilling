@@ -11,8 +11,6 @@
 
 namespace Box\Mod\Extension\Api;
 
-use FOSSBilling\Validation\Api\RequiredParams;
-
 class Admin extends \Api_Abstract
 {
     /**
@@ -45,9 +43,7 @@ class Admin extends \Api_Abstract
 
         try {
             $list = $this->di['extension_manager']->getExtensionList($type);
-        } catch (\Exception $e) {
-            $this->di['logger']->warn(sprintf('Failed to fetch extension list for type "%s": %s', $type ?? 'all', $e->getMessage()));
-
+        } catch (\Exception) {
             $list = [];
         }
 
@@ -57,9 +53,13 @@ class Admin extends \Api_Abstract
     /**
      * Gets the readme as HTML for a given extension.
      */
-    #[RequiredParams(['extension_id' => 'Extension ID was not passed'])]
     public function get_extension_readme($data): string
     {
+        $required = [
+            'extension_id' => 'Extension ID was not passed',
+        ];
+
+        $this->di['validator']->checkRequiredParamsForArray($required, $data);
         $extensionInfo = $this->di['extension_manager']->getExtension($data['extension_id']);
 
         return $this->di['parse_markdown']($extensionInfo['readme']);
@@ -99,9 +99,14 @@ class Admin extends \Api_Abstract
      *
      * @throws \FOSSBilling\Exception
      */
-    #[RequiredParams(['locale_id' => 'Locale ID was not passed'])]
     public function toggle_language(array $data): bool
     {
+        $required = [
+            'locale_id' => 'Locale ID was not passed',
+        ];
+
+        $this->di['validator']->checkRequiredParamsForArray($required, $data);
+
         return \FOSSBilling\i18n::toggleLocale($data['locale_id']);
     }
 
@@ -110,9 +115,14 @@ class Admin extends \Api_Abstract
      *
      * @param array $data $data The post data sent to the API. Should contain a key named `locale_id` which is set to the locale ID to get the completion percentage for. (`en_US` for example)
      */
-    #[RequiredParams(['locale_id' => 'Locale ID was not passed'])]
     public function locale_completion(array $data): int
     {
+        $required = [
+            'locale_id' => 'Locale ID was not passed',
+        ];
+
+        $this->di['validator']->checkRequiredParamsForArray($required, $data);
+
         return \FOSSBilling\i18n::getLocaleCompletionPercent($data['locale_id']);
     }
 
@@ -142,9 +152,14 @@ class Admin extends \Api_Abstract
      *
      * @throws \FOSSBilling\Exception
      */
-    #[RequiredParams(['id' => 'Extension ID was not passed', 'type' => 'Extension type was not passed'])]
     public function activate($data)
     {
+        $required = [
+            'id' => 'Extension ID was not passed',
+            'type' => 'Extension type was not passed',
+        ];
+        $this->di['validator']->checkRequiredParamsForArray($required, $data);
+
         $service = $this->getService();
 
         return $service->activateExistingExtension($data);
@@ -157,7 +172,7 @@ class Admin extends \Api_Abstract
      *
      * @throws \FOSSBilling\Exception
      */
-    public function deactivate($data): bool
+    public function deactivate($data)
     {
         $ext = $this->_getExtension($data);
 
@@ -178,14 +193,15 @@ class Admin extends \Api_Abstract
      *
      * @return bool
      */
-    public function uninstall($data): bool
+    public function uninstall($data)
     {
         $ext = $this->_getExtension($data);
         $this->di['events_manager']->fire(['event' => 'onBeforeAdminUninstallExtension', 'params' => ['id' => $ext->id]]);
 
-        $this->getService()->uninstall($data['type'], $data['id']);
+        $service = $this->getService();
+        $service->uninstall($ext);
 
-        $this->di['events_manager']->fire(['event' => 'onAfterAdminUninstallExtension', 'params' => ['type' => $data['type'], 'id' => $data['id']]]);
+        $this->di['events_manager']->fire(['event' => 'onAfterAdminUninstallExtension', 'params' => ['id' => $ext->id]]);
 
         return true;
     }
@@ -193,11 +209,18 @@ class Admin extends \Api_Abstract
     /**
      * Install new extension from extensions site.
      *
+     * @return array
+     *
      * @throws \FOSSBilling\Exception
      */
-    #[RequiredParams(['id' => 'Extension ID was not passed', 'type' => 'Extension type was not passed'])]
     public function install($data)
     {
+        $required = [
+            'id' => 'Extension ID was not passed',
+            'type' => 'Extension type was not passed',
+        ];
+        $this->di['validator']->checkRequiredParamsForArray($required, $data);
+
         $this->di['events_manager']->fire(['event' => 'onBeforeAdminInstallExtension', 'params' => $data]);
 
         $service = $this->getService();
@@ -223,9 +246,13 @@ class Admin extends \Api_Abstract
      *
      * @throws \FOSSBilling\Exception
      */
-    #[RequiredParams(['ext' => 'Parameter "ext" was not passed'])]
     public function config_get($data)
     {
+        $required = [
+            'ext' => 'Parameter ext was not passed',
+        ];
+        $this->di['validator']->checkRequiredParamsForArray($required, $data);
+
         $service = $this->getService();
 
         return $service->getConfig($data['ext']);
@@ -244,15 +271,24 @@ class Admin extends \Api_Abstract
      *
      * @throws \FOSSBilling\Exception
      */
-    #[RequiredParams(['ext' => 'Parameter "ext" was not passed'])]
     public function config_save($data)
     {
+        $required = [
+            'ext' => 'Parameter ext was not passed',
+        ];
+        $this->di['validator']->checkRequiredParamsForArray($required, $data);
+
         return $this->getService()->setConfig($data);
     }
 
-    #[RequiredParams(['id' => 'Extension ID was not passed', 'type' => 'Extension type was not passed'])]
     private function _getExtension($data)
     {
+        $required = [
+            'id' => 'Extension ID was not passed',
+            'type' => 'Extension type was not passed',
+        ];
+        $this->di['validator']->checkRequiredParamsForArray($required, $data);
+
         $service = $this->getService();
         $ext = $service->findExtension($data['type'], $data['id']);
         if (!$ext instanceof \Model_Extension) {

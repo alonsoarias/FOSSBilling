@@ -3,6 +3,7 @@
 declare(strict_types=1);
 /**
  * Copyright 2022-2025 FOSSBilling
+ * Copyright 2011-2021 BoxBilling, Inc.
  * SPDX-License-Identifier: Apache-2.0.
  *
  * @copyright FOSSBilling (https://www.fossbilling.org)
@@ -193,13 +194,13 @@ class Fingerprint
         $userAgent = $_SERVER['HTTP_USER_AGENT'] ?? '';
 
         // Extract the browser name
-        if (preg_match('/(?:Chrome|CriOS)\/([0-9\.]+)/', (string) $userAgent, $matches)) {
+        if (preg_match('/(?:Chrome|CriOS)\/([0-9\.]+)/', $userAgent, $matches)) {
             $browser = 'Chrome';
             $version = $matches[1];
-        } elseif (preg_match('/Firefox\/([0-9\.]+)/', (string) $userAgent, $matches)) {
+        } elseif (preg_match('/Firefox\/([0-9\.]+)/', $userAgent, $matches)) {
             $browser = 'Firefox';
             $version = $matches[1];
-        } elseif (preg_match('/Safari\/([0-9\.]+)/', (string) $userAgent, $matches)) {
+        } elseif (preg_match('/Safari\/([0-9\.]+)/', $userAgent, $matches)) {
             $browser = 'Safari';
             $version = $matches[1];
         } else {
@@ -208,11 +209,11 @@ class Fingerprint
         }
 
         // Extract the operating system
-        if (preg_match('/Windows NT ([0-9\.]+)/', (string) $userAgent, $matches)) {
+        if (preg_match('/Windows NT ([0-9\.]+)/', $userAgent, $matches)) {
             $os = 'Windows NT ' . $matches[1];
-        } elseif (preg_match('/Mac OS X ([0-9_]+)/', (string) $userAgent, $matches)) {
+        } elseif (preg_match('/Mac OS X ([0-9_]+)/', $userAgent, $matches)) {
             $os = 'Mac OS X';
-        } elseif (preg_match('/Linux/', (string) $userAgent)) {
+        } elseif (preg_match('/Linux/', $userAgent)) {
             $os = 'Linux';
         } else {
             $os = 'Unknown';
@@ -236,13 +237,8 @@ class Fingerprint
         // Otherwise, instance the system's GeoIP reader and read the country from there.
         try {
             $reader = new GeoIP\Reader();
-            $remoteAddr = $_SERVER['REMOTE_ADDR'] ?? '';
 
-            if (empty($remoteAddr)) {
-                return '';
-            }
-
-            return $reader->country($remoteAddr)->name;
+            return $reader->country($_SERVER['REMOTE_ADDR'])->name;
         } catch (\Exception) {
             return '';
         }
@@ -251,16 +247,10 @@ class Fingerprint
     private function getIpAsn()
     {
         try {
-            $remoteAddr = $_SERVER['REMOTE_ADDR'] ?? '';
-
-            if (empty($remoteAddr)) {
-                return '';
-            }
-
             $asnDb = GeoIP\Reader::getAsnDatabase();
             $reader = new GeoIP\Reader($asnDb);
 
-            return $reader->asn($remoteAddr)->asnNumber;
+            return $reader->asn($_SERVER['REMOTE_ADDR'])->asnNumber;
         } catch (\Exception) {
             return '';
         }

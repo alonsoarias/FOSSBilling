@@ -754,10 +754,6 @@ return [
             'EC$',
             'Austrumkarību dolārs',
         ],
-        'XCG' => [
-            'Cg.',
-            'Karību guldenis',
-        ],
         'XEU' => [
             'XEU',
             'Eiropas norēķinu vienība',
@@ -797,10 +793,6 @@ return [
         'ZWD' => [
             'ZWD',
             'Zimbabves dolārs',
-        ],
-        'ZWG' => [
-            'ZWG',
-            'Zimbabves zelts',
         ],
         'ZWL' => [
             'ZWL',

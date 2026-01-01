@@ -31,8 +31,10 @@ class Service implements InjectionAwareInterface
 
     /**
      * Method called before adding product to cart.
+     *
+     * @return array
      */
-    public function attachOrderConfig(\Model_Product $product, array $data): array
+    public function attachOrderConfig(\Model_Product $product, array $data)
     {
         $config = json_decode($product->config ?? '', true) ?? [];
 
@@ -41,8 +43,10 @@ class Service implements InjectionAwareInterface
 
     /**
      * Method is called before adding product to cart.
+     *
+     * @return bool
      */
-    public function validateOrderData(array &$data): bool
+    public function validateOrderData(array &$data)
     {
         return true;
     }
@@ -92,7 +96,10 @@ class Service implements InjectionAwareInterface
         return $model;
     }
 
-    public function action_activate(\Model_ClientOrder $order): bool
+    /**
+     * @return bool
+     */
+    public function action_activate(\Model_ClientOrder $order)
     {
         $orderService = $this->di['mod_service']('order');
         $c = $orderService->getConfig($order);
@@ -133,45 +140,58 @@ class Service implements InjectionAwareInterface
 
     /**
      * @todo
+     *
+     * @return bool
      */
-    public function action_renew(\Model_ClientOrder $order): bool
+    public function action_renew(\Model_ClientOrder $order)
     {
         return true;
     }
 
     /**
      * @todo
+     *
+     * @return bool
      */
-    public function action_suspend(\Model_ClientOrder $order): bool
+    public function action_suspend(\Model_ClientOrder $order)
     {
         return true;
     }
 
     /**
      * @todo
+     *
+     * @return bool
      */
-    public function action_unsuspend(\Model_ClientOrder $order): bool
+    public function action_unsuspend(\Model_ClientOrder $order)
     {
         return true;
     }
 
     /**
      * @todo
+     *
+     * @return bool
      */
-    public function action_cancel(\Model_ClientOrder $order): bool
+    public function action_cancel(\Model_ClientOrder $order)
     {
         return true;
     }
 
     /**
      * @todo
+     *
+     * @return bool
      */
-    public function action_uncancel(\Model_ClientOrder $order): bool
+    public function action_uncancel(\Model_ClientOrder $order)
     {
         return true;
     }
 
-    public function action_delete(\Model_ClientOrder $order): void
+    /**
+     * @return void
+     */
+    public function action_delete(\Model_ClientOrder $order)
     {
         $orderService = $this->di['mod_service']('order');
         $service = $orderService->getOrderService($order);
@@ -180,7 +200,7 @@ class Service implements InjectionAwareInterface
         }
     }
 
-    public function reset(\Model_ServiceLicense $model): bool
+    public function reset(\Model_ServiceLicense $model)
     {
         $data = [
             'id' => $model->id,
@@ -293,7 +313,7 @@ class Service implements InjectionAwareInterface
         return in_array($value, $defined);
     }
 
-    public function getAdditionalParams(\Model_ServiceLicense $model, $data = []): array
+    public function getAdditionalParams(\Model_ServiceLicense $model, $data = [])
     {
         $plugin = $this->_getPlugin($model);
         if (is_object($plugin) && method_exists($plugin, 'validate')) {
@@ -348,7 +368,7 @@ class Service implements InjectionAwareInterface
     /**
      * @param string $key
      */
-    private function _addValue(\Model_ServiceLicense $model, $key, $value): void
+    private function _addValue(\Model_ServiceLicense $model, $key, $value)
     {
         $m = 'getAllowed' . ucfirst($key);
         $allowed = $model->{$m}();
@@ -359,7 +379,7 @@ class Service implements InjectionAwareInterface
         $this->di['db']->store($model);
     }
 
-    private function _getPlugin(\Model_ServiceLicense $model): ?object
+    private function _getPlugin(\Model_ServiceLicense $model)
     {
         $plugins = $this->getLicensePlugins();
         foreach ($plugins as $plugin) {
@@ -375,7 +395,7 @@ class Service implements InjectionAwareInterface
         return null;
     }
 
-    public function update(\Model_ServiceLicense $s, array $data): bool
+    public function update(\Model_ServiceLicense $s, array $data)
     {
         $s->plugin = $data['plugin'] ?? $s->plugin;
         $s->validate_ip = (bool) ($data['validate_ip'] ?? $s->validate_ip);

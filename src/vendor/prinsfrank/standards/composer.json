@@ -15,7 +15,7 @@
         }
     },
     "require": {
-        "php": "~8.1.0 || ~8.2.0 || ~8.3.0 || ~8.4.0 || ~8.5.0",
+        "php": "~8.1.0 || ~8.2.0 || ~8.3.0 || ~8.4.0",
         "ext-intl": "*",
         "ext-mbstring": "*",
         "prinsfrank/enums": "^1.4"
@@ -30,8 +30,7 @@
         "composer/composer": "^2.3",
         "prinsfrank/transliteration": "^1.0",
         "phpstan/phpstan-strict-rules": "^2",
-        "prinsfrank/pdfparser": "^2.1",
-        "prinsfrank/phpstan-doc-code-analyzer": "^0.0.3"
+        "prinsfrank/pdfparser": "^2.1"
     },
     "scripts": {
         "cs": "php-cs-fixer fix --allow-risky=yes --dry-run",

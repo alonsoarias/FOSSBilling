@@ -1,6 +1,5 @@
 <?php
 
-declare(strict_types=1);
 /**
  * Copyright 2022-2025 FOSSBilling
  * Copyright 2011-2021 BoxBilling, Inc.
@@ -10,35 +9,38 @@ declare(strict_types=1);
  * @license http://www.apache.org/licenses/LICENSE-2.0 Apache-2.0
  */
 
-namespace Box\Mod\Currency\Api;
+/**
+ * Currency management.
+ */
 
-use Box\Mod\Currency\Entity\Currency;
-use FOSSBilling\Validation\Api\RequiredParams;
+namespace Box\Mod\Currency\Api;
 
 class Admin extends \Api_Abstract
 {
     /**
-     * Get a list of available currencies on the system.
+     * Get list of available currencies on system.
      *
-     * @param array $data Filtering and pagination parameters
-     * @return array Paginated list of currencies
+     * @return array
      */
-    public function get_list(array $data): array
+    public function get_list($data)
     {
-        /** @var \Box\Mod\Currency\Repository\CurrencyRepository $repo */
-        $repo = $this->getService()->getCurrencyRepository();
+        [$query, $params] = $this->getService()->getSearchQuery();
+        $per_page = $data['per_page'] ?? $this->di['pager']->getDefaultPerPage();
+        $pager = $this->di['pager']->getPaginatedResultSet($query, $params, $per_page);
+        foreach ($pager['list'] as $key => $item) {
+            $currency = $this->di['db']->getExistingModelById('Currency', $item['id'], 'Currency not found');
+            $pager['list'][$key] = $this->getService()->toApiArray($currency);
+        }
 
-        $qb = $repo->getSearchQueryBuilder($data);
-
-        return $this->di['pager']->paginateDoctrineQuery($qb);
+        return $pager;
     }
 
     /**
-     * Get list of available currencies on system as key-value pairs.
+     * Get code title pairs of currencies.
      *
-     * @return array<string, string> Array of currency code => formatted currency display name pairs (e.g., 'USD' => 'USD - United States dollar')
+     * @return array
      */
-    public function get_pairs(): array
+    public function get_pairs()
     {
         $service = $this->getService();
 
@@ -52,19 +54,21 @@ class Admin extends \Api_Abstract
      *
      * @throws \FOSSBilling\Exception
      */
-    #[RequiredParams(['code' => 'Currency code is missing'])]
-    public function get($data): array
+    public function get($data)
     {
-        /** @var \Box\Mod\Currency\Repository\CurrencyRepository $repo */
-        $repo = $this->getService()->getCurrencyRepository();
+        $required = [
+            'code' => 'Currency code is missing',
+        ];
+        $this->di['validator']->checkRequiredParamsForArray($required, $data);
 
-        $model = $repo->findOneByCode($data['code']);
+        $service = $this->getService();
+        $model = $service->getByCode($data['code']);
 
-        if (!$model instanceof Currency) {
+        if (!$model instanceof \Model_Currency) {
             throw new \FOSSBilling\Exception('Currency not found');
         }
 
-        return $model->toApiArray();
+        return $service->toApiArray($model);
     }
 
     /**
@@ -72,17 +76,12 @@ class Admin extends \Api_Abstract
      *
      * @return array
      */
-    public function get_default(array $data): array
+    public function get_default($data)
     {
-        /** @var \Box\Mod\Currency\Repository\CurrencyRepository $repo */
-        $repo = $this->getService()->getCurrencyRepository();
+        $service = $this->getService();
+        $currency = $service->getDefault();
 
-        $default = $repo->findDefault();
-
-        if (!$default instanceof Currency) {
-            throw new \FOSSBilling\Exception('Default currency not found');
-        }
-        return $default->toApiArray();
+        return $service->toApiArray($currency);
     }
 
     /**
@@ -94,15 +93,17 @@ class Admin extends \Api_Abstract
      *
      * @throws \FOSSBilling\Exception
      */
-    #[RequiredParams(['code' => 'Currency code is missing', 'format' => 'Currency format is missing'])]
-    public function create($data = []): string
+    public function create($data = [])
     {
+        $required = [
+            'code' => 'Currency code is missing',
+            'format' => 'Currency format is missing',
+        ];
+        $this->di['validator']->checkRequiredParamsForArray($required, $data);
+
         $service = $this->getService();
 
-        /** @var \Box\Mod\Currency\Repository\CurrencyRepository $repo */
-        $repo = $service->getCurrencyRepository();
-
-        if ($repo->findOneByCode($data['code'] ?? null)) {
+        if ($service->getByCode($data['code'] ?? null)) {
             throw new \FOSSBilling\Exception('Currency already registered');
         }
 
@@ -127,9 +128,13 @@ class Admin extends \Api_Abstract
      *
      * @throws \FOSSBilling\Exception
      */
-    #[RequiredParams(['code' => 'Currency code is missing'])]
-    public function update($data): bool
+    public function update($data)
     {
+        $required = [
+            'code' => 'Currency code is missing',
+        ];
+        $this->di['validator']->checkRequiredParamsForArray($required, $data);
+
         $format = $data['format'] ?? null;
         $title = $data['title'] ?? null;
         $priceFormat = $data['price_format'] ?? null;
@@ -141,7 +146,7 @@ class Admin extends \Api_Abstract
     /**
      * See if CRON jobs are enabled for currency rates.
      */
-    public function is_cron_enabled(array $data): bool
+    public function is_cron_enabled($data): bool
     {
         return $this->getService()->isCronEnabled();
     }
@@ -151,21 +156,25 @@ class Admin extends \Api_Abstract
      *
      * @return bool
      */
-    public function update_rates(array $data): bool
+    public function update_rates($data)
     {
-        return $this->service->updateCurrencyRates();
+        return $this->service->updateCurrencyRates($data);
     }
 
     /**
-     * Remove a currency. Default currency cannot be removed.
+     * Remove currency. Default currency cannot be removed.
      *
      * @return bool
      *
      * @throws \FOSSBilling\Exception
      */
-    #[RequiredParams(['code' => 'Currency code is missing'])]
-    public function delete($data): bool
+    public function delete($data)
     {
+        $required = [
+            'code' => 'Currency code is missing',
+        ];
+        $this->di['validator']->checkRequiredParamsForArray($required, $data);
+
         return $this->getService()->deleteCurrencyByCode($data['code']);
     }
 
@@ -177,16 +186,16 @@ class Admin extends \Api_Abstract
      *
      * @throws \FOSSBilling\Exception
      */
-    #[RequiredParams(['code' => 'Currency code is missing'])]
-    public function set_default($data): bool
+    public function set_default($data)
     {
+        $required = [
+            'code' => 'Currency code is missing',
+        ];
+        $this->di['validator']->checkRequiredParamsForArray($required, $data);
+
         $service = $this->getService();
-
-        /** @var \Box\Mod\Currency\Repository\CurrencyRepository $repo */
-        $repo = $service->getCurrencyRepository();
-
-        $model = $repo->findOneByCode($data['code']);
-        if (!$model instanceof Currency) {
+        $model = $service->getByCode($data['code']);
+        if (!$model instanceof \Model_Currency) {
             throw new \FOSSBilling\Exception('Currency not found');
         }
 

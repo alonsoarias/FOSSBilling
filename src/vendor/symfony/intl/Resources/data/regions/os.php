@@ -1,7 +1,6 @@
 <?php
 
 return [
-    'UserAssignedNames' => [],
     'Names' => [
         'BR' => 'Бразили',
         'CN' => 'Китай',

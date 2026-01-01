@@ -76,10 +76,6 @@ class UnsupportedSchemeException extends LogicException
             'class' => Bridge\Mailtrap\Transport\MailtrapTransportFactory::class,
             'package' => 'symfony/mailtrap-mailer',
         ],
-        'microsoftgraph' => [
-            'class' => Bridge\MicrosoftGraph\Transport\MicrosoftGraphTransportFactory::class,
-            'package' => 'symfony/microsoft-graph-mailer',
-        ],
         'resend' => [
             'class' => Bridge\Resend\Transport\ResendTransportFactory::class,
             'package' => 'symfony/resend-mailer',

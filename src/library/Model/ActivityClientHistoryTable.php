@@ -25,7 +25,7 @@ class Model_ActivityClientHistoryTable implements FOSSBilling\InjectionAwareInte
     /**
      * @param array $data
      */
-    public function logEvent($data): void
+    public function logEvent($data)
     {
         if (!isset($data['client_id']) || !isset($data['ip'])) {
             return;
@@ -46,7 +46,7 @@ class Model_ActivityClientHistoryTable implements FOSSBilling\InjectionAwareInte
         $this->di['db']->store($entry);
     }
 
-    public function rmByClient(Model_Client $client): void
+    public function rmByClient(Model_Client $client)
     {
         $models = $this->di['db']->find('ActivityClientHistory', 'client_id = ?', [$client->id]);
         foreach ($models as $model) {

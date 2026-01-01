@@ -207,9 +207,6 @@ enum URIScheme: string {
     #[Status(URISchemeStatus::Provisional)]
     case dlna_playsingle = 'dlna-playsingle';
 
-    #[Status(URISchemeStatus::Provisional)]
-    case dnp = 'dnp';
-
     #[Status(URISchemeStatus::Permanent)]
     case dns = 'dns';
 
@@ -218,9 +215,6 @@ enum URIScheme: string {
 
     #[Status(URISchemeStatus::Permanent)]
     case doi = 'doi';
-
-    #[Status(URISchemeStatus::Provisional)]
-    case donau = 'donau';
 
     #[Status(URISchemeStatus::Provisional)]
     case dpp = 'dpp';
@@ -260,9 +254,6 @@ enum URIScheme: string {
 
     #[Status(URISchemeStatus::Provisional)]
     case ens = 'ens';
-
-    #[Status(URISchemeStatus::Provisional)]
-    case esim = 'esim';
 
     #[Status(URISchemeStatus::Provisional)]
     case ethereum = 'ethereum';
@@ -372,9 +363,6 @@ enum URIScheme: string {
     #[Status(URISchemeStatus::Provisional)]
     case hyper = 'hyper';
 
-    #[Status(URISchemeStatus::Provisional)]
-    case i0 = 'i0';
-
     #[Status(URISchemeStatus::Permanent)]
     case iax = 'iax';
 
@@ -475,9 +463,6 @@ enum URIScheme: string {
     case lid = 'lid';
 
     #[Status(URISchemeStatus::Provisional)]
-    case linkid = 'linkid';
-
-    #[Status(URISchemeStatus::Provisional)]
     case lorawan = 'lorawan';
 
     #[Status(URISchemeStatus::Provisional)]
@@ -533,12 +518,6 @@ enum URIScheme: string {
 
     #[Status(URISchemeStatus::Provisional)]
     case moz = 'moz';
-
-    #[Status(URISchemeStatus::Provisional)]
-    case mqtt = 'mqtt';
-
-    #[Status(URISchemeStatus::Provisional)]
-    case mqtts = 'mqtts';
 
     #[Status(URISchemeStatus::Provisional)]
     case ms_access = 'ms-access';
@@ -1000,9 +979,6 @@ enum URIScheme: string {
     case soldat = 'soldat';
 
     #[Status(URISchemeStatus::Provisional)]
-    case spacify = 'spacify';
-
-    #[Status(URISchemeStatus::Provisional)]
     case spiffe = 'spiffe';
 
     #[Status(URISchemeStatus::Provisional)]
@@ -1184,9 +1160,6 @@ enum URIScheme: string {
 
     #[Status(URISchemeStatus::Provisional)]
     case wyciwyg = 'wyciwyg';
-
-    #[Status(URISchemeStatus::Provisional)]
-    case xcompute = 'xcompute';
 
     #[Status(URISchemeStatus::Permanent)]
     case xcon = 'xcon';

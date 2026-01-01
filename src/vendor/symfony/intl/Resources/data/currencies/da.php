@@ -978,10 +978,6 @@ return [
             'EC$',
             'østkaribisk dollar',
         ],
-        'XCG' => [
-            'Cg.',
-            'caribiske gylden',
-        ],
         'XEU' => [
             'XEU',
             'ECU',
@@ -1053,10 +1049,6 @@ return [
         'ZWD' => [
             'ZWD',
             'Zimbabwisk dollar (1980–2008)',
-        ],
-        'ZWG' => [
-            'ZWG',
-            'Zimbabwe Gold',
         ],
         'ZWL' => [
             'ZWL',

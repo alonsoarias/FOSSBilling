@@ -22,13 +22,6 @@ use Sentry\UserDataBag;
 class Scope
 {
     /**
-     * Maximum number of flags allowed. We only track the first flags set.
-     *
-     * @internal
-     */
-    public const MAX_FLAGS = 100;
-
-    /**
      * @var PropagationContext
      */
     private $propagationContext;
@@ -52,11 +45,6 @@ class Scope
      * @var array<string, string> The list of tags associated to this scope
      */
     private $tags = [];
-
-    /**
-     * @var array<int, array<string, bool>> The list of flags associated to this scope
-     */
-    private $flags = [];
 
     /**
      * @var array<string, mixed> A set of extra data associated to this scope
@@ -138,35 +126,6 @@ class Scope
     public function removeTag(string $key): self
     {
         unset($this->tags[$key]);
-
-        return $this;
-    }
-
-    /**
-     * Adds a feature flag to the scope.
-     *
-     * @return $this
-     */
-    public function addFeatureFlag(string $key, bool $result): self
-    {
-        // If the flag was already set, remove it first
-        // This basically mimics an LRU cache so that the most recently added flags are kept
-        foreach ($this->flags as $flagIndex => $flag) {
-            if (isset($flag[$key])) {
-                unset($this->flags[$flagIndex]);
-            }
-        }
-
-        // Keep only the most recent MAX_FLAGS flags
-        if (\count($this->flags) >= self::MAX_FLAGS) {
-            array_shift($this->flags);
-        }
-
-        $this->flags[] = [$key => $result];
-
-        if ($this->span !== null) {
-            $this->span->setFlag($key, $result);
-        }
 
         return $this;
     }
@@ -372,7 +331,6 @@ class Scope
         $this->fingerprint = [];
         $this->breadcrumbs = [];
         $this->tags = [];
-        $this->flags = [];
         $this->extra = [];
         $this->contexts = [];
 
@@ -399,17 +357,6 @@ class Scope
 
         if (!empty($this->tags)) {
             $event->setTags(array_merge($this->tags, $event->getTags()));
-        }
-
-        if (!empty($this->flags)) {
-            $event->setContext('flags', [
-                'values' => array_map(static function (array $flag) {
-                    return [
-                        'flag' => key($flag),
-                        'result' => current($flag),
-                    ];
-                }, $this->flags),
-            ]);
         }
 
         if (!empty($this->extra)) {

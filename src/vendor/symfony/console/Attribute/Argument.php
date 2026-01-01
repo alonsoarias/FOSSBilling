@@ -11,16 +11,14 @@
 
 namespace Symfony\Component\Console\Attribute;
 
-use Symfony\Component\Console\Attribute\Reflection\ReflectionMember;
 use Symfony\Component\Console\Completion\CompletionInput;
 use Symfony\Component\Console\Completion\Suggestion;
-use Symfony\Component\Console\Exception\InvalidArgumentException;
 use Symfony\Component\Console\Exception\LogicException;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\String\UnicodeString;
 
-#[\Attribute(\Attribute::TARGET_PARAMETER | \Attribute::TARGET_PROPERTY)]
+#[\Attribute(\Attribute::TARGET_PARAMETER)]
 class Argument
 {
     private const ALLOWED_TYPES = ['string', 'bool', 'int', 'float', 'array'];
@@ -28,11 +26,7 @@ class Argument
     private string|bool|int|float|array|null $default = null;
     private array|\Closure $suggestedValues;
     private ?int $mode = null;
-    /**
-     * @var string|class-string<\BackedEnum>
-     */
-    private string $typeName = '';
-    private ?InteractiveAttributeInterface $interactiveAttribute = null;
+    private string $function = '';
 
     /**
      * Represents a console command <argument> definition.
@@ -52,52 +46,45 @@ class Argument
     /**
      * @internal
      */
-    public static function tryFrom(\ReflectionParameter|\ReflectionProperty $member): ?self
+    public static function tryFrom(\ReflectionParameter $parameter): ?self
     {
-        $reflection = new ReflectionMember($member);
-
-        if (!$self = $reflection->getAttribute(self::class)) {
+        /** @var self $self */
+        if (null === $self = ($parameter->getAttributes(self::class, \ReflectionAttribute::IS_INSTANCEOF)[0] ?? null)?->newInstance()) {
             return null;
         }
 
-        $type = $reflection->getType();
-        $name = $reflection->getName();
-
-        if (!$type instanceof \ReflectionNamedType) {
-            throw new LogicException(\sprintf('The %s "$%s" of "%s" must have a named type. Untyped, Union or Intersection types are not supported for command arguments.', $reflection->getMemberName(), $name, $reflection->getSourceName()));
+        if (($function = $parameter->getDeclaringFunction()) instanceof \ReflectionMethod) {
+            $self->function = $function->class.'::'.$function->name;
+        } else {
+            $self->function = $function->name;
         }
 
-        $self->typeName = $type->getName();
-        $isBackedEnum = is_subclass_of($self->typeName, \BackedEnum::class);
+        $type = $parameter->getType();
+        $name = $parameter->getName();
 
-        if (!\in_array($self->typeName, self::ALLOWED_TYPES, true) && !$isBackedEnum) {
-            throw new LogicException(\sprintf('The type "%s" on %s "$%s" of "%s" is not supported as a command argument. Only "%s" types and backed enums are allowed.', $self->typeName, $reflection->getMemberName(), $name, $reflection->getSourceName(), implode('", "', self::ALLOWED_TYPES)));
+        if (!$type instanceof \ReflectionNamedType) {
+            throw new LogicException(\sprintf('The parameter "$%s" of "%s()" must have a named type. Untyped, Union or Intersection types are not supported for command arguments.', $name, $self->function));
+        }
+
+        $parameterTypeName = $type->getName();
+
+        if (!\in_array($parameterTypeName, self::ALLOWED_TYPES, true)) {
+            throw new LogicException(\sprintf('The type "%s" on parameter "$%s" of "%s()" is not supported as a command argument. Only "%s" types are allowed.', $parameterTypeName, $name, $self->function, implode('", "', self::ALLOWED_TYPES)));
         }
 
         if (!$self->name) {
             $self->name = (new UnicodeString($name))->kebab();
         }
 
-        $self->default = $reflection->hasDefaultValue() ? $reflection->getDefaultValue() : null;
+        $self->default = $parameter->isDefaultValueAvailable() ? $parameter->getDefaultValue() : null;
 
-        $isOptional = $reflection->hasDefaultValue() || $reflection->isNullable();
-        $self->mode = $isOptional ? InputArgument::OPTIONAL : InputArgument::REQUIRED;
-        if ('array' === $self->typeName) {
+        $self->mode = $parameter->isDefaultValueAvailable() || $parameter->allowsNull() ? InputArgument::OPTIONAL : InputArgument::REQUIRED;
+        if ('array' === $parameterTypeName) {
             $self->mode |= InputArgument::IS_ARRAY;
         }
 
-        if (\is_array($self->suggestedValues) && !\is_callable($self->suggestedValues) && 2 === \count($self->suggestedValues) && ($instance = $reflection->getSourceThis()) && $instance::class === $self->suggestedValues[0] && \is_callable([$instance, $self->suggestedValues[1]])) {
+        if (\is_array($self->suggestedValues) && !\is_callable($self->suggestedValues) && 2 === \count($self->suggestedValues) && ($instance = $parameter->getDeclaringFunction()->getClosureThis()) && $instance::class === $self->suggestedValues[0] && \is_callable([$instance, $self->suggestedValues[1]])) {
             $self->suggestedValues = [$instance, $self->suggestedValues[1]];
-        }
-
-        if ($isBackedEnum && !$self->suggestedValues) {
-            $self->suggestedValues = array_column($self->typeName::cases(), 'value');
-        }
-
-        $self->interactiveAttribute = Ask::tryFrom($member, $self->name);
-
-        if ($self->interactiveAttribute && $isOptional) {
-            throw new LogicException(\sprintf('The %s "$%s" argument of "%s" cannot be both interactive and optional.', $reflection->getMemberName(), $self->name, $reflection->getSourceName()));
         }
 
         return $self;
@@ -118,28 +105,6 @@ class Argument
      */
     public function resolveValue(InputInterface $input): mixed
     {
-        $value = $input->getArgument($this->name);
-
-        if (is_subclass_of($this->typeName, \BackedEnum::class) && (\is_string($value) || \is_int($value))) {
-            return $this->typeName::tryFrom($value) ?? throw InvalidArgumentException::fromEnumValue($this->name, $value, $this->suggestedValues);
-        }
-
-        return $value;
-    }
-
-    /**
-     * @internal
-     */
-    public function getInteractiveAttribute(): ?InteractiveAttributeInterface
-    {
-        return $this->interactiveAttribute;
-    }
-
-    /**
-     * @internal
-     */
-    public function isRequired(): bool
-    {
-        return InputArgument::REQUIRED === (InputArgument::REQUIRED & $this->mode);
+        return $input->getArgument($this->name);
     }
 }

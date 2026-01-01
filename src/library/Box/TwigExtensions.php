@@ -10,10 +10,8 @@
  */
 
 use FOSSBilling\InjectionAwareInterface;
-use Symfony\Component\Filesystem\Path;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
-use Twig\TwigFunction;
 
 class Box_TwigExtensions extends AbstractExtension implements InjectionAwareInterface
 {
@@ -83,23 +81,11 @@ class Box_TwigExtensions extends AbstractExtension implements InjectionAwareInte
     }
 
     /**
-     * Returns a list of functions to add to the existing list.
-     *
-     * @return array An array of functions
-     */
-    public function getFunctions()
-    {
-        return [
-            new TwigFunction('svg_sprite', $this->twig_svg_sprite(...), ['needs_environment' => true, 'is_safe' => ['html']]),
-        ];
-    }
-
-    /**
      * Returns the name of the extension.
      *
      * @return string The extension name
      */
-    public function getName(): string
+    public function getName()
     {
         return 'bb';
     }
@@ -181,53 +167,53 @@ class Box_TwigExtensions extends AbstractExtension implements InjectionAwareInte
         return $api_guest->currency_format(['price' => $price, 'code' => $currency, 'convert' => false, 'without_currency' => true]);
     }
 
-    public function twig_mod_asset_url($asset, $mod): string
+    public function twig_mod_asset_url($asset, $mod)
     {
-        return SYSTEM_URL . 'modules/' . ucfirst((string) $mod) . '/assets/' . $asset;
+        return SYSTEM_URL . 'modules/' . ucfirst($mod) . '/assets/' . $asset;
     }
 
-    public function twig_asset_url(Twig\Environment $env, $asset): string
+    public function twig_asset_url(Twig\Environment $env, $asset)
     {
         $globals = $env->getGlobals();
 
         return SYSTEM_URL . 'themes/' . $globals['current_theme'] . '/assets/' . $asset;
     }
 
-    public function twig_library_url($path): string
+    public function twig_library_url($path)
     {
         return SYSTEM_URL . 'library/' . $path;
     }
 
-    public function twig_img_tag($path, $alt = null): string
+    public function twig_img_tag($path, $alt = null)
     {
-        $alt = is_null($alt) ? pathinfo((string) $path, PATHINFO_BASENAME) : $alt;
+        $alt = is_null($alt) ? pathinfo($path, PATHINFO_BASENAME) : $alt;
 
-        return sprintf('<img src="%s" alt="%s" title="%s"/>', htmlspecialchars((string) $path), htmlspecialchars($alt), htmlspecialchars($alt));
+        return sprintf('<img src="%s" alt="%s" title="%s"/>', htmlspecialchars($path), htmlspecialchars($alt), htmlspecialchars($alt));
     }
 
-    public function twig_script_tag($path): string
+    public function twig_script_tag($path)
     {
         return sprintf('<script type="text/javascript" src="%s?%s"></script>', $path, FOSSBilling\Version::VERSION);
     }
 
-    public function twig_stylesheet_tag($path, $media = 'screen'): string
+    public function twig_stylesheet_tag($path, $media = 'screen')
     {
         return sprintf('<link rel="stylesheet" type="text/css" href="%s?v=%s" media="%s" />', $path, FOSSBilling\Version::VERSION, $media);
     }
 
-    public function twig_gravatar_filter($email, $size = 20): string
+    public function twig_gravatar_filter($email, $size = 20)
     {
         if (empty($email)) {
             return '';
         }
 
         $url = 'https://www.gravatar.com/avatar/';
-        $url .= md5(strtolower(trim((string) $email)));
+        $url .= md5(strtolower(trim($email)));
 
         return $url . "?s=$size&d=mp&r=g";
     }
 
-    public function twig_autolink_filter($text): ?string
+    public function twig_autolink_filter($text)
     {
         $pattern = '#\b(([\w-]+://?|www[.])[^\s()<>]+(?:\([\w\d]+\)|([^[:punct:]\s]|/)))#';
 
@@ -242,10 +228,10 @@ class Box_TwigExtensions extends AbstractExtension implements InjectionAwareInte
             return sprintf('<a target="_blank" href="%s">%s</a>', $url, $url);
         };
 
-        return preg_replace_callback($pattern, $callback, (string) $text);
+        return preg_replace_callback($pattern, $callback, $text);
     }
 
-    public function twig_number_filter($number, $decimals = 2, $dec_point = '.', $thousands_sep = ''): string
+    public function twig_number_filter($number, $decimals = 2, $dec_point = '.', $thousands_sep = '')
     {
         if (is_null($number)) {
             $number = '0';
@@ -254,17 +240,17 @@ class Box_TwigExtensions extends AbstractExtension implements InjectionAwareInte
         return number_format(floatval($number), $decimals, $dec_point, $thousands_sep);
     }
 
-    public function twig_daysleft_filter($iso8601): int
+    public function twig_daysleft_filter($iso8601)
     {
-        $timediff = strtotime((string) $iso8601) - time();
+        $timediff = strtotime($iso8601) - time();
 
         return intval($timediff / 86400);
     }
 
-    public function twig_timeago_filter($iso8601): string
+    public function twig_timeago_filter($iso8601)
     {
         $cur_tm = time();
-        $dif = $cur_tm - strtotime((string) $iso8601);
+        $dif = $cur_tm - strtotime($iso8601);
         $pds = [__trans('second'), __trans('minute'), __trans('hour'), __trans('day'), __trans('week'), __trans('month'), __trans('year'), __trans('decade')];
         $lngh = [1, 60, 3600, 86400, 604800, 2_630_880, 31_570_560, 315_705_600];
         $no = 0;
@@ -375,7 +361,7 @@ class Box_TwigExtensions extends AbstractExtension implements InjectionAwareInte
         return $array;
     }
 
-    public function ipLookupLink(?string $ip): string
+    public function ipLookupLink(?string $ip)
     {
         if ($ip === null || $ip === '') {
             return '';
@@ -384,23 +370,5 @@ class Box_TwigExtensions extends AbstractExtension implements InjectionAwareInte
         $link = $this->di['url']->adminLink('security/iplookup', ['ip' => $ip]);
 
         return "<a href='{$link}' target='_blank' class='iplookuplink'>{$ip}</a>";
-    }
-
-    public function twig_svg_sprite(Twig\Environment $env): string
-    {
-        $globals = $env->getGlobals();
-        $themeCode = $globals['theme']['code'] ?? null;
-
-        if ($themeCode === null) {
-            return '';
-        }
-
-        $spritePath = Path::join(PATH_THEMES, $themeCode, 'assets/build/symbol/icons-sprite.svg');
-
-        if (!file_exists($spritePath)) {
-            return '';
-        }
-
-        return file_get_contents($spritePath);
     }
 }

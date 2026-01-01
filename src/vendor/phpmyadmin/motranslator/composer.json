@@ -27,28 +27,22 @@
         ]
     },
     "require": {
-        "php": "^8.2",
-        "symfony/expression-language": "^6.4 || ^7.0"
+        "php": "^7.2 || ^8.0",
+        "symfony/expression-language": "^5.0 || ^6.0 || ^7.0"
     },
     "require-dev": {
-        "phpmyadmin/coding-standard": "^4.0",
+        "phpmyadmin/coding-standard": "^3.0.0",
         "phpstan/extension-installer": "^1.4",
-        "phpstan/phpstan": "^2.1",
-        "phpstan/phpstan-deprecation-rules": "^2.0",
-        "phpstan/phpstan-phpunit": "^2.0",
-        "phpstan/phpstan-strict-rules": "^2.0",
-        "phpunit/phpunit": "^11.5 || ^12.0",
-        "psalm/plugin-phpunit": "^0.19.2",
-        "vimeo/psalm": "^6.8"
-    },
-    "suggest": {
-        "ext-apcu": "Needed for APCu-backed translation cache"
+        "phpstan/phpstan": "^1.12",
+        "phpstan/phpstan-deprecation-rules": "^1.2",
+        "phpstan/phpstan-phpunit": "^1.4",
+        "phpstan/phpstan-strict-rules": "^1.6",
+        "phpunit/phpunit": "^8.5 || ^9.6 || ^10.5"
     },
     "autoload": {
         "psr-4": {
             "PhpMyAdmin\\MoTranslator\\": "src"
-        },
-        "files": ["src/functions.php"]
+        }
     },
     "autoload-dev": {
         "psr-4": {
@@ -56,16 +50,13 @@
         }
     },
     "config": {
+        "sort-packages": true,
         "allow-plugins": {
             "dealerdirect/phpcodesniffer-composer-installer": true,
             "phpstan/extension-installer": true
-        },
-        "discard-changes": true,
-        "sort-packages": true
-    },
-    "extra": {
-        "branch-alias": {
-            "dev-master": "6.0-dev"
         }
+    },
+    "suggest": {
+        "ext-apcu": "Needed for ACPu-backed translation cache"
     }
 }

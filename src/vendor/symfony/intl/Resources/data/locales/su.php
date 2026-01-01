@@ -12,7 +12,6 @@ return [
         'en_ID' => 'Inggris (Indonesia)',
         'en_IN' => 'Inggris (India)',
         'en_IT' => 'Inggris (Italia)',
-        'en_JP' => 'Inggris (Jepang)',
         'en_US' => 'Inggris (Amérika Sarikat)',
         'es' => 'Spanyol',
         'es_BR' => 'Spanyol (Brasil)',

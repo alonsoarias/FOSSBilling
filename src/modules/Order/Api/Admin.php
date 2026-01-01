@@ -15,8 +15,6 @@
 
 namespace Box\Mod\Order\Api;
 
-use FOSSBilling\Validation\Api\RequiredParams;
-
 class Admin extends \Api_Abstract
 {
     /**
@@ -73,12 +71,14 @@ class Admin extends \Api_Abstract
      *
      * @return array
      */
-    #[RequiredParams([
-        'client_id' => 'Client ID was not passed',
-        'product_id' => 'Product ID was not passed',
-    ])]
     public function create($data)
     {
+        $required = [
+            'client_id' => 'Client id not passed',
+            'product_id' => 'Product id not passed',
+        ];
+        $this->di['validator']->checkRequiredParamsForArray($required, $data);
+
         $client = $this->di['db']->getExistingModelById('Client', $data['client_id'], 'Client not found');
         $product = $this->di['db']->getExistingModelById('Product', $data['product_id'], 'Product not found');
 
@@ -298,10 +298,14 @@ class Admin extends \Api_Abstract
      *
      * @return array
      */
-    #[RequiredParams(['status' => 'Order status was not passed'])]
     public function status_history_add($data)
     {
         $order = $this->_getOrder($data);
+
+        $required = [
+            'status' => 'Order status was not passed',
+        ];
+        $this->di['validator']->checkRequiredParamsForArray($required, $data);
 
         $notes = $data['notes'] ?? null;
 
@@ -313,9 +317,13 @@ class Admin extends \Api_Abstract
      *
      * @return bool
      */
-    #[RequiredParams(['id' => 'Order history line ID was not passed'])]
     public function status_history_delete($data)
     {
+        $required = [
+            'id' => 'Order history line id not passed',
+        ];
+        $this->di['validator']->checkRequiredParamsForArray($required, $data);
+
         return $this->getService()->orderStatusRm($data['id']);
     }
 
@@ -331,8 +339,10 @@ class Admin extends \Api_Abstract
 
     /**
      * Return available invoice options.
+     *
+     * @return array
      */
-    public function get_invoice_options($data): array
+    public function get_invoice_options($data)
     {
         return [
             'issue-invoice' => __trans('Automatically issue renewal invoices'),
@@ -342,8 +352,10 @@ class Admin extends \Api_Abstract
 
     /**
      * Return order statuses codes with titles.
+     *
+     * @return array
      */
-    public function get_status_pairs($data): array
+    public function get_status_pairs($data)
     {
         return [
             \Model_ClientOrder::STATUS_PENDING_SETUP => 'Pending setup',
@@ -372,7 +384,7 @@ class Admin extends \Api_Abstract
     protected function _getOrder($data)
     {
         $required = [
-            'id' => 'Order ID was not passed',
+            'id' => 'Order id not passed',
         ];
         $this->di['validator']->checkRequiredParamsForArray($required, $data);
 
@@ -383,10 +395,16 @@ class Admin extends \Api_Abstract
      * Deletes orders with given IDs.
      *
      * @optional bool $delete_addons - Remove addons also. Default false.
+     *
+     * @return bool
      */
-    #[RequiredParams(['ids' => 'Order IDs were not passed'])]
     public function batch_delete($data)
     {
+        $required = [
+            'ids' => 'Orders ids not passed',
+        ];
+        $this->di['validator']->checkRequiredParamsForArray($required, $data);
+
         $delete_addons = isset($data['delete_addons']) && (bool) $data['delete_addons'];
 
         foreach ($data['ids'] as $id) {

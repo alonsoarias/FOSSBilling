@@ -2,7 +2,6 @@
 
 return [
     'Names' => [
-        'cy' => 'Sewelsh',
         'en' => 'Senyesemane',
         'en_LS' => 'Senyesemane (Lesotho)',
         'en_ZA' => 'Senyesemane (Afrika Borwa)',

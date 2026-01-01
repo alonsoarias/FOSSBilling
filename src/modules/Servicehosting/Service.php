@@ -263,7 +263,10 @@ class Service implements InjectionAwareInterface
         return true;
     }
 
-    public function action_delete(\Model_ClientOrder $order): void
+    /**
+     * @return void
+     */
+    public function action_delete(\Model_ClientOrder $order)
     {
         $orderService = $this->di['mod_service']('order');
         $service = $orderService->getOrderService($order);
@@ -276,7 +279,7 @@ class Service implements InjectionAwareInterface
         }
     }
 
-    public function changeAccountPlan(\Model_ClientOrder $order, \Model_ServiceHosting $model, \Model_ServiceHostingHp $hp): bool
+    public function changeAccountPlan(\Model_ClientOrder $order, \Model_ServiceHosting $model, \Model_ServiceHostingHp $hp)
     {
         $model->service_hosting_hp_id = $hp->id;
         if ($this->_performOnService($order)) {
@@ -292,13 +295,13 @@ class Service implements InjectionAwareInterface
         return true;
     }
 
-    public function changeAccountUsername(\Model_ClientOrder $order, \Model_ServiceHosting $model, $data): bool
+    public function changeAccountUsername(\Model_ClientOrder $order, \Model_ServiceHosting $model, $data)
     {
         if (!isset($data['username']) || empty($data['username'])) {
             throw new InformationException('Account username is missing or is invalid');
         }
 
-        $u = strtolower((string) $data['username']);
+        $u = strtolower($data['username']);
 
         if ($this->_performOnService($order)) {
             [$adapter, $account] = $this->_getAM($model);
@@ -314,7 +317,7 @@ class Service implements InjectionAwareInterface
         return true;
     }
 
-    public function changeAccountIp(\Model_ClientOrder $order, \Model_ServiceHosting $model, $data): bool
+    public function changeAccountIp(\Model_ClientOrder $order, \Model_ServiceHosting $model, $data)
     {
         if (!isset($data['ip']) || empty($data['ip'])) {
             throw new InformationException('Account IP address is missing or is invalid');
@@ -335,7 +338,7 @@ class Service implements InjectionAwareInterface
         return true;
     }
 
-    public function changeAccountDomain(\Model_ClientOrder $order, \Model_ServiceHosting $model, $data): bool
+    public function changeAccountDomain(\Model_ClientOrder $order, \Model_ServiceHosting $model, $data)
     {
         if (
             !isset($data['tld']) || empty($data['tld'])
@@ -361,7 +364,7 @@ class Service implements InjectionAwareInterface
         return true;
     }
 
-    public function changeAccountPassword(\Model_ClientOrder $order, \Model_ServiceHosting $model, $data): bool
+    public function changeAccountPassword(\Model_ClientOrder $order, \Model_ServiceHosting $model, $data)
     {
         if (
             !isset($data['password']) || !isset($data['password_confirm'])
@@ -385,7 +388,7 @@ class Service implements InjectionAwareInterface
         return true;
     }
 
-    public function sync(\Model_ClientOrder $order, \Model_ServiceHosting $model): bool
+    public function sync(\Model_ClientOrder $order, \Model_ServiceHosting $model)
     {
         [$adapter, $account] = $this->_getAM($model);
         $updated = $adapter->synchronizeAccount($account);
@@ -496,7 +499,7 @@ class Service implements InjectionAwareInterface
         return [$adapter, $server_account];
     }
 
-    public function toApiArray(\Model_ServiceHosting $model, $deep = false, $identity = null): array
+    public function toApiArray(\Model_ServiceHosting $model, $deep = false, $identity = null)
     {
         $serviceHostingServerModel = $this->di['db']->load('ServiceHostingServer', $model->service_hosting_server_id);
         $serviceHostingHpModel = $this->di['db']->load('ServiceHostingHp', $model->service_hosting_hp_id);
@@ -590,7 +593,7 @@ class Service implements InjectionAwareInterface
 
         if ($data['domain']['action'] == 'owndomain') {
             $sld = $data['domain']['owndomain_sld'];
-            $tld = str_contains((string) $data['domain']['owndomain_tld'], '.') ? $data['domain']['owndomain_tld'] : '.' . $data['domain']['owndomain_tld'];
+            $tld = str_contains($data['domain']['owndomain_tld'], '.') ? $data['domain']['owndomain_tld'] : '.' . $data['domain']['owndomain_tld'];
         }
 
         if ($data['domain']['action'] == 'register') {
@@ -974,7 +977,7 @@ class Service implements InjectionAwareInterface
         return $newId;
     }
 
-    public function getServerPackage(\Model_ServiceHostingHp $model): \Server_Package
+    public function getServerPackage(\Model_ServiceHostingHp $model)
     {
         $config = json_decode($model->config ?? '', true);
         if (!is_array($config)) {

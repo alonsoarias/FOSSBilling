@@ -1078,10 +1078,6 @@ return [
             'XCD',
             'Rytų Karibų doleris',
         ],
-        'XCG' => [
-            'Cg.',
-            'Karibų guldenas',
-        ],
         'XEU' => [
             'XEU',
             'Europos piniginis vienetas (1993–1999)',
@@ -1157,10 +1153,6 @@ return [
         'ZWD' => [
             'ZWD',
             'Zimbabvės doleris (1980–2008)',
-        ],
-        'ZWG' => [
-            'ZWG',
-            'Zimbabvės auksas',
         ],
         'ZWL' => [
             'ZWL',

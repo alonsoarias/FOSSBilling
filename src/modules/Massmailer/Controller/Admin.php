@@ -25,7 +25,7 @@ class Admin implements \FOSSBilling\InjectionAwareInterface
         return $this->di;
     }
 
-    public function fetchNavigation(): array
+    public function fetchNavigation()
     {
         return [
             'subpages' => [
@@ -40,20 +40,20 @@ class Admin implements \FOSSBilling\InjectionAwareInterface
         ];
     }
 
-    public function register(\Box_App &$app): void
+    public function register(\Box_App &$app)
     {
         $app->get('/massmailer', 'get_index', [], static::class);
         $app->get('/massmailer/message/:id', 'get_edit', ['id' => '[0-9]+'], static::class);
     }
 
-    public function get_index(\Box_App $app): string
+    public function get_index(\Box_App $app)
     {
         $this->di['is_admin_logged'];
 
         return $app->render('mod_massmailer_index');
     }
 
-    public function get_edit(\Box_App $app, $id): string
+    public function get_edit(\Box_App $app, $id)
     {
         $api = $this->di['api_admin'];
         $model = $api->massmailer_get(['id' => $id]);

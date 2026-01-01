@@ -15,8 +15,6 @@
 
 namespace Box\Mod\Support\Api;
 
-use FOSSBilling\Validation\Api\RequiredParams;
-
 class Guest extends \Api_Abstract
 {
     /**
@@ -24,20 +22,19 @@ class Guest extends \Api_Abstract
      *
      * @return string - ticket hash
      */
-    #[RequiredParams([
-        'name' => 'Please enter your name',
-        'email' => 'Please enter your email address',
-        'subject' => 'Please enter the subject',
-        'message' => 'Please enter your message',
-    ])]
-    public function ticket_create(array $data): string
+    public function ticket_create($data)
     {
+        $required = [
+            'name' => 'Please enter your name',
+            'email' => 'Please enter your email',
+            'subject' => 'Please enter your subject',
+            'message' => 'Please enter your message',
+        ];
+        $this->di['validator']->checkRequiredParamsForArray($required, $data);
+
         if (strlen($data['message']) < 4) {
             throw new \FOSSBilling\InformationException('Please enter your message');
         }
-
-        // Sanitize message to prevent XSS attacks
-        $data['message'] = \FOSSBilling\Tools::sanitizeContent($data['message'], true);
 
         return $this->getService()->ticketCreateForGuest($data);
     }
@@ -47,9 +44,13 @@ class Guest extends \Api_Abstract
      *
      * @return array - ticket details
      */
-    #[RequiredParams(['hash' => 'Public ticket hash required'])]
-    public function ticket_get(array $data): array
+    public function ticket_get($data)
     {
+        $required = [
+            'hash' => 'Public ticket hash required',
+        ];
+        $this->di['validator']->checkRequiredParamsForArray($required, $data);
+
         $publicTicket = $this->getService()->publicFindOneByHash($data['hash']);
 
         return $this->getService()->publicToApiArray($publicTicket);
@@ -60,9 +61,13 @@ class Guest extends \Api_Abstract
      *
      * @return bool
      */
-    #[RequiredParams(['hash' => 'Public ticket hash required'])]
-    public function ticket_close(array $data): bool
+    public function ticket_close($data)
     {
+        $required = [
+            'hash' => 'Public ticket hash required',
+        ];
+        $this->di['validator']->checkRequiredParamsForArray($required, $data);
+
         $publicTicket = $this->getService()->publicFindOneByHash($data['hash']);
 
         return $this->getService()->publicCloseTicket($publicTicket, $this->getIdentity());
@@ -73,13 +78,15 @@ class Guest extends \Api_Abstract
      *
      * @return string - ticket hash
      */
-    #[RequiredParams(['hash' => 'Public ticket hash required', 'message' => 'Message cannot be empty'])]
-    public function ticket_reply(array $data): string
+    public function ticket_reply($data)
     {
-        $publicTicket = $this->getService()->publicFindOneByHash($data['hash']);
+        $required = [
+            'hash' => 'Public ticket hash required',
+            'message' => 'Message is required and cannot be blank',
+        ];
+        $this->di['validator']->checkRequiredParamsForArray($required, $data);
 
-        // Sanitize message to prevent XSS attacks
-        $data['message'] = \FOSSBilling\Tools::sanitizeContent($data['message'], true);
+        $publicTicket = $this->getService()->publicFindOneByHash($data['hash']);
 
         return $this->getService()->publicTicketReplyForGuest($publicTicket, $data['message']);
     }
@@ -93,7 +100,7 @@ class Guest extends \Api_Abstract
      *
      * @return bool
      */
-    public function kb_enabled(): bool
+    public function kb_enabled()
     {
         return $this->getService()->kbEnabled();
     }
@@ -104,14 +111,17 @@ class Guest extends \Api_Abstract
      *
      * @return array
      */
-    public function kb_article_get_list(array $data): array
+    public function kb_article_get_list($data)
     {
+        $data['status'] = 'active';
+
+        $status = $data['status'] ?? null;
         $search = $data['search'] ?? null;
         $cat = $data['kb_article_category_id'] ?? null;
         $per_page = $data['per_page'] ?? $this->di['pager']->getDefaultPerPage();
         $page = $data['page'] ?? null;
 
-        $pager = $this->getService()->kbSearchArticles('active', $search, $cat, $per_page, $page);
+        $pager = $this->getService()->kbSearchArticles($status, $search, $cat, $per_page, $page);
 
         foreach ($pager['list'] as $key => $item) {
             $article = $this->di['db']->getExistingModelById('SupportKbArticle', $item['id'], 'KB Article not found');
@@ -126,7 +136,7 @@ class Guest extends \Api_Abstract
      *
      * @return array
      */
-    public function kb_article_get(array $data): array
+    public function kb_article_get($data)
     {
         if (!isset($data['id']) && !isset($data['slug'])) {
             throw new \FOSSBilling\InformationException('ID or slug is missing');
@@ -155,7 +165,7 @@ class Guest extends \Api_Abstract
      *
      * @return array
      */
-    public function kb_category_get_list(array $data): array
+    public function kb_category_get_list($data)
     {
         $data['article_status'] = \Model_SupportKbArticle::ACTIVE;
         [$query, $bindings] = $this->getService()->kbCategoryGetSearchQuery($data);
@@ -178,7 +188,7 @@ class Guest extends \Api_Abstract
      *
      * @return array
      */
-    public function kb_category_get_pairs(array $data): array
+    public function kb_category_get_pairs($data)
     {
         return $this->getService()->kbCategoryGetPairs();
     }
@@ -188,7 +198,7 @@ class Guest extends \Api_Abstract
      *
      * @return array
      */
-    public function kb_category_get(array $data): array
+    public function kb_category_get($data)
     {
         if (!isset($data['id']) && !isset($data['slug'])) {
             throw new \FOSSBilling\InformationException('Category ID or slug is missing');

@@ -21,20 +21,6 @@ class Service implements InjectionAwareInterface
     protected ?\Pimple\Container $di = null;
     private readonly Filesystem $filesystem;
 
-    /**
-     * In-request cache for the current admin theme name.
-     * This cache is used to store theme information during a single request.
-     * It is cleared whenever theme settings are changed by calling clearThemeCache().
-     */
-    private static ?string $adminThemeCache = null;
-    /**
-     * In-request cache for the current client theme name.
-     * This cache is used to avoid repeated lookups during a single request.
-     * It is cleared whenever theme settings are changed by calling clearThemeCache().
-     */
-    
-    private static ?string $clientThemeCache = null;
-
     public function setDi(\Pimple\Container $di): void
     {
         $this->di = $di;
@@ -50,16 +36,7 @@ class Service implements InjectionAwareInterface
         $this->filesystem = new Filesystem();
     }
 
-    /**
-     * Clear the theme cache. Call this method when theme settings are updated.
-     */
-    public static function clearThemeCache(): void
-    {
-        self::$adminThemeCache = null;
-        self::$clientThemeCache = null;
-    }
-
-    public function getTheme($name): Model\Theme
+    public function getTheme($name)
     {
         return new Model\Theme($name);
     }
@@ -84,7 +61,7 @@ class Service implements InjectionAwareInterface
         return $current;
     }
 
-    public function setCurrentThemePreset(Model\Theme $theme, $preset): bool
+    public function setCurrentThemePreset(Model\Theme $theme, $preset)
     {
         $params = ['theme' => $theme->getName(), 'preset' => $preset];
         $updated = $this->di['db']->exec("
@@ -124,7 +101,7 @@ class Service implements InjectionAwareInterface
         return true;
     }
 
-    public function deletePreset(Model\Theme $theme, $preset): bool
+    public function deletePreset(Model\Theme $theme, $preset)
     {
         // delete settings
         $this->di['db']->exec(
@@ -192,7 +169,7 @@ class Service implements InjectionAwareInterface
         }
     }
 
-    public function updateSettings(Model\Theme $theme, $preset, array $params): bool
+    public function updateSettings(Model\Theme $theme, $preset, array $params)
     {
         $meta = $this->di['db']->findOne(
             'ExtensionMeta',
@@ -216,7 +193,7 @@ class Service implements InjectionAwareInterface
         return true;
     }
 
-    public function regenerateThemeSettingsDataFile(Model\Theme $theme): bool
+    public function regenerateThemeSettingsDataFile(Model\Theme $theme)
     {
         $settings = [];
         $presets = $this->getThemePresets($theme);
@@ -231,7 +208,7 @@ class Service implements InjectionAwareInterface
         return true;
     }
 
-    public function regenerateThemeCssAndJsFiles(Model\Theme $theme, $preset, $api_admin): bool
+    public function regenerateThemeCssAndJsFiles(Model\Theme $theme, $preset, $api_admin)
     {
         $assets = $theme->getPathAssets();
 
@@ -254,29 +231,14 @@ class Service implements InjectionAwareInterface
         return true;
     }
 
-    public function getCurrentAdminAreaTheme(): array
+    public function getCurrentAdminAreaTheme()
     {
-        $default = 'admin_default';
-
-        if (self::$adminThemeCache !== null) {
-            // Apply default logic when returning from cache
-            $theme = !empty(self::$adminThemeCache) && $this->filesystem->exists(Path::join(PATH_THEMES, self::$adminThemeCache))
-                ? self::$adminThemeCache
-                : $default;
-            $url = SYSTEM_URL . "themes/{$theme}/";
-
-            return ['code' => $theme, 'url' => $url];
-        }
-
         $query = 'SELECT value
                 FROM setting
                 WHERE param = :param
                ';
+        $default = 'admin_default';
         $theme = $this->di['db']->getCell($query, ['param' => 'admin_theme']);
-        // Cache the raw database value (use empty string instead of null to mark as cached)
-        self::$adminThemeCache = $theme ?? '';
-
-        // Apply default logic for the return value
         if ($theme == null || !$this->filesystem->exists(Path::join(PATH_THEMES, $theme))) {
             $theme = $default;
         }
@@ -294,14 +256,7 @@ class Service implements InjectionAwareInterface
 
     public function getCurrentClientAreaThemeCode()
     {
-        if (self::$clientThemeCache !== null) {
-            // Apply default logic when returning from cache
-            return !empty(self::$clientThemeCache) ? self::$clientThemeCache : 'huraga';
-        }
-
         $theme = $this->di['db']->getCell("SELECT value FROM setting WHERE param = 'theme' ");
-        // Cache the raw database value (use empty string instead of null to mark as cached)
-        self::$clientThemeCache = $theme ?? '';
 
         return !empty($theme) ? $theme : 'huraga';
     }
@@ -390,7 +345,7 @@ class Service implements InjectionAwareInterface
         $paths = [Path::join($theme_path, 'html')];
 
         if (isset($config['extends'])) {
-            $ext = trim((string) $config['extends'], '/');
+            $ext = trim($config['extends'], '/');
             $ext = str_replace('.', '', $ext);
 
             $config['url'] = SYSTEM_URL . "themes/{$ext}/";
@@ -408,7 +363,7 @@ class Service implements InjectionAwareInterface
         }
         $list = array_unique($list);
         foreach ($list as $mod) {
-            $p = Path::join(PATH_MODS, ucfirst((string) $mod), $client ? 'html_client' : 'html_admin');
+            $p = Path::join(PATH_MODS, ucfirst($mod), $client ? 'html_client' : 'html_admin');
             if ($this->filesystem->exists($p)) {
                 $paths[] = $p;
             }
@@ -434,6 +389,29 @@ class Service implements InjectionAwareInterface
         return $this->getCurrentClientAreaTheme()->getName();
     }
 
+    public function getEncoreInfo(): array
+    {
+        $encoreInfo = [];
+        $entrypoint = 'entrypoints';
+        $manifest = 'manifest';
+        $encoreInfo['is_encore_theme'] = true;
+
+        if (!$this->filesystem->exists($this->getEncoreJsonPath($entrypoint)) && !$this->filesystem->exists($this->getEncoreJsonPath($manifest))) {
+            $encoreInfo['is_encore_theme'] = false;
+        }
+
+        $encoreInfo[$entrypoint] = $this->getEncoreJsonPath($entrypoint);
+        $encoreInfo[$manifest] = $this->getEncoreJsonPath($manifest);
+
+        if ($this->useAdminDefaultEncore()) {
+            $encoreInfo['is_encore_theme'] = true;
+            $encoreInfo[$entrypoint] = Path::join($this->getThemesPath(), 'admin_default', 'build', "{$entrypoint}.json");
+            $encoreInfo[$manifest] = Path::join($this->getThemesPath(), 'admin_default', 'build', "{$manifest}.json");
+        }
+
+        return $encoreInfo;
+    }
+
     public function getDefaultMarkdownAttributes(): array
     {
         if (defined('ADMIN_AREA') && ADMIN_AREA == true) {
@@ -454,5 +432,17 @@ class Service implements InjectionAwareInterface
         } else {
             return [];
         }
+    }
+
+    protected function getEncoreJsonPath($filename): string
+    {
+        return Path::join($this->getThemesPath(), $this->getCurrentRouteTheme(), 'build', "{$filename}.json");
+    }
+
+    protected function useAdminDefaultEncore()
+    {
+        $config = $this->getThemeConfig();
+
+        return $config['use_admin_default_encore'] ?? false;
     }
 }

@@ -29,7 +29,7 @@ class Service implements InjectionAwareInterface
         return $this->di;
     }
 
-    public function pingSitemap($config, $forced = false): bool
+    public function pingSitemap($config, $forced = false)
     {
         $systemService = $this->di['mod_service']('system');
 
@@ -37,7 +37,7 @@ class Service implements InjectionAwareInterface
         $last_time = $systemService->getParamValue($key);
 
         // Make sure we don't ping more than once a day
-        if ($last_time && (time() - strtotime((string) $last_time)) < 24 * 60 * 60 && !$forced) {
+        if ($last_time && (time() - strtotime($last_time)) < 24 * 60 * 60 && !$forced) {
             return false;
         }
 
@@ -65,7 +65,10 @@ class Service implements InjectionAwareInterface
         return true;
     }
 
-    public function getInfo(): array
+    /**
+     * @return array
+     */
+    public function getInfo()
     {
         $systemService = $this->di['mod_service']('system');
 
@@ -78,8 +81,10 @@ class Service implements InjectionAwareInterface
 
     /**
      * @param string $engine - The ID of the engine to check
+     *
+     * @return bool
      */
-    public function isEngineEnabled($engine): bool
+    public function isEngineEnabled($engine)
     {
         $extensionService = $this->di['mod_service']('extension');
         $config = $extensionService->getConfig('mod_seo');
@@ -123,7 +128,7 @@ class Service implements InjectionAwareInterface
         return $details;
     }
 
-    public static function onBeforeAdminCronRun(\Box_Event $event): bool
+    public static function onBeforeAdminCronRun(\Box_Event $event)
     {
         $di = $event->getDi();
         $extensionService = $di['mod_service']('extension');

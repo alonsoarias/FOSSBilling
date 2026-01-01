@@ -1,11 +1,6 @@
 CHANGELOG
 =========
 
-7.4
----
-
- * Add `logger` (constructor) property to `RoundRobinTransport`
-
 7.3
 ---
 

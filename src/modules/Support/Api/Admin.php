@@ -15,8 +15,6 @@
 
 namespace Box\Mod\Support\Api;
 
-use FOSSBilling\Validation\Api\RequiredParams;
-
 class Admin extends \Api_Abstract
 {
     /**
@@ -28,7 +26,7 @@ class Admin extends \Api_Abstract
      *
      * @return array
      */
-    public function ticket_get_list(array $data): array
+    public function ticket_get_list($data)
     {
         [$sql, $bindings] = $this->getService()->getSearchQuery($data);
         $per_page = $data['per_page'] ?? $this->di['pager']->getDefaultPerPage();
@@ -46,9 +44,13 @@ class Admin extends \Api_Abstract
      *
      * @return array
      */
-    #[RequiredParams(['id' => 'Ticket ID is missing'])]
-    public function ticket_get(array $data): array
+    public function ticket_get($data)
     {
+        $required = [
+            'id' => 'Ticket id is missing',
+        ];
+        $this->di['validator']->checkRequiredParamsForArray($required, $data);
+
         $model = $this->di['db']->getExistingModelById('SupportTicket', $data['id'], 'Ticket not found');
 
         return $this->getService()->toApiArray($model, true, $this->getIdentity());
@@ -64,15 +66,14 @@ class Admin extends \Api_Abstract
      *
      * @return bool
      */
-    #[RequiredParams(['id' => 'Ticket ID is missing'])]
-    public function ticket_update(array $data): bool
+    public function ticket_update($data)
     {
-        $model = $this->di['db']->getExistingModelById('SupportTicket', $data['id'], 'Ticket not found');
+        $required = [
+            'id' => 'Ticket id is missing',
+        ];
+        $this->di['validator']->checkRequiredParamsForArray($required, $data);
 
-        // Sanitize subject if provided
-        if (isset($data['subject'])) {
-            $data['subject'] = \FOSSBilling\Tools::sanitizeContent($data['subject'], false);
-        }
+        $model = $this->di['db']->getExistingModelById('SupportTicket', $data['id'], 'Ticket not found');
 
         return $this->getService()->ticketUpdate($model, $data);
     }
@@ -82,9 +83,14 @@ class Admin extends \Api_Abstract
      *
      * @return bool
      */
-    #[RequiredParams(['id' => 'Ticket message ID is missing', 'content' => 'Ticket message content is missing'])]
-    public function ticket_message_update(array $data): bool
+    public function ticket_message_update($data)
     {
+        $required = [
+            'id' => 'Ticket message id is missing',
+            'content' => 'Ticket message content is missing',
+        ];
+        $this->di['validator']->checkRequiredParamsForArray($required, $data);
+
         $model = $this->di['db']->getExistingModelById('SupportTicketMessage', $data['id'], 'Ticket message not found');
 
         return $this->getService()->ticketMessageUpdate($model, $data['content']);
@@ -95,9 +101,13 @@ class Admin extends \Api_Abstract
      *
      * @return bool
      */
-    #[RequiredParams(['id' => 'Ticket ID is missing'])]
-    public function ticket_delete(array $data): bool
+    public function ticket_delete($data)
     {
+        $required = [
+            'id' => 'Ticket id is missing',
+        ];
+        $this->di['validator']->checkRequiredParamsForArray($required, $data);
+
         $model = $this->di['db']->getExistingModelById('SupportTicket', $data['id'], 'Ticket not found');
 
         return $this->getService()->rm($model);
@@ -108,11 +118,15 @@ class Admin extends \Api_Abstract
      *
      * @return int - ticket message id
      */
-    #[RequiredParams(['id' => 'Ticket ID is missing', 'content' => 'Ticket message content is missing'])]
-    public function ticket_reply(array $data): int
+    public function ticket_reply($data)
     {
-        // Sanitize content to prevent XSS attacks
-        $data['content'] = \FOSSBilling\Tools::sanitizeContent($data['content'], true);
+        $required = [
+            'id' => 'Ticket id is missing',
+            'content' => 'Ticket message content is missing',
+        ];
+        $this->di['validator']->checkRequiredParamsForArray($required, $data);
+
+        $data['content'] = preg_replace('/javascript:\/\/|\%0(d|a)/i', '', $data['content']);
 
         $ticket = $this->di['db']->getExistingModelById('SupportTicket', $data['id'], 'Ticket not found');
 
@@ -124,9 +138,13 @@ class Admin extends \Api_Abstract
      *
      * @return bool
      */
-    #[RequiredParams(['id' => 'Ticket ID is missing'])]
-    public function ticket_close(array $data): bool
+    public function ticket_close($data)
     {
+        $required = [
+            'id' => 'Ticket id is missing',
+        ];
+        $this->di['validator']->checkRequiredParamsForArray($required, $data);
+
         $ticket = $this->di['db']->getExistingModelById('SupportTicket', $data['id'], 'Ticket not found');
 
         if ($ticket->status == \Model_SupportTicket::CLOSED) {
@@ -144,11 +162,17 @@ class Admin extends \Api_Abstract
      *
      * @return int $id - ticket id
      */
-    #[RequiredParams(['client_id' => 'Client ID is missing', 'content' => 'Ticket content required', 'subject' => 'Ticket subject required', 'support_helpdesk_id' => 'Ticket support_helpdesk_id is required'])]
-    public function ticket_create(array $data): int
+    public function ticket_create($data)
     {
-        // Sanitize content to prevent XSS attacks
-        $data['content'] = \FOSSBilling\Tools::sanitizeContent($data['content'], true);
+        $required = [
+            'client_id' => 'Client id is missing',
+            'content' => 'Ticket content required',
+            'subject' => 'Ticket subject required',
+            'support_helpdesk_id' => 'Ticket support_helpdesk_id is required',
+        ];
+        $this->di['validator']->checkRequiredParamsForArray($required, $data);
+
+        $data['content'] = preg_replace('/javascript:\/\/|\%0(d|a)/i', '', $data['content']);
 
         $client = $this->di['db']->getExistingModelById('Client', $data['client_id'], 'Client not found');
         $helpdesk = $this->di['db']->getExistingModelById('SupportHelpdesk', $data['support_helpdesk_id'], 'Helpdesk invalid');
@@ -161,8 +185,10 @@ class Admin extends \Api_Abstract
      * time defined in helpdesk.
      *
      * Run by cron job
+     *
+     * @return bool
      */
-    public function batch_ticket_auto_close($data): bool
+    public function batch_ticket_auto_close($data)
     {
         // Auto close support tickets
         $expiredArr = $this->getService()->getExpired();
@@ -182,8 +208,10 @@ class Admin extends \Api_Abstract
      * time defined in helpdesk.
      *
      * Run by cron job
+     *
+     * @return bool
      */
-    public function batch_public_ticket_auto_close($data): bool
+    public function batch_public_ticket_auto_close($data)
     {
         // Auto close public tickets
         $expired = $this->getService()->publicGetExpired();
@@ -199,7 +227,7 @@ class Admin extends \Api_Abstract
     /**
      * Return tickets statuses with counter.
      */
-    public function ticket_get_statuses(array $data): array
+    public function ticket_get_statuses($data)
     {
         if (isset($data['titles'])) {
             return $this->getService()->getStatuses();
@@ -213,7 +241,7 @@ class Admin extends \Api_Abstract
      *
      * @return array
      */
-    public function public_ticket_get_list(array $data): array
+    public function public_ticket_get_list($data)
     {
         [$sql, $bindings] = $this->getService()->publicGetSearchQuery($data);
         $per_page = $data['per_page'] ?? $this->di['pager']->getDefaultPerPage();
@@ -234,12 +262,15 @@ class Admin extends \Api_Abstract
      *
      * @throws \FOSSBilling\Exception
      */
-    #[RequiredParams(['name' => 'Client name parameter is missing', 'email' => 'Client email parameter is missing', 'subject' => 'Subject parameter is missing', 'message' => 'Ticket message is missing'])]
-    public function public_ticket_create(array $data): int
+    public function public_ticket_create($data)
     {
-        // Sanitize user input to prevent XSS attacks
-        $data['subject'] = \FOSSBilling\Tools::sanitizeContent($data['subject'], false);
-        $data['message'] = \FOSSBilling\Tools::sanitizeContent($data['message'], true);
+        $required = [
+            'name' => 'Client name parameter is missing',
+            'email' => 'Client email parameter is missing',
+            'subject' => 'Subject parameter is missing',
+            'message' => 'Ticket message is missing',
+        ];
+        $this->di['validator']->checkRequiredParamsForArray($required, $data);
 
         return $this->getService()->publicTicketCreate($data, $this->getIdentity());
     }
@@ -251,9 +282,13 @@ class Admin extends \Api_Abstract
      *
      * @throws \FOSSBilling\Exception
      */
-    #[RequiredParams(['id' => 'Ticket ID is missing'])]
-    public function public_ticket_get(array $data): array
+    public function public_ticket_get($data)
     {
+        $required = [
+            'id' => 'Ticket id is missing',
+        ];
+        $this->di['validator']->checkRequiredParamsForArray($required, $data);
+
         $model = $this->di['db']->getExistingModelById('SupportPTicket', $data['id'], 'Ticket not found');
 
         return $this->getService()->publicToApiArray($model, true);
@@ -266,9 +301,13 @@ class Admin extends \Api_Abstract
      *
      * @throws \FOSSBilling\Exception
      */
-    #[RequiredParams(['id' => 'Ticket ID is missing'])]
-    public function public_ticket_delete(array $data): bool
+    public function public_ticket_delete($data)
     {
+        $required = [
+            'id' => 'Ticket id is missing',
+        ];
+        $this->di['validator']->checkRequiredParamsForArray($required, $data);
+
         $model = $this->di['db']->getExistingModelById('SupportPTicket', $data['id'], 'Ticket not found');
 
         return $this->getService()->publicRm($model);
@@ -277,13 +316,17 @@ class Admin extends \Api_Abstract
     /**
      * Set id status to closed.
      *
-     * @return bool
+     * @return array
      *
      * @throws \FOSSBilling\Exception
      */
-    #[RequiredParams(['id' => 'Ticket ID is missing'])]
-    public function public_ticket_close(array $data): bool
+    public function public_ticket_close($data)
     {
+        $required = [
+            'id' => 'Ticket id is missing',
+        ];
+        $this->di['validator']->checkRequiredParamsForArray($required, $data);
+
         $ticket = $this->di['db']->getExistingModelById('SupportPTicket', $data['id'], 'Ticket not found');
 
         return $this->getService()->publicCloseTicket($ticket, $this->getIdentity());
@@ -299,9 +342,13 @@ class Admin extends \Api_Abstract
      *
      * @throws \FOSSBilling\Exception
      */
-    #[RequiredParams(['id' => 'Ticket ID is missing'])]
-    public function public_ticket_update(array $data): bool
+    public function public_ticket_update($data)
     {
+        $required = [
+            'id' => 'Ticket id is missing',
+        ];
+        $this->di['validator']->checkRequiredParamsForArray($required, $data);
+
         $model = $this->di['db']->getExistingModelById('SupportPTicket', $data['id'], 'Ticket not found');
 
         return $this->getService()->publicTicketUpdate($model, $data);
@@ -310,13 +357,18 @@ class Admin extends \Api_Abstract
     /**
      * Post new reply to inquiry.
      *
-     * @return int
+     * @return bool
      *
      * @throws \FOSSBilling\Exception
      */
-    #[RequiredParams(['id' => 'Ticket ID is missing', 'content' => 'Ticket content required'])]
-    public function public_ticket_reply(array $data): int
+    public function public_ticket_reply($data)
     {
+        $required = [
+            'id' => 'Ticket id is missing',
+            'content' => 'Ticket content required',
+        ];
+        $this->di['validator']->checkRequiredParamsForArray($required, $data);
+
         $ticket = $this->di['db']->getExistingModelById('SupportPTicket', $data['id'], 'Ticket not found');
 
         return $this->getService()->publicTicketReply($ticket, $this->getIdentity(), $data['content']);
@@ -325,7 +377,7 @@ class Admin extends \Api_Abstract
     /**
      * Return tickets statuses with counter.
      */
-    public function public_ticket_get_statuses(array $data): array
+    public function public_ticket_get_statuses($data)
     {
         if (isset($data['titles'])) {
             return $this->getService()->publicGetStatuses();
@@ -339,7 +391,7 @@ class Admin extends \Api_Abstract
      *
      * @return array
      */
-    public function helpdesk_get_list(array $data): array
+    public function helpdesk_get_list($data)
     {
         [$sql, $bindings] = $this->getService()->helpdeskGetSearchQuery($data);
         $per_page = $data['per_page'] ?? $this->di['pager']->getDefaultPerPage();
@@ -352,7 +404,7 @@ class Admin extends \Api_Abstract
      *
      * @return array
      */
-    public function helpdesk_get_pairs(array $data): array
+    public function helpdesk_get_pairs($data)
     {
         return $this->getService()->helpdeskGetPairs();
     }
@@ -364,9 +416,13 @@ class Admin extends \Api_Abstract
      *
      * @throws \FOSSBilling\Exception
      */
-    #[RequiredParams(['id' => 'Help desk ID is missing'])]
-    public function helpdesk_get(array $data): array
+    public function helpdesk_get($data)
     {
+        $required = [
+            'id' => 'Help desk id is missing',
+        ];
+        $this->di['validator']->checkRequiredParamsForArray($required, $data);
+
         $model = $this->di['db']->getExistingModelById('SupportHelpdesk', $data['id'], 'Help desk not found');
 
         return $this->getService()->helpdeskToApiArray($model);
@@ -385,9 +441,13 @@ class Admin extends \Api_Abstract
      *
      * @throws \FOSSBilling\Exception
      */
-    #[RequiredParams(['id' => 'Help desk ID is missing'])]
-    public function helpdesk_update(array $data): bool
+    public function helpdesk_update($data)
     {
+        $required = [
+            'id' => 'Help desk id is missing',
+        ];
+        $this->di['validator']->checkRequiredParamsForArray($required, $data);
+
         $model = $this->di['db']->getExistingModelById('SupportHelpdesk', $data['id'], 'Help desk not found');
 
         return $this->getService()->helpdeskUpdate($model, $data);
@@ -405,9 +465,13 @@ class Admin extends \Api_Abstract
      *
      * @throws \FOSSBilling\Exception
      */
-    #[RequiredParams(['name' => 'Help desk title is missing'])]
-    public function helpdesk_create(array $data): int
+    public function helpdesk_create($data)
     {
+        $required = [
+            'name' => 'Help desk title is missing',
+        ];
+        $this->di['validator']->checkRequiredParamsForArray($required, $data);
+
         return $this->getService()->helpdeskCreate($data);
     }
 
@@ -418,9 +482,13 @@ class Admin extends \Api_Abstract
      *
      * @throws \FOSSBilling\Exception
      */
-    #[RequiredParams(['id' => 'Help desk ID is missing'])]
-    public function helpdesk_delete(array $data): bool
+    public function helpdesk_delete($data)
     {
+        $required = [
+            'id' => 'Help desk id is missing',
+        ];
+        $this->di['validator']->checkRequiredParamsForArray($required, $data);
+
         $model = $this->di['db']->getExistingModelById('SupportHelpdesk', $data['id'], 'Help desk not found');
 
         return $this->getService()->helpdeskRm($model);
@@ -431,7 +499,7 @@ class Admin extends \Api_Abstract
      *
      * @return array
      */
-    public function canned_get_list(array $data): array
+    public function canned_get_list($data)
     {
         [$sql, $bindings] = $this->getService()->cannedGetSearchQuery($data);
 
@@ -466,9 +534,13 @@ class Admin extends \Api_Abstract
      *
      * @throws \FOSSBilling\Exception
      */
-    #[RequiredParams(['id' => 'Canned reply ID is missing'])]
-    public function canned_get(array $data): array
+    public function canned_get($data)
     {
+        $required = [
+            'id' => 'Canned reply id is missing',
+        ];
+        $this->di['validator']->checkRequiredParamsForArray($required, $data);
+
         $model = $this->di['db']->getExistingModelById('SupportPr', $data['id'], 'Canned reply not found');
 
         return $this->getService()->cannedToApiArray($model);
@@ -481,9 +553,13 @@ class Admin extends \Api_Abstract
      *
      * @throws \FOSSBilling\Exception
      */
-    #[RequiredParams(['id' => 'Canned reply ID is missing'])]
-    public function canned_delete(array $data): bool
+    public function canned_delete($data)
     {
+        $required = [
+            'id' => 'Canned reply id is missing',
+        ];
+        $this->di['validator']->checkRequiredParamsForArray($required, $data);
+
         $model = $this->di['db']->getExistingModelById('SupportPr', $data['id'], 'Canned reply not found');
 
         return $this->getService()->cannedRm($model);
@@ -498,9 +574,14 @@ class Admin extends \Api_Abstract
      *
      * @throws \FOSSBilling\Exception
      */
-    #[RequiredParams(['title' => 'Canned reply title is missing', 'category_id' => 'Canned reply category ID is missing'])]
-    public function canned_create(array $data): int
+    public function canned_create($data)
     {
+        $required = [
+            'title' => 'Canned reply title is missing',
+            'category_id' => 'Canned reply category id is missing',
+        ];
+        $this->di['validator']->checkRequiredParamsForArray($required, $data);
+
         $content = $data['content'] ?? null;
 
         return $this->getService()->cannedCreate($data['title'], $data['category_id'], $content);
@@ -517,9 +598,13 @@ class Admin extends \Api_Abstract
      *
      * @throws \FOSSBilling\Exception
      */
-    #[RequiredParams(['id' => 'Canned reply ID is missing'])]
-    public function canned_update(array $data): bool
+    public function canned_update($data)
     {
+        $required = [
+            'id' => 'Canned reply id is missing',
+        ];
+        $this->di['validator']->checkRequiredParamsForArray($required, $data);
+
         $model = $this->di['db']->getExistingModelById('SupportPr', $data['id'], 'Canned reply not found');
 
         return $this->getService()->cannedUpdate($model, $data);
@@ -530,7 +615,7 @@ class Admin extends \Api_Abstract
      *
      * @return array
      */
-    public function canned_category_pairs(array $data): array
+    public function canned_category_pairs($data)
     {
         return $this->di['db']->getAssoc('SELECT id, title FROM support_pr_category WHERE 1');
     }
@@ -542,9 +627,13 @@ class Admin extends \Api_Abstract
      *
      * @throws \FOSSBilling\Exception
      */
-    #[RequiredParams(['id' => 'Canned category ID is missing'])]
-    public function canned_category_get(array $data): array
+    public function canned_category_get($data)
     {
+        $required = [
+            'id' => 'Canned category id is missing',
+        ];
+        $this->di['validator']->checkRequiredParamsForArray($required, $data);
+
         $model = $this->di['db']->getExistingModelById('SupportPrCategory', $data['id'], 'Canned category not found');
 
         return $this->getService()->cannedCategoryToApiArray($model);
@@ -559,9 +648,13 @@ class Admin extends \Api_Abstract
      *
      * @throws \FOSSBilling\Exception
      */
-    #[RequiredParams(['id' => 'Canned category ID is missing'])]
-    public function canned_category_update(array $data): bool
+    public function canned_category_update($data)
     {
+        $required = [
+            'id' => 'Canned category id is missing',
+        ];
+        $this->di['validator']->checkRequiredParamsForArray($required, $data);
+
         $model = $this->di['db']->getExistingModelById('SupportPrCategory', $data['id'], 'Canned category not found');
 
         $title = $data['title'] ?? $model->title;
@@ -576,9 +669,13 @@ class Admin extends \Api_Abstract
      *
      * @throws \FOSSBilling\Exception
      */
-    #[RequiredParams(['id' => 'Canned category ID is missing'])]
-    public function canned_category_delete(array $data): bool
+    public function canned_category_delete($data)
     {
+        $required = [
+            'id' => 'Canned category id is missing',
+        ];
+        $this->di['validator']->checkRequiredParamsForArray($required, $data);
+
         $model = $this->di['db']->getExistingModelById('SupportPrCategory', $data['id'], 'Canned category not found');
 
         return $this->getService()->cannedCategoryRm($model);
@@ -591,9 +688,13 @@ class Admin extends \Api_Abstract
      *
      * @throws \FOSSBilling\Exception
      */
-    #[RequiredParams(['title' => 'Canned category title is missing'])]
-    public function canned_category_create(array $data): int
+    public function canned_category_create($data)
     {
+        $required = [
+            'title' => 'Canned category title is missing',
+        ];
+        $this->di['validator']->checkRequiredParamsForArray($required, $data);
+
         return $this->getService()->cannedCategoryCreate($data['title']);
     }
 
@@ -604,9 +705,14 @@ class Admin extends \Api_Abstract
      *
      * @throws \FOSSBilling\Exception
      */
-    #[RequiredParams(['ticket_id' => 'ticket_ID is missing', 'note' => 'Note is missing'])]
-    public function note_create(array $data): int
+    public function note_create($data)
     {
+        $required = [
+            'ticket_id' => 'ticket_id is missing',
+            'note' => 'Note is missing',
+        ];
+        $this->di['validator']->checkRequiredParamsForArray($required, $data);
+
         $ticket = $this->di['db']->getExistingModelById('SupportTicket', $data['ticket_id'], 'Ticket not found');
 
         return $this->getService()->noteCreate($ticket, $this->getIdentity(), $data['note']);
@@ -619,9 +725,13 @@ class Admin extends \Api_Abstract
      *
      * @throws \FOSSBilling\Exception
      */
-    #[RequiredParams(['id' => 'Note ID is missing'])]
-    public function note_delete(array $data): bool
+    public function note_delete($data)
     {
+        $required = [
+            'id' => 'Note id is missing',
+        ];
+        $this->di['validator']->checkRequiredParamsForArray($required, $data);
+
         $model = $this->di['db']->getExistingModelById('SupportTicketNote', $data['id'], 'Note not found');
 
         return $this->getService()->noteRm($model);
@@ -634,9 +744,13 @@ class Admin extends \Api_Abstract
      *
      * @throws \FOSSBilling\Exception
      */
-    #[RequiredParams(['id' => 'Ticket ID is missing'])]
-    public function task_complete(array $data): bool
+    public function task_complete($data)
     {
+        $required = [
+            'id' => 'Ticket id is missing',
+        ];
+        $this->di['validator']->checkRequiredParamsForArray($required, $data);
+
         $model = $this->di['db']->getExistingModelById('SupportTicket', $data['id'], 'Ticket not found');
 
         return $this->getService()->ticketTaskComplete($model);
@@ -644,10 +758,16 @@ class Admin extends \Api_Abstract
 
     /**
      * Deletes tickets with given IDs.
+     *
+     * @return bool
      */
-    #[RequiredParams(['ids' => 'IDs were not passed'])]
     public function batch_delete($data)
     {
+        $required = [
+            'ids' => 'IDs not passed',
+        ];
+        $this->di['validator']->checkRequiredParamsForArray($required, $data);
+
         foreach ($data['ids'] as $id) {
             $this->ticket_delete(['id' => $id]);
         }
@@ -657,10 +777,16 @@ class Admin extends \Api_Abstract
 
     /**
      * Deletes tickets with given IDs.
+     *
+     * @return bool
      */
-    #[RequiredParams(['ids' => 'IDs were not passed'])]
     public function batch_delete_public($data)
     {
+        $required = [
+            'ids' => 'IDs not passed',
+        ];
+        $this->di['validator']->checkRequiredParamsForArray($required, $data);
+
         foreach ($data['ids'] as $id) {
             $this->public_ticket_delete(['id' => $id]);
         }
@@ -677,7 +803,7 @@ class Admin extends \Api_Abstract
      *
      * @return array
      */
-    public function kb_article_get_list(array $data): array
+    public function kb_article_get_list($data)
     {
         $status = $data['status'] ?? null;
         $search = $data['search'] ?? null;
@@ -698,9 +824,13 @@ class Admin extends \Api_Abstract
      *
      * @return array
      */
-    #[RequiredParams(['id' => 'Article ID was not passed'])]
-    public function kb_article_get(array $data): array
+    public function kb_article_get($data)
     {
+        $required = [
+            'id' => 'Article id not passed',
+        ];
+        $this->di['validator']->checkRequiredParamsForArray($required, $data);
+
         $model = $this->di['db']->findOne('SupportKbArticle', 'id = ?', [$data['id']]);
 
         if (!$model instanceof \Model_SupportKbArticle) {
@@ -716,16 +846,20 @@ class Admin extends \Api_Abstract
      * @optional string $status - knowledge base article status
      * @optional string $content - knowledge base article content
      *
-     * @return int
+     * @return array
      */
-    #[RequiredParams(['kb_article_category_id' => 'Article category ID was not passed', 'title' => 'Article title not passed'])]
-    public function kb_article_create(array $data): int
+    public function kb_article_create($data)
     {
+        $required = [
+            'kb_article_category_id' => 'Article category id not passed',
+            'title' => 'Article title not passed',
+        ];
+        $this->di['validator']->checkRequiredParamsForArray($required, $data);
+
         $articleCategoryId = $data['kb_article_category_id'];
-        // Sanitize title and content to prevent XSS attacks
-        $title = \FOSSBilling\Tools::sanitizeContent($data['title'], false);
+        $title = $data['title'];
         $status = $data['status'] ?? \Model_SupportKbArticle::DRAFT;
-        $content = isset($data['content']) ? \FOSSBilling\Tools::sanitizeContent($data['content'], true) : null;
+        $content = $data['content'] ?? null;
 
         return $this->getService()->kbCreateArticle($articleCategoryId, $title, $status, $content);
     }
@@ -742,15 +876,18 @@ class Admin extends \Api_Abstract
      *
      * @return bool
      */
-    #[RequiredParams(['id' => 'Article ID was not passed'])]
-    public function kb_article_update(array $data): bool
+    public function kb_article_update($data)
     {
+        $required = [
+            'id' => 'Article ID not passed',
+        ];
+        $this->di['validator']->checkRequiredParamsForArray($required, $data);
+
         $articleCategoryId = $data['kb_article_category_id'] ?? null;
-        // Sanitize title and content to prevent XSS attacks
-        $title = isset($data['title']) ? \FOSSBilling\Tools::sanitizeContent($data['title'], false) : null;
+        $title = $data['title'] ?? null;
         $slug = $data['slug'] ?? null;
         $status = $data['status'] ?? null;
-        $content = isset($data['content']) ? \FOSSBilling\Tools::sanitizeContent($data['content'], true) : null;
+        $content = $data['content'] ?? null;
         $views = $data['views'] ?? null;
 
         return $this->getService()->kbUpdateArticle($data['id'], $articleCategoryId, $title, $slug, $status, $content, $views);
@@ -758,10 +895,16 @@ class Admin extends \Api_Abstract
 
     /**
      * Delete knowledge base article.
+     *
+     * @return bool
      */
-    #[RequiredParams(['id' => 'Article ID was not passed'])]
     public function kb_article_delete($data)
     {
+        $required = [
+            'id' => 'Article ID not passed',
+        ];
+        $this->di['validator']->checkRequiredParamsForArray($required, $data);
+
         $model = $this->di['db']->findOne('SupportKbArticle', 'id = ?', [$data['id']]);
 
         if (!$model instanceof \Model_SupportKbArticle) {
@@ -778,7 +921,7 @@ class Admin extends \Api_Abstract
      *
      * @return array
      */
-    public function kb_category_get_list(array $data): array
+    public function kb_category_get_list($data)
     {
         [$sql, $bindings] = $this->getService()->kbCategoryGetSearchQuery($data);
         $per_page = $data['per_page'] ?? $this->di['pager']->getDefaultPerPage();
@@ -797,9 +940,13 @@ class Admin extends \Api_Abstract
      *
      * @return array
      */
-    #[RequiredParams(['id' => 'Category ID was not passed'])]
-    public function kb_category_get(array $data): array
+    public function kb_category_get($data)
     {
+        $required = [
+            'id' => 'Category ID not passed',
+        ];
+        $this->di['validator']->checkRequiredParamsForArray($required, $data);
+
         $model = $this->di['db']->findOne('SupportKbArticleCategory', 'id = ?', [$data['id']]);
 
         if (!$model instanceof \Model_SupportKbArticleCategory) {
@@ -814,11 +961,15 @@ class Admin extends \Api_Abstract
      *
      * @optional string $description - knowledge base category description
      *
-     * @return int
+     * @return array
      */
-    #[RequiredParams(['title' => 'Category title not passed'])]
-    public function kb_category_create(array $data): int
+    public function kb_category_create($data)
     {
+        $required = [
+            'title' => 'Category title not passed',
+        ];
+        $this->di['validator']->checkRequiredParamsForArray($required, $data);
+
         $title = $data['title'];
         $description = $data['description'] ?? null;
 
@@ -832,11 +983,15 @@ class Admin extends \Api_Abstract
      * @optional string $slug  - knowledge base category slug
      * @optional string $description - knowledge base category description
      *
-     * @return bool
+     * @return array
      */
-    #[RequiredParams(['id' => 'Category ID was not passed'])]
-    public function kb_category_update(array $data): bool
+    public function kb_category_update($data)
     {
+        $required = [
+            'id' => 'Category ID not passed',
+        ];
+        $this->di['validator']->checkRequiredParamsForArray($required, $data);
+
         $model = $this->di['db']->findOne('SupportKbArticleCategory', 'id = ?', [$data['id']]);
 
         if (!$model instanceof \Model_SupportKbArticleCategory) {
@@ -855,9 +1010,13 @@ class Admin extends \Api_Abstract
      *
      * @return bool
      */
-    #[RequiredParams(['id' => 'Category ID was not passed'])]
-    public function kb_category_delete(array $data): bool
+    public function kb_category_delete($data)
     {
+        $required = [
+            'id' => 'Category ID not passed',
+        ];
+        $this->di['validator']->checkRequiredParamsForArray($required, $data);
+
         $model = $this->di['db']->findOne('SupportKbArticleCategory', 'id = ?', [$data['id']]);
 
         if (!$model instanceof \Model_SupportKbArticleCategory) {
@@ -872,7 +1031,7 @@ class Admin extends \Api_Abstract
      *
      * @return array
      */
-    public function kb_category_get_pairs(array $data): array
+    public function kb_category_get_pairs($data)
     {
         return $this->getService()->kbCategoryGetPairs();
     }

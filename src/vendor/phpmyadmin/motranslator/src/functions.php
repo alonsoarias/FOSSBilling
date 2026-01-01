@@ -26,8 +26,6 @@ declare(strict_types=1);
 
 use PhpMyAdmin\MoTranslator\Loader;
 
-// phpcs:disable Squiz.Functions.GlobalFunction
-
 if (! function_exists('_setlocale')) {
     /**
      * Sets a requested locale.
@@ -68,7 +66,7 @@ if (! function_exists('_bind_textdomain_codeset')) {
      * @param string $domain  Domain where to set character set
      * @param string $codeset Character set to set
      */
-    function _bind_textdomain_codeset(string $domain, string $codeset): void
+    function _bind_textdomain_codeset($domain, $codeset): void
     {
     }
 }

@@ -11,8 +11,6 @@
 
 namespace Box\Mod\Massmailer\Api;
 
-use FOSSBilling\Validation\Api\RequiredParams;
-
 class Admin extends \Api_Abstract
 {
     /**
@@ -56,8 +54,10 @@ class Admin extends \Api_Abstract
      * @optional string $from_name - mail message email from name
      * @optional string $from_email - mail message email from email
      * @optional array $filter  - filter parameters to select clients
+     *
+     * @return bool
      */
-    public function update($data): bool
+    public function update($data)
     {
         $model = $this->_getMessage($data);
 
@@ -96,9 +96,13 @@ class Admin extends \Api_Abstract
      *
      * @return bool
      */
-    #[RequiredParams(['subject' => 'Message subject was not passed'])]
     public function create($data)
     {
+        $required = [
+            'subject' => 'Message subject not passed',
+        ];
+        $this->di['validator']->checkRequiredParamsForArray($required, $data);
+
         $default_content = '{% apply markdown %}
 Hi {{ c.first_name }} {{ c.last_name }},
 
@@ -138,8 +142,10 @@ Order our services at {{ "order"|link }}
 
     /**
      * Send test mail message by ID to client.
+     *
+     * @return bool
      */
-    public function send_test($data): bool
+    public function send_test($data)
     {
         /** @var \Model_MassmailerMessage $model */
         $model = $this->_getMessage($data);
@@ -158,8 +164,10 @@ Order our services at {{ "order"|link }}
 
     /**
      * Send mail message by ID.
+     *
+     * @return bool
      */
-    public function send($data): bool
+    public function send($data)
     {
         /** @var \Model_MassmailerMessage $model */
         $model = $this->_getMessage($data);
@@ -222,8 +230,10 @@ Order our services at {{ "order"|link }}
 
     /**
      * Delete mail message by ID.
+     *
+     * @return bool
      */
-    public function delete($data): bool
+    public function delete($data)
     {
         $model = $this->_getMessage($data);
         $id = $model->id;
@@ -240,7 +250,7 @@ Order our services at {{ "order"|link }}
      *
      * @return array - parsed subject and content strings
      */
-    public function preview($data): array
+    public function preview($data)
     {
         $model = $this->_getMessage($data);
         $client_id = $this->_getTestClientId();
@@ -282,7 +292,7 @@ Order our services at {{ "order"|link }}
         return $client->email;
     }
 
-    private function _getTestClientId(): int
+    private function _getTestClientId()
     {
         $mod = $this->di['mod']('massmailer');
         $c = $mod->getConfig();
@@ -295,9 +305,13 @@ Order our services at {{ "order"|link }}
         return (int) $c['test_client_id'];
     }
 
-    #[RequiredParams(['id' => 'Message ID was not passed'])]
     private function _getMessage($data)
     {
+        $required = [
+            'id' => 'Message ID not passed',
+        ];
+        $this->di['validator']->checkRequiredParamsForArray($required, $data);
+
         return $this->di['db']->getExistingModelById('mod_massmailer', $data['id'], 'Message not found');
     }
 }

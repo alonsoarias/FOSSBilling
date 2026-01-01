@@ -38,10 +38,14 @@ use const PHP_INT_MAX;
  */
 class StringReader
 {
-    private string $string;
-    private int $length;
+    /** @var string */
+    private $string;
+    /** @var int */
+    private $length;
 
-    /** @param string $filename Name of file to load */
+    /**
+     * @param string $filename Name of file to load
+     */
     public function __construct(string $filename)
     {
         $this->string = (string) file_get_contents($filename);
@@ -60,7 +64,9 @@ class StringReader
             throw new ReaderException('Not enough bytes!');
         }
 
-        return substr($this->string, $pos, $bytes);
+        $data = substr($this->string, $pos, $bytes);
+
+        return $data === false ? '' : $data;
     }
 
     /**

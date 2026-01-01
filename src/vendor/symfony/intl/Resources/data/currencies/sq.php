@@ -634,10 +634,6 @@ return [
             'EC$',
             'Dollari i Karaibeve Lindore',
         ],
-        'XCG' => [
-            'ANG',
-            'gilder karaibian',
-        ],
         'XOF' => [
             'F CFA',
             'Franga e Bregut të Fildishtë',
@@ -656,11 +652,7 @@ return [
         ],
         'ZMW' => [
             'ZMW',
-            'Kuaça e Zambisë',
-        ],
-        'ZWG' => [
-            'ZWG',
-            'Ari i Zimbabves',
+            'Kuaça e Zambikut',
         ],
     ],
 ];

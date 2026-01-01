@@ -24,7 +24,7 @@ class Client extends \Api_Abstract
      *
      * @return true
      */
-    public function update_nameservers($data): bool
+    public function update_nameservers($data)
     {
         $s = $this->_getService($data);
 

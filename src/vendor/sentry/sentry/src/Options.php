@@ -10,7 +10,6 @@ use Sentry\HttpClient\HttpClientInterface;
 use Sentry\Integration\ErrorListenerIntegration;
 use Sentry\Integration\IntegrationInterface;
 use Sentry\Logs\Log;
-use Sentry\Metrics\Types\Metric;
 use Sentry\Transport\TransportInterface;
 use Symfony\Component\OptionsResolver\Options as SymfonyOptions;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -176,31 +175,6 @@ final class Options
     public function getEnableLogs(): bool
     {
         return $this->options['enable_logs'] ?? false;
-    }
-
-    /**
-     * Sets if metrics should be enabled or not.
-     */
-    public function setEnableMetrics(bool $enableTracing): self
-    {
-        $options = array_merge($this->options, ['enable_metrics' => $enableTracing]);
-
-        $this->options = $this->resolver->resolve($options);
-
-        return $this;
-    }
-
-    /**
-     * Returns whether metrics are enabled or not.
-     */
-    public function getEnableMetrics(): bool
-    {
-        /**
-         * @var bool $enableMetrics
-         */
-        $enableMetrics = $this->options['enable_metrics'] ?? true;
-
-        return $enableMetrics;
     }
 
     /**
@@ -703,35 +677,6 @@ final class Options
     }
 
     /**
-     * Gets a callback that will be invoked before a metric is added.
-     * Returning `null` means that the metric will be discarded.
-     */
-    public function getBeforeSendMetricCallback(): callable
-    {
-        /**
-         * @var callable $callback
-         */
-        $callback = $this->options['before_send_metric'];
-
-        return $callback;
-    }
-
-    /**
-     * Sets a new callback that is invoked before metrics are sent.
-     * Returning `null` means that the metric will be discarded.
-     *
-     * @return $this
-     */
-    public function setBeforeSendMetricCallback(callable $callback): self
-    {
-        $options = array_merge($this->options, ['before_send_metric' => $callback]);
-
-        $this->options = $this->resolver->resolve($options);
-
-        return $this;
-    }
-
-    /**
      * Sets a callable to be called to decide whether metrics should
      * be send or not.
      *
@@ -1185,7 +1130,7 @@ final class Options
      *                                   captured. It can be set to one of the
      *                                   following values:
      *
-     *                                    - never: request bodies are never sent
+     *                                    - none: request bodies are never sent
      *                                    - small: only small request bodies will
      *                                      be captured where the cutoff for small
      *                                      depends on the SDK (typically 4KB)
@@ -1275,7 +1220,6 @@ final class Options
             'sample_rate' => 1,
             'enable_tracing' => null,
             'enable_logs' => false,
-            'enable_metrics' => true,
             'traces_sample_rate' => null,
             'traces_sampler' => null,
             'profiles_sample_rate' => null,
@@ -1312,13 +1256,9 @@ final class Options
             },
             /**
              * @deprecated Metrics are no longer supported. Metrics API is a no-op and will be removed in 5.x.
-             * Use `before_send_metric` instead.
              */
             'before_send_metrics' => static function (Event $metrics): ?Event {
                 return null;
-            },
-            'before_send_metric' => static function (Metric $metric): Metric {
-                return $metric;
             },
             'trace_propagation_targets' => null,
             'strict_trace_propagation' => false,
@@ -1350,7 +1290,6 @@ final class Options
         $resolver->setAllowedTypes('sample_rate', ['int', 'float']);
         $resolver->setAllowedTypes('enable_tracing', ['null', 'bool']);
         $resolver->setAllowedTypes('enable_logs', 'bool');
-        $resolver->setAllowedTypes('enable_metrics', 'bool');
         $resolver->setAllowedTypes('traces_sample_rate', ['null', 'int', 'float']);
         $resolver->setAllowedTypes('traces_sampler', ['null', 'callable']);
         $resolver->setAllowedTypes('profiles_sample_rate', ['null', 'int', 'float']);
@@ -1370,7 +1309,6 @@ final class Options
         $resolver->setAllowedTypes('before_send', ['callable']);
         $resolver->setAllowedTypes('before_send_transaction', ['callable']);
         $resolver->setAllowedTypes('before_send_log', 'callable');
-        $resolver->setAllowedTypes('before_send_metric', ['callable']);
         $resolver->setAllowedTypes('ignore_exceptions', 'string[]');
         $resolver->setAllowedTypes('ignore_transactions', 'string[]');
         $resolver->setAllowedTypes('trace_propagation_targets', ['null', 'string[]']);
@@ -1519,13 +1457,13 @@ final class Options
     }
 
     /**
-     * Validates if the value of the max_breadcrumbs option is valid.
+     * Validates if the value of the max_breadcrumbs option is in range.
      *
      * @param int $value The value to validate
      */
     private function validateMaxBreadcrumbsOptions(int $value): bool
     {
-        return $value >= 0;
+        return $value >= 0 && $value <= self::DEFAULT_MAX_BREADCRUMBS;
     }
 
     /**

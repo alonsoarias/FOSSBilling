@@ -15,8 +15,6 @@
 
 namespace Box\Mod\Email\Api;
 
-use FOSSBilling\Validation\Api\RequiredParams;
-
 class Client extends \Api_Abstract
 {
     /**
@@ -56,9 +54,13 @@ class Client extends \Api_Abstract
      *
      * @throws \FOSSBilling\Exception
      */
-    #[RequiredParams(['id' => 'Email ID was not passed'])]
     public function get($data)
     {
+        $required = [
+            'id' => 'Email ID is required',
+        ];
+        $this->di['validator']->checkRequiredParamsForArray($required, $data);
+
         $model = $this->getService()->findOneForClientById($this->getIdentity(), $data['id']);
 
         if (!$model instanceof \Model_ActivityClientEmail) {
@@ -75,9 +77,13 @@ class Client extends \Api_Abstract
      *
      * @throws \FOSSBilling\Exception
      */
-    #[RequiredParams(['id' => 'Email ID was not passed'])]
     public function resend($data)
     {
+        $required = [
+            'id' => 'Email ID is required',
+        ];
+        $this->di['validator']->checkRequiredParamsForArray($required, $data);
+
         $model = $this->getService()->findOneForClientById($this->getIdentity(), $data['id']);
         if (!$model instanceof \Model_ActivityClientEmail) {
             throw new \FOSSBilling\Exception('Email not found');
@@ -93,9 +99,13 @@ class Client extends \Api_Abstract
      *
      * @throws \FOSSBilling\Exception
      */
-    #[RequiredParams(['id' => 'Email ID was not passed'])]
     public function delete($data)
     {
+        $required = [
+            'id' => 'Email ID is required',
+        ];
+        $this->di['validator']->checkRequiredParamsForArray($required, $data);
+
         $model = $this->getService()->findOneForClientById($this->getIdentity(), $data['id']);
         if (!$model instanceof \Model_ActivityClientEmail) {
             throw new \FOSSBilling\Exception('Email not found');

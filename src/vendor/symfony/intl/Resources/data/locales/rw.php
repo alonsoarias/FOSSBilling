@@ -55,7 +55,6 @@ return [
         'kn' => 'Igikanada',
         'ko' => 'Igikoreya',
         'ku' => 'Inyekuridishi',
-        'ku_Latn' => 'Inyekuridishi (Latin)',
         'ky' => 'Inkerigizi',
         'ln' => 'Ilingala',
         'lo' => 'Ikilawotiyani',

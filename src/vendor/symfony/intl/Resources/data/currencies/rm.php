@@ -28,7 +28,7 @@ return [
         ],
         'AMD' => [
             'AMD',
-            'dram da l’Armenia',
+            'dram armen',
         ],
         'ANG' => [
             'ANG',
@@ -108,7 +108,7 @@ return [
         ],
         'BDT' => [
             'BDT',
-            'taka dal Bangladesch',
+            'taka bangladais',
         ],
         'BEC' => [
             'BEC',
@@ -204,7 +204,7 @@ return [
         ],
         'BTN' => [
             'BTN',
-            'ngultrum dal Butan',
+            'ngultrum butanais',
         ],
         'BUK' => [
             'BUK',
@@ -212,7 +212,7 @@ return [
         ],
         'BWP' => [
             'BWP',
-            'pula da la Botsuana',
+            'pula da la Botswana',
         ],
         'BYB' => [
             'BYB',
@@ -280,7 +280,7 @@ return [
         ],
         'CRC' => [
             'CRC',
-            'colón da la Costa Rica',
+            'colon da la Costa Rica',
         ],
         'CSD' => [
             'CSD',
@@ -308,7 +308,7 @@ return [
         ],
         'CZK' => [
             'CZK',
-            'curuna tscheca',
+            'cruna tscheca',
         ],
         'DDM' => [
             'DDM',
@@ -324,7 +324,7 @@ return [
         ],
         'DKK' => [
             'DKK',
-            'curuna danaisa',
+            'cruna danaisa',
         ],
         'DOP' => [
             'DOP',
@@ -352,7 +352,7 @@ return [
         ],
         'ERN' => [
             'ERN',
-            'nakfa da l’Eritrea',
+            'nakfa eritreic',
         ],
         'ESA' => [
             'ESA',
@@ -392,7 +392,7 @@ return [
         ],
         'GBP' => [
             '£',
-            'glivra sterlina',
+            'glivra britannica',
         ],
         'GEK' => [
             'GEK',
@@ -416,7 +416,7 @@ return [
         ],
         'GMD' => [
             'GMD',
-            'dalasi da la Gambia',
+            'dalasi gambic',
         ],
         'GNF' => [
             'GNF',
@@ -456,7 +456,7 @@ return [
         ],
         'HNL' => [
             'HNL',
-            'lempira honduriana',
+            'lempira hondurian',
         ],
         'HRD' => [
             'HRD',
@@ -492,7 +492,7 @@ return [
         ],
         'ILS' => [
             '₪',
-            'nov shekel israelian',
+            'nov schekel israelian',
         ],
         'INR' => [
             '₹',
@@ -512,7 +512,7 @@ return [
         ],
         'ISK' => [
             'ISK',
-            'curuna islandaisa',
+            'cruna islandaisa',
         ],
         'ITL' => [
             'ITL',
@@ -536,7 +536,7 @@ return [
         ],
         'KGS' => [
             'KGS',
-            'som kirghis',
+            'som kirgis',
         ],
         'KHR' => [
             'KHR',
@@ -544,7 +544,7 @@ return [
         ],
         'KMF' => [
             'KMF',
-            'franc da las Comoras',
+            'franc comorian',
         ],
         'KPW' => [
             'KPW',
@@ -676,7 +676,7 @@ return [
         ],
         'MOP' => [
             'MOP',
-            'pataca da Macao',
+            'pataca dal Macao',
         ],
         'MRO' => [
             'MRO',
@@ -740,7 +740,7 @@ return [
         ],
         'NAD' => [
             'NAD',
-            'dollar da la Namibia',
+            'dollar namibian',
         ],
         'NGN' => [
             'NGN',
@@ -760,7 +760,7 @@ return [
         ],
         'NOK' => [
             'NOK',
-            'curuna norvegiaisa',
+            'cruna norvegiaisa',
         ],
         'NPR' => [
             'NPR',
@@ -804,7 +804,7 @@ return [
         ],
         'PLN' => [
             'PLN',
-            'zloti polac',
+            'zloty polac',
         ],
         'PLZ' => [
             'PLZ',
@@ -820,7 +820,7 @@ return [
         ],
         'QAR' => [
             'QAR',
-            'riyal dal Qatar',
+            'rial da Katar',
         ],
         'RHD' => [
             'RHD',
@@ -876,11 +876,11 @@ return [
         ],
         'SEK' => [
             'SEK',
-            'curuna svedaisa',
+            'cruna svedaisa',
         ],
         'SGD' => [
             'SGD',
-            'dollar da Singapur',
+            'dollar dal Singapur',
         ],
         'SHP' => [
             'SHP',
@@ -900,7 +900,7 @@ return [
         ],
         'SLL' => [
             'SLL',
-            'leone da la Sierra Leone (1964–2022)',
+            'leone da la Sierra Leone (1964—2022)',
         ],
         'SOS' => [
             'SOS',
@@ -908,7 +908,7 @@ return [
         ],
         'SRD' => [
             'SRD',
-            'dollar dal Surinam',
+            'dollar surinam',
         ],
         'SRG' => [
             'SRG',
@@ -924,7 +924,7 @@ return [
         ],
         'STN' => [
             'STN',
-            'dobra da São Tomé e Príncipe',
+            'dobra da São Tomé e Principe',
         ],
         'SUR' => [
             'SUR',
@@ -940,7 +940,7 @@ return [
         ],
         'SZL' => [
             'SZL',
-            'lilangeni dal Swasiland',
+            'lilangeni dal Swaziland',
         ],
         'THB' => [
             'THB',
@@ -968,7 +968,7 @@ return [
         ],
         'TOP' => [
             'TOP',
-            'paʻanga dal Tonga',
+            'paʻanga da Tonga',
         ],
         'TPE' => [
             'TPE',
@@ -992,7 +992,7 @@ return [
         ],
         'TZS' => [
             'TZS',
-            'schilling da la Tansania',
+            'schilling tansanian',
         ],
         'UAH' => [
             'UAH',
@@ -1032,7 +1032,7 @@ return [
         ],
         'UYU' => [
             'UYU',
-            'peso uruguaian',
+            'peso da l’Uruguay',
         ],
         'UZS' => [
             'UZS',
@@ -1048,7 +1048,7 @@ return [
         ],
         'VES' => [
             'VES',
-            'bolívar venezolan',
+            'bolívar venezuelan',
         ],
         'VND' => [
             '₫',
@@ -1073,10 +1073,6 @@ return [
         'XCD' => [
             'EC$',
             'dollar da la Caribica Orientala',
-        ],
-        'XCG' => [
-            'Cg.',
-            'flurin caribic',
         ],
         'XFO' => [
             'XFO',
@@ -1136,7 +1132,7 @@ return [
         ],
         'ZMW' => [
             'ZMW',
-            'kwacha da la Sambia',
+            'kwacha da la sambia',
         ],
         'ZRN' => [
             'ZRN',
@@ -1149,10 +1145,6 @@ return [
         'ZWD' => [
             'ZWD',
             'dollar dal Simbabwe (1980–2008)',
-        ],
-        'ZWG' => [
-            'ZWG',
-            'aur dal Simbabwe',
         ],
         'ZWL' => [
             'ZWL',

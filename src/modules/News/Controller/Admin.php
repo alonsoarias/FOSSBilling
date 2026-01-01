@@ -1,6 +1,5 @@
 <?php
 
-declare(strict_types=1);
 /**
  * Copyright 2022-2025 FOSSBilling
  * Copyright 2011-2021 BoxBilling, Inc.
@@ -26,7 +25,7 @@ class Admin implements \FOSSBilling\InjectionAwareInterface
         return $this->di;
     }
 
-    public function fetchNavigation(): array
+    public function fetchNavigation()
     {
         return [
             'subpages' => [
@@ -41,7 +40,7 @@ class Admin implements \FOSSBilling\InjectionAwareInterface
         ];
     }
 
-    public function register(\Box_App &$app): void
+    public function register(\Box_App &$app)
     {
         $app->get('/news', 'get_index', [], static::class);
         $app->get('/news/', 'get_index', [], static::class);
@@ -50,14 +49,14 @@ class Admin implements \FOSSBilling\InjectionAwareInterface
         $app->get('/news/post/:id', 'get_post', ['id' => '[0-9]+'], static::class);
     }
 
-    public function get_index(\Box_App $app): string
+    public function get_index(\Box_App $app)
     {
         $this->di['is_admin_logged'];
 
         return $app->render('mod_news_index');
     }
 
-    public function get_post(\Box_App $app, $id): string
+    public function get_post(\Box_App $app, $id)
     {
         $api = $this->di['api_admin'];
         $post = $api->news_get(['id' => $id]);

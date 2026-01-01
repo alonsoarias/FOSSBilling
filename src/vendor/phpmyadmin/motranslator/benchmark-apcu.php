@@ -2,10 +2,6 @@
 
 declare(strict_types=1);
 
-use PhpMyAdmin\MoTranslator\Cache\ApcuCache;
-use PhpMyAdmin\MoTranslator\MoParser;
-use PhpMyAdmin\MoTranslator\Translator;
-
 require './vendor/autoload.php';
 
 $files = [
@@ -17,7 +13,11 @@ $start = microtime(true);
 
 for ($i = 0; $i < 2000; ++$i) {
     foreach ($files as $domain => $filename) {
-        $translator = new Translator(new ApcuCache(new MoParser($filename), 'foo', $domain));
+        $translator = new PhpMyAdmin\MoTranslator\Translator(
+            new PhpMyAdmin\MoTranslator\Cache\ApcuCache(
+                new PhpMyAdmin\MoTranslator\MoParser($filename), 'foo', $domain
+            )
+        );
         $translator->gettext('Column');
     }
 }

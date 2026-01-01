@@ -1,21 +1,6 @@
 <?php
 
 return [
-    'UserAssignedRegions' => [
-        'XK',
-    ],
-    'UserAssignedAlpha2ToAlpha3' => [
-        'XK' => 'XKK',
-    ],
-    'UserAssignedAlpha3ToAlpha2' => [
-        'XKK' => 'XK',
-    ],
-    'UserAssignedAlpha2ToNumeric' => [
-        'XK' => '983',
-    ],
-    'UserAssignedNumericToAlpha2' => [
-        '_983' => 'XK',
-    ],
     'Regions' => [
         'AD',
         'AE',

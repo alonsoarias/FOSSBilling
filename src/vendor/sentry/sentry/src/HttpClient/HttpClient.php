@@ -106,9 +106,7 @@ class HttpClient implements HttpClientInterface
         if ($body === false) {
             $errorCode = curl_errno($curlHandle);
             $error = curl_error($curlHandle);
-            if (\PHP_MAJOR_VERSION < 8) {
-                curl_close($curlHandle);
-            }
+            curl_close($curlHandle);
 
             $message = 'cURL Error (' . $errorCode . ') ' . $error;
 
@@ -117,9 +115,7 @@ class HttpClient implements HttpClientInterface
 
         $statusCode = curl_getinfo($curlHandle, \CURLINFO_HTTP_CODE);
 
-        if (\PHP_MAJOR_VERSION < 8) {
-            curl_close($curlHandle);
-        }
+        curl_close($curlHandle);
 
         $error = $statusCode >= 400 ? $body : '';
 

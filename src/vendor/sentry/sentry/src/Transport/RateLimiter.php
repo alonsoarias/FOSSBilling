@@ -14,22 +14,12 @@ final class RateLimiter
     /**
      * @var string
      */
-    public const DATA_CATEGORY_PROFILE = 'profile';
-
-    /**
-     * @var string
-     */
     private const DATA_CATEGORY_ERROR = 'error';
 
     /**
      * @var string
      */
     private const DATA_CATEGORY_LOG_ITEM = 'log_item';
-
-    /**
-     * @var string
-     */
-    private const DATA_CATEGORY_CHECK_IN = 'monitor';
 
     /**
      * The name of the header to look at to know the rate limits for the events
@@ -113,7 +103,9 @@ final class RateLimiter
      */
     public function isRateLimited($eventType): bool
     {
-        return $this->getDisabledUntil($eventType) > time();
+        $disabledUntil = $this->getDisabledUntil($eventType);
+
+        return $disabledUntil > time();
     }
 
     /**
@@ -127,8 +119,6 @@ final class RateLimiter
             $eventType = self::DATA_CATEGORY_ERROR;
         } elseif ($eventType === 'log') {
             $eventType = self::DATA_CATEGORY_LOG_ITEM;
-        } elseif ($eventType === 'check_in') {
-            $eventType = self::DATA_CATEGORY_CHECK_IN;
         }
 
         return max($this->rateLimits['all'] ?? 0, $this->rateLimits[$eventType] ?? 0);

@@ -149,7 +149,7 @@ final class CastToArray implements TypeCasting
 
         if ($this->shape->equals(ArrayShape::Csv)) {
             try {
-                $data = Reader::fromString($value);
+                $data = Reader::createFromString($value);
                 $data->setDelimiter($this->delimiter);
                 $data->setEnclosure($this->enclosure);
                 $data->setEscape('');

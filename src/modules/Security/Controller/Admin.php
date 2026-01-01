@@ -25,7 +25,7 @@ class Admin implements \FOSSBilling\InjectionAwareInterface
         return $this->di;
     }
 
-    public function fetchNavigation(): array
+    public function fetchNavigation()
     {
         return [
             'group' => [
@@ -53,21 +53,21 @@ class Admin implements \FOSSBilling\InjectionAwareInterface
         ];
     }
 
-    public function register(\Box_App &$app): void
+    public function register(\Box_App &$app)
     {
         $app->get('/security', 'get_index', [], static::class);
         $app->get('/security/', 'get_index', [], static::class);
         $app->get('/security/iplookup', 'ip_lookup', [], static::class);
     }
 
-    public function get_index(\Box_App $app): string
+    public function get_index(\Box_App $app)
     {
         $this->di['is_admin_logged'];
 
         return $app->render('mod_security_index');
     }
 
-    public function ip_lookup(\Box_App $app): string
+    public function ip_lookup(\Box_App $app)
     {
         $this->di['is_admin_logged'];
         $record = [];

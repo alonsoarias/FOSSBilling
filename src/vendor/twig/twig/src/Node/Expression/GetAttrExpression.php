@@ -125,12 +125,12 @@ class GetAttrExpression extends AbstractExpression implements SupportDefinedTest
         }
     }
 
-    private function changeIgnoreStrictCheck(self $node): void
+    private function changeIgnoreStrictCheck(GetAttrExpression $node): void
     {
         $node->setAttribute('optimizable', false);
         $node->setAttribute('ignore_strict_check', true);
 
-        if ($node->getNode('node') instanceof self) {
+        if ($node->getNode('node') instanceof GetAttrExpression) {
             $this->changeIgnoreStrictCheck($node->getNode('node'));
         }
     }

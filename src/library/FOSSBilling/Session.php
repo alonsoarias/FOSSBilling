@@ -3,6 +3,7 @@
 declare(strict_types=1);
 /**
  * Copyright 2022-2025 FOSSBilling
+ * Copyright 2011-2021 BoxBilling, Inc.
  * SPDX-License-Identifier: Apache-2.0.
  *
  * @copyright FOSSBilling (https://www.fossbilling.org)
@@ -29,7 +30,7 @@ class Session implements InjectionAwareInterface
     {
     }
 
-    public function setupSession(): void
+    public function setupSession()
     {
         if (Environment::isCLI()) {
             return;

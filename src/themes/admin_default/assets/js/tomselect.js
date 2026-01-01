@@ -47,40 +47,43 @@ document.addEventListener('DOMContentLoaded', () => {
                 <small class="text-muted ms-1 lh-1">#${escape(item.value)}</small>
              </div>`;
   }
-  let autocompleteSelectorEls = document.querySelectorAll('.autocomplete-selector');
-  if (autocompleteSelectorEls.length > 0) {
-    autocompleteSelectorEls.forEach((autocompleteSelectorEl) => {
-      new TomSelect(autocompleteSelectorEl, {
-        copyClassesToDropdown: false,
-        dropdownClass: "dropdown-menu ts-dropdown",
-        optionClass: "dropdown-item",
-        valueField: "value",
-        labelField: "label",
-        searchField: ["label", "value"],
-        load: (query, callback) => {
-          let items;
-          let restUrl = new URL(bb.restUrl(autocompleteSelectorEl.dataset.resturl));
-          restUrl.searchParams.append("search", query);
-          restUrl.searchParams.append("CSRFToken", Tools.getCSRFToken());
-          restUrl.searchParams.append("per_page", 5);
-          fetch(restUrl)
-            .then((response) => response.json())
-            .then((json) => {
-              items = Object.entries(json.result).map(([key, value]) => {
-                return { label: value, value: key };
-              });
-              callback(items);
+  let autocompleteSelectorEl = document.querySelector('.autocomplete-selector');
+  if (autocompleteSelectorEl !== null) {
+    new TomSelect(".autocomplete-selector", {
+      copyClassesToDropdown: false,
+      dropdownClass: "dropdown-menu ts-dropdown",
+      optionClass: "dropdown-item",
+      valueField: "value",
+      labelField: "label",
+      searchField: ["label", "value"],
+      load: (query, callback) => {
+        let items;
+        let restUrl = new URL(
+          bb.restUrl(autocompleteSelectorEl.dataset.resturl)
+        );
+        restUrl.searchParams.append("search", query);
+        restUrl.searchParams.append(
+          "CSRFToken",
+          autocompleteSelectorEl.dataset.csrf
+        );
+        restUrl.searchParams.append("per_page", 5);
+        fetch(restUrl)
+          .then((response) => response.json())
+          .then((json) => {
+            items = Object.entries(json.result).map(([key, value]) => {
+              return { label: value, value: key };
             });
+            callback(items);
+          });
+      },
+      render: {
+        option: function (item, escape) {
+          return autocompleteTemplate(item, escape);
         },
-        render: {
-          option: function (item, escape) {
-            return autocompleteTemplate(item, escape);
-          },
-          item: function (item, escape) {
-            return `<span>${escape(item.label)}</span>`;
-          },
+        item: function (item, escape) {
+          return `<span>${escape(item.label)}</span>`;
         },
-      });
+      },
     });
   }
 
@@ -103,7 +106,10 @@ document.addEventListener('DOMContentLoaded', () => {
         bb.restUrl(cannedResponseSelectorEl.dataset.resturl)
       );
       restUrl.searchParams.append('id', value);
-      restUrl.searchParams.append('CSRFToken', Tools.getCSRFToken());
+      restUrl.searchParams.append(
+        'CSRFToken',
+        cannedResponseSelectorEl.dataset.csrf,
+      );
       fetch(restUrl)
         .then((response) => response.json())
         .then((json) => {

@@ -25,19 +25,13 @@ use EmailChecker\ThrowawayDomains;
  */
 class BuiltInAdapter implements AdapterInterface
 {
-    /**
-     * @var string[]|null
-     */
-    protected $domains = null;
+    protected $domains;
 
     public function isThrowawayDomain($domain)
     {
-        return in_array($domain, $this->getDomains(), true);
+        return in_array($domain, $this->getDomains());
     }
 
-    /**
-     * @return string[]
-     */
     private function getDomains()
     {
         if (null === $this->domains) {

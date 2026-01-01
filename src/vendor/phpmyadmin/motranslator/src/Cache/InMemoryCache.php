@@ -11,10 +11,11 @@ use function array_key_exists;
 final class InMemoryCache implements CacheInterface, GetAllInterface
 {
     /** @var array<string, string> */
-    private array $cache = [];
+    private $cache;
 
     public function __construct(MoParser $parser)
     {
+        $this->cache = [];
         $parser->parseIntoCache($this);
     }
 
@@ -33,13 +34,14 @@ final class InMemoryCache implements CacheInterface, GetAllInterface
         return array_key_exists($msgid, $this->cache);
     }
 
-    /** @inheritDoc */
     public function setAll(array $translations): void
     {
         $this->cache = $translations;
     }
 
-    /** @inheritDoc */
+    /**
+     * @inheritDoc
+     */
     public function getAll(): array
     {
         return $this->cache;

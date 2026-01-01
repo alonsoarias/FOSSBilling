@@ -15,8 +15,6 @@
 
 namespace Box\Mod\Formbuilder\Api;
 
-use FOSSBilling\Validation\Api\RequiredParams;
-
 class Guest extends \Api_Abstract
 {
     /**
@@ -26,9 +24,13 @@ class Guest extends \Api_Abstract
      *
      * @throws \FOSSBilling\Exception
      */
-    #[RequiredParams(['id' => 'Form ID was not passed'])]
     public function get($data)
     {
+        $required = [
+            'id' => 'Form id was not passed',
+        ];
+        $this->di['validator']->checkRequiredParamsForArray($required, $data);
+
         $service = $this->getService();
 
         return $service->getForm($data['id']);

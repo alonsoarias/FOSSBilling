@@ -144,7 +144,7 @@ class XMLConverter
      *
      * @throws Exception
      */
-    public function download(TabularDataProvider|TabularData|iterable $records, ?string $filename = null, string $encoding = 'utf-8', bool $formatOutput = false): int|false
+    public function download(iterable $records, ?string $filename = null, string $encoding = 'utf-8', bool $formatOutput = false): int|false
     {
         /** @var XMLDocument|DOMDocument $document */
         $document = self::newXmlDocument(XMLDocument::class);
@@ -168,16 +168,8 @@ class XMLConverter
      *
      * **DOES NOT** attach to the DOMDocument
      */
-    public function import(TabularDataProvider|TabularData|iterable $records, DOMDocument|XMLDocument $doc): DOMElement|Element
+    public function import(iterable $records, DOMDocument|XMLDocument $doc): DOMElement|Element
     {
-        if ($records instanceof TabularDataProvider) {
-            $records = $records->getTabularData();
-        }
-
-        if ($records instanceof TabularData) {
-            $records = $records->getRecords();
-        }
-
         if (null !== $this->formatter) {
             $records = MapIterator::fromIterable($records, $this->formatter);
         }
@@ -290,7 +282,7 @@ class XMLConverter
      * Converts a Record collection into a DOMDocument.
      */
     #[Deprecated(message:'use League\Csv\XMLConverter::impoprt()', since:'league/csv:9.22.0')]
-    public function convert(TabularDataProvider|TabularData|iterable $records): DOMDocument
+    public function convert(iterable $records): DOMDocument
     {
         $document = new DOMDocument(encoding: 'UTF-8');
         $document->appendChild($this->import($records, $document));

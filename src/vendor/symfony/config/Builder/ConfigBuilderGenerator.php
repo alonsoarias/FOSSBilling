@@ -30,8 +30,6 @@ use Symfony\Component\Config\Loader\ParamConfigurator;
  * Generate ConfigBuilders to help create valid config.
  *
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
- *
- * @deprecated since Symfony 7.4
  */
 class ConfigBuilderGenerator implements ConfigBuilderGeneratorInterface
 {
@@ -53,7 +51,7 @@ class ConfigBuilderGenerator implements ConfigBuilderGeneratorInterface
         $this->classes = [];
 
         $rootNode = $configuration->getConfigTreeBuilder()->buildTree();
-        $rootClass = new ClassBuilder('Symfony\\Config', $rootNode->getName(), $rootNode, true);
+        $rootClass = new ClassBuilder('Symfony\\Config', $rootNode->getName());
 
         $path = $this->getFullPath($rootClass);
         if (!is_file($path)) {
@@ -70,7 +68,7 @@ public function NAME(): string
             $this->writeClasses();
         }
 
-        return static function () use ($path, $rootClass) {
+        return function () use ($path, $rootClass) {
             require_once $path;
             $className = $rootClass->getFqcn();
 
@@ -82,7 +80,7 @@ public function NAME(): string
     {
         $directory = $this->outputDir.\DIRECTORY_SEPARATOR.$class->getDirectory();
         if (!is_dir($directory)) {
-            @mkdir($directory, 0o777, true);
+            @mkdir($directory, 0777, true);
         }
 
         return $directory.\DIRECTORY_SEPARATOR.$class->getFilename();
@@ -91,13 +89,10 @@ public function NAME(): string
     private function writeClasses(): void
     {
         foreach ($this->classes as $class) {
-            $this->buildConstructor($class, $class->getNode());
+            $this->buildConstructor($class);
             $this->buildToArray($class);
             if ($class->getProperties()) {
                 $class->addProperty('_usedProperties', null, '[]');
-            }
-            if ($class->isRoot) {
-                $class->addProperty('_hasDeprecatedCalls', null, 'false');
             }
             $this->buildSetExtraKey($class);
 
@@ -119,42 +114,39 @@ public function NAME(): string
                 $child instanceof PrototypedArrayNode => $this->handlePrototypedArrayNode($child, $class, $namespace),
                 $child instanceof VariableNode => $this->handleVariableNode($child, $class),
                 $child instanceof ArrayNode => $this->handleArrayNode($child, $class, $namespace),
-                default => throw new \RuntimeException(\sprintf('Unknown node "%s".', get_debug_type($child))),
+                default => throw new \RuntimeException(\sprintf('Unknown node "%s".', $child::class)),
             };
         }
     }
 
     private function handleArrayNode(ArrayNode $node, ClassBuilder $class, string $namespace): void
     {
-        $childClass = new ClassBuilder($namespace, $node->getName(), $node);
+        $childClass = new ClassBuilder($namespace, $node->getName());
         $childClass->setAllowExtraKeys($node->shouldIgnoreExtraKeys());
         $class->addRequire($childClass);
         $this->classes[] = $childClass;
 
         $nodeTypes = $this->getParameterTypes($node);
-        $paramType = implode('|', $nodeTypes);
-        $acceptScalar = 'array' !== $paramType;
+        $paramType = $this->getParamType($nodeTypes);
 
+        $hasNormalizationClosures = $this->hasNormalizationClosures($node);
         $comment = $this->getComment($node);
-        if ($acceptScalar) {
+        if ($hasNormalizationClosures && 'array' !== $paramType) {
             $comment = \sprintf(" * @template TValue of %s\n * @param TValue \$value\n%s", $paramType, $comment);
             $comment .= \sprintf(' * @return %s|$this'."\n", $childClass->getFqcn());
-            $comment .= \sprintf(' * @psalm-return (TValue is array ? %s : static)'."\n", $childClass->getFqcn());
-        }
-        if ($class->isRoot) {
-            $comment .= " * @deprecated since Symfony 7.4\n";
+            $comment .= \sprintf(' * @psalm-return (TValue is array ? %s : static)'."\n ", $childClass->getFqcn());
         }
         if ('' !== $comment) {
-            $comment = "/**\n$comment */\n";
+            $comment = "/**\n$comment*/\n";
         }
 
         $property = $class->addProperty(
             $node->getName(),
-            $childClass->getFqcn().($acceptScalar ? '|scalar' : '')
+            $this->getType($childClass->getFqcn(), $hasNormalizationClosures)
         );
-        $body = $acceptScalar ? '
+        $body = $hasNormalizationClosures && 'array' !== $paramType ? '
 COMMENTpublic function NAME(PARAM_TYPE $value = []): CLASS|static
-{DEPRECATED_BODY
+{
     if (!\is_array($value)) {
         $this->_usedProperties[\'PROPERTY\'] = true;
         $this->PROPERTY = $value;
@@ -172,7 +164,7 @@ COMMENTpublic function NAME(PARAM_TYPE $value = []): CLASS|static
     return $this->PROPERTY;
 }' : '
 COMMENTpublic function NAME(array $value = []): CLASS
-{DEPRECATED_BODY
+{
     if (null === $this->PROPERTY) {
         $this->_usedProperties[\'PROPERTY\'] = true;
         $this->PROPERTY = new CLASS($value);
@@ -184,7 +176,6 @@ COMMENTpublic function NAME(array $value = []): CLASS
 }';
         $class->addUse(InvalidConfigurationException::class);
         $class->addMethod($node->getName(), $body, [
-            'DEPRECATED_BODY' => $class->isRoot ? "\n    \$this->_hasDeprecatedCalls = true;" : '',
             'COMMENT' => $comment,
             'PROPERTY' => $property->getName(),
             'CLASS' => $childClass->getFqcn(),
@@ -204,17 +195,15 @@ COMMENTpublic function NAME(array $value = []): CLASS
 /**
 COMMENT *
  * @return $this
- *DEPRECATED_ANNOTATION/
+ */
 public function NAME(mixed $valueDEFAULT): static
-{DEPRECATED_BODY
+{
     $this->_usedProperties[\'PROPERTY\'] = true;
     $this->PROPERTY = $value;
 
     return $this;
 }';
         $class->addMethod($node->getName(), $body, [
-            'DEPRECATED_BODY' => $class->isRoot ? "\n    \$this->_hasDeprecatedCalls = true;" : '',
-            'DEPRECATED_ANNOTATION' => $class->isRoot ? " @deprecated since Symfony 7.4\n *" : '',
             'PROPERTY' => $property->getName(),
             'COMMENT' => $comment,
             'DEFAULT' => $node->hasDefaultValue() ? ' = '.var_export($node->getDefaultValue(), true) : '',
@@ -226,26 +215,25 @@ public function NAME(mixed $valueDEFAULT): static
         $name = $this->getSingularName($node);
         $prototype = $node->getPrototype();
         $methodName = $name;
+        $hasNormalizationClosures = $this->hasNormalizationClosures($node) || $this->hasNormalizationClosures($prototype);
 
         $nodeParameterTypes = $this->getParameterTypes($node);
         $prototypeParameterTypes = $this->getParameterTypes($prototype);
         $noKey = null === $key = $node->getKeyAttribute();
-        $acceptScalar = ['array'] !== $nodeParameterTypes || ['array'] !== $prototypeParameterTypes;
-
         if (!$prototype instanceof ArrayNode || ($prototype instanceof PrototypedArrayNode && $prototype->getPrototype() instanceof ScalarNode)) {
             $class->addUse(ParamConfigurator::class);
             $property = $class->addProperty($node->getName());
             if ($noKey) {
                 // This is an array of values; don't use singular name
-                $nodeTypesWithoutArray = array_diff($nodeParameterTypes, ['array']);
+                $nodeTypesWithoutArray = array_filter($nodeParameterTypes, static fn ($type) => 'array' !== $type);
                 $body = '
 /**
  * @param ParamConfigurator|list<ParamConfigurator|PROTOTYPE_TYPE>EXTRA_TYPE $value
  *
  * @return $this
- *DEPRECATED_ANNOTATION/
+ */
 public function NAME(PARAM_TYPE $value): static
-{DEPRECATED_BODY
+{
     $this->_usedProperties[\'PROPERTY\'] = true;
     $this->PROPERTY = $value;
 
@@ -253,20 +241,18 @@ public function NAME(PARAM_TYPE $value): static
 }';
 
                 $class->addMethod($node->getName(), $body, [
-                    'DEPRECATED_BODY' => $class->isRoot ? "\n    \$this->_hasDeprecatedCalls = true;" : '',
-                    'DEPRECATED_ANNOTATION' => $class->isRoot ? " @deprecated since Symfony 7.4\n *" : '',
                     'PROPERTY' => $property->getName(),
                     'PROTOTYPE_TYPE' => implode('|', $prototypeParameterTypes),
                     'EXTRA_TYPE' => $nodeTypesWithoutArray ? '|'.implode('|', $nodeTypesWithoutArray) : '',
-                    'PARAM_TYPE' => ['mixed'] !== $nodeParameterTypes ? 'ParamConfigurator|'.implode('|', $nodeParameterTypes) : 'mixed',
+                    'PARAM_TYPE' => $this->getParamType($nodeParameterTypes, true),
                 ]);
             } else {
                 $body = '
 /**
  * @return $this
- *DEPRECATED_ANNOTATION/
+ */
 public function NAME(string $VAR, TYPE $VALUE): static
-{DEPRECATED_BODY
+{
     $this->_usedProperties[\'PROPERTY\'] = true;
     $this->PROPERTY[$VAR] = $VALUE;
 
@@ -274,10 +260,8 @@ public function NAME(string $VAR, TYPE $VALUE): static
 }';
 
                 $class->addMethod($methodName, $body, [
-                    'DEPRECATED_BODY' => $class->isRoot ? "\n    \$this->_hasDeprecatedCalls = true;" : '',
-                    'DEPRECATED_ANNOTATION' => $class->isRoot ? " @deprecated since Symfony 7.4\n *" : '',
                     'PROPERTY' => $property->getName(),
-                    'TYPE' => ['mixed'] !== $prototypeParameterTypes ? 'ParamConfigurator|'.implode('|', $prototypeParameterTypes) : 'mixed',
+                    'TYPE' => $this->getParamType($prototypeParameterTypes, true),
                     'VAR' => '' === $key ? 'key' : $key,
                     'VALUE' => 'value' === $key ? 'data' : 'value',
                 ]);
@@ -286,7 +270,7 @@ public function NAME(string $VAR, TYPE $VALUE): static
             return;
         }
 
-        $childClass = new ClassBuilder($namespace, $name, $prototype);
+        $childClass = new ClassBuilder($namespace, $name);
         if ($prototype instanceof ArrayNode) {
             $childClass->setAllowExtraKeys($prototype->shouldIgnoreExtraKeys());
         }
@@ -295,29 +279,25 @@ public function NAME(string $VAR, TYPE $VALUE): static
 
         $property = $class->addProperty(
             $node->getName(),
-            $childClass->getFqcn().'[]'.($acceptScalar ? '|scalar' : '')
+            $this->getType($childClass->getFqcn().'[]', $hasNormalizationClosures)
         );
 
-        $paramType = implode('|', $noKey ? $nodeParameterTypes : $prototypeParameterTypes);
-        $acceptScalar = 'array' !== $paramType;
+        $paramType = $this->getParamType($noKey ? $nodeParameterTypes : $prototypeParameterTypes);
 
         $comment = $this->getComment($node);
-        if ($acceptScalar) {
+        if ($hasNormalizationClosures && 'array' !== $paramType) {
             $comment = \sprintf(" * @template TValue of %s\n * @param TValue \$value\n%s", $paramType, $comment);
             $comment .= \sprintf(' * @return %s|$this'."\n", $childClass->getFqcn());
-            $comment .= \sprintf(' * @psalm-return (TValue is array ? %s : static)'."\n", $childClass->getFqcn());
-        }
-        if ($class->isRoot) {
-            $comment .= " * @deprecated since Symfony 7.4\n";
+            $comment .= \sprintf(' * @psalm-return (TValue is array ? %s : static)'."\n ", $childClass->getFqcn());
         }
         if ('' !== $comment) {
-            $comment = "/**\n$comment */\n";
+            $comment = "/**\n$comment*/\n";
         }
 
         if ($noKey) {
-            $body = $acceptScalar ? '
+            $body = $hasNormalizationClosures && 'array' !== $paramType ? '
 COMMENTpublic function NAME(PARAM_TYPE $value = []): CLASS|static
-{DEPRECATED_BODY
+{
     $this->_usedProperties[\'PROPERTY\'] = true;
     if (!\is_array($value)) {
         $this->PROPERTY[] = $value;
@@ -328,22 +308,21 @@ COMMENTpublic function NAME(PARAM_TYPE $value = []): CLASS|static
     return $this->PROPERTY[] = new CLASS($value);
 }' : '
 COMMENTpublic function NAME(array $value = []): CLASS
-{DEPRECATED_BODY
+{
     $this->_usedProperties[\'PROPERTY\'] = true;
 
     return $this->PROPERTY[] = new CLASS($value);
 }';
             $class->addMethod($methodName, $body, [
-                'DEPRECATED_BODY' => $class->isRoot ? "\n    \$this->_hasDeprecatedCalls = true;" : '',
                 'COMMENT' => $comment,
                 'PROPERTY' => $property->getName(),
                 'CLASS' => $childClass->getFqcn(),
                 'PARAM_TYPE' => $paramType,
             ]);
         } else {
-            $body = $acceptScalar ? '
+            $body = $hasNormalizationClosures && 'array' !== $paramType ? '
 COMMENTpublic function NAME(string $VAR, PARAM_TYPE $VALUE = []): CLASS|static
-{DEPRECATED_BODY
+{
     if (!\is_array($VALUE)) {
         $this->_usedProperties[\'PROPERTY\'] = true;
         $this->PROPERTY[$VAR] = $VALUE;
@@ -361,7 +340,7 @@ COMMENTpublic function NAME(string $VAR, PARAM_TYPE $VALUE = []): CLASS|static
     return $this->PROPERTY[$VAR];
 }' : '
 COMMENTpublic function NAME(string $VAR, array $VALUE = []): CLASS
-{DEPRECATED_BODY
+{
     if (!isset($this->PROPERTY[$VAR])) {
         $this->_usedProperties[\'PROPERTY\'] = true;
         $this->PROPERTY[$VAR] = new CLASS($VALUE);
@@ -373,9 +352,7 @@ COMMENTpublic function NAME(string $VAR, array $VALUE = []): CLASS
 }';
             $class->addUse(InvalidConfigurationException::class);
             $class->addMethod($methodName, str_replace('$value', '$VAR', $body), [
-                'DEPRECATED_BODY' => $class->isRoot ? "\n    \$this->_hasDeprecatedCalls = true;" : '',
-                'COMMENT' => $comment,
-                'PROPERTY' => $property->getName(),
+                'COMMENT' => $comment, 'PROPERTY' => $property->getName(),
                 'CLASS' => $childClass->getFqcn(),
                 'VAR' => '' === $key ? 'key' : $key,
                 'VALUE' => 'value' === $key ? 'data' : 'value',
@@ -395,53 +372,42 @@ COMMENTpublic function NAME(string $VAR, array $VALUE = []): CLASS
         $body = '
 /**
 COMMENT * @return $this
- *DEPRECATED_ANNOTATION/
+ */
 public function NAME($value): static
-{DEPRECATED_BODY
+{
     $this->_usedProperties[\'PROPERTY\'] = true;
     $this->PROPERTY = $value;
 
     return $this;
 }';
 
-        $class->addMethod($node->getName(), $body, [
-            'DEPRECATED_BODY' => $class->isRoot ? "\n    \$this->_hasDeprecatedCalls = true;" : '',
-            'DEPRECATED_ANNOTATION' => $class->isRoot ? " @deprecated since Symfony 7.4\n *" : '',
-            'PROPERTY' => $property->getName(),
-            'COMMENT' => $comment,
-        ]);
+        $class->addMethod($node->getName(), $body, ['PROPERTY' => $property->getName(), 'COMMENT' => $comment]);
     }
 
     private function getParameterTypes(NodeInterface $node): array
     {
         $paramTypes = [];
         if ($node instanceof BaseNode) {
-            foreach ($node->getNormalizedTypes() as $type) {
-                if (ExprBuilder::TYPE_ANY === $type) {
-                    return ['mixed'];
-                }
-
-                $paramTypes[] = match ($type) {
-                    ExprBuilder::TYPE_STRING => 'string',
-                    ExprBuilder::TYPE_NULL => 'null',
-                    ExprBuilder::TYPE_ARRAY => 'array',
-                    ExprBuilder::TYPE_BOOL => 'bool',
-                    ExprBuilder::TYPE_BACKED_ENUM => '\BackedEnum',
-                    ExprBuilder::TYPE_INT => 'int',
-                };
+            $types = $node->getNormalizedTypes();
+            if (\in_array(ExprBuilder::TYPE_ANY, $types, true)) {
+                $paramTypes[] = 'mixed';
+            }
+            if (\in_array(ExprBuilder::TYPE_STRING, $types, true)) {
+                $paramTypes[] = 'string';
             }
         }
-
         if ($node instanceof BooleanNode) {
             $paramTypes[] = 'bool';
         } elseif ($node instanceof IntegerNode) {
             $paramTypes[] = 'int';
         } elseif ($node instanceof FloatNode) {
             $paramTypes[] = 'float';
+        } elseif ($node instanceof EnumNode) {
+            $paramTypes[] = 'mixed';
         } elseif ($node instanceof ArrayNode) {
             $paramTypes[] = 'array';
-        } else {
-            return ['mixed'];
+        } elseif ($node instanceof VariableNode) {
+            $paramTypes[] = 'mixed';
         }
 
         return array_unique($paramTypes);
@@ -480,7 +446,7 @@ public function NAME($value): static
         }
 
         if ($node->isDeprecated()) {
-            $comment .= '@deprecated '.$node->getDeprecationMessage()."\n";
+            $comment .= '@deprecated '.$node->getDeprecation($node->getName(), $node->getParent()->getName())['message']."\n";
         }
 
         return $comment ? ' * '.str_replace("\n", "\n * ", rtrim($comment, "\n"))."\n" : '';
@@ -529,18 +495,11 @@ public function NAME($value): static
 
             $body .= strtr('
     if (isset($this->_usedProperties[\'PROPERTY\'])) {
-        $output[\'ORIG_NAME\'] = '.$code.';
-    }', ['PROPERTY' => $p->getName(), 'ORIG_NAME' => $p->getOriginalName(), 'CLASS' => $p->getType()]);
+        $output[\'ORG_NAME\'] = '.$code.';
+    }', ['PROPERTY' => $p->getName(), 'ORG_NAME' => $p->getOriginalName(), 'CLASS' => $p->getType()]);
         }
 
         $extraKeys = $class->shouldAllowExtraKeys() ? ' + $this->_extraKeys' : '';
-
-        if ($class->isRoot) {
-            $body .= "
-    if (\$this->_hasDeprecatedCalls) {
-        trigger_deprecation('symfony/config', '7.4', 'Calling any fluent method on \"%s\" is deprecated; pass the configuration to the constructor instead.', \$this::class);
-    }";
-        }
 
         $class->addMethod('toArray', '
 public function NAME(): array
@@ -551,49 +510,49 @@ public function NAME(): array
 }');
     }
 
-    private function buildConstructor(ClassBuilder $class, NodeInterface $node): void
+    private function buildConstructor(ClassBuilder $class): void
     {
         $body = '';
         foreach ($class->getProperties() as $p) {
-            $code = '$config[\'ORIG_NAME\']';
+            $code = '$value[\'ORG_NAME\']';
             if (null !== $p->getType()) {
                 if ($p->isArray()) {
                     $code = $p->areScalarsAllowed()
-                        ? 'array_map(fn ($v) => \is_array($v) ? new '.$p->getType().'($v) : $v, $config[\'ORIG_NAME\'])'
-                        : 'array_map(fn ($v) => new '.$p->getType().'($v), $config[\'ORIG_NAME\'])'
+                        ? 'array_map(fn ($v) => \is_array($v) ? new '.$p->getType().'($v) : $v, $value[\'ORG_NAME\'])'
+                        : 'array_map(fn ($v) => new '.$p->getType().'($v), $value[\'ORG_NAME\'])'
                     ;
                 } else {
                     $code = $p->areScalarsAllowed()
-                        ? '\is_array($config[\'ORIG_NAME\']) ? new '.$p->getType().'($config[\'ORIG_NAME\']) : $config[\'ORIG_NAME\']'
-                        : 'new '.$p->getType().'($config[\'ORIG_NAME\'])'
+                        ? '\is_array($value[\'ORG_NAME\']) ? new '.$p->getType().'($value[\'ORG_NAME\']) : $value[\'ORG_NAME\']'
+                        : 'new '.$p->getType().'($value[\'ORG_NAME\'])'
                     ;
                 }
             }
 
             $body .= strtr('
-    if (array_key_exists(\'ORIG_NAME\', $config)) {
+    if (array_key_exists(\'ORG_NAME\', $value)) {
         $this->_usedProperties[\'PROPERTY\'] = true;
         $this->PROPERTY = '.$code.';
-        unset($config[\'ORIG_NAME\']);
+        unset($value[\'ORG_NAME\']);
     }
-', ['PROPERTY' => $p->getName(), 'ORIG_NAME' => $p->getOriginalName()]);
+', ['PROPERTY' => $p->getName(), 'ORG_NAME' => $p->getOriginalName()]);
         }
 
         if ($class->shouldAllowExtraKeys()) {
             $body .= '
-    $this->_extraKeys = $config;
+    $this->_extraKeys = $value;
 ';
         } else {
             $body .= '
-    if ($config) {
-        throw new InvalidConfigurationException(sprintf(\'The following keys are not supported by "%s": \', __CLASS__).implode(\', \', array_keys($config)));
+    if ([] !== $value) {
+        throw new InvalidConfigurationException(sprintf(\'The following keys are not supported by "%s": \', __CLASS__).implode(\', \', array_keys($value)));
     }';
 
             $class->addUse(InvalidConfigurationException::class);
         }
 
         $class->addMethod('__construct', '
-public function __construct(array $config = [])
+public function __construct(array $value = [])
 {'.$body.'
 }');
     }
@@ -613,20 +572,38 @@ public function __construct(array $config = [])
  * @param ParamConfigurator|mixed $value
  *
  * @return $this
- *DEPRECATED_ANNOTATION/
+ */
 public function NAME(string $key, mixed $value): static
-{DEPRECATED_BODY
+{
     $this->_extraKeys[$key] = $value;
 
     return $this;
-}', [
-            'DEPRECATED_BODY' => $class->isRoot ? "\n    \$this->_hasDeprecatedCalls = true;" : '',
-            'DEPRECATED_ANNOTATION' => $class->isRoot ? " @deprecated since Symfony 7.4\n *" : '',
-        ]);
+}');
     }
 
     private function getSubNamespace(ClassBuilder $rootClass): string
     {
         return \sprintf('%s\\%s', $rootClass->getNamespace(), substr($rootClass->getName(), 0, -6));
+    }
+
+    private function hasNormalizationClosures(NodeInterface $node): bool
+    {
+        try {
+            $r = new \ReflectionProperty($node, 'normalizationClosures');
+        } catch (\ReflectionException) {
+            return false;
+        }
+
+        return [] !== $r->getValue($node);
+    }
+
+    private function getType(string $classType, bool $hasNormalizationClosures): string
+    {
+        return $classType.($hasNormalizationClosures ? '|scalar' : '');
+    }
+
+    private function getParamType(array $types, bool $withParamConfigurator = false): string
+    {
+        return \in_array('mixed', $types, true) ? 'mixed' : ($withParamConfigurator ? 'ParamConfigurator|' : '').implode('|', $types);
     }
 }

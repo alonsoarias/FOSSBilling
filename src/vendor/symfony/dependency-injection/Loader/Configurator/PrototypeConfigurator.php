@@ -50,7 +50,9 @@ class PrototypeConfigurator extends AbstractServiceConfigurator
         private ?string $path = null,
     ) {
         $definition = new Definition();
-        $definition->setPublic($defaults->isPublic());
+        if (!$defaults->isPublic() || !$defaults->isPrivate()) {
+            $definition->setPublic($defaults->isPublic());
+        }
         $definition->setAutowired($defaults->isAutowired());
         $definition->setAutoconfigured($defaults->isAutoconfigured());
         // deep clone, to avoid multiple process of the same instance in the passes

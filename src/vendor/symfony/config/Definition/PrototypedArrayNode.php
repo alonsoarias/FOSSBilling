@@ -29,12 +29,10 @@ class PrototypedArrayNode extends ArrayNode
     protected int $minNumberOfElements = 0;
     protected array $defaultValue = [];
     protected ?array $defaultChildren = null;
-
     /**
      * @var NodeInterface[] An array of the prototypes of the simplified value children
      */
     private array $valuePrototypes = [];
-    private bool $defaultToNull = false;
 
     /**
      * Sets the minimum number of elements that a prototype based node must
@@ -89,13 +87,6 @@ class PrototypedArrayNode extends ArrayNode
     public function setDefaultValue(array $value): void
     {
         $this->defaultValue = $value;
-        $this->defaultToNull = false;
-    }
-
-    public function setNullAsDefault(): void
-    {
-        $this->defaultValue = [];
-        $this->defaultToNull = true;
     }
 
     public function hasDefaultValue(): bool
@@ -115,19 +106,14 @@ class PrototypedArrayNode extends ArrayNode
         } else {
             $this->defaultChildren = \is_int($children) && $children > 0 ? range(1, $children) : (array) $children;
         }
-        $this->defaultToNull = false;
     }
 
     /**
-     * The default value could be either explicit or derived from the prototype
+     * The default value could be either explicited or derived from the prototype
      * default value.
      */
     public function getDefaultValue(): mixed
     {
-        if ($this->defaultToNull) {
-            return null;
-        }
-
         if (null !== $this->defaultChildren) {
             $default = $this->prototype->hasDefaultValue() ? $this->prototype->getDefaultValue() : [];
             $defaults = [];

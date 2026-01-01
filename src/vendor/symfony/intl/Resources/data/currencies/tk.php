@@ -626,10 +626,6 @@ return [
             'EC$',
             'Gündogar karib dollary',
         ],
-        'XCG' => [
-            'Kg.',
-            'karib guldeni',
-        ],
         'XOF' => [
             'F CFA',
             'KFA BCEAO franky',
@@ -649,10 +645,6 @@ return [
         'ZMW' => [
             'ZMW',
             'Zambiýa kwaçasy',
-        ],
-        'ZWG' => [
-            'ZWG',
-            'Zimbabwe altyny',
         ],
     ],
 ];

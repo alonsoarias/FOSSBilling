@@ -70,7 +70,7 @@ class Box_Event implements ArrayAccess, FOSSBilling\InjectionAwareInterface
      *
      * @param mixed $value The return value
      */
-    public function setReturnValue(mixed $value): void
+    public function setReturnValue(mixed $value)
     {
         $this->value = $value;
     }
@@ -90,7 +90,7 @@ class Box_Event implements ArrayAccess, FOSSBilling\InjectionAwareInterface
      *
      * @param bool $processed The processed flag value
      */
-    public function setProcessed($processed): void
+    public function setProcessed($processed)
     {
         $this->processed = (bool) $processed;
     }

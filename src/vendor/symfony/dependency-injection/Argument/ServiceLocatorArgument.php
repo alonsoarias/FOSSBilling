@@ -18,8 +18,6 @@ namespace Symfony\Component\DependencyInjection\Argument;
  */
 class ServiceLocatorArgument implements ArgumentInterface
 {
-    use ArgumentTrait;
-
     private array $values;
     private ?TaggedIteratorArgument $taggedIteratorArgument = null;
 

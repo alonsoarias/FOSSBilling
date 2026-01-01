@@ -3,7 +3,8 @@ composer/class-map-generator
 
 Utilities to generate class maps and scan PHP code.
 
-[![Continuous Integration](https://github.com/composer/class-map-generator/actions/workflows/continuous-integration.yml/badge.svg?branch=main)](https://github.com/composer/class-map-generator/actions)
+[![Continuous Integration](https://github.com/composer/class-map-generator/workflows/Continuous%20Integration/badge.svg?branch=main)](https://github.com/composer/class-map-generator/actions)
+
 
 Installation
 ------------

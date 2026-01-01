@@ -26,7 +26,7 @@ class Registrar_Adapter_Internetbs extends Registrar_AdapterAbstract
         }
     }
 
-    public static function getConfig(): array
+    public static function getConfig()
     {
         return [
             'label' => 'Manages domains on Internetbs via API',
@@ -46,7 +46,7 @@ class Registrar_Adapter_Internetbs extends Registrar_AdapterAbstract
         ];
     }
 
-    public function isDomainAvailable(Registrar_Domain $domain): bool
+    public function isDomainAvailable(Registrar_Domain $domain)
     {
         $params = [
             'domain' => $domain->getName(),
@@ -57,7 +57,7 @@ class Registrar_Adapter_Internetbs extends Registrar_AdapterAbstract
         return $result['status'] == 'AVAILABLE';
     }
 
-    public function isDomaincanBeTransferred(Registrar_Domain $domain): bool
+    public function isDomaincanBeTransferred(Registrar_Domain $domain)
     {
         $params = [
             'domain' => $domain->getName(),
@@ -70,7 +70,7 @@ class Registrar_Adapter_Internetbs extends Registrar_AdapterAbstract
         return $result['status'] == 'UNAVAILABLE';
     }
 
-    public function modifyNs(Registrar_Domain $domain): bool
+    public function modifyNs(Registrar_Domain $domain)
     {
         $params = [
             'domain' => $domain->getName(),
@@ -89,7 +89,7 @@ class Registrar_Adapter_Internetbs extends Registrar_AdapterAbstract
         return $result['status'] == 'SUCCESS';
     }
 
-    public function modifyContact(Registrar_Domain $domain): bool
+    public function modifyContact(Registrar_Domain $domain)
     {
         $c = $domain->getContactRegistrar();
 
@@ -118,7 +118,7 @@ class Registrar_Adapter_Internetbs extends Registrar_AdapterAbstract
         return $result['status'] == 'SUCCESS';
     }
 
-    public function transferDomain(Registrar_Domain $domain): bool
+    public function transferDomain(Registrar_Domain $domain)
     {
         $c = $domain->getContactRegistrar();
 
@@ -169,7 +169,7 @@ class Registrar_Adapter_Internetbs extends Registrar_AdapterAbstract
         throw new Registrar_Exception(':type: does not support :action:', [':type:' => 'Internet.bs', ':action:' => __trans('deleting domains')]);
     }
 
-    public function registerDomain(Registrar_Domain $domain): bool
+    public function registerDomain(Registrar_Domain $domain)
     {
         $c = $domain->getContactRegistrar();
 
@@ -249,7 +249,7 @@ class Registrar_Adapter_Internetbs extends Registrar_AdapterAbstract
                || ($result['product_0_status'] == 'SUCCESS');
     }
 
-    public function renewDomain(Registrar_Domain $domain): bool
+    public function renewDomain(Registrar_Domain $domain)
     {
         $params = [
             'domain' => $domain->getName(),
@@ -260,7 +260,7 @@ class Registrar_Adapter_Internetbs extends Registrar_AdapterAbstract
         return $result['product_0_status'] == 'SUCCESS';
     }
 
-    public function enablePrivacyProtection(Registrar_Domain $domain): bool
+    public function enablePrivacyProtection(Registrar_Domain $domain)
     {
         $cmd = '/Domain/PrivateWhois/Enable';
 
@@ -273,7 +273,7 @@ class Registrar_Adapter_Internetbs extends Registrar_AdapterAbstract
         return $result['status'] == 'SUCCESS';
     }
 
-    public function disablePrivacyProtection(Registrar_Domain $domain): bool
+    public function disablePrivacyProtection(Registrar_Domain $domain)
     {
         $cmd = '/Domain/PrivateWhois/Disable';
 
@@ -293,7 +293,7 @@ class Registrar_Adapter_Internetbs extends Registrar_AdapterAbstract
         return $d->getEpp();
     }
 
-    public function lock(Registrar_Domain $domain): bool
+    public function lock(Registrar_Domain $domain)
     {
         $cmd = '/Domain/RegistrarLock/Enable';
         $params = [
@@ -304,7 +304,7 @@ class Registrar_Adapter_Internetbs extends Registrar_AdapterAbstract
         return $result['status'] == 'SUCCESS';
     }
 
-    public function unlock(Registrar_Domain $domain): bool
+    public function unlock(Registrar_Domain $domain)
     {
         $cmd = '/Domain/RegistrarLock/Disable';
         $params = [
@@ -383,8 +383,10 @@ class Registrar_Adapter_Internetbs extends Registrar_AdapterAbstract
 
     /**
      * Api URL.
+     *
+     * @return string
      */
-    private function _getApiUrl(): string
+    private function _getApiUrl()
     {
         if ($this->isTestEnv()) {
             return 'https://testapi.internet.bs';
@@ -401,7 +403,7 @@ class Registrar_Adapter_Internetbs extends Registrar_AdapterAbstract
     private function _createDomainObj($result, Registrar_Domain $domain)
     {
         $type = 'contacts_registrant_';
-        $tel = explode('.', (string) $result[$type . 'phonenumber']);
+        $tel = explode('.', $result[$type . 'phonenumber']);
         $name = '';
 
         // domain specific
@@ -457,7 +459,7 @@ class Registrar_Adapter_Internetbs extends Registrar_AdapterAbstract
                         || ($result['privatewhois'] == 'PARTIAL');
         }
 
-        $domain->setExpirationTime(strtotime((string) $result['expirationdate']));
+        $domain->setExpirationTime(strtotime($result['expirationdate']));
         $domain->setPrivacyEnabled($privacy);
         $domain->setEpp($result['transferauthinfo']);
         $domain->setContactRegistrar($c);
@@ -467,8 +469,10 @@ class Registrar_Adapter_Internetbs extends Registrar_AdapterAbstract
 
     /**
      * Checks whether privacy is enabled.
+     *
+     * @return bool
      */
-    private function _isPrivacyEnabled(Registrar_Domain $domain): bool
+    private function _isPrivacyEnabled(Registrar_Domain $domain)
     {
         $params = [
             'domain' => $domain->getName(),

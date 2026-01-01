@@ -1,6 +1,5 @@
 <?php
 
-declare(strict_types=1);
 /**
  * Copyright 2022-2025 FOSSBilling
  * Copyright 2011-2021 BoxBilling, Inc.
@@ -10,46 +9,45 @@ declare(strict_types=1);
  * @license http://www.apache.org/licenses/LICENSE-2.0 Apache-2.0
  */
 
-namespace Box\Mod\Currency\Api;
+/**
+ *Currency management.
+ */
 
-use Box\Mod\Currency\Entity\Currency;
+namespace Box\Mod\Currency\Api;
 
 class Guest extends \Api_Abstract
 {
     /**
-     * Get a list of available currencies.
+     * Get list of available currencies.
      *
      * @return array
      */
-    public function get_pairs(array $data): array
+    public function get_pairs($data)
     {
-        /** @var \Box\Mod\Currency\Repository\CurrencyRepository $repo */
-        $repo = $this->getService()->getCurrencyRepository();
+        $service = $this->getService();
 
-        return $repo->getPairs();
+        return $service->getPairs();
     }
 
     /**
-     * Get a currency by code.
+     * Get currency by code.
      *
      * @return array
      */
-    public function get(array $data): array
+    public function get($data)
     {
-        /** @var \Box\Mod\Currency\Repository\CurrencyRepository $repo */
-        $repo = $this->getService()->getCurrencyRepository();
-
+        $service = $this->getService();
         if (isset($data['code']) && !empty($data['code'])) {
-            $model = $repo->findOneByCode($data['code']);
+            $model = $service->getByCode($data['code']);
         } else {
-            $model = $repo->findDefault();
+            $model = $service->getDefault();
         }
 
-        if (!$model instanceof Currency) {
+        if (!$model instanceof \Model_Currency) {
             throw new \FOSSBilling\Exception('Currency not found');
         }
 
-        return $model->toApiArray();
+        return $service->toApiArray($model);
     }
 
     /**
@@ -74,7 +72,7 @@ class Guest extends \Api_Abstract
      *
      * @return string - formatted string
      */
-    public function format(array $data): string
+    public function format($data = [])
     {
         $c = $this->get($data);
 
@@ -102,7 +100,7 @@ class Guest extends \Api_Abstract
         return str_replace('{{price}}', $p, $c['format']);
     }
 
-    private function select_format($p, $format): string
+    private function select_format($p, $format)
     {
         return match (intval($format)) {
             2 => number_format($p, 2, '.', ','),

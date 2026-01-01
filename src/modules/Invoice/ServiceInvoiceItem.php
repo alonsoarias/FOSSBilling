@@ -27,7 +27,7 @@ class ServiceInvoiceItem implements InjectionAwareInterface
         return $this->di;
     }
 
-    public function markAsPaid(\Model_InvoiceItem $item, $charge = true): void
+    public function markAsPaid(\Model_InvoiceItem $item, $charge = true)
     {
         if ($charge && !$item->charged) {
             $this->creditInvoiceItem($item);
@@ -40,10 +40,12 @@ class ServiceInvoiceItem implements InjectionAwareInterface
         $this->di['db']->store($item);
 
         $oid = $this->getOrderId($item);
-        $orderService = $this->di['mod_service']('Order');
-        $order = $this->di['db']->load('ClientOrder', $oid);
-        if ($order instanceof \Model_ClientOrder) {
-            $orderService->unsetUnpaidInvoice($order);
+        if ($oid !== null) {
+            $orderService = $this->di['mod_service']('Order');
+            $order = $this->di['db']->load('ClientOrder', $oid);
+            if ($order instanceof \Model_ClientOrder) {
+                $orderService->unsetUnpaidInvoice($order);
+            }
         }
     }
 
@@ -120,7 +122,7 @@ class ServiceInvoiceItem implements InjectionAwareInterface
         }
     }
 
-    public function addNew(\Model_Invoice $proforma, array $data): int
+    public function addNew(\Model_Invoice $proforma, array $data)
     {
         $title = $data['title'] ?? '';
         if (empty($title)) {
@@ -157,7 +159,7 @@ class ServiceInvoiceItem implements InjectionAwareInterface
         return (int) $itemId;
     }
 
-    public function getTotal(\Model_InvoiceItem $item): float
+    public function getTotal(\Model_InvoiceItem $item)
     {
         return floatval($item->price * $item->quantity);
     }
@@ -176,7 +178,7 @@ class ServiceInvoiceItem implements InjectionAwareInterface
         return round($item->price * $rate / 100, 2);
     }
 
-    public function update(\Model_InvoiceItem $item, array $data): void
+    public function update(\Model_InvoiceItem $item, array $data)
     {
         $item->title = $data['title'] ?? $item->title;
         $item->price = $data['price'] ?? $item->price;
@@ -197,7 +199,7 @@ class ServiceInvoiceItem implements InjectionAwareInterface
         $this->di['db']->store($item);
     }
 
-    public function remove(\Model_InvoiceItem $model): bool
+    public function remove(\Model_InvoiceItem $model)
     {
         $id = $model->id;
         $this->di['db']->trash($model);
@@ -206,7 +208,7 @@ class ServiceInvoiceItem implements InjectionAwareInterface
         return true;
     }
 
-    public function generateForAddFunds(\Model_Invoice $proforma, $amount): void
+    public function generateForAddFunds(\Model_Invoice $proforma, $amount)
     {
         $pi = $this->di['db']->dispense('InvoiceItem');
         $pi->invoice_id = $proforma->id;
@@ -226,7 +228,7 @@ class ServiceInvoiceItem implements InjectionAwareInterface
         $this->di['db']->store($pi);
     }
 
-    public function creditInvoiceItem(\Model_InvoiceItem $item): void
+    public function creditInvoiceItem(\Model_InvoiceItem $item)
     {
         $total = $this->getTotalWithTax($item);
 
@@ -247,12 +249,12 @@ class ServiceInvoiceItem implements InjectionAwareInterface
         $invoiceService->addNote($invoice, sprintf('Charged clients balance with %s %s for %s', $total, $invoice->currency, $item->title));
     }
 
-    public function getTotalWithTax(\Model_InvoiceItem $item): float
+    public function getTotalWithTax(\Model_InvoiceItem $item)
     {
         return $this->getTotal($item) + $this->getTax($item) * $item->quantity;
     }
 
-    public function getOrderId(\Model_InvoiceItem $item): int
+    public function getOrderId(\Model_InvoiceItem $item)
     {
         if ($item->type == \Model_InvoiceItem::TYPE_ORDER) {
             return (int) $item->rel_id;
@@ -268,7 +270,7 @@ class ServiceInvoiceItem implements InjectionAwareInterface
         $this->di['db']->store($item);
     }
 
-    public function generateFromOrder(\Model_Invoice $proforma, \Model_ClientOrder $order, $task, $price): void
+    public function generateFromOrder(\Model_Invoice $proforma, \Model_ClientOrder $order, $task, $price)
     {
         $corderService = $this->di['mod_service']('Order');
 

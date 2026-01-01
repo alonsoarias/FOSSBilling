@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Sentry\Tracing;
 
 use Sentry\EventId;
+use Sentry\Metrics\MetricsUnit;
 use Sentry\SentrySdk;
 use Sentry\State\Scope;
-use Sentry\Unit;
 
 /**
  * This class stores all the information about a span.
@@ -22,13 +22,6 @@ use Sentry\Unit;
  */
 class Span
 {
-    /**
-     * Maximum number of flags allowed. We only track the first flags set.
-     *
-     * @internal
-     */
-    public const MAX_FLAGS = 10;
-
     /**
      * @var SpanId Span ID
      */
@@ -68,11 +61,6 @@ class Span
      * @var array<string, string> A List of tags associated to this span
      */
     protected $tags = [];
-
-    /**
-     * @var array<string, bool> A List of flags associated to this span
-     */
-    protected $flags = [];
 
     /**
      * @var array<string, mixed> An arbitrary mapping of additional metadata
@@ -341,20 +329,6 @@ class Span
     }
 
     /**
-     * Sets a feature flag associated to this span.
-     *
-     * @return $this
-     */
-    public function setFlag(string $key, bool $result)
-    {
-        if (\count($this->flags) < self::MAX_FLAGS) {
-            $this->flags[$key] = $result;
-        }
-
-        return $this;
-    }
-
-    /**
      * Gets the ID of the span.
      */
     public function getSpanId(): SpanId
@@ -395,13 +369,7 @@ class Span
     public function getData(?string $key = null, $default = null)
     {
         if ($key === null) {
-            $data = $this->data;
-
-            foreach ($this->flags as $flagKey => $flagValue) {
-                $data["flag.evaluation.{$flagKey}"] = $flagValue;
-            }
-
-            return $data;
+            return $this->data;
         }
 
         return $this->data[$key] ?? $default;
@@ -548,7 +516,7 @@ class Span
         string $type,
         string $key,
         $value,
-        Unit $unit,
+        MetricsUnit $unit,
         array $tags
     ): void {
     }

@@ -40,7 +40,7 @@ return [
         'Mymr' => 'Mianmar',
         'Nkoo' => 'N’Ko',
         'Olck' => 'Ol Chiki',
-        'Orya' => 'Odia',
+        'Orya' => 'Oriya',
         'Rohg' => 'Hanifi',
         'Sinh' => 'Sinhala',
         'Sund' => 'Soendanees',

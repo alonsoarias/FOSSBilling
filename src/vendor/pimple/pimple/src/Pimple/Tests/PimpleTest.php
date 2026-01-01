@@ -26,7 +26,6 @@
 
 namespace Pimple\Tests;
 
-use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Pimple\Container;
 
@@ -151,7 +150,6 @@ class PimpleTest extends TestCase
     /**
      * @dataProvider serviceDefinitionProvider
      */
-    #[DataProvider('serviceDefinitionProvider')]
     public function testShare($service)
     {
         $pimple = new Container();
@@ -169,7 +167,6 @@ class PimpleTest extends TestCase
     /**
      * @dataProvider serviceDefinitionProvider
      */
-    #[DataProvider('serviceDefinitionProvider')]
     public function testProtect($service)
     {
         $pimple = new Container();
@@ -231,7 +228,6 @@ class PimpleTest extends TestCase
     /**
      * @dataProvider serviceDefinitionProvider
      */
-    #[DataProvider('serviceDefinitionProvider')]
     public function testExtend($service)
     {
         $pimple = new Container();
@@ -336,7 +332,6 @@ class PimpleTest extends TestCase
     /**
      * @dataProvider badServiceDefinitionProvider
      */
-    #[DataProvider('badServiceDefinitionProvider')]
     public function testFactoryFailsForInvalidServiceDefinitions($service)
     {
         $this->expectException(\Pimple\Exception\ExpectedInvokableException::class);
@@ -350,7 +345,6 @@ class PimpleTest extends TestCase
      * @group legacy
      * @dataProvider badServiceDefinitionProvider
      */
-    #[DataProvider('badServiceDefinitionProvider')]
     public function testLegacyFactoryFailsForInvalidServiceDefinitions($service)
     {
         $this->expectException(\InvalidArgumentException::class);
@@ -363,7 +357,6 @@ class PimpleTest extends TestCase
     /**
      * @dataProvider badServiceDefinitionProvider
      */
-    #[DataProvider('badServiceDefinitionProvider')]
     public function testProtectFailsForInvalidServiceDefinitions($service)
     {
         $this->expectException(\Pimple\Exception\ExpectedInvokableException::class);
@@ -377,7 +370,6 @@ class PimpleTest extends TestCase
      * @group legacy
      * @dataProvider badServiceDefinitionProvider
      */
-    #[DataProvider('badServiceDefinitionProvider')]
     public function testLegacyProtectFailsForInvalidServiceDefinitions($service)
     {
         $this->expectException(\InvalidArgumentException::class);
@@ -390,7 +382,6 @@ class PimpleTest extends TestCase
     /**
      * @dataProvider badServiceDefinitionProvider
      */
-    #[DataProvider('badServiceDefinitionProvider')]
     public function testExtendFailsForKeysNotContainingServiceDefinitions($service)
     {
         $this->expectException(\Pimple\Exception\InvalidServiceIdentifierException::class);
@@ -406,7 +397,6 @@ class PimpleTest extends TestCase
      * @group legacy
      * @dataProvider badServiceDefinitionProvider
      */
-    #[DataProvider('badServiceDefinitionProvider')]
     public function testLegacyExtendFailsForKeysNotContainingServiceDefinitions($service)
     {
         $this->expectException(\InvalidArgumentException::class);
@@ -422,8 +412,7 @@ class PimpleTest extends TestCase
      * @group legacy
      * @expectedDeprecation How Pimple behaves when extending protected closures will be fixed in Pimple 4. Are you sure "foo" should be protected?
      */
-    #[DataProvider('badServiceDefinitionProvider')]
-    public function testExtendingProtectedClosureDeprecation($service)
+    public function testExtendingProtectedClosureDeprecation()
     {
         $pimple = new Container();
         $pimple['foo'] = $pimple->protect(function () {
@@ -440,7 +429,6 @@ class PimpleTest extends TestCase
     /**
      * @dataProvider badServiceDefinitionProvider
      */
-    #[DataProvider('badServiceDefinitionProvider')]
     public function testExtendFailsForInvalidServiceDefinitions($service)
     {
         $this->expectException(\Pimple\Exception\ExpectedInvokableException::class);
@@ -456,7 +444,6 @@ class PimpleTest extends TestCase
      * @group legacy
      * @dataProvider badServiceDefinitionProvider
      */
-    #[DataProvider('badServiceDefinitionProvider')]
     public function testLegacyExtendFailsForInvalidServiceDefinitions($service)
     {
         $this->expectException(\InvalidArgumentException::class);
@@ -501,7 +488,7 @@ class PimpleTest extends TestCase
     /**
      * Provider for invalid service definitions.
      */
-    public static function badServiceDefinitionProvider()
+    public function badServiceDefinitionProvider()
     {
         return [
           [123],
@@ -512,7 +499,7 @@ class PimpleTest extends TestCase
     /**
      * Provider for service definitions.
      */
-    public static function serviceDefinitionProvider()
+    public function serviceDefinitionProvider()
     {
         return [
             [function ($value) {

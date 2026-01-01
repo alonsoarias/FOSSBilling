@@ -4,6 +4,7 @@
 declare(strict_types=1);
 /**
  * Copyright 2022-2025 FOSSBilling
+ * Copyright 2011-2021 BoxBilling, Inc.
  * SPDX-License-Identifier: Apache-2.0.
  *
  * @copyright FOSSBilling (https://www.fossbilling.org)
@@ -46,25 +47,18 @@ if ($filesystem->exists(PATH_CONFIG)) {
 // Dynamically load the commands from the modules
 foreach ($modules as $module) {
     // Our manifests declare the names in lowercase, but the module directories start with an uppercase letter.
-    $cap = ucfirst((string) $module);
-
-    $commandsPath = Path::join(PATH_ROOT, 'modules', $cap, 'Commands');
-
-    // Skip if Commands directory doesn't exist
-    if (!$filesystem->exists($commandsPath)) {
-        continue;
-    }
+    $cap = ucfirst($module);
 
     $finder = new Finder();
-    $finder->files()->in($commandsPath)->name('*.php');
+    $finder->files()->in(Path::join(PATH_ROOT, 'modules', $cap, 'Commands'))->name('*.php');
 
     foreach ($finder as $file) {
         $command = $file->getFilenameWithoutExtension();
-        $class = "Box\\Mod\\{$cap}\\Commands\\{$command}";
+        $class = 'Box\\Mod\\' . $cap . '\\Commands\\' . $command;
 
         $command = new $class();
         $command->setDi($di);
-        $application->addCommand($command);
+        $application->add($command);
     }
 }
 

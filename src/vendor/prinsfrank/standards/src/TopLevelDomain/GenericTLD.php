@@ -403,8 +403,6 @@ enum GenericTLD: string implements TLD {
 
     #[NotAssigned]
     case duck = 'duck';
-
-    #[NotAssigned]
     case dunlop = 'dunlop';
 
     #[NotAssigned]
@@ -1113,8 +1111,6 @@ enum GenericTLD: string implements TLD {
     case realty = 'realty';
     case recipes = 'recipes';
     case red = 'red';
-
-    #[NotAssigned]
     case redstone = 'redstone';
     case redumbrella = 'redumbrella';
     case rehab = 'rehab';
@@ -1504,9 +1500,6 @@ enum GenericTLD: string implements TLD {
     case yamaxun = 'yamaxun';
     case yandex = 'yandex';
     case yi_dong_han = '移动';
-
-    #[NotAssigned]
-    case yi_hao_dian_han = '一号店';
     case yodobashi = 'yodobashi';
     case yoga = 'yoga';
     case yokohama = 'yokohama';

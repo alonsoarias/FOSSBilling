@@ -1,9 +1,6 @@
 <?php
 
 return [
-    'UserAssignedNames' => [
-        'XK' => 'Kosovo',
-    ],
     'Names' => [
         'AD' => 'Andorra',
         'AE' => 'Falme za Kiarabu',
@@ -44,7 +41,7 @@ return [
         'BZ' => 'Belize',
         'CA' => 'Kanada',
         'CC' => 'Visiwa vya Cocos (Keeling)',
-        'CD' => 'Kongo - Kinshasa',
+        'CD' => 'Jamhuri ya Kidemokrasia ya Kongo',
         'CF' => 'Jamhuri ya Afrika ya Kati',
         'CG' => 'Kongo - Brazzaville',
         'CH' => 'Uswisi',

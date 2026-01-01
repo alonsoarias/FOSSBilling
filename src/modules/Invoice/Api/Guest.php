@@ -15,8 +15,6 @@
 
 namespace Box\Mod\Invoice\Api;
 
-use FOSSBilling\Validation\Api\RequiredParams;
-
 class Guest extends \Api_Abstract
 {
     /**
@@ -26,9 +24,13 @@ class Guest extends \Api_Abstract
      *
      * @throws \FOSSBilling\Exception
      */
-    #[RequiredParams(['hash' => 'Invoice hash was not passed'])]
     public function get($data)
     {
+        $required = [
+            'hash' => 'Invoice hash not passed',
+        ];
+        $this->di['validator']->checkRequiredParamsForArray($required, $data);
+
         $model = $this->di['db']->findOne('Invoice', 'hash = :hash', ['hash' => $data['hash']]);
         if (!$model) {
             throw new \FOSSBilling\Exception('Invoice was not found');
@@ -48,9 +50,13 @@ class Guest extends \Api_Abstract
      *
      * @throws \FOSSBilling\Exception
      */
-    #[RequiredParams(['hash' => 'Invoice hash was not passed'])]
     public function update($data)
     {
+        $required = [
+            'hash' => 'Invoice hash not passed',
+        ];
+        $this->di['validator']->checkRequiredParamsForArray($required, $data);
+
         $invoice = $this->di['db']->findOne('Invoice', 'hash = :hash', ['hash' => $data['hash']]);
         if (!$invoice) {
             throw new \FOSSBilling\Exception('Invoice was not found');
@@ -111,9 +117,13 @@ class Guest extends \Api_Abstract
      *
      * @throws \FOSSBilling\Exception
      */
-    #[RequiredParams(['hash' => 'Invoice hash was not passed'])]
     public function pdf($data)
     {
+        $required = [
+            'hash' => 'Invoice hash is missing',
+        ];
+        $this->di['validator']->checkRequiredParamsForArray($required, $data);
+
         return $this->getService()->generatePDF($data['hash'], $this->getIdentity());
     }
 }

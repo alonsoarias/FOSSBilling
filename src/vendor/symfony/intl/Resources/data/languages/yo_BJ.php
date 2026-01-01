@@ -3,7 +3,6 @@
 return [
     'Names' => [
         'agq' => 'Èdè Ágɛ̀ɛ̀mù',
-        'bal' => 'Èdè Belúshì',
         'bez' => 'Èdè Bɛ́nà',
         'chr' => 'Èdè Shɛ́rókiì',
         'cu' => 'Èdè Síláfííkì Ilé Ìjɔ́sìn',

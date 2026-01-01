@@ -808,7 +808,7 @@ return [
         ],
         'SLL' => [
             'SLL',
-            'leone sierraleoński (1964–2022)',
+            'leone sierraleoński (1964—2022)',
         ],
         'SOS' => [
             'SOS',
@@ -966,10 +966,6 @@ return [
             'EC$',
             'dolar wschodniokaraibski',
         ],
-        'XCG' => [
-            'XCG',
-            'gulden karaibski',
-        ],
         'XEU' => [
             'XEU',
             'ECU',
@@ -1033,10 +1029,6 @@ return [
         'ZWD' => [
             'ZWD',
             'dolar Zimbabwe (1980–2008)',
-        ],
-        'ZWG' => [
-            'ZWG',
-            'złoto Zimbabwe',
         ],
         'ZWL' => [
             'ZWL',

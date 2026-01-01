@@ -20,7 +20,7 @@ class Service
         $this->di = $di;
     }
 
-    public function install(): bool
+    public function install()
     {
         $sql = '
             CREATE TABLE IF NOT EXISTS `custom_pages` (
@@ -51,7 +51,7 @@ class Service
         return $this->di['pager']->getPaginatedResultSet($sql, $filter, $per_page, $page);
     }
 
-    public function deletePage($id): void
+    public function deletePage($id)
     {
         if (is_array($id)) {
             foreach ($id as $i => $x) {

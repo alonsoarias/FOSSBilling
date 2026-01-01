@@ -986,10 +986,6 @@ return [
             'EC$',
             'dollaro dei Caraibi orientali',
         ],
-        'XCG' => [
-            'Cf',
-            'fiorino caraibico',
-        ],
         'XFO' => [
             'XFO',
             'franco oro francese',
@@ -1057,10 +1053,6 @@ return [
         'ZWD' => [
             'ZWD',
             'dollaro dello Zimbabwe',
-        ],
-        'ZWG' => [
-            'ZWG',
-            'Zimbabwe Gold',
         ],
         'ZWL' => [
             'ZWL',

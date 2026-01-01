@@ -15,8 +15,6 @@
 
 namespace Box\Mod\Invoice\Api;
 
-use FOSSBilling\Validation\Api\RequiredParams;
-
 class Client extends \Api_Abstract
 {
     /**
@@ -46,9 +44,13 @@ class Client extends \Api_Abstract
      *
      * @throws \FOSSBilling\Exception
      */
-    #[RequiredParams(['hash' => 'Invoice hash was not passed'])]
     public function get($data)
     {
+        $required = [
+            'hash' => 'Invoice hash not passed',
+        ];
+        $this->di['validator']->checkRequiredParamsForArray($required, $data);
+
         $model = $this->di['db']->findOne('Invoice', 'hash = :hash', ['hash' => $data['hash']]);
         if (!$model) {
             throw new \FOSSBilling\Exception('Invoice was not found');
@@ -66,9 +68,13 @@ class Client extends \Api_Abstract
      *
      * @throws \FOSSBilling\Exception
      */
-    #[RequiredParams(['hash' => 'Invoice hash was not passed'])]
     public function update($data)
     {
+        $required = [
+            'hash' => 'Invoice hash not passed',
+        ];
+        $this->di['validator']->checkRequiredParamsForArray($required, $data);
+
         $invoice = $this->di['db']->findOne('Invoice', 'hash = :hash', ['hash' => $data['hash']]);
         if (!$invoice) {
             throw new \FOSSBilling\Exception('Invoice was not found');
@@ -92,9 +98,14 @@ class Client extends \Api_Abstract
      *
      * @throws \FOSSBilling\Exception
      */
-    #[RequiredParams(['order_id' => 'Order ID (order_id) was not passed'])]
     public function renewal_invoice($data)
     {
+        $required = [
+            'order_id' => 'Order id required',
+        ];
+
+        $this->di['validator']->checkRequiredParamsForArray($required, $data);
+
         $model = $this->di['db']->findOne('ClientOrder', 'client_id = ? and id = ?', [$this->getIdentity()->id, $data['order_id']]);
         if (!$model instanceof \Model_ClientOrder) {
             throw new \FOSSBilling\Exception('Order not found');
@@ -116,9 +127,14 @@ class Client extends \Api_Abstract
      *
      * @return string - invoice hash
      */
-    #[RequiredParams(['amount' => 'Amount is required'])]
     public function funds_invoice($data)
     {
+        $required = [
+            'amount' => 'Amount is required',
+        ];
+
+        $this->di['validator']->checkRequiredParamsForArray($required, $data);
+
         if (!is_numeric($data['amount'])) {
             throw new \FOSSBilling\InformationException('You need to enter numeric value');
         }
@@ -138,9 +154,13 @@ class Client extends \Api_Abstract
      *
      * @throws \FOSSBilling\Exception
      */
-    #[RequiredParams(['hash' => 'Invoice hash was not passed'])]
     public function delete($data)
     {
+        $required = [
+            'hash' => 'Invoice hash not passed',
+        ];
+        $this->di['validator']->checkRequiredParamsForArray($required, $data);
+
         $model = $this->di['db']->findOne('Invoice', 'hash = :hash', ['hash' => $data['hash']]);
         if (!$model) {
             throw new \FOSSBilling\Exception('Invoice was not found');

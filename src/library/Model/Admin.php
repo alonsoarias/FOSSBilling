@@ -22,14 +22,14 @@ class Model_Admin extends RedBeanPHP\SimpleModel
         return $this->name;
     }
 
-    public function getStatus($status = ''): string
+    public function getStatus($status = '')
     {
         $statusArray = [
             self::STATUS_ACTIVE,
             self::STATUS_INACTIVE,
         ];
         if (in_array($status, $statusArray)) {
-            return strtolower((string) $status);
+            return strtolower($status);
         }
 
         return self::STATUS_INACTIVE;

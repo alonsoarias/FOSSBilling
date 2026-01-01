@@ -61,7 +61,6 @@ final class HttplugClient implements ClientInterface, HttpAsyncClient, RequestFa
     private HttpClientInterface $client;
     private ResponseFactoryInterface $responseFactory;
     private StreamFactoryInterface $streamFactory;
-    private bool $autoUpgradeHttpVersion = true;
 
     /**
      * @var \SplObjectStorage<ResponseInterface, array{RequestInterface, Promise}>|null
@@ -97,10 +96,6 @@ final class HttplugClient implements ClientInterface, HttpAsyncClient, RequestFa
     public function withOptions(array $options): static
     {
         $clone = clone $this;
-        if (\array_key_exists('auto_upgrade_http_version', $options)) {
-            $clone->autoUpgradeHttpVersion = $options['auto_upgrade_http_version'];
-            unset($options['auto_upgrade_http_version']);
-        }
         $clone->client = $clone->client->withOptions($options);
 
         return $clone;
@@ -203,12 +198,12 @@ final class HttplugClient implements ClientInterface, HttpAsyncClient, RequestFa
         throw new \LogicException(\sprintf('You cannot use "%s()" as no PSR-17 factories have been found. Try running "composer require php-http/discovery psr/http-factory-implementation:*".', __METHOD__));
     }
 
-    public function __serialize(): array
+    public function __sleep(): array
     {
         throw new \BadMethodCallException('Cannot serialize '.__CLASS__);
     }
 
-    public function __unserialize(array $data): void
+    public function __wakeup(): void
     {
         throw new \BadMethodCallException('Cannot unserialize '.__CLASS__);
     }
@@ -270,8 +265,8 @@ final class HttplugClient implements ClientInterface, HttpAsyncClient, RequestFa
                 'buffer' => $buffer,
             ];
 
-            if (!$this->autoUpgradeHttpVersion || '1.0' === $request->getProtocolVersion()) {
-                $options['http_version'] = $request->getProtocolVersion();
+            if ('1.0' === $request->getProtocolVersion()) {
+                $options['http_version'] = '1.0';
             }
 
             return $this->client->request($request->getMethod(), (string) $request->getUri(), $options);

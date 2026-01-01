@@ -21,6 +21,7 @@ class Service implements InjectionAwareInterface
     final public const DOMAIN = 'domain';
     final public const DOWNLOADABLE = 'downloadable';
     final public const HOSTING = 'hosting';
+    final public const MEMBERSHIP = 'membership';
     final public const VPS = 'vps';
 
     final public const SETUP_AFTER_ORDER = 'after_order';
@@ -139,8 +140,8 @@ class Service implements InjectionAwareInterface
         $extensionService = $this->di['mod_service']('extension');
         $list = $extensionService->getInstalledMods();
         foreach ($list as $mod) {
-            if (str_starts_with((string) $mod, 'service')) {
-                $n = substr((string) $mod, strlen('service'));
+            if (str_starts_with($mod, 'service')) {
+                $n = substr($mod, strlen('service'));
                 $data[$n] = ucfirst($n);
             }
         }
@@ -153,7 +154,7 @@ class Service implements InjectionAwareInterface
         return $this->di['db']->findOne('Product', 'type = ?', [self::DOMAIN]);
     }
 
-    public function getPaymentTypes(): array
+    public function getPaymentTypes()
     {
         return [
             \Model_ProductPayment::FREE => 'Free',
@@ -162,7 +163,7 @@ class Service implements InjectionAwareInterface
         ];
     }
 
-    public function createProduct($title, $type, $categoryId = null): int
+    public function createProduct($title, $type, $categoryId = null)
     {
         $systemService = $this->di['mod_service']('system');
         $systemService->checkLimits('Model_Product', 5);
@@ -199,7 +200,7 @@ class Service implements InjectionAwareInterface
         return (int) $productId;
     }
 
-    public function updateProduct(\Model_Product $model, $data): bool
+    public function updateProduct(\Model_Product $model, $data)
     {
         // pricing
         if (isset($data['pricing'])) {
@@ -313,7 +314,7 @@ class Service implements InjectionAwareInterface
         return true;
     }
 
-    public function updatePriority($data): bool
+    public function updatePriority($data)
     {
         foreach ($data['priority'] as $id => $p) {
             $model = $this->di['db']->load('Product', $id);
@@ -329,7 +330,7 @@ class Service implements InjectionAwareInterface
         return true;
     }
 
-    public function updateConfig(\Model_Product $model, $data): bool
+    public function updateConfig(\Model_Product $model, $data)
     {
         /* add new config value */
         $config = json_decode($model->config ?? '', true) ?? [];
@@ -416,7 +417,7 @@ class Service implements InjectionAwareInterface
         return $productId;
     }
 
-    public function deleteProduct(\Model_Product $product): bool
+    public function deleteProduct(\Model_Product $product)
     {
         $orderService = $this->di['mod_service']('order');
         if ($orderService->productHasOrders($product)) {
@@ -446,7 +447,7 @@ class Service implements InjectionAwareInterface
         return $result;
     }
 
-    public function updateCategory(\Model_ProductCategory $productCategory, $title = null, $description = null, $icon_url = null): bool
+    public function updateCategory(\Model_ProductCategory $productCategory, $title = null, $description = null, $icon_url = null)
     {
         $productCategory->title = $title;
         $productCategory->icon_url = $icon_url;
@@ -478,7 +479,7 @@ class Service implements InjectionAwareInterface
         return $id;
     }
 
-    public function removeProductCategory(\Model_ProductCategory $category): bool
+    public function removeProductCategory(\Model_ProductCategory $category)
     {
         $model = $this->di['db']->findOne('Product', 'product_category_id = :category_id', [':category_id' => $category->id]);
         if ($model instanceof \Model_Product) {
@@ -492,7 +493,7 @@ class Service implements InjectionAwareInterface
         return true;
     }
 
-    public function getProductSearchQuery(array $data): array
+    public function getProductSearchQuery(array $data)
     {
         $sql = 'SELECT m.*
                 FROM product as m
@@ -580,7 +581,7 @@ class Service implements InjectionAwareInterface
         return $this->di['db']->findOne('Product', "slug = ? and active = 1 and status = 'enabled' and is_addon = 0", [$slug]);
     }
 
-    public function getProductCategorySearchQuery($data): array
+    public function getProductCategorySearchQuery($data)
     {
         $sql = 'SELECT m.id,
                        m.title,
@@ -674,7 +675,7 @@ class Service implements InjectionAwareInterface
         return $this->di['db']->find('Product', 'is_addon = 0 and status="enabled" and hidden = 0 and product_category_id = ?', [$model->id]);
     }
 
-    public function toProductPaymentApiArray(\Model_ProductPayment $model): array
+    public function toProductPaymentApiArray(\Model_ProductPayment $model)
     {
         $periods = [];
         $periods['1W'] = ['price' => $model->w_price, 'setup' => $model->w_setup_price, 'enabled' => $model->w_enabled];
@@ -693,7 +694,7 @@ class Service implements InjectionAwareInterface
         ];
     }
 
-    public function getStartingDomainPrice(): float
+    public function getStartingDomainPrice()
     {
         $sql = 'SELECT min(price_registration)
                 FROM tld
@@ -796,7 +797,7 @@ class Service implements InjectionAwareInterface
         return $this->di['db']->find('Product', 'type = "custom" and is_addon= 1 and id != ? and id IN (' . $slots . ')', $ids);
     }
 
-    public function toAddonArray(\Model_Product $model, $deep = true): array
+    public function toAddonArray(\Model_Product $model, $deep = true)
     {
         $productPayment = $this->di['db']->load('ProductPayment', $model->product_payment_id);
         $pricing = $this->toProductPaymentApiArray($productPayment);
@@ -823,7 +824,7 @@ class Service implements InjectionAwareInterface
     /*
      * Product Promotion Functions
      */
-    public function getPromoSearchQuery($data): array
+    public function getPromoSearchQuery($data)
     {
         $sql = 'SELECT *
                 FROM promo
@@ -886,8 +887,8 @@ class Service implements InjectionAwareInterface
         $model->once_per_client = (bool) ($data['once_per_client'] ?? 0);
         $model->recurring = (bool) ($data['recurring'] ?? 0);
         $model->maxuses = (int) $data['maxuses'] ?? null;
-        $model->start_at = !empty($data['start_at']) ? date('Y-m-d H:i:s', strtotime((string) $data['start_at'])) : null;
-        $model->end_at = !empty($data['end_at']) ? date('Y-m-d H:i:s', strtotime((string) $data['end_at'])) : null;
+        $model->start_at = !empty($data['start_at']) ? date('Y-m-d H:i:s', strtotime($data['start_at'])) : null;
+        $model->end_at = !empty($data['end_at']) ? date('Y-m-d H:i:s', strtotime($data['end_at'])) : null;
         $model->products = json_encode($products);
         $model->periods = json_encode($periods);
         $model->client_groups = json_encode($clientGroups);
@@ -915,7 +916,7 @@ class Service implements InjectionAwareInterface
         return $result;
     }
 
-    public function updatePromo(\Model_Promo $model, array $data = []): bool
+    public function updatePromo(\Model_Promo $model, array $data = [])
     {
         $model->code = $data['code'] ?? $model->code;
         $model->type = $data['type'] ?? $model->type;
@@ -925,8 +926,8 @@ class Service implements InjectionAwareInterface
         $model->once_per_client = $data['once_per_client'] ?? $model->once_per_client;
         $model->recurring = $data['recurring'] ?? $model->recurring;
         $model->used = $data['used'] ?? $model->used;
-        $model->start_at = !empty($data['start_at']) ? date('Y-m-d H:i:s', strtotime((string) $data['start_at'])) : null;
-        $model->end_at = !empty($data['end_at']) ? date('Y-m-d H:i:s', strtotime((string) $data['end_at'])) : null;
+        $model->start_at = !empty($data['start_at']) ? date('Y-m-d H:i:s', strtotime($data['start_at'])) : null;
+        $model->end_at = !empty($data['end_at']) ? date('Y-m-d H:i:s', strtotime($data['end_at'])) : null;
         $model->maxuses = (int) $data['maxuses'] ?? $model->maxuses;
 
         if (!is_array($data['products'] ?? null)) {
@@ -969,7 +970,7 @@ class Service implements InjectionAwareInterface
         return true;
     }
 
-    public function deletePromo(\Model_Promo $model): bool
+    public function deletePromo(\Model_Promo $model)
     {
         $sql = 'UPDATE client_order SET promo_id = NULL WHERE promo_id = :id';
 
@@ -1041,7 +1042,7 @@ class Service implements InjectionAwareInterface
         return $discount;
     }
 
-    public function isPromoLinkedToTld(\Model_Promo $promo, \Model_Tld $tld): bool
+    public function isPromoLinkedToTld(\Model_Promo $promo, \Model_Tld $tld)
     {
         foreach ($promo->PromoItem as $item) {
             if ($item->tld_id == $tld->id) {

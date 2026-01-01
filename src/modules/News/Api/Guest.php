@@ -1,6 +1,5 @@
 <?php
 
-declare(strict_types=1);
 /**
  * Copyright 2022-2025 FOSSBilling
  * Copyright 2011-2021 BoxBilling, Inc.
@@ -10,67 +9,58 @@ declare(strict_types=1);
  * @license http://www.apache.org/licenses/LICENSE-2.0 Apache-2.0
  */
 
-namespace Box\Mod\News\Api;
+/**
+ * News and announcements management.
+ */
 
-use Box\Mod\News\Entity\Post;
+namespace Box\Mod\News\Api;
 
 class Guest extends \Api_Abstract
 {
     /**
      * Get paginated list of active news items.
      *
-     * @param array $data Filtering and pagination parameters
-     *
-     * @return array Paginated list of news items
+     * @return array
      */
-    public function get_list(array $data): array
+    public function get_list($data)
     {
-        $data['status'] = Post::STATUS_ACTIVE;
+        $data['status'] = 'active';
+        [$sql, $params] = $this->getService()->getSearchQuery($data);
+        $per_page = $data['per_page'] ?? $this->di['pager']->getDefaultPerPage();
+        $page = $data['page'] ?? null;
+        $pager = $this->di['pager']->getPaginatedResultSet($sql, $params, $per_page, $page);
+        foreach ($pager['list'] as $key => $item) {
+            $post = $this->di['db']->getExistingModelById('Post', $item['id'], 'Post not found');
+            $pager['list'][$key] = $this->getService()->toApiArray($post);
+        }
 
-        /** @var \Box\Mod\News\Repository\PostRepository $repo */
-        $repo = $this->getService()->getPostRepository();
-
-        // Repository method returns a QueryBuilder with filters applied
-        $qb = $repo->getSearchQueryBuilder($data);
-
-        return $this->di['pager']->paginateDoctrineQuery($qb);
+        return $pager;
     }
 
     /**
-     * Get a single news item by ID or slug.
+     * Get news item by ID or SLUG.
      *
-     * @param array $data ['id' => int|null, 'slug' => string|null]
-     *
-     * @throws \FOSSBilling\Exception if ID/slug is missing or news item not found
+     * @return array
      */
-    public function get(array $data): array
+    public function get($data)
     {
+        if (!isset($data['id']) && !isset($data['slug'])) {
+            throw new \FOSSBilling\Exception('ID or slug is missing');
+        }
+
         $id = $data['id'] ?? null;
         $slug = $data['slug'] ?? null;
 
-        if (!$id && !$slug) {
-            throw new \FOSSBilling\Exception('ID or slug is required.');
-        }
-
-        /** @var \Box\Mod\News\Repository\PostRepository $repo */
-        $repo = $this->getService()->getPostRepository();
-
-        $post = null;
         if ($id) {
-            $post = $repo->findOneActiveById($id);
-        } elseif ($slug) {
-            $post = $repo->findOneActiveBySlug($slug);
+            $model = $this->getService()->findOneActiveById($id);
+        } else {
+            $model = $this->getService()->findOneActiveBySlug($slug);
         }
 
-        if (!$post || $post->getStatus() !== Post::STATUS_ACTIVE) {
-            throw new \FOSSBilling\Exception('News item not found.');
+        if (!$model || $model->status !== 'active') {
+            throw new \FOSSBilling\Exception('News item not found');
         }
 
-        /**@todo Doctrine: Replace with actual Admin entity once it's migrated to Doctrine. */
-        $admin = $this->di['db']->getRow('SELECT name FROM admin WHERE id = :id', ['id' => $post->getAdminId()]);
-
-        $post->setAdminData($admin);
-
-        return $post->toApiArray();
+        return $this->getService()->toApiArray($model);
     }
 }

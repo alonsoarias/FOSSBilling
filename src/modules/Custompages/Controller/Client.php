@@ -37,12 +37,12 @@ class Client implements \FOSSBilling\InjectionAwareInterface
      *
      * @param \Box_App $app - returned by reference
      */
-    public function register(\Box_App &$app): void
+    public function register(\Box_App &$app)
     {
         $app->get('/custompages/:slug', 'get_page', ['slug' => '[a-z0-9-]+'], static::class);
     }
 
-    public function get_page(\Box_App $app, $slug): string
+    public function get_page(\Box_App $app, $slug)
     {
         $service = new \Box\Mod\Custompages\Service();
         $service->setDi($this->di);

@@ -1030,10 +1030,6 @@ return [
             'XCD',
             'kelet-karibi dollár',
         ],
-        'XCG' => [
-            'Cg.',
-            'karibi forint',
-        ],
         'XEU' => [
             'XEU',
             'európai pénznemegység',
@@ -1109,10 +1105,6 @@ return [
         'ZWD' => [
             'ZWD',
             'Zimbabwei dollár (1980–2008)',
-        ],
-        'ZWG' => [
-            'ZWG',
-            'zimbabwei arany',
         ],
         'ZWL' => [
             'ZWL',

@@ -1,9 +1,6 @@
 <?php
 
 return [
-    'UserAssignedNames' => [
-        'XK' => 'Kosovas',
-    ],
     'Names' => [
         'AD' => 'Andora',
         'AE' => 'Jungtiniai Arabų Emyratai',
@@ -76,7 +73,7 @@ return [
         'ET' => 'Etiopija',
         'FI' => 'Suomija',
         'FJ' => 'Fidžis',
-        'FK' => 'Folklando salos',
+        'FK' => 'Folklando Salos',
         'FM' => 'Mikronezija',
         'FO' => 'Farerų Salos',
         'FR' => 'Prancūzija',

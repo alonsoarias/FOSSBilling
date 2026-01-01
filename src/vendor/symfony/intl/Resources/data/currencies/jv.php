@@ -618,10 +618,6 @@ return [
             'EC$',
             'Dolar Karibia Wetan',
         ],
-        'XCG' => [
-            'Cg.',
-            'Guilder Karibia',
-        ],
         'XOF' => [
             'F CFA',
             'CFA Franc Afrika Kulon',
@@ -641,10 +637,6 @@ return [
         'ZMW' => [
             'ZMW',
             'Kwacha Sambia',
-        ],
-        'ZWG' => [
-            'ZWG',
-            'Emas Zimbabwe',
         ],
     ],
 ];

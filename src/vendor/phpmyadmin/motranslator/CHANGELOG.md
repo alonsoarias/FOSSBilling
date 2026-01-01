@@ -1,15 +1,5 @@
 # Change Log
 
-## [6.0.0] - 2025-10-31
-
-### Changed
-
-* Added native type declarations
-
-### Removed
-
-* [#48](https://github.com/phpmyadmin/motranslator/pull/48): Drop support for PHP 7.2, PHP 7.3, PHP 7.4, PHP 8.0 and PHP 8.1
-
 ## [5.4.0] - 2025-03-16
 
 * Bump PHP minimum version to 7.2
@@ -118,6 +108,5 @@
 
 * Initial release.
 
-[6.0.0]: https://github.com/phpmyadmin/motranslator/compare/5.4.0...6.0.0
 [5.4.0]: https://github.com/phpmyadmin/motranslator/compare/5.3.1...5.4.0
 [5.3.1]: https://github.com/phpmyadmin/motranslator/compare/5.3.0...5.3.1

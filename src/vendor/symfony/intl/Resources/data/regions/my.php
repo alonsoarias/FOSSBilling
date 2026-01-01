@@ -1,9 +1,6 @@
 <?php
 
 return [
-    'UserAssignedNames' => [
-        'XK' => 'ကိုဆိုဗို',
-    ],
     'Names' => [
         'AD' => 'အန်ဒိုရာ',
         'AE' => 'ယူအေအီး',

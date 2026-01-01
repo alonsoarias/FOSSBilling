@@ -354,7 +354,6 @@ trait HttpClientTrait
                     }
                 }
             });
-            $caster = null;
 
             if ('' === $body = http_build_query($body, '', '&')) {
                 return '';

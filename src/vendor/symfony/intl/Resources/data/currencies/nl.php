@@ -1166,10 +1166,6 @@ return [
             'ZWD',
             'Zimbabwaanse dollar',
         ],
-        'ZWG' => [
-            'ZiG',
-            'Zimbabwe Gold',
-        ],
         'ZWL' => [
             'ZWL',
             'Zimbabwaanse dollar (2009)',

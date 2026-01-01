@@ -27,7 +27,7 @@ class Service implements InjectionAwareInterface
         return $this->di;
     }
 
-    public function approveClientEmailByHash($hash): bool
+    public function approveClientEmailByHash($hash)
     {
         $db = $this->di['db'];
         $result = $db->getRow('SELECT id, client_id FROM extension_meta WHERE extension = "mod_client" AND meta_key = "confirm_email" AND meta_value = :hash', [':hash' => $hash]);
@@ -42,7 +42,7 @@ class Service implements InjectionAwareInterface
 
     public function generateEmailConfirmationLink($client_id)
     {
-        $hash = strtolower((string) $this->di['tools']->generatePassword(50));
+        $hash = strtolower($this->di['tools']->generatePassword(50));
         $db = $this->di['db'];
 
         $meta = $db->dispense('ExtensionMeta');
@@ -57,7 +57,7 @@ class Service implements InjectionAwareInterface
         return $this->di['tools']->url('/client/confirm-email/' . $hash);
     }
 
-    public static function onAfterClientSignUp(\Box_Event $event): bool
+    public static function onAfterClientSignUp(\Box_Event $event)
     {
         $di = $event->getDi();
         $params = $event->getParameters();
@@ -138,17 +138,17 @@ class Service implements InjectionAwareInterface
 
         if ($created_at) {
             $where[] = "DATE_FORMAT(c.created_at, '%Y-%m-%d') = :created_at";
-            $params[':created_at'] = date('Y-m-d', strtotime((string) $created_at));
+            $params[':created_at'] = date('Y-m-d', strtotime($created_at));
         }
 
         if ($date_from) {
             $where[] = 'UNIX_TIMESTAMP(c.created_at) >= :date_from';
-            $params[':date_from'] = strtotime((string) $date_from);
+            $params[':date_from'] = strtotime($date_from);
         }
 
         if ($date_to) {
             $where[] = 'UNIX_TIMESTAMP(c.created_at) <= :date_from';
-            $params[':date_to'] = strtotime((string) $date_to);
+            $params[':date_to'] = strtotime($date_to);
         }
 
         // smartSearch
@@ -189,7 +189,7 @@ class Service implements InjectionAwareInterface
         return $this->di['db']->getAssoc($sql, $params);
     }
 
-    public function toSessionArray(\Model_Client $model): array
+    public function toSessionArray(\Model_Client $model)
     {
         return [
             'id' => $model->id,
@@ -210,7 +210,7 @@ class Service implements InjectionAwareInterface
         return ($result) ? true : false;
     }
 
-    public function canChangeCurrency(\Model_Client $model, $currency = null): bool
+    public function canChangeCurrency(\Model_Client $model, $currency = null)
     {
         if (!$model->currency) {
             return true;
@@ -233,7 +233,7 @@ class Service implements InjectionAwareInterface
         return true;
     }
 
-    public function addFunds(\Model_Client $client, $amount, $description, array $data = []): bool
+    public function addFunds(\Model_Client $client, $amount, $description, array $data = [])
     {
         if (!$client->currency) {
             throw new \FOSSBilling\InformationException('You must define the client\'s currency before adding funds.');
@@ -269,7 +269,7 @@ class Service implements InjectionAwareInterface
         return $this->di['db']->find('ClientPasswordReset', 'UNIX_TIMESTAMP() - ? > UNIX_TIMESTAMP(created_at)', [$expire_after_hours * 60 * 60]);
     }
 
-    public function getHistorySearchQuery($data): array
+    public function getHistorySearchQuery($data)
     {
         $q = 'SELECT ach.*, c.first_name, c.last_name, c.email
               FROM activity_client_history as ach
@@ -301,7 +301,7 @@ class Service implements InjectionAwareInterface
         return [$q, $params];
     }
 
-    public function counter(): array
+    public function counter()
     {
         $sql = 'SELECT status, COUNT(id) as counter
                 FROM client
@@ -324,7 +324,7 @@ class Service implements InjectionAwareInterface
         return $this->di['db']->getAssoc($sql);
     }
 
-    public function clientAlreadyExists($email): bool
+    public function clientAlreadyExists($email)
     {
         $client = $this->di['db']->findOne('Client', 'email = :email ', [':email' => $email]);
 
@@ -427,7 +427,7 @@ class Service implements InjectionAwareInterface
         return $client;
     }
 
-    public function isClientTaxable(\Model_Client $model): bool
+    public function isClientTaxable(\Model_Client $model)
     {
         $systemService = $this->di['mod_service']('system');
 
@@ -460,7 +460,7 @@ class Service implements InjectionAwareInterface
         return $group_id;
     }
 
-    public function deleteGroup(\Model_ClientGroup $model): bool
+    public function deleteGroup(\Model_ClientGroup $model)
     {
         $client = $this->di['db']->findOne('Client', 'client_group_id = ?', [$model->id]);
         if ($client) {
@@ -480,12 +480,9 @@ class Service implements InjectionAwareInterface
         $client = $this->di['db']->dispense('Client');
 
         $client->auth_type = $data['auth_type'] ?? null;
-        $client->email = strtolower(trim((string) ($data['email'] ?? null)));
-        $client->first_name = ucwords((string) ($data['first_name'] ?? null));
+        $client->email = strtolower(trim($data['email'] ?? null));
+        $client->first_name = ucwords($data['first_name'] ?? null);
         $client->pass = $this->di['password']->hashIt($password);
-
-        $system = $this->di['mod']('system');
-        $systemCfg = $system->getConfig();
 
         $phoneCC = $data['phone_cc'] ?? $client->phone_cc;
         if (!empty($phoneCC)) {
@@ -508,7 +505,7 @@ class Service implements InjectionAwareInterface
         $client->city = $data['city'] ?? null;
         $client->state = $data['state'] ?? null;
         $client->postcode = $data['postcode'] ?? null;
-        $client->country = !empty($data['country']) ? $data['country'] : (!empty($systemCfg['default_country']) ? $systemCfg['default_country'] : null);
+        $client->country = $data['country'] ?? null;
         $client->document_type = $data['document_type'] ?? null;
         $client->document_nr = $data['document_nr'] ?? null;
         $client->notes = $data['notes'] ?? null;
@@ -529,7 +526,7 @@ class Service implements InjectionAwareInterface
         $client->ip = $data['ip'] ?? null;
 
         $created_at = $data['created_at'] ?? null;
-        $client->created_at = !empty($created_at) ? date('Y-m-d H:i:s', strtotime((string) $created_at)) : date('Y-m-d H:i:s');
+        $client->created_at = !empty($created_at) ? date('Y-m-d H:i:s', strtotime($created_at)) : date('Y-m-d H:i:s');
         $client->updated_at = date('Y-m-d H:i:s');
         $this->di['db']->store($client);
 
@@ -556,15 +553,13 @@ class Service implements InjectionAwareInterface
         $data['status'] = \Model_Client::ACTIVE;
         $client = $this->createClient($data);
 
-        $event_params['id'] = $client->id;
-
-        $this->di['events_manager']->fire(['event' => 'onAfterClientSignUp', 'params' => $event_params]);
+        $this->di['events_manager']->fire(['event' => 'onAfterClientSignUp', 'params' => ['id' => $client->id, 'password' => $data['password']]]);
         $this->di['logger']->info('Client #%s signed up', $client->id);
 
         return $client;
     }
 
-    public function remove(\Model_Client $model): void
+    public function remove(\Model_Client $model)
     {
         $service = $this->di['mod_service']('Order');
         $service->rmByClient($model);
@@ -601,7 +596,7 @@ class Service implements InjectionAwareInterface
         return $this->di['auth']->authorizeUser($model, $plainTextPassword);
     }
 
-    public function sendEmailConfirmationForClient(\Model_Client $client): void
+    public function sendEmailConfirmationForClient(\Model_Client $client)
     {
         try {
             $email = [];
@@ -618,7 +613,7 @@ class Service implements InjectionAwareInterface
         }
     }
 
-    public function canChangeEmail(\Model_Client $client, $email): bool
+    public function canChangeEmail(\Model_Client $client, $email)
     {
         $config = $this->di['mod_config']('client');
 
@@ -633,7 +628,7 @@ class Service implements InjectionAwareInterface
         return true;
     }
 
-    public function checkExtraRequiredFields(array $checkArr): void
+    public function checkExtraRequiredFields(array $checkArr)
     {
         $config = $this->di['mod_config']('client');
         $required = $config['required'] ?? [];
@@ -646,7 +641,7 @@ class Service implements InjectionAwareInterface
         }
     }
 
-    public function checkCustomFields(array $checkArr): void
+    public function checkCustomFields(array $checkArr)
     {
         $config = $this->di['mod_config']('client');
         $customFields = $config['custom_fields'] ?? [];
@@ -714,7 +709,7 @@ class Service implements InjectionAwareInterface
      *
      * @return void
      */
-    public static function onBeforeAdminCronRun(\Box_Event $event): void
+    public static function onBeforeAdminCronRun(\Box_Event $event)
     {
         $di = $event->getDi();
         $sql = 'DELETE FROM client_password_reset WHERE UNIX_TIMESTAMP() - 900 > UNIX_TIMESTAMP(created_at);';

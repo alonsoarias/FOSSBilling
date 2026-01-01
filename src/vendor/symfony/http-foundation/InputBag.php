@@ -17,8 +17,6 @@ use Symfony\Component\HttpFoundation\Exception\UnexpectedValueException;
 /**
  * InputBag is a container for user input values such as $_GET, $_POST, $_REQUEST, and $_COOKIE.
  *
- * @template TInput of string|int|float|bool|null
- *
  * @author Saif Eddin Gmati <azjezz@protonmail.com>
  */
 final class InputBag extends ParameterBag
@@ -26,11 +24,7 @@ final class InputBag extends ParameterBag
     /**
      * Returns a scalar input value by name.
      *
-     * @template TDefault of string|int|float|bool|null
-     *
-     * @param TDefault $default The default value if the input key does not exist
-     *
-     * @return TDefault|TInput
+     * @param string|int|float|bool|null $default The default value if the input key does not exist
      *
      * @throws BadRequestException if the input contains a non-scalar value
      */

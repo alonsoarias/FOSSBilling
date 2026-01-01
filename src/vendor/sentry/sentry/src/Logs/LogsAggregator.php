@@ -109,6 +109,8 @@ final class LogsAggregator
         $attributes = Arr::simpleDot($attributes);
 
         foreach ($attributes as $key => $value) {
+            $attribute = Attribute::tryFromValue($value);
+
             if (!\is_string($key)) {
                 if ($sdkLogger !== null) {
                     $sdkLogger->info(
@@ -118,8 +120,6 @@ final class LogsAggregator
 
                 continue;
             }
-
-            $attribute = Attribute::tryFromValue($value);
 
             if ($attribute === null) {
                 if ($sdkLogger !== null) {
@@ -147,8 +147,9 @@ final class LogsAggregator
             return;
         }
 
+        // We check if it's a `LogsLogger` to avoid a infinite loop where the logger is logging the logs it's writing
         if ($sdkLogger !== null) {
-            $sdkLogger->log($log->getPsrLevel(), "Logs item: {$log->getBody()}", $log->attributes()->toSimpleArray());
+            $sdkLogger->log((string) $log->getLevel(), "Logs item: {$log->getBody()}", $log->attributes()->toSimpleArray());
         }
 
         $this->logs[] = $log;

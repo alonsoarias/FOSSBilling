@@ -21,7 +21,7 @@ class Admin extends \Api_Abstract
         return $config['editor'] ?? 'ckeditor';
     }
 
-    public function editors(): array
+    public function editors()
     {
         return [
             'ckeditor' => 'CKEditor',

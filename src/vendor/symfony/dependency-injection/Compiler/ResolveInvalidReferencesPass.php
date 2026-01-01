@@ -62,7 +62,7 @@ class ResolveInvalidReferencesPass implements CompilerPassInterface
         } elseif ($value instanceof ArgumentInterface) {
             $value->setValues($this->processValue($value->getValues(), $rootLevel, 1 + $level));
         } elseif ($value instanceof Definition) {
-            if ($value->isSynthetic() || $value->isAbstract() || $value->hasTag('container.excluded')) {
+            if ($value->isSynthetic() || $value->isAbstract()) {
                 return $value;
             }
             $value->setArguments($this->processValue($value->getArguments(), 0));

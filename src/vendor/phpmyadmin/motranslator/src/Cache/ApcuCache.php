@@ -24,21 +24,37 @@ final class ApcuCache implements CacheInterface
 {
     public const LOADED_KEY = '__TRANSLATIONS_LOADED__';
 
+    /** @var MoParser */
+    private $parser;
+    /** @var string */
+    private $locale;
+    /** @var string */
+    private $domain;
+    /** @var int */
+    private $ttl;
+    /** @var bool */
+    private $reloadOnMiss;
+    /** @var string */
+    private $prefix;
+
     public function __construct(
-        private MoParser $parser,
-        private string $locale,
-        private string $domain,
-        private int $ttl = 0,
-        private bool $reloadOnMiss = true,
-        private string $prefix = 'mo_',
+        MoParser $parser,
+        string $locale,
+        string $domain,
+        int $ttl = 0,
+        bool $reloadOnMiss = true,
+        string $prefix = 'mo_'
     ) {
-        if (! function_exists('apcu_enabled')) {
-            throw new CacheException('The APCu extension must be installed.');
+        if (! (function_exists('apcu_enabled') && apcu_enabled())) {
+            throw new CacheException('ACPu extension must be installed and enabled');
         }
 
-        if (! apcu_enabled()) {
-            throw new CacheException('The APCu extension must be enabled (apc.enabled=1) or (apc.enable_cli=1)');
-        }
+        $this->parser = $parser;
+        $this->locale = $locale;
+        $this->domain = $domain;
+        $this->ttl = $ttl;
+        $this->reloadOnMiss = $reloadOnMiss;
+        $this->prefix = $prefix;
 
         $this->ensureTranslationsLoaded();
     }
@@ -86,7 +102,6 @@ final class ApcuCache implements CacheInterface
         return apcu_exists($this->getKey($msgid));
     }
 
-    /** @inheritDoc */
     public function setAll(array $translations): void
     {
         $keys = array_map(function (string $msgid): string {

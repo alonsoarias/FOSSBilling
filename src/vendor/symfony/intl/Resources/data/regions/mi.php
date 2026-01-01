@@ -1,9 +1,6 @@
 <?php
 
 return [
-    'UserAssignedNames' => [
-        'XK' => 'Kōhoro',
-    ],
     'Names' => [
         'AD' => 'Anatōra',
         'AE' => 'Kotahitanga o ngā Whenua o Ārapi',
@@ -21,7 +18,7 @@ return [
         'AW' => 'Arūpa',
         'AX' => 'Motu Ōrana',
         'AZ' => 'Atepaihānia',
-        'BA' => 'Pōngia & Herekōwini',
+        'BA' => 'Pōngia-Herekōwini',
         'BB' => 'Papatohe',
         'BD' => 'Pākaratēhi',
         'BE' => 'Peretiama',

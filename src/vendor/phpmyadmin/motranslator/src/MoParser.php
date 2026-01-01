@@ -7,6 +7,7 @@ namespace PhpMyAdmin\MoTranslator;
 use PhpMyAdmin\MoTranslator\Cache\CacheInterface;
 
 use function is_readable;
+use function strcmp;
 
 final class MoParser
 {
@@ -14,17 +15,14 @@ final class MoParser
      * None error.
      */
     public const ERROR_NONE = 0;
-
     /**
      * File does not exist.
      */
     public const ERROR_DOES_NOT_EXIST = 1;
-
     /**
      * File has bad magic number.
      */
     public const ERROR_BAD_MAGIC = 2;
-
     /**
      * Error while reading file, probably too short.
      */
@@ -34,7 +32,6 @@ final class MoParser
      * Big endian mo file magic bytes.
      */
     public const MAGIC_BE = "\x95\x04\x12\xde";
-
     /**
      * Little endian mo file magic bytes.
      */
@@ -42,11 +39,17 @@ final class MoParser
 
     /**
      * Parse error code (0 if no error).
+     *
+     * @var int
      */
-    public int $error = self::ERROR_NONE;
+    public $error = self::ERROR_NONE;
 
-    public function __construct(private readonly string|null $filename = null)
+    /** @var string|null */
+    private $filename;
+
+    public function __construct(?string $filename)
     {
+        $this->filename = $filename;
     }
 
     /**
@@ -68,9 +71,9 @@ final class MoParser
 
         try {
             $magic = $stream->read(0, 4);
-            if ($magic === self::MAGIC_LE) {
+            if (strcmp($magic, self::MAGIC_LE) === 0) {
                 $unpack = 'V';
-            } elseif ($magic === self::MAGIC_BE) {
+            } elseif (strcmp($magic, self::MAGIC_BE) === 0) {
                 $unpack = 'N';
             } else {
                 $this->error = self::ERROR_BAD_MAGIC;
@@ -97,7 +100,7 @@ final class MoParser
                 $translation = $stream->read($tableTranslations[$iPlusTwo], $tableTranslations[$iPlusOne]);
                 $cache->set($original, $translation);
             }
-        } catch (ReaderException) {
+        } catch (ReaderException $e) {
             $this->error = self::ERROR_READING;
 
             return;

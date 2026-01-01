@@ -1070,10 +1070,6 @@ return [
             'EC$',
             'Dolar Karibia Timur',
         ],
-        'XCG' => [
-            'Cg.',
-            'Guilder Karibia',
-        ],
         'XEU' => [
             'XEU',
             'Satuan Mata Uang Eropa',
@@ -1149,10 +1145,6 @@ return [
         'ZWD' => [
             'ZWD',
             'Dolar Zimbabwe (1980–2008)',
-        ],
-        'ZWG' => [
-            'ZWG',
-            'Emas Zimbabwe',
         ],
         'ZWL' => [
             'ZWL',

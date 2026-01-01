@@ -1,11 +1,6 @@
 CHANGELOG
 =========
 
-7.4
----
-
- * Add support for exporting named closures
-
 7.3
 ---
 

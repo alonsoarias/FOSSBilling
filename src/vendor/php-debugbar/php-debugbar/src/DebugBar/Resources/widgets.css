@@ -327,7 +327,6 @@ div.phpdebugbar[data-theme='dark'] .phpdebugbar-widgets-success > pre.sf-dump > 
 table.phpdebugbar-widgets-tablevar {
   width: 100%;
   table-layout: auto;
-  font-size: 1em;
 }
 
 table.phpdebugbar-widgets-tablevar td:first-child {
@@ -356,7 +355,7 @@ table.phpdebugbar-widgets-tablevar td {
   font-weight: normal;
 }
 
-div.phpdebugbar span.phpdebugbar-widgets-badge {
+table.phpdebugbar-widgets-tablevar .phpdebugbar-widgets-header span.phpdebugbar-widgets-badge {
   margin: 0 5px 0 8px;
   font-size: 11px;
   line-height: 14px;

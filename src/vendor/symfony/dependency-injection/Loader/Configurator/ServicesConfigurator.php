@@ -80,8 +80,8 @@ class ServicesConfigurator extends AbstractConfigurator
             }
 
             $id = \sprintf('.%d_%s', ++$this->anonymousCount, preg_replace('/^.*\\\\/', '', $class).'~'.$this->anonymousHash);
-        } else {
-            $definition->setPublic($defaults->isPublic());
+        } elseif (!$defaults->isPublic() || !$defaults->isPrivate()) {
+            $definition->setPublic($defaults->isPublic() && !$defaults->isPrivate());
         }
 
         $definition->setAutowired($defaults->isAutowired());
@@ -115,7 +115,9 @@ class ServicesConfigurator extends AbstractConfigurator
     {
         $ref = static::processValue($referencedId, true);
         $alias = new Alias((string) $ref);
-        $alias->setPublic($this->defaults->isPublic());
+        if (!$this->defaults->isPublic() || !$this->defaults->isPrivate()) {
+            $alias->setPublic($this->defaults->isPublic());
+        }
         $this->container->setAlias($id, $alias);
 
         return new AliasConfigurator($this, $alias);

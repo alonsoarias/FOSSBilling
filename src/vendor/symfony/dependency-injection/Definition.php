@@ -465,7 +465,8 @@ class Definition
     public function addResourceTag(string $name, array $attributes = []): static
     {
         return $this->addTag($name, $attributes)
-            ->addTag('container.excluded', ['source' => \sprintf('by tag "%s"', $name)]);
+            ->addTag('container.excluded', ['source' => \sprintf('by tag "%s"', $name)])
+            ->setAbstract(true);
     }
 
     /**
@@ -818,21 +819,5 @@ class Definition
     public function hasErrors(): bool
     {
         return (bool) $this->errors;
-    }
-
-    public function __serialize(): array
-    {
-        $data = [];
-        foreach ((array) $this as $k => $v) {
-            if (false !== $i = strrpos($k, "\0")) {
-                $k = substr($k, 1 + $i);
-            }
-            if (!$v xor 'shared' === $k) {
-                continue;
-            }
-            $data[$k] = $v;
-        }
-
-        return $data;
     }
 }

@@ -6,6 +6,8 @@ namespace PhpMyAdmin\MoTranslator\Cache;
 
 interface GetAllInterface
 {
-    /** @return array<string, string> */
+    /**
+     * @return array<string, string>
+     */
     public function getAll(): array;
 }

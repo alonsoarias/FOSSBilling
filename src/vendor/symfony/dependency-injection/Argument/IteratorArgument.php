@@ -18,8 +18,6 @@ namespace Symfony\Component\DependencyInjection\Argument;
  */
 class IteratorArgument implements ArgumentInterface
 {
-    use ArgumentTrait;
-
     private array $values;
 
     public function __construct(array $values)

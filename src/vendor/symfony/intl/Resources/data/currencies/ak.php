@@ -124,7 +124,7 @@ return [
         ],
         'CNY' => [
             'CN¥',
-            'Kyaena yuan',
+            'kyaena yuan',
         ],
         'COP' => [
             'COP',
@@ -180,7 +180,7 @@ return [
         ],
         'EUR' => [
             '€',
-            'yuro',
+            'Iro',
         ],
         'FJD' => [
             'FJD',
@@ -552,7 +552,7 @@ return [
         ],
         'SZL' => [
             'SZL',
-            'Swazi lilangeni',
+            'Lilangeni',
         ],
         'THB' => [
             'THB',
@@ -634,10 +634,6 @@ return [
             'EC$',
             'Karibine Apueeɛ dɔla',
         ],
-        'XCG' => [
-            'Cg.',
-            'Karibiafoᴐ giida',
-        ],
         'XOF' => [
             'AAS',
             'Afrika Atɔeɛ Sefa',
@@ -665,10 +661,6 @@ return [
         'ZWD' => [
             'ZWD',
             'Zimbabwe Dɔla',
-        ],
-        'ZWG' => [
-            'ZWG',
-            'Zimbabwe sika kᴐkᴐᴐ',
         ],
     ],
 ];

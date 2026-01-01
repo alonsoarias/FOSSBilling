@@ -2,7 +2,6 @@
 
 return [
     'Names' => [
-        'cy' => 'Sewelsh',
         'en' => 'Senyesemane',
         'st' => 'Sesotho',
     ],

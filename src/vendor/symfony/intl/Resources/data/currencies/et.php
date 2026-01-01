@@ -998,10 +998,6 @@ return [
             'EC$',
             'Ida-Kariibi dollar',
         ],
-        'XCG' => [
-            'Cg.',
-            'Kariibi kulden',
-        ],
         'XEU' => [
             'XEU',
             'eküü',
@@ -1065,10 +1061,6 @@ return [
         'ZWD' => [
             'ZWD',
             'Zimbabwe dollar (1980–2008)',
-        ],
-        'ZWG' => [
-            'ZWG',
-            'Zimbabwe kuld',
         ],
         'ZWL' => [
             'ZWL',

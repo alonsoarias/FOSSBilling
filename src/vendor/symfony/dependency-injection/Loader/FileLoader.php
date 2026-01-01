@@ -189,25 +189,21 @@ abstract class FileLoader extends BaseFileLoader
             }
 
             $r = null === $errorMessage ? $this->container->getReflectionClass($class) : null;
+            if ($r?->isAbstract() || $r?->isInterface()) {
+                if ($r->isInterface()) {
+                    $this->interfaces[] = $class;
+                }
+                $autoconfigureAttributes?->processClass($this->container, $r);
+                continue;
+            }
 
-            $abstract = $r?->isAbstract() || $r?->isInterface() ? '.abstract.' : '';
-            $this->setDefinition($abstract.$class, $definition = $getPrototype());
-            $definition->setClass($class);
+            $this->setDefinition($class, $definition = $getPrototype());
             if (null !== $errorMessage) {
                 $definition->addError($errorMessage);
 
                 continue;
             }
-
-            if ($abstract) {
-                if ($r->isInterface()) {
-                    $this->interfaces[] = $class;
-                }
-                $autoconfigureAttributes?->processClass($this->container, $r);
-                $definition->setAbstract(true)
-                    ->addTag('container.excluded', ['source' => 'because the class is abstract']);
-                continue;
-            }
+            $definition->setClass($class);
 
             $interfaces = [];
             foreach (class_implements($class, false) as $interface) {
@@ -220,7 +216,7 @@ abstract class FileLoader extends BaseFileLoader
             }
             $r = $this->container->getReflectionClass($class);
             $defaultAlias = 1 === \count($interfaces) ? $interfaces[0] : null;
-            foreach ($r->getAttributes(AsAlias::class, \ReflectionAttribute::IS_INSTANCEOF) as $attr) {
+            foreach ($r->getAttributes(AsAlias::class) as $attr) {
                 /** @var AsAlias $attribute */
                 $attribute = $attr->newInstance();
                 $alias = $attribute->id ?? $defaultAlias;
@@ -259,7 +255,7 @@ abstract class FileLoader extends BaseFileLoader
         $this->interfaces = $this->singlyImplemented = $this->aliases = [];
     }
 
-    final protected function loadExtensionConfig(string $namespace, array $config, string $file = '?'): void
+    final protected function loadExtensionConfig(string $namespace, array $config): void
     {
         if (!$this->prepend) {
             $this->container->loadFromExtension($namespace, $config);

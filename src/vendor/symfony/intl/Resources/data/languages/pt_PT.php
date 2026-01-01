@@ -34,6 +34,7 @@ return [
         'grc' => 'grego clássico',
         'gsw' => 'alemão suíço',
         'ha' => 'haúça',
+        'hi' => 'hindi',
         'hy' => 'arménio',
         'ikt' => 'inuktitut canadiano ocidental',
         'kbd' => 'cabardiano',

@@ -25,7 +25,7 @@ class Admin implements \FOSSBilling\InjectionAwareInterface
         return $this->di;
     }
 
-    public function fetchNavigation(): array
+    public function fetchNavigation()
     {
         return [
             'group' => [
@@ -37,7 +37,7 @@ class Admin implements \FOSSBilling\InjectionAwareInterface
             'subpages' => [
                 [
                     'location' => 'activity',
-                    'label' => __trans('System activity'),
+                    'label' => __trans('Event history'),
                     'index' => 100,
                     'uri' => $this->di['url']->adminLink('activity'),
                     'class' => '',
@@ -46,12 +46,12 @@ class Admin implements \FOSSBilling\InjectionAwareInterface
         ];
     }
 
-    public function register(\Box_App &$app): void
+    public function register(\Box_App &$app)
     {
         $app->get('/activity', 'get_index', [], static::class);
     }
 
-    public function get_index(\Box_App $app): string
+    public function get_index(\Box_App $app)
     {
         $this->di['is_admin_logged'];
 

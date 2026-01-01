@@ -11,14 +11,14 @@
 
 namespace Box\Mod\Theme\Api;
 
-use FOSSBilling\Validation\Api\RequiredParams;
-
 class Admin extends \Api_Abstract
 {
     /**
      * Get list of available client area themes.
+     *
+     * @return array
      */
-    public function get_list($data): array
+    public function get_list($data)
     {
         $themes = $this->getService()->getThemes();
 
@@ -27,8 +27,10 @@ class Admin extends \Api_Abstract
 
     /**
      * Get list of available admin area themes.
+     *
+     * @return array
      */
-    public function get_admin_list($data): array
+    public function get_admin_list($data)
     {
         $themes = $this->getService()->getThemes(false);
 
@@ -40,18 +42,28 @@ class Admin extends \Api_Abstract
      *
      * @return array
      */
-    #[RequiredParams(['code' => 'Theme code was not passed'])]
     public function get($data)
     {
+        $required = [
+            'code' => 'Theme code is missing',
+        ];
+        $this->di['validator']->checkRequiredParamsForArray($required, $data);
+
         return $this->getService()->loadTheme($data['code']);
     }
 
     /**
      * Set new theme as default.
+     *
+     * @return bool
      */
-    #[RequiredParams(['code' => 'Theme code was not passed'])]
     public function select($data)
     {
+        $required = [
+            'code' => 'Theme code is missing',
+        ];
+        $this->di['validator']->checkRequiredParamsForArray($required, $data);
+
         $theme = $this->getService()->getTheme($data['code']);
 
         $systemService = $this->di['mod_service']('system');
@@ -61,9 +73,6 @@ class Admin extends \Api_Abstract
             $systemService->setParamValue('theme', $data['code']);
         }
 
-        // Clear theme cache so subsequent calls get the updated theme
-        \Box\Mod\Theme\Service::clearThemeCache();
-
         $this->di['logger']->info('Changed default theme');
 
         return true;
@@ -71,10 +80,17 @@ class Admin extends \Api_Abstract
 
     /**
      * Delete theme preset.
+     *
+     * @return bool
      */
-    #[RequiredParams(['code' => 'Theme code was not passed', 'preset' => 'Preset name is missing'])]
     public function preset_delete($data)
     {
+        $required = [
+            'code' => 'Theme code is missing',
+            'preset' => 'Theme preset name is missing',
+        ];
+        $this->di['validator']->checkRequiredParamsForArray($required, $data);
+
         $service = $this->getService();
 
         $theme = $service->getTheme($data['code']);
@@ -85,10 +101,17 @@ class Admin extends \Api_Abstract
 
     /**
      * Select new theme preset.
+     *
+     * @return bool
      */
-    #[RequiredParams(['code' => 'Theme code was not passed', 'preset' => 'Preset name is missing'])]
     public function preset_select($data)
     {
+        $required = [
+            'code' => 'Theme code is missing',
+            'preset' => 'Theme preset name is missing',
+        ];
+        $this->di['validator']->checkRequiredParamsForArray($required, $data);
+
         $service = $this->getService();
         $theme = $service->getTheme($data['code']);
         $service->setCurrentThemePreset($theme, $data['preset']);

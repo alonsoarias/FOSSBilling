@@ -1,9 +1,6 @@
 <?php
 
 return [
-    'UserAssignedNames' => [
-        'XK' => '𞤑𞤮𞥅𞤧𞤮𞤾𞤮𞥅',
-    ],
     'Names' => [
         'AD' => '𞤀𞤲𞤣𞤮𞤪𞤢𞥄',
         'AE' => '𞤁𞤫𞤲𞤼𞤢𞤤 𞤋𞤥𞤪𞤢𞥄𞤼𞤭 𞤀𞥄𞤪𞤢𞤦𞤵',

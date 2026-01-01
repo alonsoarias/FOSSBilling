@@ -1,6 +1,5 @@
 <?php
 
-declare(strict_types=1);
 /**
  * Copyright 2022-2025 FOSSBilling
  * Copyright 2011-2021 BoxBilling, Inc.
@@ -10,108 +9,125 @@ declare(strict_types=1);
  * @license http://www.apache.org/licenses/LICENSE-2.0 Apache-2.0
  */
 
-namespace Box\Mod\News\Api;
+/**
+ * News management.
+ */
 
-use Box\Mod\News\Entity\Post;
-use FOSSBilling\Validation\Api\RequiredParams;
+namespace Box\Mod\News\Api;
 
 class Admin extends \Api_Abstract
 {
     /**
-     * Get paginated list of news items (any status).
+     * Get paginated list of active news items.
      *
-     * @param array $data Filtering and pagination parameters
-     *
-     * @return array Paginated list of news items
+     * @return array
      */
-    public function get_list(array $data): array
+    public function get_list($data)
     {
-        /** @var \Box\Mod\News\Repository\PostRepository $repo */
-        $repo = $this->getService()->getPostRepository();
+        $service = $this->getService();
+        [$sql, $params] = $service->getSearchQuery($data);
+        $per_page = $data['per_page'] ?? $this->di['pager']->getDefaultPerPage();
+        $pager = $this->di['pager']->getPaginatedResultSet($sql, $params, $per_page);
+        foreach ($pager['list'] as $key => $item) {
+            $post = $this->di['db']->getExistingModelById('Post', $item['id'], 'Post not found');
+            $pager['list'][$key] = $this->getService()->toApiArray($post, 'admin');
+        }
 
-        // Repository method returns a QueryBuilder with filters applied
-        $qb = $repo->getSearchQueryBuilder($data);
-
-        return $this->di['pager']->paginateDoctrineQuery($qb);
+        return $pager;
     }
 
     /**
-     * Get a single news item by ID or slug.
+     * Get news item by ID.
      *
-     * @param array $data ['id' => int|null, 'slug' => string|null]
-     *
-     * @throws \FOSSBilling\Exception if ID/slug is missing or news item not found
+     * @return array
      */
-    public function get(array $data): array
+    public function get($data)
     {
+        if (!isset($data['id']) && !isset($data['slug'])) {
+            throw new \FOSSBilling\Exception('ID or slug is missing');
+        }
+
         $id = $data['id'] ?? null;
         $slug = $data['slug'] ?? null;
 
-        if (!$id && !$slug) {
-            throw new \FOSSBilling\Exception('ID or slug is required.');
-        }
-
-        /** @var \Box\Mod\News\Repository\PostRepository $repo */
-        $repo = $this->getService()->getPostRepository();
-
-        $post = null;
+        $model = null;
         if ($id) {
-            $post = $repo->find($id);
-        } elseif ($slug) {
-            $post = $repo->findOneBy(['slug' => $slug]);
+            $model = $this->di['db']->load('Post', $id);
+        } else {
+            if (!empty($slug)) {
+                $model = $this->di['db']->findOne('Post', 'slug = :slug', ['slug' => $slug]);
+            }
         }
 
-        if (!$post instanceof Post) {
-            throw new \FOSSBilling\Exception('News item not found.');
+        if (!$model instanceof \Model_Post) {
+            throw new \FOSSBilling\Exception('News item not found');
         }
 
-        /** @todo Doctrine: Replace with actual Admin entity once it's migrated to Doctrine. */
-        $admin = $this->di['db']->getRow('SELECT name FROM admin WHERE id = :id', ['id' => $post->getAdminId()]);
-
-        $post->setAdminData($admin);
-
-        return $post->toApiArray();
+        return $this->getService()->toApiArray($model, 'admin');
     }
 
     /**
      * Update news item.
+     *
+     * @optional string $title - news item title
+     * @optional string $description - news item description
+     * @optional string $slug - news item slug
+     * @optional string $content - news item content
+     * @optional string $status - news item status
+     *
+     * @return bool
      */
-    #[RequiredParams(['id' => 'Post ID was not passed'])]
-    public function update(array $data): bool
+    public function update($data)
     {
-        /** @var \Box\Mod\News\Repository\PostRepository $repo */
-        $repo = $this->getService()->getPostRepository();
-
-        $post = $repo->find($data['id']);
-
-        if (!$post instanceof Post) {
-            throw new \FOSSBilling\Exception('News item not found');
-        }
-
         $service = $this->getService();
-        $description = $data['description'] ?? $post->getDescription();
+        $required = [
+            'id' => 'Post ID not passed',
+        ];
+        $this->di['validator']->checkRequiredParamsForArray($required, $data);
+
+        $model = $this->di['db']->getExistingModelById('Post', $data['id'], 'News item not found');
+
+        $description = $data['description'] ?? $model->description;
         if (empty($description)) {
-            $description = $service->generateDescriptionFromContent($data['content'] ?? $post->getContent());
+            $description = $service->generateDescriptionFromContent($data['content'] ?? $model->content);
         }
 
-        $post->setTitle($data['title'] ?? $post->getTitle())
-             ->setDescription($description)
-             ->setSlug($data['slug'] ?? $post->getSlug())
-             ->setContent($data['content'] ?? $post->getContent())
-             ->setImage($data['image'] ?? $post->getImage())
-             ->setSection($data['section'] ?? $post->getSection())
-             ->setStatus($data['status'] ?? $post->getStatus());
+        $model->content = $data['content'] ?? $model->content;
+        $model->title = $data['title'] ?? $model->title;
+        $model->description = $description;
+        $model->slug = $data['slug'] ?? $model->slug;
+        $model->image = $data['image'] ?? $model->image;
+        $model->section = $data['section'] ?? $model->section;
+        $model->status = $data['status'] ?? $model->status;
 
-        if (!empty($data['created_at'])) {
-            $post->setCreatedAt(new \DateTime($data['created_at']));
+        $publish_at = $data['publish_at'] ?? 0;
+        if ($publish_at) {
+            $model->publish_at = date('Y-m-d H:i:s', strtotime($publish_at));
         }
 
-        $post->setAdminId($this->getIdentity()->id);
+        $published_at = $data['published_at'] ?? 0;
+        if ($published_at) {
+            $model->published_at = date('Y-m-d H:i:s', strtotime($published_at));
+        }
 
-        $this->di['em']->persist($post);
-        $this->di['em']->flush();
+        $expires_at = $data['expires_at'] ?? 0;
+        if ($expires_at) {
+            $model->expires_at = date('Y-m-d H:i:s', strtotime($expires_at));
+        }
 
-        $this->di['logger']->info('Updated news item #%s', $post->getId());
+        $created_at = $data['created_at'] ?? 0;
+        if ($created_at) {
+            $model->created_at = date('Y-m-d H:i:s', strtotime($created_at));
+        }
+
+        $updated_at = $data['updated_at'] ?? 0;
+        if ($created_at) {
+            $model->updated_at = date('Y-m-d H:i:s', strtotime($updated_at));
+        }
+        $model->admin_id = $this->getIdentity()->id;
+        $this->di['db']->store($model);
+
+        $this->di['logger']->info('Updated news item #%s', $model->id);
 
         return true;
     }
@@ -119,61 +135,70 @@ class Admin extends \Api_Abstract
     /**
      * Create new news item.
      *
-     * @return int New post ID
+     * @optional string $content - news item content
+     * @optional string $status - news item status
+     *
+     * @return bool
      */
-    #[RequiredParams(['title' => 'Post title was not passed'])]
-    public function create(array $data): int
+    public function create($data)
     {
-        $post = new Post($data['title'], $this->di['tools']->slug($data['title']));
+        $service = $this->getService();
+        $required = [
+            'title' => 'Post title not passed',
+        ];
+        $this->di['validator']->checkRequiredParamsForArray($required, $data);
 
-        $post->setAdminId($this->getIdentity()->id)
-             ->setContent($data['content'] ?? null)
-             ->setStatus($data['status'] ?? Post::STATUS_ACTIVE)
-             ->setDescription($data['description'] ?? null);
+        $model = $this->di['db']->dispense('Post');
+        $model->admin_id = $this->getIdentity()->id;
+        $model->title = $data['title'];
+        $model->description = null;
+        $model->slug = $this->di['tools']->slug($data['title']);
+        $model->status = $data['status'] ?? null;
+        $model->content = $data['content'] ?? null;
+        $model->created_at = date('Y-m-d H:i:s');
+        $model->updated_at = date('Y-m-d H:i:s');
+        $this->di['db']->store($model);
 
-        $this->di['em']->persist($post);
-        $this->di['em']->flush();
+        $this->di['logger']->info('Created news item #%s', $model->id);
 
-        $this->di['logger']->info('Created news item #%s', $post->getId());
-
-        return $post->getId();
+        return $model->id;
     }
 
     /**
      * Delete news item by ID.
+     *
+     * @return bool
      */
-    #[RequiredParams(['id' => 'Post ID was not passed'])]
-    public function delete(array $data): bool
+    public function delete($data)
     {
-        /** @var \Box\Mod\News\Repository\PostRepository $repo */
-        $repo = $this->getService()->getPostRepository();
+        $required = [
+            'id' => 'Post ID not passed',
+        ];
+        $this->di['validator']->checkRequiredParamsForArray($required, $data);
 
-        $post = $repo->find($data['id']);
-
-        if (!$post instanceof Post) {
-            throw new \FOSSBilling\Exception('News item not found');
-        }
-
-        $this->di['em']->remove($post);
-        $this->di['em']->flush();
-
-        $this->di['logger']->info('Removed news item #%s', $data['id']);
+        $model = $this->di['db']->getExistingModelById('Post', $data['id'], 'News item not found');
+        $id = $model->id;
+        $this->di['db']->trash($model);
+        $this->di['logger']->info('Removed news item #%s', $id);
 
         return true;
     }
 
     /**
-     * Batch delete news items by IDs.
+     * Deletes news items with given IDs.
+     *
+     * @return bool
      */
-    #[RequiredParams(['ids' => 'IDs were not passed'])]
-    public function batch_delete(array $data): bool
+    public function batch_delete($data)
     {
-        /** @var \Box\Mod\News\Repository\PostRepository $repo */
-        $repo = $this->getService()->getPostRepository();
+        $required = [
+            'ids' => 'IDs not passed',
+        ];
+        $this->di['validator']->checkRequiredParamsForArray($required, $data);
 
-        $count = $repo->deleteByIds($data['ids']);
-
-        $this->di['logger']->info('Removed %s news items', $count);
+        foreach ($data['ids'] as $id) {
+            $this->delete(['id' => $id]);
+        }
 
         return true;
     }

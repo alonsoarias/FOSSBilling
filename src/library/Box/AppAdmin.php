@@ -69,7 +69,6 @@ class Box_AppAdmin extends Box_App
         $twig = $this->di['twig'];
         $twig->setLoader($loader);
         $twig->addGlobal('theme', $theme);
-        $twig->addGlobal('current_theme', $theme['code']);
 
         if (Environment::isDevelopment()) {
             $profile = new Profile();

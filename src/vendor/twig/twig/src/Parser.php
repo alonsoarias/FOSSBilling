@@ -76,9 +76,6 @@ class Parser
         return \sprintf('__internal_parse_%d', $this->varNameSalt++);
     }
 
-    /**
-     * @throws SyntaxError
-     */
     public function parse(TokenStream $stream, $test = null, bool $dropNeedle = false): ModuleNode
     {
         $vars = get_object_vars($this);
@@ -161,9 +158,6 @@ class Parser
         }
     }
 
-    /**
-     * @throws SyntaxError
-     */
     public function subparse($test, bool $dropNeedle = false): Node
     {
         $lineno = $this->getCurrentToken()->getLine();
@@ -500,26 +494,11 @@ class Parser
             // try 2-words tests
             $name = $name.' '.$this->getCurrentToken()->getValue();
 
-            try {
-                $test = $this->env->getTest($name);
-            } catch (SyntaxError $e) {
-                if (!$this->shouldIgnoreUnknownTwigCallables()) {
-                    throw $e;
-                }
-
-                $test = null;
+            if ($test = $this->env->getTest($name)) {
+                $this->stream->next();
             }
-            $this->stream->next();
         } else {
-            try {
-                $test = $this->env->getTest($name);
-            } catch (SyntaxError $e) {
-                if (!$this->shouldIgnoreUnknownTwigCallables()) {
-                    throw $e;
-                }
-
-                $test = null;
-            }
+            $test = $this->env->getTest($name);
         }
 
         if (!$test) {

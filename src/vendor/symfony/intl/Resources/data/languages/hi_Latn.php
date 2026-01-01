@@ -4,6 +4,7 @@ return [
     'Names' => [
         'af' => 'Afreeki',
         'bgc' => 'Hariyaanvi',
+        'bn' => 'Bangla',
         'bo' => 'Tibbati',
         'ckb' => 'Kurdish, Sorani',
         'crh' => 'Crimean Turkish',

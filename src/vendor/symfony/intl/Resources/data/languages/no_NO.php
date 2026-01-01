@@ -106,7 +106,6 @@ return [
         'chp' => 'chipewiansk',
         'chr' => 'cherokesisk',
         'chy' => 'cheyenne',
-        'cic' => 'chickasaw',
         'ckb' => 'sentralkurdisk',
         'clc' => 'chilcotin',
         'co' => 'korsikansk',

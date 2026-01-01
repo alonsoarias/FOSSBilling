@@ -540,7 +540,7 @@ return [
         ],
         'KGS' => [
             'KGS',
-            'Kyrgyz Som',
+            'Kyrgystani Som',
         ],
         'KHR' => [
             'KHR',

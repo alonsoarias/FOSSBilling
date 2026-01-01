@@ -27,7 +27,7 @@ class ServiceBalance implements InjectionAwareInterface
         return $this->di;
     }
 
-    public function getClientBalance(\Model_Client $c): float
+    public function getClientBalance(\Model_Client $c)
     {
         return (float) $this->clientTotal($c);
     }
@@ -44,7 +44,7 @@ class ServiceBalance implements InjectionAwareInterface
         return $this->di['db']->getCell($sql, [$c->id]);
     }
 
-    public function rmByClient(\Model_Client $client): void
+    public function rmByClient(\Model_Client $client)
     {
         $clientBalances = $this->di['db']->find('ClientBalance', 'client_id = ?', [$client->id]);
         foreach ($clientBalances as $balanceModel) {
@@ -52,12 +52,12 @@ class ServiceBalance implements InjectionAwareInterface
         }
     }
 
-    public function rm(\Model_ClientBalance $model): void
+    public function rm(\Model_ClientBalance $model)
     {
         $this->di['db']->trash($model);
     }
 
-    public function toApiArray(\Model_ClientBalance $model): array
+    public function toApiArray(\Model_ClientBalance $model)
     {
         $client = $this->di['db']->getExistingModelById('Client', $model->client_id, 'Client not found');
 
@@ -70,7 +70,7 @@ class ServiceBalance implements InjectionAwareInterface
         ];
     }
 
-    public function getSearchQuery($data): array
+    public function getSearchQuery($data)
     {
         $q = 'SELECT m.*, c.currency  as currency
               FROM client_balance as m

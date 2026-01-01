@@ -20,7 +20,6 @@ return [
         'de_LI' => 'Kijerumani (Lishenteni)',
         'de_LU' => 'Kijerumani (Lasembagi)',
         'en_CX' => 'Kiingereza (Kisiwa cha Christmas)',
-        'en_LV' => 'Kiingereza (Lativia)',
         'en_NG' => 'Kiingereza (Nijeria)',
         'en_NO' => 'Kiingereza (Norwe)',
         'en_PR' => 'Kiingereza (Puetoriko)',

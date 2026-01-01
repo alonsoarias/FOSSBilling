@@ -16,21 +16,13 @@ use Symfony\Component\Config\Definition\NodeInterface;
 /**
  * This is the entry class for building a config tree.
  *
- * @template T of 'array'|'variable'|'scalar'|'string'|'boolean'|'integer'|'float'|'enum' = 'array'
- *
  * @author Johannes M. Schmitt <schmittjoh@gmail.com>
  */
 class TreeBuilder implements NodeParentInterface
 {
     protected ?NodeInterface $tree = null;
-    /**
-     * @var NodeDefinition<$this>|null
-     */
     protected ?NodeDefinition $root = null;
 
-    /**
-     * @param T $type
-     */
     public function __construct(string $name, string $type = 'array', ?NodeBuilder $builder = null)
     {
         $builder ??= new NodeBuilder();
@@ -38,23 +30,18 @@ class TreeBuilder implements NodeParentInterface
     }
 
     /**
-     * @return (
-     *    T is 'array' ? ArrayNodeDefinition<$this>
-     *    : (T is 'variable' ? VariableNodeDefinition<$this>
-     *    : (T is 'scalar' ? ScalarNodeDefinition<$this>
-     *    : (T is 'string' ? StringNodeDefinition<$this>
-     *    : (T is 'boolean' ? BooleanNodeDefinition<$this>
-     *    : (T is 'integer' ? IntegerNodeDefinition<$this>
-     *    : (T is 'float' ? FloatNodeDefinition<$this>
-     *    : (T is 'enum' ? EnumNodeDefinition<$this>
-     *    : NodeDefinition<$this>)))))))
-     * )
+     * @return NodeDefinition|ArrayNodeDefinition The root node (as an ArrayNodeDefinition when the type is 'array')
      */
-    public function getRootNode(): NodeDefinition
+    public function getRootNode(): NodeDefinition|ArrayNodeDefinition
     {
         return $this->root;
     }
 
+    /**
+     * Builds the tree.
+     *
+     * @throws \RuntimeException
+     */
     public function buildTree(): NodeInterface
     {
         return $this->tree ??= $this->root->getNode(true);

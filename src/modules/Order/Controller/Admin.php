@@ -25,7 +25,7 @@ class Admin implements \FOSSBilling\InjectionAwareInterface
         return $this->di;
     }
 
-    public function fetchNavigation(): array
+    public function fetchNavigation()
     {
         return [
             'group' => [
@@ -54,7 +54,7 @@ class Admin implements \FOSSBilling\InjectionAwareInterface
         ];
     }
 
-    public function register(\Box_App &$app): void
+    public function register(\Box_App &$app)
     {
         $app->get('/order', 'get_index', [], static::class);
         $app->get('/order/', 'get_index', [], static::class);
@@ -63,14 +63,14 @@ class Admin implements \FOSSBilling\InjectionAwareInterface
         $app->post('/order/new', 'get_new', [], static::class);
     }
 
-    public function get_index(\Box_App $app): string
+    public function get_index(\Box_App $app)
     {
         $this->di['is_admin_logged'];
 
         return $app->render('mod_order_index');
     }
 
-    public function get_new(\Box_App $app): string
+    public function get_new(\Box_App $app)
     {
         $api = $this->di['api_admin'];
 
@@ -80,7 +80,7 @@ class Admin implements \FOSSBilling\InjectionAwareInterface
         return $app->render('mod_order_new', ['product' => $product, 'client' => $client]);
     }
 
-    public function get_order(\Box_App $app, $id): string
+    public function get_order(\Box_App $app, $id)
     {
         $api = $this->di['api_admin'];
         $data = [

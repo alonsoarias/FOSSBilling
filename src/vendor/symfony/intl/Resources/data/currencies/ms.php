@@ -372,7 +372,7 @@ return [
         ],
         'MMK' => [
             'MMK',
-            'Kyat Myanmar',
+            'Kyat Myanma',
         ],
         'MNT' => [
             'MNT',
@@ -654,10 +654,6 @@ return [
             'EC$',
             'Dolar Caribbean Timur',
         ],
-        'XCG' => [
-            'Cg.',
-            'Guilder Caribbean',
-        ],
         'XOF' => [
             'F CFA',
             'Franc CFA BCEAO',
@@ -685,10 +681,6 @@ return [
         'ZWD' => [
             'ZWD',
             'Dolar Zimbabwe (1980–2008)',
-        ],
-        'ZWG' => [
-            'ZWG',
-            'Emas Zimbabwe',
         ],
         'ZWL' => [
             'ZWL',

@@ -48,12 +48,4 @@ class FileExistenceResource implements SelfCheckingResourceInterface
     {
         return file_exists($this->resource) === $this->exists;
     }
-
-    public function __serialize(): array
-    {
-        return [
-            'resource' => $this->resource,
-            'exists' => $this->exists,
-        ];
-    }
 }

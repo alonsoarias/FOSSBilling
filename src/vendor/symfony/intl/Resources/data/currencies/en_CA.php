@@ -50,9 +50,5 @@ return [
             'US$',
             'US Dollar',
         ],
-        'XCG' => [
-            'Cg',
-            'Caribbean guilder',
-        ],
     ],
 ];

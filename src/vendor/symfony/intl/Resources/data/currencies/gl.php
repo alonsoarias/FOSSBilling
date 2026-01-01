@@ -802,10 +802,6 @@ return [
             'XCD',
             'dólar do Caribe Oriental',
         ],
-        'XCG' => [
-            'ƒ',
-            'florín caribeño',
-        ],
         'XOF' => [
             'F CFA',
             'franco CFA (BCEAO)',
@@ -829,10 +825,6 @@ return [
         'ZMW' => [
             'ZMW',
             'kwacha zambiano',
-        ],
-        'ZWG' => [
-            'ZWG',
-            'ouro de Zimbabwe',
         ],
     ],
 ];

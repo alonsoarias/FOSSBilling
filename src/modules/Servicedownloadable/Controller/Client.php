@@ -25,12 +25,12 @@ class Client implements \FOSSBilling\InjectionAwareInterface
         return $this->di;
     }
 
-    public function register(\Box_App &$app): void
+    public function register(\Box_App &$app)
     {
         $app->get('/servicedownloadable/get-file/:id', 'get_download', ['id' => '[0-9]+'], static::class);
     }
 
-    public function get_download(\Box_App $app, $id): void
+    public function get_download(\Box_App $app, $id)
     {
         $api = $this->di['api_client'];
         $data = [

@@ -70,7 +70,7 @@ class Payment_Transaction
      *
      * @return string the transaction status
      */
-    public function getStatus(): string
+    public function getStatus()
     {
         return $this->status;
     }
@@ -94,7 +94,7 @@ class Payment_Transaction
      *
      * @return string the transaction type
      */
-    public function getType(): string
+    public function getType()
     {
         return $this->type;
     }
