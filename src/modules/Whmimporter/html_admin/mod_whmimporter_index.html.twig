@@ -387,7 +387,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }, function(error) {
                 document.getElementById('packagesLoading').style.display = 'none';
                 document.getElementById('packagesError').style.display = 'block';
-                document.getElementById('packagesError').textContent = error;
+                document.getElementById('packagesError').textContent = typeof error === 'object' ? (error.message || error.error || JSON.stringify(error)) : error;
             });
         });
     });
@@ -507,7 +507,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }, function(error) {
                 document.getElementById('accountsLoading').style.display = 'none';
                 document.getElementById('accountsError').style.display = 'block';
-                document.getElementById('accountsError').textContent = error;
+                document.getElementById('accountsError').textContent = typeof error === 'object' ? (error.message || error.error || JSON.stringify(error)) : error;
             });
         });
     });
