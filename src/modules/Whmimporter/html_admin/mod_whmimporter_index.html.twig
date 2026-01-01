@@ -157,21 +157,30 @@
                     </div>
 
                     <div class="row mb-3">
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <label class="form-label">{{ 'Client Group'|trans }}</label>
                             <select class="form-select" id="accountsClientGroup">
                                 <option value="1">{{ 'Default'|trans }}</option>
                             </select>
                             <small class="text-muted">{{ 'New clients will be added to this group.'|trans }}</small>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <label class="form-label">{{ 'If client email already exists'|trans }}</label>
                             <select class="form-select" id="accountsDuplicateAction">
                                 <option value="use_existing">{{ 'Use existing client'|trans }}</option>
                                 <option value="update_existing">{{ 'Update existing client data'|trans }}</option>
                                 <option value="create_new">{{ 'Create new client (add suffix to email)'|trans }}</option>
                             </select>
-                            <small class="text-muted">{{ 'Action to take when a client with the same email already exists.'|trans }}</small>
+                            <small class="text-muted">{{ 'Action for duplicate client emails.'|trans }}</small>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">{{ 'If hosting account already exists'|trans }}</label>
+                            <select class="form-select" id="accountsAccountDuplicateAction">
+                                <option value="update" selected>{{ 'Update existing account'|trans }}</option>
+                                <option value="recreate">{{ 'Delete and recreate account'|trans }}</option>
+                                <option value="skip">{{ 'Skip (do not import)'|trans }}</option>
+                            </select>
+                            <small class="text-muted">{{ 'Action for duplicate hosting accounts.'|trans }}</small>
                         </div>
                     </div>
 
@@ -517,6 +526,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const serverId = document.getElementById('accountsServerId').value;
         const clientGroupId = document.getElementById('accountsClientGroup').value;
         const duplicateAction = document.getElementById('accountsDuplicateAction').value;
+        const accountDuplicateAction = document.getElementById('accountsAccountDuplicateAction').value;
 
         const selectedAccounts = [];
         document.querySelectorAll('.account-checkbox:checked').forEach(cb => {
@@ -535,7 +545,8 @@ document.addEventListener('DOMContentLoaded', function() {
             server_id: serverId,
             usernames: JSON.stringify(selectedAccounts),
             client_group_id: clientGroupId,
-            duplicate_action: duplicateAction
+            duplicate_action: duplicateAction,
+            account_duplicate_action: accountDuplicateAction
         }, function(result) {
             importAccountsModal.hide();
 
@@ -551,14 +562,31 @@ document.addEventListener('DOMContentLoaded', function() {
             }
 
             if (result.imported.length > 0) {
-                html += '<h6 class="text-success"><svg class="icon"><use xlink:href="#check" /></svg> Imported (' + result.imported.length + ')</h6>';
-                html += '<ul class="list-unstyled">';
-                result.imported.forEach(acct => {
-                    const resellerBadge = acct.is_reseller ? ' <span class="badge bg-purple">Reseller</span>' : '';
-                    const planBadge = acct.plan ? ' <span class="badge bg-info">' + acct.plan + '</span>' : '';
-                    html += '<li><strong>' + acct.username + '</strong> - ' + acct.domain + resellerBadge + planBadge + '</li>';
-                });
-                html += '</ul>';
+                // Separate new imports from updates
+                const newImports = result.imported.filter(acct => acct.action !== 'updated');
+                const updatedImports = result.imported.filter(acct => acct.action === 'updated');
+
+                if (newImports.length > 0) {
+                    html += '<h6 class="text-success"><svg class="icon"><use xlink:href="#check" /></svg> Imported (' + newImports.length + ')</h6>';
+                    html += '<ul class="list-unstyled">';
+                    newImports.forEach(acct => {
+                        const resellerBadge = acct.is_reseller ? ' <span class="badge bg-purple">Reseller</span>' : '';
+                        const planBadge = acct.plan ? ' <span class="badge bg-info">' + acct.plan + '</span>' : '';
+                        html += '<li><strong>' + acct.username + '</strong> - ' + acct.domain + resellerBadge + planBadge + '</li>';
+                    });
+                    html += '</ul>';
+                }
+
+                if (updatedImports.length > 0) {
+                    html += '<h6 class="text-primary"><svg class="icon"><use xlink:href="#refresh-cw" /></svg> Updated (' + updatedImports.length + ')</h6>';
+                    html += '<ul class="list-unstyled">';
+                    updatedImports.forEach(acct => {
+                        const resellerBadge = acct.is_reseller ? ' <span class="badge bg-purple">Reseller</span>' : '';
+                        const planBadge = acct.plan ? ' <span class="badge bg-info">' + acct.plan + '</span>' : '';
+                        html += '<li><strong>' + acct.username + '</strong> - ' + acct.domain + resellerBadge + planBadge + '</li>';
+                    });
+                    html += '</ul>';
+                }
             }
 
             if (result.skipped.length > 0) {

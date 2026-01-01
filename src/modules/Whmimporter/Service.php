@@ -487,12 +487,13 @@ class Service implements InjectionAwareInterface
      * Each account is automatically associated with its cPanel package.
      * If the package doesn't exist in FOSSBilling, it will be created.
      *
-     * @param int    $serverId        Server ID
-     * @param array  $usernames       Array of usernames to import
-     * @param int    $clientGroupId   Client group ID
-     * @param string $duplicateAction Action for duplicate clients: use_existing, update_existing, create_new
+     * @param int    $serverId               Server ID
+     * @param array  $usernames              Array of usernames to import
+     * @param int    $clientGroupId          Client group ID
+     * @param string $duplicateAction        Action for duplicate clients: use_existing, update_existing, create_new
+     * @param string $accountDuplicateAction Action for duplicate accounts: skip, update, recreate
      */
-    public function importAccounts(int $serverId, array $usernames, int $clientGroupId = 1, string $duplicateAction = 'use_existing'): array
+    public function importAccounts(int $serverId, array $usernames, int $clientGroupId = 1, string $duplicateAction = 'use_existing', string $accountDuplicateAction = 'skip'): array
     {
         $server = $this->getServer($serverId);
         $remoteAccounts = $this->getRemoteAccounts($serverId);
@@ -522,8 +523,24 @@ class Service implements InjectionAwareInterface
                 ]);
 
                 if ($existingService) {
-                    $skipped[] = $acct['user'];
-                    continue;
+                    switch ($accountDuplicateAction) {
+                        case 'update':
+                            // Update existing service and order
+                            $result = $this->updateExistingAccount($existingService, $acct, $serverId, $packagesByName, $plansCreated, $clientGroupId, $duplicateAction);
+                            $imported[] = array_merge($result, ['action' => 'updated']);
+                            continue 2;
+
+                        case 'recreate':
+                            // Delete existing service and order, then create new
+                            $this->deleteExistingAccount($existingService);
+                            // Continue to create new account below
+                            break;
+
+                        case 'skip':
+                        default:
+                            $skipped[] = $acct['user'];
+                            continue 2;
+                    }
                 }
 
                 // Get or create hosting plan and product based on cPanel package name
@@ -550,7 +567,9 @@ class Service implements InjectionAwareInterface
                 $model->username = $acct['user'];
                 $model->pass = '********'; // We don't have access to real passwords
                 $model->reseller = $isReseller;
-                $model->created_at = date('Y-m-d H:i:s');
+                // Use cPanel account creation date
+                $createdAt = $this->parseWhmDate($acct['startdate'] ?? null);
+                $model->created_at = $createdAt;
                 $model->updated_at = date('Y-m-d H:i:s');
                 $serviceId = $this->di['db']->store($model);
 
@@ -844,6 +863,7 @@ class Service implements InjectionAwareInterface
 
     /**
      * Create a new client record.
+     * Uses the cPanel account creation date as the client registration date.
      */
     protected function createNewClient(string $email, array $acct, int $clientGroupId): \Model_Client
     {
@@ -854,7 +874,10 @@ class Service implements InjectionAwareInterface
         $client->status = 'active';
         $client->email_approved = true;
         $client->client_group_id = $clientGroupId;
-        $client->created_at = date('Y-m-d H:i:s');
+
+        // Use cPanel account creation date for client registration
+        $createdAt = $this->parseWhmDate($acct['startdate'] ?? null);
+        $client->created_at = $createdAt;
         $client->updated_at = date('Y-m-d H:i:s');
 
         // Generate a random password hash
@@ -863,9 +886,107 @@ class Service implements InjectionAwareInterface
 
         $this->di['db']->store($client);
 
-        $this->di['logger']->info('Created client :email during WHM import', [':email' => $email]);
+        $this->di['logger']->info('Created client :email during WHM import with date :date', [
+            ':email' => $email,
+            ':date' => $createdAt,
+        ]);
 
         return $client;
+    }
+
+    /**
+     * Update an existing hosting account with new data from WHM.
+     */
+    protected function updateExistingAccount(
+        \Model_ServiceHosting $existingService,
+        array $acct,
+        int $serverId,
+        array $packagesByName,
+        array &$plansCreated,
+        int $clientGroupId,
+        string $duplicateAction
+    ): array {
+        // Get or create hosting plan and product based on cPanel package name
+        $planName = $acct['plan'] ?? 'default';
+        [$hostingPlan, $product] = $this->findOrCreateHostingPlanAndProduct($planName, $serverId, $packagesByName, $plansCreated);
+
+        // Parse domain into SLD and TLD
+        [$sld, $tld] = $this->parseDomain($acct['domain']);
+
+        // Find or create client
+        $client = $this->findOrCreateClient($acct, $clientGroupId, $duplicateAction);
+
+        // Update existing service
+        $existingService->client_id = $client->id;
+        $existingService->service_hosting_hp_id = $hostingPlan->id;
+        $existingService->sld = $sld;
+        $existingService->tld = $tld;
+        $existingService->ip = $acct['ip'];
+        $existingService->reseller = $acct['is_reseller'] ?? false;
+        $existingService->updated_at = date('Y-m-d H:i:s');
+        $this->di['db']->store($existingService);
+
+        // Find and update existing order, or create new one
+        $existingOrder = $this->di['db']->findOne('ClientOrder', 'service_id = ? AND service_type = ?', [
+            $existingService->id,
+            'hosting',
+        ]);
+
+        if ($existingOrder) {
+            $existingOrder->client_id = $client->id;
+            $existingOrder->product_id = $product->id;
+            $existingOrder->title = $product->title . ' - ' . $acct['domain'];
+            $existingOrder->status = $acct['suspended'] ? 'suspended' : 'active';
+            $existingOrder->config = json_encode([
+                'server_id' => $serverId,
+                'hosting_plan_id' => $hostingPlan->id,
+                'sld' => $sld,
+                'tld' => $tld,
+                'import' => true,
+                'domain' => [
+                    'action' => 'owndomain',
+                    'owndomain_sld' => $sld,
+                    'owndomain_tld' => $tld,
+                ],
+            ]);
+            $existingOrder->updated_at = date('Y-m-d H:i:s');
+            $orderId = $this->di['db']->store($existingOrder);
+        } else {
+            $orderId = $this->createOrderForService($client, $existingService, $acct, $product);
+        }
+
+        $this->di['logger']->info('Updated existing account :username during WHM import', [':username' => $acct['user']]);
+
+        return [
+            'username' => $acct['user'],
+            'domain' => $acct['domain'],
+            'plan' => $planName,
+            'client_id' => $client->id,
+            'service_id' => $existingService->id,
+            'order_id' => $orderId,
+            'is_reseller' => $acct['is_reseller'] ?? false,
+        ];
+    }
+
+    /**
+     * Delete an existing hosting account and its order.
+     */
+    protected function deleteExistingAccount(\Model_ServiceHosting $existingService): void
+    {
+        // Find and delete associated order
+        $existingOrder = $this->di['db']->findOne('ClientOrder', 'service_id = ? AND service_type = ?', [
+            $existingService->id,
+            'hosting',
+        ]);
+
+        if ($existingOrder) {
+            $this->di['db']->trash($existingOrder);
+        }
+
+        // Delete the service
+        $this->di['db']->trash($existingService);
+
+        $this->di['logger']->info('Deleted existing account :username during WHM reimport', [':username' => $existingService->username]);
     }
 
     /**
