@@ -180,6 +180,19 @@
                         </label>
                     </div>
 
+                    <div class="mb-3">
+                        <div class="btn-group" role="group" aria-label="Account filter">
+                            <input type="radio" class="btn-check" name="accountFilter" id="filterAll" value="all" checked>
+                            <label class="btn btn-outline-primary" for="filterAll">{{ 'All Accounts'|trans }}</label>
+
+                            <input type="radio" class="btn-check" name="accountFilter" id="filterResellers" value="reseller">
+                            <label class="btn btn-outline-primary" for="filterResellers">{{ 'Resellers Only'|trans }}</label>
+
+                            <input type="radio" class="btn-check" name="accountFilter" id="filterRegular" value="regular">
+                            <label class="btn btn-outline-primary" for="filterRegular">{{ 'Regular Accounts'|trans }}</label>
+                        </div>
+                    </div>
+
                     <div class="table-responsive">
                         <table class="table table-vcenter card-table">
                             <thead>
@@ -187,9 +200,10 @@
                                     <th class="w-1"></th>
                                     <th>{{ 'Domain'|trans }}</th>
                                     <th>{{ 'Username'|trans }}</th>
+                                    <th>{{ 'Type'|trans }}</th>
+                                    <th>{{ 'Owner'|trans }}</th>
                                     <th>{{ 'Email'|trans }}</th>
                                     <th>{{ 'Plan'|trans }}</th>
-                                    <th>{{ 'IP'|trans }}</th>
                                     <th>{{ 'Status'|trans }}</th>
                                 </tr>
                             </thead>
@@ -236,6 +250,69 @@ document.addEventListener('DOMContentLoaded', function() {
     const importPackagesModal = new bootstrap.Modal(document.getElementById('importPackagesModal'));
     const importAccountsModal = new bootstrap.Modal(document.getElementById('importAccountsModal'));
     const resultsModal = new bootstrap.Modal(document.getElementById('resultsModal'));
+
+    // Function to render accounts list
+    function renderAccountsList(accounts) {
+        let html = '';
+        accounts.forEach(acct => {
+            const statusBadge = acct.suspended
+                ? '<span class="badge bg-danger">Suspended</span>'
+                : '<span class="badge bg-success">Active</span>';
+
+            let typeBadge;
+            if (acct.is_reseller) {
+                typeBadge = '<span class="badge bg-purple">Reseller</span>';
+            } else if (acct.is_owned_by_reseller) {
+                typeBadge = '<span class="badge bg-info">Sub-account</span>';
+            } else {
+                typeBadge = '<span class="badge bg-secondary">Standard</span>';
+            }
+
+            html += `
+                <tr data-is-reseller="${acct.is_reseller}" data-owner="${acct.owner}">
+                    <td>
+                        <input class="form-check-input account-checkbox" type="checkbox" value="${acct.user}">
+                    </td>
+                    <td>${acct.domain}</td>
+                    <td><code>${acct.user}</code></td>
+                    <td>${typeBadge}</td>
+                    <td>${acct.owner}</td>
+                    <td>${acct.email || '-'}</td>
+                    <td>${acct.plan}</td>
+                    <td>${statusBadge}</td>
+                </tr>
+            `;
+        });
+
+        if (accounts.length === 0) {
+            html = '<tr><td colspan="8" class="text-center text-muted">No accounts found matching the filter.</td></tr>';
+        }
+
+        document.getElementById('accountsList').innerHTML = html;
+    }
+
+    // Function to filter accounts
+    function filterAccounts(filterType) {
+        if (!window.accountsData) return;
+
+        let filtered;
+        switch (filterType) {
+            case 'reseller':
+                filtered = window.accountsData.filter(a => a.is_reseller);
+                break;
+            case 'regular':
+                filtered = window.accountsData.filter(a => !a.is_reseller);
+                break;
+            default:
+                filtered = window.accountsData;
+        }
+
+        renderAccountsList(filtered);
+    }
+
+    // Make functions globally available
+    window.renderAccountsList = renderAccountsList;
+    window.filterAccounts = filterAccounts;
 
     // Test Connection
     document.querySelectorAll('.btn-test-connection').forEach(btn => {
@@ -417,32 +494,16 @@ document.addEventListener('DOMContentLoaded', function() {
                 document.getElementById('accountsLoading').style.display = 'none';
                 document.getElementById('accountsContent').style.display = 'block';
 
-                let html = '';
-                accounts.forEach(acct => {
-                    const statusBadge = acct.suspended
-                        ? '<span class="badge bg-danger">Suspended</span>'
-                        : '<span class="badge bg-success">Active</span>';
+                // Store accounts data for filtering
+                window.accountsData = accounts;
+                renderAccountsList(accounts);
 
-                    html += `
-                        <tr>
-                            <td>
-                                <input class="form-check-input account-checkbox" type="checkbox" value="${acct.user}">
-                            </td>
-                            <td>${acct.domain}</td>
-                            <td><code>${acct.user}</code></td>
-                            <td>${acct.email || '-'}</td>
-                            <td>${acct.plan}</td>
-                            <td>${acct.ip}</td>
-                            <td>${statusBadge}</td>
-                        </tr>
-                    `;
+                // Setup filter handlers
+                document.querySelectorAll('input[name="accountFilter"]').forEach(radio => {
+                    radio.addEventListener('change', function() {
+                        filterAccounts(this.value);
+                    });
                 });
-
-                if (accounts.length === 0) {
-                    html = '<tr><td colspan="7" class="text-center text-muted">No accounts found on this server.</td></tr>';
-                }
-
-                document.getElementById('accountsList').innerHTML = html;
             }, function(error) {
                 document.getElementById('accountsLoading').style.display = 'none';
                 document.getElementById('accountsError').style.display = 'block';
@@ -496,7 +557,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 html += '<h6 class="text-success"><svg class="icon"><use xlink:href="#check" /></svg> Imported (' + result.imported.length + ')</h6>';
                 html += '<ul class="list-unstyled">';
                 result.imported.forEach(acct => {
-                    html += '<li><strong>' + acct.username + '</strong> - ' + acct.domain + '</li>';
+                    const resellerBadge = acct.is_reseller ? ' <span class="badge bg-purple">Reseller</span>' : '';
+                    html += '<li><strong>' + acct.username + '</strong> - ' + acct.domain + resellerBadge + '</li>';
                 });
                 html += '</ul>';
             }

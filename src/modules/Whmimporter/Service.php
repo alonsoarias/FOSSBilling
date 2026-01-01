@@ -144,24 +144,61 @@ class Service implements InjectionAwareInterface
     }
 
     /**
-     * Get accounts from WHM server.
+     * Get list of resellers from WHM server.
      */
-    public function getRemoteAccounts(int $serverId): array
+    public function getRemoteResellers(int $serverId): array
+    {
+        $server = $this->getServer($serverId);
+        $response = $this->whmRequest($server, 'listresellers');
+
+        $resellers = [];
+        if (isset($response->reseller) && is_array($response->reseller)) {
+            foreach ($response->reseller as $reseller) {
+                $resellers[] = is_string($reseller) ? $reseller : (string) $reseller;
+            }
+        }
+
+        return $resellers;
+    }
+
+    /**
+     * Get accounts from WHM server.
+     *
+     * @param bool $includeResellers Whether to also fetch reseller status for each account
+     */
+    public function getRemoteAccounts(int $serverId, bool $includeResellers = true): array
     {
         $server = $this->getServer($serverId);
         $response = $this->whmRequest($server, 'listaccts');
 
+        // Get list of resellers to identify reseller accounts
+        $resellerList = [];
+        if ($includeResellers) {
+            try {
+                $resellerList = $this->getRemoteResellers($serverId);
+            } catch (\Exception $e) {
+                // If we can't get resellers, continue without that info
+                $this->di['logger']->warning('Could not fetch reseller list: ' . $e->getMessage());
+            }
+        }
+
         $accounts = [];
         if (isset($response->acct) && is_array($response->acct)) {
             foreach ($response->acct as $acct) {
+                $username = $acct->user ?? '';
+                $isReseller = in_array($username, $resellerList);
+                $owner = $acct->owner ?? 'root';
+
                 $accounts[] = [
-                    'domain' => $acct->domain,
-                    'user' => $acct->user,
+                    'domain' => $acct->domain ?? '',
+                    'user' => $username,
                     'email' => $acct->email ?? '',
-                    'owner' => $acct->owner ?? 'root',
-                    'plan' => $acct->plan,
-                    'ip' => $acct->ip,
-                    'suspended' => (bool) ($acct->suspended ?? false),
+                    'owner' => $owner,
+                    'is_reseller' => $isReseller,
+                    'is_owned_by_reseller' => $owner !== 'root',
+                    'plan' => $acct->plan ?? '',
+                    'ip' => $acct->ip ?? '',
+                    'suspended' => ($acct->suspended ?? '0') === '1' || $acct->suspended === true,
                     'suspendtime' => $acct->suspendtime ?? null,
                     'startdate' => $acct->startdate ?? null,
                     'diskused' => $acct->diskused ?? '0M',
@@ -273,6 +310,9 @@ class Service implements InjectionAwareInterface
                 // Find or create client
                 $client = $this->findOrCreateClient($acct, $clientGroupId);
 
+                // Determine if account is a reseller
+                $isReseller = $acct['is_reseller'] ?? false;
+
                 // Create hosting service
                 $model = $this->di['db']->dispense('ServiceHosting');
                 $model->client_id = $client->id;
@@ -283,7 +323,7 @@ class Service implements InjectionAwareInterface
                 $model->ip = $acct['ip'];
                 $model->username = $acct['user'];
                 $model->pass = '********'; // We don't have access to real passwords
-                $model->reseller = false;
+                $model->reseller = $isReseller;
                 $model->created_at = date('Y-m-d H:i:s');
                 $model->updated_at = date('Y-m-d H:i:s');
                 $serviceId = $this->di['db']->store($model);
@@ -297,6 +337,7 @@ class Service implements InjectionAwareInterface
                     'client_id' => $client->id,
                     'service_id' => $serviceId,
                     'order_id' => $orderId,
+                    'is_reseller' => $isReseller,
                 ];
             } catch (\Exception $e) {
                 $errors[] = [
