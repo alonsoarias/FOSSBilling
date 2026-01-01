@@ -526,9 +526,9 @@ class Service implements InjectionAwareInterface
                     continue;
                 }
 
-                // Get or create hosting plan based on cPanel package name
+                // Get or create hosting plan and product based on cPanel package name
                 $planName = $acct['plan'] ?? 'default';
-                $hostingPlan = $this->findOrCreateHostingPlanFromPackage($planName, $packagesByName, $plansCreated);
+                [$hostingPlan, $product] = $this->findOrCreateHostingPlanAndProduct($planName, $serverId, $packagesByName, $plansCreated);
 
                 // Parse domain into SLD and TLD
                 [$sld, $tld] = $this->parseDomain($acct['domain']);
@@ -554,8 +554,8 @@ class Service implements InjectionAwareInterface
                 $model->updated_at = date('Y-m-d H:i:s');
                 $serviceId = $this->di['db']->store($model);
 
-                // Create an order for this service
-                $orderId = $this->createOrderForService($client, $model, $acct);
+                // Create an order for this service using the correct product
+                $orderId = $this->createOrderForService($client, $model, $acct, $product);
 
                 $imported[] = [
                     'username' => $acct['user'],
@@ -588,19 +588,29 @@ class Service implements InjectionAwareInterface
     }
 
     /**
-     * Find or create a hosting plan based on cPanel package name.
+     * Find or create a hosting plan and product based on cPanel package name.
+     * Returns both the hosting plan and the associated product.
+     *
+     * @return array [\Model_ServiceHostingHp, \Model_Product]
      */
-    protected function findOrCreateHostingPlanFromPackage(string $planName, array $packagesByName, array &$plansCreated): \Model_ServiceHostingHp
+    protected function findOrCreateHostingPlanAndProduct(string $planName, int $serverId, array $packagesByName, array &$plansCreated): array
     {
         // Check if we already processed this plan in this import
         if (isset($plansCreated[$planName])) {
-            return $this->di['db']->load('ServiceHostingHp', $plansCreated[$planName]);
+            $hp = $this->di['db']->load('ServiceHostingHp', $plansCreated[$planName]['hp_id']);
+            $product = $this->di['db']->load('Product', $plansCreated[$planName]['product_id']);
+
+            return [$hp, $product];
         }
 
         // Try to find existing hosting plan by name
         $existingPlan = $this->di['db']->findOne('ServiceHostingHp', 'name = ?', [$planName]);
+
         if ($existingPlan) {
-            return $existingPlan;
+            // Find or create the product for this existing plan
+            $product = $this->findOrCreateProductForHostingPlan($existingPlan, $serverId, $planName);
+
+            return [$existingPlan, $product];
         }
 
         // Create new hosting plan using package data from cPanel
@@ -629,11 +639,141 @@ class Service implements InjectionAwareInterface
             'max_addon' => $maxAddon,
         ]);
 
-        $plansCreated[$planName] = $hpId;
+        $hp = $this->di['db']->load('ServiceHostingHp', $hpId);
 
-        $this->di['logger']->info('Created hosting plan :name during WHM account import', [':name' => $planName]);
+        // Create the product for this hosting plan
+        $product = $this->createProductForHostingPlan($hp, $serverId, $planName);
 
-        return $this->di['db']->load('ServiceHostingHp', $hpId);
+        $plansCreated[$planName] = [
+            'hp_id' => $hpId,
+            'product_id' => $product->id,
+        ];
+
+        $this->di['logger']->info('Created hosting plan and product :name during WHM account import', [':name' => $planName]);
+
+        return [$hp, $product];
+    }
+
+    /**
+     * Find or create a product for an existing hosting plan.
+     */
+    protected function findOrCreateProductForHostingPlan(\Model_ServiceHostingHp $hp, int $serverId, string $planName): \Model_Product
+    {
+        // Try to find an existing product configured for this hosting plan and server
+        $products = $this->di['db']->find('Product', "type = 'hosting' AND status = 'enabled'");
+
+        foreach ($products as $product) {
+            $config = json_decode($product->config ?? '{}', true);
+            if (isset($config['hosting_plan_id']) && $config['hosting_plan_id'] == $hp->id
+                && isset($config['server_id']) && $config['server_id'] == $serverId) {
+                return $product;
+            }
+        }
+
+        // No existing product found, create one
+        return $this->createProductForHostingPlan($hp, $serverId, $planName);
+    }
+
+    /**
+     * Create a product for a hosting plan with recurrent pricing.
+     */
+    protected function createProductForHostingPlan(\Model_ServiceHostingHp $hp, int $serverId, string $planName): \Model_Product
+    {
+        // Create ProductPayment with recurrent pricing (monthly, quarterly, semi-annual, annual)
+        $modelPayment = $this->di['db']->dispense('ProductPayment');
+        $modelPayment->type = \Model_ProductPayment::RECURRENT;
+
+        // Set default prices to 0 (admin can adjust later)
+        // Monthly (1M)
+        $modelPayment->w_price = 0;
+        $modelPayment->w_setup_price = 0;
+        $modelPayment->w_enabled = 0;
+
+        $modelPayment->m_price = 0;
+        $modelPayment->m_setup_price = 0;
+        $modelPayment->m_enabled = 1;
+
+        // Quarterly (3M)
+        $modelPayment->q_price = 0;
+        $modelPayment->q_setup_price = 0;
+        $modelPayment->q_enabled = 1;
+
+        // Semi-annual (6M)
+        $modelPayment->b_price = 0;
+        $modelPayment->b_setup_price = 0;
+        $modelPayment->b_enabled = 1;
+
+        // Annual (1Y)
+        $modelPayment->a_price = 0;
+        $modelPayment->a_setup_price = 0;
+        $modelPayment->a_enabled = 1;
+
+        // Biennial (2Y)
+        $modelPayment->bia_price = 0;
+        $modelPayment->bia_setup_price = 0;
+        $modelPayment->bia_enabled = 0;
+
+        // Triennial (3Y)
+        $modelPayment->tria_price = 0;
+        $modelPayment->tria_setup_price = 0;
+        $modelPayment->tria_enabled = 0;
+
+        $paymentId = $this->di['db']->store($modelPayment);
+
+        // Create the product
+        $model = $this->di['db']->dispense('Product');
+        $model->product_payment_id = $paymentId;
+        $model->product_category_id = $this->getOrCreateHostingCategory();
+        $model->status = \Model_Product::STATUS_ENABLED;
+        $model->title = 'Hosting - ' . $planName;
+        $model->slug = $this->di['tools']->slug('hosting-' . $planName);
+        $model->type = 'hosting';
+        $model->setup = 'after_order';
+        $model->hidden = 0;
+
+        // Configure hosting settings
+        $model->config = json_encode([
+            'server_id' => $serverId,
+            'hosting_plan_id' => $hp->id,
+        ]);
+
+        $model->description = 'Hosting plan imported from cPanel/WHM: ' . $planName;
+        $model->updated_at = date('Y-m-d H:i:s');
+        $model->created_at = date('Y-m-d H:i:s');
+
+        // Try to save, handle duplicate slug
+        try {
+            $this->di['db']->store($model);
+        } catch (\Exception $e) {
+            $model->slug = $this->di['tools']->slug('hosting-' . $planName) . '-' . random_int(1, 9999);
+            $this->di['db']->store($model);
+        }
+
+        $this->di['logger']->info('Created product :title for hosting plan', [':title' => $model->title]);
+
+        return $model;
+    }
+
+    /**
+     * Get or create a product category for hosting products.
+     */
+    protected function getOrCreateHostingCategory(): int
+    {
+        // Try to find existing hosting category
+        $category = $this->di['db']->findOne('ProductCategory', "title LIKE '%Hosting%' OR title LIKE '%hosting%'");
+
+        if ($category) {
+            return $category->id;
+        }
+
+        // Create hosting category
+        $category = $this->di['db']->dispense('ProductCategory');
+        $category->title = 'Web Hosting';
+        $category->description = 'Web hosting plans';
+        $category->updated_at = date('Y-m-d H:i:s');
+        $category->created_at = date('Y-m-d H:i:s');
+
+        return $this->di['db']->store($category);
     }
 
     /**
@@ -730,26 +870,24 @@ class Service implements InjectionAwareInterface
 
     /**
      * Create an order for the imported service.
+     * Uses the product that was created/found for the hosting plan.
      */
-    protected function createOrderForService(\Model_Client $client, \Model_ServiceHosting $service, array $acct): int
+    protected function createOrderForService(\Model_Client $client, \Model_ServiceHosting $service, array $acct, \Model_Product $product): int
     {
-        // Find or create a hosting product
-        $product = $this->findOrCreateHostingProduct($service);
-
-        // Create order
+        // Create order linked to the correct product
         $order = $this->di['db']->dispense('ClientOrder');
         $order->client_id = $client->id;
         $order->product_id = $product->id;
         $order->group_id = uniqid();
         $order->group_master = 1;
-        $order->title = 'Hosting - ' . $acct['domain'];
+        $order->title = $product->title . ' - ' . $acct['domain'];
         $order->currency = $this->getDefaultCurrency();
         $order->service_id = $service->id;
         $order->service_type = 'hosting';
-        $order->period = '1Y';
+        $order->period = '1Y';  // Annual by default for imported accounts
         $order->quantity = 1;
-        $order->unit = 'product';
-        $order->price = 0;
+        $order->unit = $product->unit ?? 'product';
+        $order->price = 0;  // Price is 0 for imported accounts
         $order->discount = 0;
         $order->status = $acct['suspended'] ? 'suspended' : 'active';
         $order->invoice_option = 'no-invoice';
@@ -759,6 +897,11 @@ class Service implements InjectionAwareInterface
             'sld' => $service->sld,
             'tld' => $service->tld,
             'import' => true,
+            'domain' => [
+                'action' => 'owndomain',
+                'owndomain_sld' => $service->sld,
+                'owndomain_tld' => $service->tld,
+            ],
         ]);
 
         // Parse WHM date format to MySQL datetime format
@@ -775,35 +918,26 @@ class Service implements InjectionAwareInterface
     }
 
     /**
-     * Find or create a generic hosting product.
+     * Find or create a generic hosting product (deprecated, kept for backward compatibility).
+     * @deprecated Use findOrCreateHostingPlanAndProduct instead
      */
     protected function findOrCreateHostingProduct(\Model_ServiceHosting $service): \Model_Product
     {
-        // Look for an existing hosting product
-        $product = $this->di['db']->findOne('Product', "type = 'hosting' AND status = 'enabled' ORDER BY id ASC");
+        // Look for an existing hosting product configured for this server and plan
+        $products = $this->di['db']->find('Product', "type = 'hosting' AND status = 'enabled'");
 
-        if ($product) {
-            return $product;
+        foreach ($products as $product) {
+            $config = json_decode($product->config ?? '{}', true);
+            if (isset($config['hosting_plan_id']) && $config['hosting_plan_id'] == $service->service_hosting_hp_id
+                && isset($config['server_id']) && $config['server_id'] == $service->service_hosting_server_id) {
+                return $product;
+            }
         }
 
-        // Create a generic hosting product
-        $product = $this->di['db']->dispense('Product');
-        $product->type = 'hosting';
-        $product->title = 'Imported Hosting';
-        $product->slug = 'imported-hosting';
-        $product->description = 'Hosting product created for imported accounts';
-        $product->status = 'enabled';
-        $product->hidden = 1;
-        $product->setup = 'after_payment';
-        $product->config = json_encode([
-            'server_id' => $service->service_hosting_server_id,
-            'hosting_plan_id' => $service->service_hosting_hp_id,
-        ]);
-        $product->created_at = date('Y-m-d H:i:s');
-        $product->updated_at = date('Y-m-d H:i:s');
-        $this->di['db']->store($product);
+        // No matching product found, create one
+        $hp = $this->di['db']->load('ServiceHostingHp', $service->service_hosting_hp_id);
 
-        return $product;
+        return $this->createProductForHostingPlan($hp, $service->service_hosting_server_id, $hp->name ?? 'Imported');
     }
 
     /**
