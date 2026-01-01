@@ -67,6 +67,14 @@ class Service implements InjectionAwareInterface
 
     /**
      * Make a request to WHM API.
+     *
+     * WHM API supports multiple response formats. This method handles:
+     * - Legacy format: status/statusmsg at root level
+     * - Modern format: metadata.result/metadata.reason
+     * - cPanel result format: result[0].status/result[0].statusmsg
+     * - Data result format: data.result/data.reason
+     *
+     * @see https://api.docs.cpanel.net/whm/introduction/
      */
     protected function whmRequest(\Model_ServiceHostingServer $server, string $action, array $params = []): mixed
     {
@@ -80,15 +88,26 @@ class Service implements InjectionAwareInterface
         $protocol = $server->secure ? 'https' : 'http';
         $url = "{$protocol}://{$server->hostname}:{$port}/json-api/{$action}";
 
+        // Add API version parameter for consistent behavior
+        if (!isset($params['api.version'])) {
+            $params['api.version'] = 1;
+        }
+
         $username = $server->username;
         $accessHash = $server->accesshash;
         $password = $server->password;
 
+        // WHM supports two authentication methods:
+        // 1. Access Hash: "WHM username:accesshash" (recommended)
+        // 2. Basic Auth: "Basic base64(username:password)"
         if (!empty($accessHash)) {
+            // Remove any whitespace from access hash (may contain newlines)
             $authHeader = 'WHM ' . $username . ':' . preg_replace('/\s+/', '', $accessHash);
         } else {
             $authHeader = 'Basic ' . base64_encode($username . ':' . $password);
         }
+
+        $this->di['logger']->debug('WHM API Request: :action', [':action' => $action]);
 
         try {
             $response = $client->request('POST', $url, [
@@ -96,6 +115,7 @@ class Service implements InjectionAwareInterface
                 'body' => $params,
             ]);
         } catch (HttpExceptionInterface $error) {
+            $this->di['logger']->error('WHM API HTTP Error: :error', [':error' => $error->getMessage()]);
             throw new Exception('WHM API Error: :error', [':error' => $error->getMessage()]);
         }
 
@@ -103,60 +123,199 @@ class Service implements InjectionAwareInterface
         $json = json_decode($body);
 
         if (!is_object($json)) {
+            $this->di['logger']->error('WHM API Invalid Response for :action', [':action' => $action]);
             throw new Exception('Invalid response from WHM server');
         }
 
-        if (isset($json->status) && $json->status != '1') {
-            throw new Exception('WHM Error: :msg', [':msg' => $json->statusmsg ?? 'Unknown error']);
-        }
+        // Check for errors in various WHM API response formats
+        $this->validateWhmResponse($json, $action);
 
         return $json;
     }
 
     /**
+     * Validate WHM API response for errors.
+     *
+     * WHM API has multiple error response formats depending on the endpoint and API version.
+     */
+    protected function validateWhmResponse(object $json, string $action): void
+    {
+        // Format 1: cpanelresult.error (cPanel API errors)
+        if (isset($json->cpanelresult->error)) {
+            $this->di['logger']->error('WHM cPanel Error [:action]: :error', [
+                ':action' => $action,
+                ':error' => $json->cpanelresult->error,
+            ]);
+            throw new Exception('WHM Error: :msg', [':msg' => $json->cpanelresult->error]);
+        }
+
+        // Format 2: data.result = 0 (Modern API format)
+        if (isset($json->data->result) && $json->data->result == '0') {
+            $reason = $json->data->reason ?? 'Unknown error';
+            $this->di['logger']->error('WHM Data Error [:action]: :error', [
+                ':action' => $action,
+                ':error' => $reason,
+            ]);
+            throw new Exception('WHM Error: :msg', [':msg' => $reason]);
+        }
+
+        // Format 3: result[0].status = 0 (Account operations)
+        if (isset($json->result) && is_array($json->result) && isset($json->result[0]->status)) {
+            if ($json->result[0]->status == 0) {
+                $msg = $json->result[0]->statusmsg ?? 'Unknown error';
+                $this->di['logger']->error('WHM Result Error [:action]: :error', [
+                    ':action' => $action,
+                    ':error' => $msg,
+                ]);
+                throw new Exception('WHM Error: :msg', [':msg' => $msg]);
+            }
+        }
+
+        // Format 4: status != 1 (Legacy format)
+        if (isset($json->status) && $json->status != '1') {
+            $msg = $json->statusmsg ?? 'Unknown error';
+            $this->di['logger']->error('WHM Status Error [:action]: :error', [
+                ':action' => $action,
+                ':error' => $msg,
+            ]);
+            throw new Exception('WHM Error: :msg', [':msg' => $msg]);
+        }
+
+        // Format 5: metadata.result = 0 (Newer API format with metadata)
+        if (isset($json->metadata->result) && $json->metadata->result == 0) {
+            $reason = $json->metadata->reason ?? 'Unknown error';
+            $this->di['logger']->error('WHM Metadata Error [:action]: :error', [
+                ':action' => $action,
+                ':error' => $reason,
+            ]);
+            throw new Exception('WHM Error: :msg', [':msg' => $reason]);
+        }
+    }
+
+    /**
      * Get packages from WHM server.
+     *
+     * WHM API 'listpkgs' returns package data in one of two formats:
+     * - Legacy: { "package": [...] }
+     * - Modern: { "data": { "pkg": [...] }, "metadata": {...} }
+     *
+     * Package fields reference:
+     * - QUOTA: Disk space in MB
+     * - BWLIMIT: Bandwidth limit in MB/month
+     * - MAXFTP/MAXSQL/MAXPOP/MAXSUB/MAXPARK/MAXADDON: Resource limits
+     * - HASSHELL: Shell access (y/n or 1/0)
+     * - CGI: CGI access (y/n or 1/0)
+     * - FEATURELIST: cPanel feature list name
+     * - IP: Dedicated IP (y/n or 1/0)
+     *
+     * @see https://api.docs.cpanel.net/openapi/whm/operation/listpkgs/
      */
     public function getRemotePackages(int $serverId): array
     {
         $server = $this->getServer($serverId);
         $response = $this->whmRequest($server, 'listpkgs');
 
-        $packages = [];
+        // Handle both legacy and modern API response formats
+        $packageList = [];
         if (isset($response->package) && is_array($response->package)) {
-            foreach ($response->package as $pkg) {
-                $packages[] = [
-                    'name' => $pkg->name,
-                    'quota' => $pkg->QUOTA ?? 'unlimited',
-                    'bandwidth' => $pkg->BWLIMIT ?? 'unlimited',
-                    'max_ftp' => $pkg->MAXFTP ?? 'unlimited',
-                    'max_sql' => $pkg->MAXSQL ?? 'unlimited',
-                    'max_pop' => $pkg->MAXPOP ?? 'unlimited',
-                    'max_sub' => $pkg->MAXSUB ?? 'unlimited',
-                    'max_park' => $pkg->MAXPARK ?? 'unlimited',
-                    'max_addon' => $pkg->MAXADDON ?? 'unlimited',
-                    'has_shell' => ($pkg->HASSHELL ?? 'n') !== 'n',
-                    'has_cgi' => ($pkg->CGI ?? 'n') !== 'n',
-                ];
-            }
+            // Legacy format: $response->package
+            $packageList = $response->package;
+        } elseif (isset($response->data->pkg) && is_array($response->data->pkg)) {
+            // Modern format: $response->data->pkg
+            $packageList = $response->data->pkg;
         }
+
+        $packages = [];
+        foreach ($packageList as $pkg) {
+            $packages[] = [
+                'name' => $pkg->name ?? '',
+                'quota' => $this->normalizeLimit($pkg->QUOTA ?? 'unlimited'),
+                'bandwidth' => $this->normalizeLimit($pkg->BWLIMIT ?? 'unlimited'),
+                'max_ftp' => $this->normalizeLimit($pkg->MAXFTP ?? 'unlimited'),
+                'max_sql' => $this->normalizeLimit($pkg->MAXSQL ?? 'unlimited'),
+                'max_pop' => $this->normalizeLimit($pkg->MAXPOP ?? 'unlimited'),
+                'max_sub' => $this->normalizeLimit($pkg->MAXSUB ?? 'unlimited'),
+                'max_park' => $this->normalizeLimit($pkg->MAXPARK ?? 'unlimited'),
+                'max_addon' => $this->normalizeLimit($pkg->MAXADDON ?? 'unlimited'),
+                'max_email_lists' => $this->normalizeLimit($pkg->MAXLST ?? 'unlimited'),
+                'has_shell' => $this->normalizeBoolean($pkg->HASSHELL ?? 'n'),
+                'has_cgi' => $this->normalizeBoolean($pkg->CGI ?? 'n'),
+                'has_ip' => $this->normalizeBoolean($pkg->IP ?? 'n'),
+                'feature_list' => $pkg->FEATURELIST ?? 'default',
+                'theme' => $pkg->CPMOD ?? 'paper_lantern',
+            ];
+        }
+
+        $this->di['logger']->info('Retrieved :count packages from WHM server :server', [
+            ':count' => count($packages),
+            ':server' => $server->name,
+        ]);
 
         return $packages;
     }
 
     /**
+     * Normalize a limit value from WHM (handles 'unlimited', null, numeric strings).
+     */
+    protected function normalizeLimit(mixed $value): string
+    {
+        if ($value === null || $value === '' || strtolower((string) $value) === 'unlimited') {
+            return 'unlimited';
+        }
+
+        return (string) $value;
+    }
+
+    /**
+     * Normalize a boolean value from WHM (handles 'y'/'n', '1'/'0', 1/0, true/false).
+     */
+    protected function normalizeBoolean(mixed $value): bool
+    {
+        if (is_bool($value)) {
+            return $value;
+        }
+
+        $strValue = strtolower((string) $value);
+
+        return in_array($strValue, ['y', 'yes', '1', 'true', 'on'], true);
+    }
+
+    /**
      * Get list of resellers from WHM server.
+     *
+     * WHM API 'listresellers' returns a simple array of reseller usernames.
+     * Response formats:
+     * - Legacy: { "reseller": ["user1", "user2"] }
+     * - Modern: { "data": { "reseller": ["user1", "user2"] }, "metadata": {...} }
+     *
+     * Note: This endpoint requires root-level WHM access.
+     *
+     * @see https://api.docs.cpanel.net/openapi/whm/operation/listresellers/
      */
     public function getRemoteResellers(int $serverId): array
     {
         $server = $this->getServer($serverId);
         $response = $this->whmRequest($server, 'listresellers');
 
-        $resellers = [];
+        // Handle both legacy and modern API response formats
+        $resellerList = [];
         if (isset($response->reseller) && is_array($response->reseller)) {
-            foreach ($response->reseller as $reseller) {
-                $resellers[] = is_string($reseller) ? $reseller : (string) $reseller;
-            }
+            // Legacy format: $response->reseller
+            $resellerList = $response->reseller;
+        } elseif (isset($response->data->reseller) && is_array($response->data->reseller)) {
+            // Modern format: $response->data->reseller
+            $resellerList = $response->data->reseller;
         }
+
+        $resellers = [];
+        foreach ($resellerList as $reseller) {
+            $resellers[] = is_string($reseller) ? $reseller : (string) $reseller;
+        }
+
+        $this->di['logger']->info('Retrieved :count resellers from WHM server :server', [
+            ':count' => count($resellers),
+            ':server' => $server->name,
+        ]);
 
         return $resellers;
     }
@@ -164,7 +323,31 @@ class Service implements InjectionAwareInterface
     /**
      * Get accounts from WHM server.
      *
+     * WHM API 'listaccts' returns account data in one of two formats:
+     * - Legacy: { "acct": [...] }
+     * - Modern: { "data": { "acct": [...] }, "metadata": {...} }
+     *
+     * Account fields reference:
+     * - domain: Primary domain for the account
+     * - user: cPanel username
+     * - email: Contact email address
+     * - owner: Account owner (root or reseller username)
+     * - plan: Hosting package name
+     * - ip: IP address assigned to the account
+     * - suspended: Suspension status (0/1 or false/true)
+     * - suspendreason: Reason for suspension if suspended
+     * - suspendtime: Unix timestamp of suspension
+     * - startdate: Human-readable creation date
+     * - unix_startdate: Unix timestamp of creation
+     * - diskused: Disk space used (e.g., "65M")
+     * - disklimit: Disk space limit (e.g., "500M" or "unlimited")
+     * - shell: Shell path (e.g., "/usr/bin/bash")
+     * - partition: Disk partition (e.g., "home")
+     *
+     * @param int  $serverId         Server ID
      * @param bool $includeResellers Whether to also fetch reseller status for each account
+     *
+     * @see https://api.docs.cpanel.net/openapi/whm/operation/listaccts/
      */
     public function getRemoteAccounts(int $serverId, bool $includeResellers = true): array
     {
@@ -178,34 +361,60 @@ class Service implements InjectionAwareInterface
                 $resellerList = $this->getRemoteResellers($serverId);
             } catch (\Exception $e) {
                 // If we can't get resellers, continue without that info
-                $this->di['logger']->warning('Could not fetch reseller list: ' . $e->getMessage());
+                // This can happen if the user doesn't have root access
+                $this->di['logger']->warning('Could not fetch reseller list: :error', [
+                    ':error' => $e->getMessage(),
+                ]);
             }
+        }
+
+        // Handle both legacy and modern API response formats
+        $accountList = [];
+        if (isset($response->acct) && is_array($response->acct)) {
+            // Legacy format: $response->acct
+            $accountList = $response->acct;
+        } elseif (isset($response->data->acct) && is_array($response->data->acct)) {
+            // Modern format: $response->data->acct
+            $accountList = $response->data->acct;
         }
 
         $accounts = [];
-        if (isset($response->acct) && is_array($response->acct)) {
-            foreach ($response->acct as $acct) {
-                $username = $acct->user ?? '';
-                $isReseller = in_array($username, $resellerList);
-                $owner = $acct->owner ?? 'root';
+        foreach ($accountList as $acct) {
+            $username = $acct->user ?? '';
+            $isReseller = in_array($username, $resellerList, true);
+            $owner = $acct->owner ?? 'root';
 
-                $accounts[] = [
-                    'domain' => $acct->domain ?? '',
-                    'user' => $username,
-                    'email' => $acct->email ?? '',
-                    'owner' => $owner,
-                    'is_reseller' => $isReseller,
-                    'is_owned_by_reseller' => $owner !== 'root',
-                    'plan' => $acct->plan ?? '',
-                    'ip' => $acct->ip ?? '',
-                    'suspended' => ($acct->suspended ?? '0') === '1' || $acct->suspended === true,
-                    'suspendtime' => $acct->suspendtime ?? null,
-                    'startdate' => $acct->startdate ?? null,
-                    'diskused' => $acct->diskused ?? '0M',
-                    'disklimit' => $acct->disklimit ?? 'unlimited',
-                ];
+            // Handle suspended field which can be 0, "0", 1, "1", true, or false
+            $suspended = false;
+            if (isset($acct->suspended)) {
+                $suspended = $this->normalizeBoolean($acct->suspended);
             }
+
+            $accounts[] = [
+                'domain' => $acct->domain ?? '',
+                'user' => $username,
+                'email' => $acct->email ?? '',
+                'owner' => $owner,
+                'is_reseller' => $isReseller,
+                'is_owned_by_reseller' => $owner !== 'root',
+                'plan' => $acct->plan ?? '',
+                'ip' => $acct->ip ?? '',
+                'suspended' => $suspended,
+                'suspend_reason' => $acct->suspendreason ?? '',
+                'suspendtime' => $acct->suspendtime ?? null,
+                'startdate' => $acct->startdate ?? null,
+                'unix_startdate' => $acct->unix_startdate ?? null,
+                'diskused' => $acct->diskused ?? '0M',
+                'disklimit' => $acct->disklimit ?? 'unlimited',
+                'shell' => $acct->shell ?? '',
+                'partition' => $acct->partition ?? 'home',
+            ];
         }
+
+        $this->di['logger']->info('Retrieved :count accounts from WHM server :server', [
+            ':count' => count($accounts),
+            ':server' => $server->name,
+        ]);
 
         return $accounts;
     }
