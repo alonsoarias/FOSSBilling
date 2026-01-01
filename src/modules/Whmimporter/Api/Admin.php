@@ -169,4 +169,15 @@ class Admin extends \Api_Abstract
     {
         return $this->getService()->getClientGroups();
     }
+
+    /**
+     * Fix products that were imported without proper payment configuration.
+     * This will add recurrent pricing to all hosting products that are missing it.
+     *
+     * @return array Results with fixed product count
+     */
+    public function fix_product_payments(): array
+    {
+        return $this->getService()->fixAllProductPayments();
+    }
 }

@@ -685,12 +685,64 @@ class Service implements InjectionAwareInterface
             $config = json_decode($product->config ?? '{}', true);
             if (isset($config['hosting_plan_id']) && $config['hosting_plan_id'] == $hp->id
                 && isset($config['server_id']) && $config['server_id'] == $serverId) {
+                // Ensure product has valid payment configuration
+                if (empty($product->product_payment_id)) {
+                    $this->fixProductPayment($product);
+                }
+
                 return $product;
             }
         }
 
         // No existing product found, create one
         return $this->createProductForHostingPlan($hp, $serverId, $planName);
+    }
+
+    /**
+     * Fix a product that doesn't have proper payment configuration.
+     */
+    protected function fixProductPayment(\Model_Product $product): void
+    {
+        // Create ProductPayment with recurrent pricing
+        $modelPayment = $this->di['db']->dispense('ProductPayment');
+        $modelPayment->type = \Model_ProductPayment::RECURRENT;
+
+        // Set default prices to 0
+        $modelPayment->w_price = 0;
+        $modelPayment->w_setup_price = 0;
+        $modelPayment->w_enabled = 0;
+
+        $modelPayment->m_price = 0;
+        $modelPayment->m_setup_price = 0;
+        $modelPayment->m_enabled = 1;
+
+        $modelPayment->q_price = 0;
+        $modelPayment->q_setup_price = 0;
+        $modelPayment->q_enabled = 1;
+
+        $modelPayment->b_price = 0;
+        $modelPayment->b_setup_price = 0;
+        $modelPayment->b_enabled = 1;
+
+        $modelPayment->a_price = 0;
+        $modelPayment->a_setup_price = 0;
+        $modelPayment->a_enabled = 1;
+
+        $modelPayment->bia_price = 0;
+        $modelPayment->bia_setup_price = 0;
+        $modelPayment->bia_enabled = 0;
+
+        $modelPayment->tria_price = 0;
+        $modelPayment->tria_setup_price = 0;
+        $modelPayment->tria_enabled = 0;
+
+        $paymentId = $this->di['db']->store($modelPayment);
+
+        // Update product with payment ID
+        $product->product_payment_id = $paymentId;
+        $this->di['db']->store($product);
+
+        $this->di['logger']->info('Fixed product payment for product :id', [':id' => $product->id]);
     }
 
     /**
@@ -1195,5 +1247,36 @@ class Service implements InjectionAwareInterface
         } catch (\Exception $e) {
             throw new Exception('Connection failed: :error', [':error' => $e->getMessage()]);
         }
+    }
+
+    /**
+     * Fix all products that are missing payment configuration.
+     * This repairs products that were imported without proper pricing.
+     */
+    public function fixAllProductPayments(): array
+    {
+        $products = $this->di['db']->find('Product', '1');
+        $fixed = [];
+        $alreadyOk = 0;
+
+        foreach ($products as $product) {
+            if (empty($product->product_payment_id)) {
+                $this->fixProductPayment($product);
+                $fixed[] = [
+                    'id' => $product->id,
+                    'title' => $product->title,
+                ];
+            } else {
+                $alreadyOk++;
+            }
+        }
+
+        $this->di['logger']->info('Fixed :count products with missing payment configuration', [':count' => count($fixed)]);
+
+        return [
+            'fixed' => $fixed,
+            'fixed_count' => count($fixed),
+            'already_ok' => $alreadyOk,
+        ];
     }
 }
