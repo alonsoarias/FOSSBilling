@@ -1,0 +1,10 @@
+{
+    "id": "Servicestatus",
+    "type": "mod",
+    "name": "Service Status",
+    "description": "Public status page showing the health and availability of your services. Similar to Statuspage.io or Blesta System Status.",
+    "homepage_url": "https://github.com/FOSSBilling/FOSSBilling",
+    "author": "FOSSBilling",
+    "version": "1.0.0",
+    "minimum_boxbilling_version": "4.22"
+}

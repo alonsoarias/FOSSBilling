@@ -1,0 +1,97 @@
+{% extends request.ajax ? "layout_blank.html.twig" : "layout_default.html.twig" %}
+
+{% block meta_title %}{{ 'Incident History'|trans }} - {{ 'System Status'|trans }}{% endblock %}
+
+{% block body_class %}status-history{% endblock %}
+
+{% block content %}
+    {% set incidents = guest.servicestatus_incident_get_recent({'days': 90}) %}
+
+    <div class="page-header d-print-none">
+        <div class="container-xl">
+            <div class="row g-2 align-items-center">
+                <div class="col-auto">
+                    <a href="{{ '/status'|link }}" class="btn btn-ghost-secondary">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                            <path d="M5 12l14 0"></path>
+                            <path d="M5 12l6 6"></path>
+                            <path d="M5 12l6 -6"></path>
+                        </svg>
+                        {{ 'Back to Status'|trans }}
+                    </a>
+                </div>
+                <div class="col">
+                    <h2 class="page-title">{{ 'Incident History'|trans }}</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="page-body">
+        <div class="container-xl">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    {% if incidents|length > 0 %}
+                        {% set grouped_incidents = {} %}
+                        {% for incident in incidents %}
+                            {% set month_key = incident.created_at|date('Y-m') %}
+                            {% if grouped_incidents[month_key] is not defined %}
+                                {% set grouped_incidents = grouped_incidents|merge({(month_key): []}) %}
+                            {% endif %}
+                            {% set grouped_incidents = grouped_incidents|merge({(month_key): grouped_incidents[month_key]|merge([incident])}) %}
+                        {% endfor %}
+
+                        {% for month_key, month_incidents in grouped_incidents %}
+                        <div class="card mb-4">
+                            <div class="card-header bg-light">
+                                <h3 class="card-title">{{ month_key|date('F Y') }}</h3>
+                            </div>
+                            <div class="list-group list-group-flush">
+                                {% for incident in month_incidents %}
+                                <a href="{{ '/status/incident'|link }}/{{ incident.id }}" class="list-group-item list-group-item-action">
+                                    <div class="d-flex justify-content-between align-items-start">
+                                        <div>
+                                            <h5 class="mb-1">{{ incident.title }}</h5>
+                                            <small class="text-muted">
+                                                {{ incident.created_at|format_datetime }}
+                                                {% if incident.is_scheduled %}
+                                                    <span class="badge bg-info-lt ms-1">{{ 'Maintenance'|trans }}</span>
+                                                {% endif %}
+                                            </small>
+                                            {% if incident.components|length > 0 %}
+                                            <div class="mt-1">
+                                                {% for comp in incident.components %}
+                                                    <span class="badge bg-secondary-lt">{{ comp.name }}</span>
+                                                {% endfor %}
+                                            </div>
+                                            {% endif %}
+                                        </div>
+                                        <span class="badge bg-{% if incident.is_resolved %}success{% else %}warning{% endif %}">
+                                            {{ incident.status_label }}
+                                        </span>
+                                    </div>
+                                </a>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        {% endfor %}
+                    {% else %}
+                        <div class="card">
+                            <div class="card-body text-center py-5">
+                                <span class="avatar avatar-xl bg-success-lt mb-3">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-lg text-success" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                        <path d="M5 12l5 5l10 -10"></path>
+                                    </svg>
+                                </span>
+                                <h3>{{ 'No incidents in the past 90 days'|trans }}</h3>
+                                <p class="text-muted">{{ 'All systems have been operating normally.'|trans }}</p>
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

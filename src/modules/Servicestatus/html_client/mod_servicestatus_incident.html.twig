@@ -1,0 +1,150 @@
+{% extends request.ajax ? "layout_blank.html.twig" : "layout_default.html.twig" %}
+
+{% block meta_title %}{{ incident.title }} - {{ 'System Status'|trans }}{% endblock %}
+
+{% block body_class %}status-incident{% endblock %}
+
+{% block breadcrumb %}
+    <li class="breadcrumb-item"><a href="{{ '/status'|link }}">{{ 'System Status'|trans }}</a></li>
+    <li class="breadcrumb-item active" aria-current="page">{{ incident.title|truncate(30) }}</li>
+{% endblock %}
+
+{% block content %}
+    <div class="container py-4">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                {# Incident Header #}
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div>
+                                <h1 class="h3 mb-1">{{ incident.title }}</h1>
+                                <p class="text-muted mb-0">
+                                    {% if incident.is_scheduled %}
+                                        {{ 'Scheduled Maintenance'|trans }}
+                                    {% else %}
+                                        {{ 'Incident Report'|trans }}
+                                    {% endif %}
+                                </p>
+                            </div>
+                            <span class="badge bg-{% if incident.is_resolved %}success{% elseif incident.status == 'monitoring' %}info{% else %}warning{% endif %} fs-6">
+                                {{ incident.status_label }}
+                            </span>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-6 mb-3">
+                                <strong>{{ 'Impact'|trans }}:</strong>
+                                <span class="badge bg-{% if incident.impact == 'critical' %}danger{% elseif incident.impact == 'major' %}warning{% elseif incident.impact == 'minor' %}info{% else %}secondary{% endif %}">
+                                    {{ incident.impact|capitalize }}
+                                </span>
+                            </div>
+                            <div class="col-sm-6 mb-3">
+                                <strong>{{ 'Started'|trans }}:</strong>
+                                {{ incident.created_at|format_datetime }}
+                            </div>
+                            {% if incident.is_scheduled %}
+                            <div class="col-sm-6 mb-3">
+                                <strong>{{ 'Scheduled For'|trans }}:</strong>
+                                {{ incident.scheduled_for|format_datetime }}
+                            </div>
+                            <div class="col-sm-6 mb-3">
+                                <strong>{{ 'Expected End'|trans }}:</strong>
+                                {{ incident.scheduled_until|format_datetime|default('-') }}
+                            </div>
+                            {% endif %}
+                            {% if incident.resolved_at %}
+                            <div class="col-sm-6 mb-3">
+                                <strong>{{ 'Resolved'|trans }}:</strong>
+                                {{ incident.resolved_at|format_datetime }}
+                            </div>
+                            {% endif %}
+                        </div>
+
+                        {% if incident.components|length > 0 %}
+                        <div class="mb-0">
+                            <strong>{{ 'Affected Components'|trans }}:</strong>
+                            <div class="mt-2">
+                                {% for comp in incident.components %}
+                                    <span class="badge bg-{{ comp.status_color }} me-1">{{ comp.name }}</span>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                {# Updates Timeline #}
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title mb-0">{{ 'Updates'|trans }}</h3>
+                    </div>
+                    <div class="card-body">
+                        {% if incident.updates|length > 0 %}
+                        <div class="timeline">
+                            {% for update in incident.updates %}
+                            <div class="timeline-item {% if not loop.last %}pb-4{% endif %}">
+                                <div class="timeline-marker bg-{% if update.status == 'resolved' %}success{% elseif update.status == 'monitoring' %}info{% elseif update.status == 'identified' %}warning{% else %}danger{% endif %}"></div>
+                                <div class="timeline-content">
+                                    <div class="d-flex justify-content-between align-items-start mb-2">
+                                        <span class="badge bg-{% if update.status == 'resolved' %}success{% elseif update.status == 'monitoring' %}info{% elseif update.status == 'identified' %}warning{% else %}secondary{% endif %}">
+                                            {{ update.status_label }}
+                                        </span>
+                                        <small class="text-muted">{{ update.created_at|format_datetime }}</small>
+                                    </div>
+                                    <p class="mb-0">{{ update.message|nl2br }}</p>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        {% else %}
+                        <p class="text-muted text-center mb-0">{{ 'No updates available.'|trans }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="mt-4 text-center">
+                    <a href="{{ '/status'|link }}" class="btn btn-outline-primary">
+                        &larr; {{ 'Back to Status Page'|trans }}
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block head %}
+<style>
+.timeline {
+    position: relative;
+    padding-left: 30px;
+}
+.timeline::before {
+    content: '';
+    position: absolute;
+    left: 8px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: var(--bs-border-color, #dee2e6);
+}
+.timeline-item {
+    position: relative;
+}
+.timeline-marker {
+    position: absolute;
+    left: -30px;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    border: 3px solid #fff;
+    box-shadow: 0 0 0 2px var(--bs-border-color, #dee2e6);
+}
+.timeline-content {
+    background: var(--bs-light, #f8f9fa);
+    border-radius: 0.375rem;
+    padding: 1rem;
+}
+</style>
+{% endblock %}

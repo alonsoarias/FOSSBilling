@@ -145,8 +145,7 @@ msgid "Download"
 msgstr "Descargar"
 
 msgid "Upload"
-msgstr "Subir"
-"Subir"
+msgstr "SubirSubir"
 
 msgid "Print"
 msgstr "Imprimir"
@@ -190,8 +189,8 @@ msgid "Paid"
 msgstr "Pagado"
 
 msgid "Unpaid"
-msgstr "Sin pagar"
-"Sin pagar#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
+msgstr ""
+"Sin pagarSin pagar#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
 "No Pagado\n"
 "No pagado"
 
@@ -282,8 +281,9 @@ msgid "Company"
 msgstr "Empresa"
 
 msgid "Company Name"
-msgstr "Nombre de la Empresa"
-"Nombre de la Empresa#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
+msgstr ""
+"Nombre de la EmpresaNombre de la Empresa#-#-#-#-#  messages.po (FOSSBilling "
+"1.0)  #-#-#-#-#\n"
 "Nombre de la Empresa\n"
 "Nombre de la empresa"
 
@@ -319,9 +319,14 @@ msgstr "Código Postal"
 
 # #-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#
 # #-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#
+# #-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#
 # Orders
 msgid "Order"
-msgstr "Pedido"
+msgstr ""
+"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
+"Pedido\n"
+"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
+"Orden"
 
 msgid "Order ID"
 msgstr "ID de Pedido"
@@ -330,8 +335,9 @@ msgid "Order Date"
 msgstr "Fecha del Pedido"
 
 msgid "Order status"
-msgstr "Estado del pedido"
-"Estado del pedido#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
+msgstr ""
+"Estado del pedidoEstado del pedido#-#-#-#-#  messages.po (FOSSBilling 1.0)  "
+"#-#-#-#-#\n"
 "Estado del Pedido\n"
 "Estado del pedido"
 
@@ -413,8 +419,8 @@ msgid "Due at"
 msgstr "Vence el"
 
 msgid "Amount"
-msgstr "Monto"
-"Importe\n"
+msgstr ""
+"MontoImporte\n"
 "Monto"
 
 msgid "Total"
@@ -529,8 +535,8 @@ msgstr "Fecha de expiración"
 # #-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#
 # Hosting
 msgid "Hosting"
-msgstr "Hospedaje"
-"Hosting\n"
+msgstr ""
+"HospedajeHosting\n"
 "Alojamiento"
 
 msgid "Hosting plan"
@@ -558,13 +564,13 @@ msgid "Server Name"
 msgstr "Nombre del Servidor"
 
 msgid "Server Hostname"
-msgstr "Nombre del servidor"
-"Nombre de Host del Servidor\n"
+msgstr ""
+"Nombre del servidorNombre de Host del Servidor\n"
 "Hostname del servidor"
 
 msgid "Server IP"
-msgstr "IP del servidor"
-"IP del Servidor\n"
+msgstr ""
+"IP del servidorIP del Servidor\n"
 "IP del servidor"
 
 msgid "Username"
@@ -1070,8 +1076,8 @@ msgid "No results found for:"
 msgstr "No se encontraron resultados para:"
 
 msgid "All"
-msgstr "Todos"
-"Todos\n"
+msgstr ""
+"TodosTodos\n"
 "Todo"
 
 msgid "None"
@@ -1081,8 +1087,8 @@ msgid "Select All"
 msgstr "Seleccionar Todo"
 
 msgid "Default"
-msgstr "Predeterminado"
-"Por defecto\n"
+msgstr ""
+"PredeterminadoPor defecto\n"
 "Predeterminado"
 
 # #-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#
@@ -1211,8 +1217,8 @@ msgid "Expand"
 msgstr "Expandir"
 
 msgid "Collapse"
-msgstr "Contraer"
-"Contraer\n"
+msgstr ""
+"ContraerContraer\n"
 "Colapsar"
 
 # #-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#
@@ -1783,8 +1789,8 @@ msgstr "Formulario de Pedido"
 # #-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#
 # Confirm
 msgid "Password Confirm"
-msgstr "Confirmar Contraseña"
-"Confirmar Contraseña\n"
+msgstr ""
+"Confirmar ContraseñaConfirmar Contraseña\n"
 "Confirmar contraseña"
 
 msgid "Password confirm"
@@ -1834,18 +1840,18 @@ msgid "Upgrades"
 msgstr "Mejoras"
 
 msgid "Upgrade to"
-msgstr "Actualizar a"
-"Mejorar a\n"
+msgstr ""
+"Actualizar aMejorar a\n"
 "Actualizar a"
 
 msgid "Request Upgrade"
-msgstr "Solicitar Actualización"
-"Solicitar Mejora\n"
+msgstr ""
+"Solicitar ActualizaciónSolicitar Mejora\n"
 "Solicitar Actualización"
 
 msgid "I would like to upgrade"
-msgstr "Me gustaría actualizar"
-"Me gustaría mejorar\n"
+msgstr ""
+"Me gustaría actualizarMe gustaría mejorar\n"
 "Me gustaría actualizar"
 
 # #-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#
@@ -2871,3 +2877,269 @@ msgstr "haciendo"
 
 msgid "done"
 msgstr "hecho"
+
+# Service Status Module
+msgid "Service Status"
+msgstr "Estado del Servicio"
+
+msgid "System Status"
+msgstr "Estado del Sistema"
+
+msgid "Current Status"
+msgstr "Estado Actual"
+
+msgid "Operational"
+msgstr "Operativo"
+
+msgid "Degraded Performance"
+msgstr "Rendimiento Degradado"
+
+msgid "Partial Outage"
+msgstr "Interrupción Parcial"
+
+msgid "Major Outage"
+msgstr "Interrupción Mayor"
+
+msgid "Under Maintenance"
+msgstr "En Mantenimiento"
+
+msgid "All Systems Operational"
+msgstr "Todos los Sistemas Operativos"
+
+msgid "Major System Outage"
+msgstr "Interrupción Mayor del Sistema"
+
+msgid "Partial System Outage"
+msgstr "Interrupción Parcial del Sistema"
+
+msgid "Degraded System Performance"
+msgstr "Rendimiento Degradado del Sistema"
+
+msgid "Scheduled Maintenance"
+msgstr "Mantenimiento Programado"
+
+msgid "Components"
+msgstr "Componentes"
+
+msgid "Incidents"
+msgstr "Incidentes"
+
+msgid "New Component"
+msgstr "Nuevo Componente"
+
+msgid "New Incident"
+msgstr "Nuevo Incidente"
+
+msgid "Component Name"
+msgstr "Nombre del Componente"
+
+msgid "Incident Title"
+msgstr "Título del Incidente"
+
+msgid "View Public Page"
+msgstr "Ver Página Pública"
+
+msgid "Current system status"
+msgstr "Estado actual del sistema"
+
+msgid ""
+"No components configured. Add your first component using the \"New "
+"Component\" tab."
+msgstr ""
+"No hay componentes configurados. Agregue su primer componente usando la "
+"pestaña \"Nuevo Componente\"."
+
+msgid "No incidents reported."
+msgstr "No hay incidentes reportados."
+
+msgid "No scheduled maintenance."
+msgstr "No hay mantenimiento programado."
+
+msgid "Component"
+msgstr "Componente"
+
+msgid "Visible"
+msgstr "Visible"
+
+msgid "Incident"
+msgstr "Incidente"
+
+msgid "Impact"
+msgstr "Impacto"
+
+msgid "Affected Components"
+msgstr "Componentes Afectados"
+
+msgid "Duration"
+msgstr "Duración"
+
+msgid "Scheduled For"
+msgstr "Programado Para"
+
+msgid "Brief description of this component"
+msgstr "Breve descripción de este componente"
+
+msgid "e.g., Web Hosting, Email Server, DNS"
+msgstr "ej., Hosting Web, Servidor de Correo, DNS"
+
+msgid "e.g., Infrastructure, Services, Network"
+msgstr "ej., Infraestructura, Servicios, Red"
+
+msgid "Components with the same group name will be displayed together."
+msgstr "Los componentes con el mismo nombre de grupo se mostrarán juntos."
+
+msgid "Display Order"
+msgstr "Orden de Visualización"
+
+msgid "Lower numbers are displayed first."
+msgstr "Los números más bajos se muestran primero."
+
+msgid "Visible to Public"
+msgstr "Visible al Público"
+
+msgid "Create Component"
+msgstr "Crear Componente"
+
+msgid "e.g., Website unavailable, Email delivery delays"
+msgstr "ej., Sitio web no disponible, Retrasos en entrega de correo"
+
+msgid "Schedule"
+msgstr "Programación"
+
+msgid "Start time"
+msgstr "Hora de inicio"
+
+msgid "End time"
+msgstr "Hora de finalización"
+
+msgid "Minor"
+msgstr "Menor"
+
+msgid "Major"
+msgstr "Mayor"
+
+msgid "Critical"
+msgstr "Crítico"
+
+msgid "No components available. Create components first."
+msgstr "No hay componentes disponibles. Cree componentes primero."
+
+msgid "Initial Message"
+msgstr "Mensaje Inicial"
+
+msgid "Describe what is happening and what you are doing about it..."
+msgstr "Describa qué está sucediendo y qué está haciendo al respecto..."
+
+msgid "Create Incident"
+msgstr "Crear Incidente"
+
+msgid "Edit Component"
+msgstr "Editar Componente"
+
+msgid "Component updated successfully"
+msgstr "Componente actualizado exitosamente"
+
+msgid "Update Component"
+msgstr "Actualizar Componente"
+
+msgid "Are you sure you want to delete this component?"
+msgstr "¿Está seguro de que desea eliminar este componente?"
+
+msgid "Edit Incident"
+msgstr "Editar Incidente"
+
+msgid "Incident updated successfully"
+msgstr "Incidente actualizado exitosamente"
+
+msgid "Update Incident"
+msgstr "Actualizar Incidente"
+
+msgid "Are you sure you want to delete this incident?"
+msgstr "¿Está seguro de que desea eliminar este incidente?"
+
+msgid "Are you sure you want to delete this maintenance?"
+msgstr "¿Está seguro de que desea eliminar este mantenimiento?"
+
+msgid "Post Update"
+msgstr "Publicar Actualización"
+
+msgid "Describe the current situation or progress..."
+msgstr "Describa la situación actual o el progreso..."
+
+msgid "Update History"
+msgstr "Historial de Actualizaciones"
+
+msgid "No updates yet."
+msgstr "Sin actualizaciones aún."
+
+msgid "Investigating"
+msgstr "Investigando"
+
+msgid "Identified"
+msgstr "Identificado"
+
+msgid "Monitoring"
+msgstr "Monitoreando"
+
+msgid "Scheduled"
+msgstr "Programado"
+
+msgid "Active Incidents"
+msgstr "Incidentes Activos"
+
+msgid "Past Incidents"
+msgstr "Incidentes Pasados"
+
+msgid "View All"
+msgstr "Ver Todo"
+
+msgid "Incident History"
+msgstr "Historial de Incidentes"
+
+msgid "Incident Report"
+msgstr "Reporte de Incidente"
+
+msgid "Started"
+msgstr "Iniciado"
+
+msgid "Expected End"
+msgstr "Fin Esperado"
+
+msgid "Updates"
+msgstr "Actualizaciones"
+
+msgid "No updates available."
+msgstr "No hay actualizaciones disponibles."
+
+msgid "Back to Status Page"
+msgstr "Volver a Página de Estado"
+
+msgid "Back to Status"
+msgstr "Volver a Estado"
+
+msgid "No incidents in the past 90 days"
+msgstr "Sin incidentes en los últimos 90 días"
+
+msgid "No incidents in the past 7 days"
+msgstr "Sin incidentes en los últimos 7 días"
+
+msgid "All systems have been operating normally."
+msgstr "Todos los sistemas han estado operando normalmente."
+
+msgid "No components configured."
+msgstr "No hay componentes configurados."
+
+msgid "Last updated"
+msgstr "Última actualización"
+
+msgid "Affected"
+msgstr "Afectados"
+
+msgid "Scheduled for"
+msgstr "Programado para"
+
+msgid "No components available."
+msgstr "No hay componentes disponibles."
+
+msgid "Check the current status of our services and infrastructure."
+msgstr "Consulta el estado actual de nuestros servicios e infraestructura."
