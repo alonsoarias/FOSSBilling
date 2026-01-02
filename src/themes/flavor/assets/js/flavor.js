@@ -342,14 +342,19 @@ document.addEventListener('DOMContentLoaded', function() {
     /**
      * Back to Top Button
      */
-    const btnToTop = document.getElementById('btnToTop');
-    if (btnToTop) {
+    const backToTop = document.getElementById('backToTop');
+    if (backToTop) {
         window.addEventListener('scroll', function() {
             if (window.scrollY > 300) {
-                btnToTop.classList.add('show');
+                backToTop.classList.add('show');
             } else {
-                btnToTop.classList.remove('show');
+                backToTop.classList.remove('show');
             }
+        });
+
+        backToTop.addEventListener('click', function(e) {
+            e.preventDefault();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         });
     }
 
