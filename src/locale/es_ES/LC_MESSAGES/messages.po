@@ -144,8 +144,13 @@ msgstr "Ver"
 msgid "Download"
 msgstr "Descargar"
 
+#, fuzzy
 msgid "Upload"
-msgstr "Subir"
+msgstr ""
+"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
+"Subir\n"
+"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
+"Cargar"
 
 msgid "Print"
 msgstr "Imprimir"
@@ -162,6 +167,7 @@ msgstr "Instalar"
 msgid "Uninstall"
 msgstr "Desinstalar"
 
+# #-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#
 # Status
 msgid "Active"
 msgstr "Activo"
@@ -187,8 +193,13 @@ msgstr "Deshabilitado"
 msgid "Paid"
 msgstr "Pagado"
 
+#, fuzzy
 msgid "Unpaid"
-msgstr "No Pagado"
+msgstr ""
+"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
+"No Pagado\n"
+"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
+"No pagado"
 
 msgid "Refunded"
 msgstr "Reembolsado"
@@ -217,6 +228,7 @@ msgstr "Procesado"
 msgid "Expired"
 msgstr "Expirado"
 
+# #-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#
 # Client Management
 msgid "Client"
 msgstr "Cliente"
@@ -275,8 +287,13 @@ msgstr "Número de teléfono"
 msgid "Company"
 msgstr "Empresa"
 
+#, fuzzy
 msgid "Company Name"
-msgstr "Nombre de la Empresa"
+msgstr ""
+"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
+"Nombre de la Empresa\n"
+"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
+"Nombre de la empresa"
 
 msgid "Company name"
 msgstr "Nombre de la empresa"
@@ -308,6 +325,8 @@ msgstr "Código Postal"
 msgid "Zip/Postal Code"
 msgstr "Código Postal"
 
+# #-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#
+# #-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#
 # Orders
 msgid "Order"
 msgstr "Pedido"
@@ -318,8 +337,13 @@ msgstr "ID de Pedido"
 msgid "Order Date"
 msgstr "Fecha del Pedido"
 
+#, fuzzy
 msgid "Order status"
-msgstr "Estado del Pedido"
+msgstr ""
+"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
+"Estado del Pedido\n"
+"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
+"Estado del pedido"
 
 msgid "New Order"
 msgstr "Nuevo Pedido"
@@ -354,6 +378,7 @@ msgstr "Pedidos recientes"
 msgid "Latest orders"
 msgstr "Últimos pedidos"
 
+# #-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#
 # Invoices
 msgid "Invoice"
 msgstr "Factura"
@@ -397,8 +422,13 @@ msgstr "Fecha de Vencimiento"
 msgid "Due at"
 msgstr "Vence el"
 
+#, fuzzy
 msgid "Amount"
-msgstr "Importe"
+msgstr ""
+"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
+"Importe\n"
+"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
+"Monto"
 
 msgid "Total"
 msgstr "Total"
@@ -415,6 +445,7 @@ msgstr "Descuento"
 msgid "Price"
 msgstr "Precio"
 
+# #-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#
 # Products & Services
 msgid "Product"
 msgstr "Producto"
@@ -446,6 +477,7 @@ msgstr "Detalles del servicio"
 msgid "My Products & Services"
 msgstr "Mis Productos y Servicios"
 
+# #-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#
 # Domains
 msgid "Domain"
 msgstr "Dominio"
@@ -507,9 +539,15 @@ msgstr "Fecha de registro"
 msgid "Expiration date"
 msgstr "Fecha de expiración"
 
+# #-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#
 # Hosting
+#, fuzzy
 msgid "Hosting"
-msgstr "Hosting"
+msgstr ""
+"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
+"Hosting\n"
+"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
+"Alojamiento"
 
 msgid "Hosting plan"
 msgstr "Plan de hosting"
@@ -535,11 +573,21 @@ msgstr "Servidores"
 msgid "Server Name"
 msgstr "Nombre del Servidor"
 
+#, fuzzy
 msgid "Server Hostname"
-msgstr "Nombre de Host del Servidor"
+msgstr ""
+"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
+"Nombre de Host del Servidor\n"
+"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
+"Hostname del servidor"
 
+#, fuzzy
 msgid "Server IP"
-msgstr "IP del Servidor"
+msgstr ""
+"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
+"IP del Servidor\n"
+"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
+"IP del servidor"
 
 msgid "Username"
 msgstr "Nombre de usuario"
@@ -626,6 +674,7 @@ msgstr "Contáctenos"
 msgid "Need an answer? We are here to help!"
 msgstr "¿Necesita una respuesta? ¡Estamos aquí para ayudar!"
 
+# #-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#
 # Payments
 msgid "Payment"
 msgstr "Pago"
@@ -694,6 +743,7 @@ msgstr "Nueva Promoción"
 msgid "Have a coupon code?"
 msgstr "¿Tiene un código de cupón?"
 
+# #-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#
 # User Management
 msgid "Staff"
 msgstr "Personal"
@@ -722,6 +772,7 @@ msgstr "Rol"
 msgid "User"
 msgstr "Usuario"
 
+# #-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#
 # Time & Date
 msgid "Date"
 msgstr "Fecha"
@@ -756,6 +807,8 @@ msgstr "Este mes hasta ahora"
 msgid "Daily"
 msgstr "Diario"
 
+# #-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#
+# Order Form - Periods
 msgid "Weekly"
 msgstr "Semanal"
 
@@ -805,6 +858,7 @@ msgstr "minuto"
 msgid "second"
 msgstr "segundo"
 
+# #-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#
 # Messages & Notifications
 msgid "Success"
 msgstr "Éxito"
@@ -858,6 +912,8 @@ msgstr "Inicie sesión en su cuenta"
 msgid "Login to your account"
 msgstr "Inicie sesión en su cuenta"
 
+# #-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#
+# Additional Tide Theme translations
 msgid "Login to client area"
 msgstr "Iniciar sesión en el área de clientes"
 
@@ -894,6 +950,7 @@ msgstr "Envíame el enlace"
 msgid "You logged in successfully"
 msgstr "Ha iniciado sesión correctamente"
 
+# #-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#
 # Email
 msgid "Email"
 msgstr "Correo electrónico"
@@ -971,6 +1028,7 @@ msgstr "Documentación"
 msgid "License"
 msgstr "Licencia"
 
+# #-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#
 # Themes
 msgid "Theme"
 msgstr "Tema"
@@ -1033,8 +1091,13 @@ msgstr "No se encontraron resultados"
 msgid "No results found for:"
 msgstr "No se encontraron resultados para:"
 
+#, fuzzy
 msgid "All"
-msgstr "Todos"
+msgstr ""
+"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
+"Todos\n"
+"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
+"Todo"
 
 msgid "None"
 msgstr "Ninguno"
@@ -1042,9 +1105,15 @@ msgstr "Ninguno"
 msgid "Select All"
 msgstr "Seleccionar Todo"
 
+#, fuzzy
 msgid "Default"
-msgstr "Por defecto"
+msgstr ""
+"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
+"Por defecto\n"
+"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
+"Predeterminado"
 
+# #-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#
 # Forms
 msgid "Required"
 msgstr "Requerido"
@@ -1088,6 +1157,7 @@ msgstr "Desplegable"
 msgid "File"
 msgstr "Archivo"
 
+# #-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#
 # News & Announcements
 msgid "News"
 msgstr "Noticias"
@@ -1168,9 +1238,16 @@ msgstr "Ocultar"
 msgid "Expand"
 msgstr "Expandir"
 
+#, fuzzy
 msgid "Collapse"
-msgstr "Contraer"
+msgstr ""
+"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
+"Contraer\n"
+"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
+"Colapsar"
 
+# #-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#
+# General Order
 msgid "Free"
 msgstr "Gratis"
 
@@ -1254,10 +1331,16 @@ msgid "Loading accounts from WHM server..."
 msgstr "Cargando cuentas del servidor WHM..."
 
 msgid "Select the packages you want to import as hosting plans in FOSSBilling."
-msgstr "Seleccione los paquetes que desea importar como planes de hosting en FOSSBilling."
+msgstr ""
+"Seleccione los paquetes que desea importar como planes de hosting en "
+"FOSSBilling."
 
-msgid "Select the accounts you want to import. Clients will be created automatically if they do not exist."
-msgstr "Seleccione las cuentas que desea importar. Los clientes se crearán automáticamente si no existen."
+msgid ""
+"Select the accounts you want to import. Clients will be created "
+"automatically if they do not exist."
+msgstr ""
+"Seleccione las cuentas que desea importar. Los clientes se crearán "
+"automáticamente si no existen."
 
 msgid "Import Selected Packages"
 msgstr "Importar Paquetes Seleccionados"
@@ -1271,8 +1354,12 @@ msgstr "Resultados de Importación"
 msgid "No WHM Servers Found"
 msgstr "No se Encontraron Servidores WHM"
 
-msgid "You need to configure a WHM/cPanel server in the hosting module before you can import packages and accounts."
-msgstr "Necesita configurar un servidor WHM/cPanel en el módulo de hosting antes de poder importar paquetes y cuentas."
+msgid ""
+"You need to configure a WHM/cPanel server in the hosting module before you "
+"can import packages and accounts."
+msgstr ""
+"Necesita configurar un servidor WHM/cPanel en el módulo de hosting antes de "
+"poder importar paquetes y cuentas."
 
 msgid "Configure Servers"
 msgstr "Configurar Servidores"
@@ -1329,11 +1416,19 @@ msgstr "Debe ingresar su correo electrónico."
 msgid "You must fill in your password."
 msgstr "Debe ingresar su contraseña."
 
+#, fuzzy
 msgid "You must verify your email address before you may access our services."
-msgstr "Debe verificar su dirección de correo electrónico antes de poder acceder a nuestros servicios."
+msgstr ""
+"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
+"Debe verificar su dirección de correo electrónico antes de poder acceder a "
+"nuestros servicios.\n"
+"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
+"Debe verificar su dirección de correo electrónico antes de acceder a "
+"nuestros servicios."
 
 msgid "You must first login / create an account before you can checkout."
-msgstr "Debe iniciar sesión o crear una cuenta antes de poder finalizar la compra."
+msgstr ""
+"Debe iniciar sesión o crear una cuenta antes de poder finalizar la compra."
 
 # Additional common strings
 msgid "Back to Dashboard"
@@ -1348,8 +1443,12 @@ msgstr "Volver"
 msgid "Read the documentation"
 msgstr "Leer la documentación"
 
-msgid "This tool allows you to import packages and accounts from your cPanel/WHM servers into FOSSBilling. Select a server to begin."
-msgstr "Esta herramienta le permite importar paquetes y cuentas desde sus servidores cPanel/WHM a FOSSBilling. Seleccione un servidor para comenzar."
+msgid ""
+"This tool allows you to import packages and accounts from your cPanel/WHM "
+"servers into FOSSBilling. Select a server to begin."
+msgstr ""
+"Esta herramienta le permite importar paquetes y cuentas desde sus servidores "
+"cPanel/WHM a FOSSBilling. Seleccione un servidor para comenzar."
 
 msgid "Email was successfully sent"
 msgstr "El correo electrónico fue enviado correctamente"
@@ -1379,7 +1478,9 @@ msgid "Server connected"
 msgstr "Servidor conectado"
 
 msgid "New API key generated. Applications using old key are now not working."
-msgstr "Nueva clave API generada. Las aplicaciones que usan la clave antigua ya no funcionarán."
+msgstr ""
+"Nueva clave API generada. Las aplicaciones que usan la clave antigua ya no "
+"funcionarán."
 
 msgid "Email address was confirmed"
 msgstr "La dirección de correo electrónico fue confirmada"
@@ -1399,8 +1500,13 @@ msgstr "Notas del pedido"
 msgid "Support tickets regarding this order"
 msgstr "Tickets de soporte relacionados con este pedido"
 
+#, fuzzy
 msgid "Addons you have ordered with this service"
-msgstr "Complementos que ha pedido con este servicio"
+msgstr ""
+"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
+"Complementos que ha pedido con este servicio\n"
+"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
+"Complementos que has pedido con este servicio"
 
 msgid "All information about your service"
 msgstr "Toda la información sobre su servicio"
@@ -1411,14 +1517,25 @@ msgstr "Mantenga sus datos personales actualizados."
 msgid "Here you can manage and track your account balance."
 msgstr "Aquí puede gestionar y seguir el saldo de su cuenta."
 
-msgid "All of your invoices can be found here. You can choose to see either paid or unpaid invoices by clicking corresponding button."
-msgstr "Todas sus facturas se encuentran aquí. Puede elegir ver las facturas pagadas o no pagadas haciendo clic en el botón correspondiente."
+msgid ""
+"All of your invoices can be found here. You can choose to see either paid or "
+"unpaid invoices by clicking corresponding button."
+msgstr ""
+"Todas sus facturas se encuentran aquí. Puede elegir ver las facturas pagadas "
+"o no pagadas haciendo clic en el botón correspondiente."
 
-msgid "All of your orders are displayed here. Click on any service to get full information about it."
-msgstr "Todos sus pedidos se muestran aquí. Haga clic en cualquier servicio para obtener información completa sobre él."
+msgid ""
+"All of your orders are displayed here. Click on any service to get full "
+"information about it."
+msgstr ""
+"Todos sus pedidos se muestran aquí. Haga clic en cualquier servicio para "
+"obtener información completa sobre él."
 
-msgid "Explore our knowledge base categories and their associated articles below."
-msgstr "Explore las categorías de nuestra base de conocimientos y sus artículos asociados a continuación."
+msgid ""
+"Explore our knowledge base categories and their associated articles below."
+msgstr ""
+"Explore las categorías de nuestra base de conocimientos y sus artículos "
+"asociados a continuación."
 
 msgid "Find answers to frequent questions"
 msgstr "Encuentre respuestas a preguntas frecuentes"
@@ -1456,6 +1573,7 @@ msgstr "Fecha de nacimiento"
 msgid "Birthday"
 msgstr "Cumpleaños"
 
+# #-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#
 # VAT
 msgid "VAT"
 msgstr "IVA"
@@ -1479,6 +1597,7 @@ msgstr "Suscripciones"
 msgid "Subscription ID"
 msgstr "ID de Suscripción"
 
+# #-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#
 # Refund
 msgid "Refund"
 msgstr "Reembolso"
@@ -1512,6 +1631,7 @@ msgstr "Fecha de renovación"
 msgid "Renewal price"
 msgstr "Precio de renovación"
 
+# #-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#
 # Credit
 msgid "Credit"
 msgstr "Crédito"
@@ -1604,6 +1724,7 @@ msgstr "Tickets Públicos"
 msgid "New Public Ticket"
 msgstr "Nuevo Ticket Público"
 
+# #-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#
 # Categories
 msgid "Categories"
 msgstr "Categorías"
@@ -1625,6 +1746,7 @@ msgstr "Nuevo Artículo"
 msgid "Redirects"
 msgstr "Redirecciones"
 
+# #-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#
 # Languages
 msgid "Language"
 msgstr "Idioma"
@@ -1641,6 +1763,7 @@ msgstr "Traducciones habilitadas"
 msgid "Disabled translations"
 msgstr "Traducciones deshabilitadas"
 
+# #-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#
 # Timezone
 msgid "Timezone"
 msgstr "Zona horaria"
@@ -1673,10 +1796,12 @@ msgstr "Habilitar CAPTCHA"
 msgid "Cookie consent settings"
 msgstr "Configuración de consentimiento de cookies"
 
+# #-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#
 # Terms
 msgid "Terms"
 msgstr "Términos"
 
+# #-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#
 # Last
 msgid "First"
 msgstr "Primero"
@@ -1692,9 +1817,15 @@ msgstr "Seleccionar Producto"
 msgid "Order Form"
 msgstr "Formulario de Pedido"
 
+# #-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#
 # Confirm
+#, fuzzy
 msgid "Password Confirm"
-msgstr "Confirmar Contraseña"
+msgstr ""
+"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
+"Confirmar Contraseña\n"
+"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
+"Confirmar contraseña"
 
 msgid "Password confirm"
 msgstr "Confirmar contraseña"
@@ -1742,15 +1873,31 @@ msgstr "Mejorar"
 msgid "Upgrades"
 msgstr "Mejoras"
 
+#, fuzzy
 msgid "Upgrade to"
-msgstr "Mejorar a"
+msgstr ""
+"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
+"Mejorar a\n"
+"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
+"Actualizar a"
 
+#, fuzzy
 msgid "Request Upgrade"
-msgstr "Solicitar Mejora"
+msgstr ""
+"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
+"Solicitar Mejora\n"
+"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
+"Solicitar Actualización"
 
+#, fuzzy
 msgid "I would like to upgrade"
-msgstr "Me gustaría mejorar"
+msgstr ""
+"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
+"Me gustaría mejorar\n"
+"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
+"Me gustaría actualizar"
 
+# #-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#
 # Addons
 msgid "Addons"
 msgstr "Complementos"
@@ -1813,6 +1960,7 @@ msgstr "Configuración de documentos"
 msgid "PDF"
 msgstr "PDF"
 
+# #-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#
 # Format
 msgid "Format"
 msgstr "Formato"
@@ -1993,9 +2141,6 @@ msgstr "Tu dominio existente"
 msgid "Your new domain"
 msgstr "Tu nuevo dominio"
 
-msgid "Domain name"
-msgstr "Nombre de dominio"
-
 msgid "Extension"
 msgstr "Extensión"
 
@@ -2033,30 +2178,11 @@ msgstr " año @ "
 msgid " years @ "
 msgstr " años @ "
 
-msgid "Next"
-msgstr "Siguiente"
-
-msgid "Continue"
-msgstr "Continuar"
-
 msgid "Add to Cart"
 msgstr "Añadir al Carrito"
 
-msgid "Order"
-msgstr "Pedido"
-
-msgid "Checkout"
-msgstr "Finalizar Compra"
-
 msgid "Complete Order"
 msgstr "Completar Pedido"
-
-# Order Form - Periods
-msgid "Weekly"
-msgstr "Semanal"
-
-msgid "Monthly"
-msgstr "Mensual"
 
 msgid "Quarterly"
 msgstr "Trimestral"
@@ -2107,26 +2233,8 @@ msgstr "Ver Carrito"
 msgid "Proceed to Checkout"
 msgstr "Proceder al Pago"
 
-msgid "Remove from cart"
-msgstr "Eliminar del carrito"
-
 msgid "Coupon code"
 msgstr "Código de cupón"
-
-msgid "Apply"
-msgstr "Aplicar"
-
-msgid "Total"
-msgstr "Total"
-
-msgid "Subtotal"
-msgstr "Subtotal"
-
-msgid "Discount"
-msgstr "Descuento"
-
-msgid "Tax"
-msgstr "Impuesto"
 
 # Addons
 msgid "Available addons"
@@ -2135,15 +2243,8 @@ msgstr "Complementos disponibles"
 msgid "Select addons"
 msgstr "Seleccionar complementos"
 
-# General Order
-msgid "Free"
-msgstr "Gratis"
-
 msgid "Setup fee"
 msgstr "Tarifa de configuración"
-
-msgid "Price"
-msgstr "Precio"
 
 msgid "per month"
 msgstr "por mes"
@@ -2182,8 +2283,12 @@ msgstr "Ingrese su correo"
 msgid "Your subject"
 msgstr "Su asunto"
 
-msgid "Ticket was submitted. If you want to track conversation please go to support section"
-msgstr "El ticket fue enviado. Si desea seguir la conversación, por favor vaya a la sección de soporte"
+msgid ""
+"Ticket was submitted. If you want to track conversation please go to support "
+"section"
+msgstr ""
+"El ticket fue enviado. Si desea seguir la conversación, por favor vaya a la "
+"sección de soporte"
 
 msgid "Service cancellation request received"
 msgstr "Solicitud de cancelación de servicio recibida"
@@ -2200,27 +2305,14 @@ msgstr "El nombre de usuario de la cuenta fue cambiado"
 msgid "Account password was changed"
 msgstr "La contraseña de la cuenta fue cambiada"
 
-msgid "You must verify your email address before you may access our services."
-msgstr "Debe verificar su dirección de correo electrónico antes de acceder a nuestros servicios."
-
 msgid "API key was changed"
 msgstr "La clave API fue cambiada"
 
 msgid "Profile updated"
 msgstr "Perfil actualizado"
 
-msgid "Other"
-msgstr "Otro"
-
 msgid "Sign in"
 msgstr "Iniciar sesión"
-
-msgid "VAT"
-msgstr "IVA"
-
-# Additional Tide Theme translations
-msgid "Login to client area"
-msgstr "Iniciar sesión en el área de clientes"
 
 msgid "Your email"
 msgstr "Su correo electrónico"
@@ -2252,29 +2344,14 @@ msgstr "Esta página está obsoleta."
 msgid " Year/s @ "
 msgstr " Año/s @ "
 
-msgid "N/A"
-msgstr "N/D"
-
 msgid "Back to services"
 msgstr "Volver a servicios"
 
 msgid "Payment amount"
 msgstr "Monto del pago"
 
-msgid "Order status"
-msgstr "Estado del pedido"
-
-msgid "Order created"
-msgstr "Pedido creado"
-
 msgid "Activated at"
 msgstr "Activado el"
-
-msgid "Renewal date"
-msgstr "Fecha de renovación"
-
-msgid "Order notes"
-msgstr "Notas del pedido"
 
 msgid "Active support tickets"
 msgstr "Tickets de soporte activos"
@@ -2282,26 +2359,8 @@ msgstr "Tickets de soporte activos"
 msgid "Jump to control panel"
 msgstr "Ir al panel de control"
 
-msgid "Manage hosting account"
-msgstr "Administrar cuenta de alojamiento"
-
-msgid "Manage domain"
-msgstr "Administrar dominio"
-
 msgid "Reseller control panel"
 msgstr "Panel de control de revendedor"
-
-msgid "Server IP"
-msgstr "IP del servidor"
-
-msgid "Server Hostname"
-msgstr "Hostname del servidor"
-
-msgid "Hosting plan"
-msgstr "Plan de hosting"
-
-msgid "Bandwidth"
-msgstr "Ancho de banda"
 
 msgid "Disk quota"
 msgstr "Cuota de disco"
@@ -2309,29 +2368,11 @@ msgstr "Cuota de disco"
 msgid "Change your FTP/cPanel/SSH password."
 msgstr "Cambie su contraseña de FTP/cPanel/SSH."
 
-msgid "Password Confirm"
-msgstr "Confirmar contraseña"
-
-msgid "Change password"
-msgstr "Cambiar contraseña"
-
 msgid "Change domain"
 msgstr "Cambiar dominio"
 
-msgid "New domain"
-msgstr "Nuevo dominio"
-
 msgid "Change username"
 msgstr "Cambiar nombre de usuario"
-
-msgid "Product name"
-msgstr "Nombre del producto"
-
-msgid "Addons"
-msgstr "Complementos"
-
-msgid "Addons you have ordered with this service"
-msgstr "Complementos que has pedido con este servicio"
 
 msgid "Product/Service"
 msgstr "Producto/Servicio"
@@ -2357,23 +2398,525 @@ msgstr "Razón"
 msgid "Submit upgrade request"
 msgstr "Enviar solicitud de actualización"
 
-msgid "I would like to upgrade"
-msgstr "Me gustaría actualizar"
-
-msgid "Upgrade to"
-msgstr "Actualizar a"
-
-msgid "Renew now"
-msgstr "Renovar ahora"
-
-msgid "Request Upgrade"
-msgstr "Solicitar Actualización"
-
-msgid "Open ticket"
-msgstr "Abrir ticket"
-
-msgid "Request Cancellation"
-msgstr "Solicitar Cancelación"
-
 msgid "Request"
 msgstr "Solicitar"
+
+# Admin Panel translations
+msgid "Sponsor"
+msgstr "Patrocinar"
+
+msgid "Enable dark mode"
+msgstr "Activar modo oscuro"
+
+msgid "Enable light mode"
+msgstr "Activar modo claro"
+
+msgid "Report a bug"
+msgstr "Reportar un error"
+
+msgid "Toggle navigation"
+msgstr "Alternar navegación"
+
+msgid "Open user menu"
+msgstr "Abrir menú de usuario"
+
+msgid "Back to top"
+msgstr "Volver arriba"
+
+msgid "All statuses"
+msgstr "Todos los estados"
+
+msgid "All currencies"
+msgstr "Todas las monedas"
+
+msgid "Overdue"
+msgstr "Vencido"
+
+msgid "Cancelled"
+msgstr "Cancelado"
+
+msgid "Issue date"
+msgstr "Fecha de emisión"
+
+msgid "Due date"
+msgstr "Fecha de vencimiento"
+
+msgid "Filter invoices"
+msgstr "Filtrar facturas"
+
+msgid "Start typing the client name or ID"
+msgstr "Comience a escribir el nombre o ID del cliente"
+
+msgid "Licensed under"
+msgstr "Licenciado bajo"
+
+msgid "Running version"
+msgstr "Versión en ejecución"
+
+msgid "New"
+msgstr "Nuevo"
+
+msgid "View all"
+msgstr "Ver todo"
+
+msgid "Mark as read"
+msgstr "Marcar como leído"
+
+msgid "Recent activity"
+msgstr "Actividad reciente"
+
+msgid "Quick stats"
+msgstr "Estadísticas rápidas"
+
+msgid "Advanced"
+msgstr "Avanzado"
+
+msgid "Basic"
+msgstr "Básico"
+
+msgid "General"
+msgstr "General"
+
+msgid "Select all"
+msgstr "Seleccionar todo"
+
+msgid "Deselect all"
+msgstr "Deseleccionar todo"
+
+msgid "Clear"
+msgstr "Limpiar"
+
+msgid "Paste"
+msgstr "Pegar"
+
+msgid "Forward"
+msgstr "Reenviar"
+
+msgid "More"
+msgstr "Más"
+
+msgid "Less"
+msgstr "Menos"
+
+msgid "Page"
+msgstr "Página"
+
+msgid "of"
+msgstr "de"
+
+msgid "items"
+msgstr "elementos"
+
+msgid "Results"
+msgstr "Resultados"
+
+msgid "No data available"
+msgstr "No hay datos disponibles"
+
+msgid "Empty"
+msgstr "Vacío"
+
+msgid "Created"
+msgstr "Creado"
+
+msgid "Updated"
+msgstr "Actualizado"
+
+msgid "Modified"
+msgstr "Modificado"
+
+msgid "Deleted"
+msgstr "Eliminado"
+
+msgid "Expires"
+msgstr "Expira"
+
+msgid "Never"
+msgstr "Nunca"
+
+msgid "Always"
+msgstr "Siempre"
+
+msgid "Debit"
+msgstr "Débito"
+
+msgid "Method"
+msgstr "Método"
+
+msgid "Gateway"
+msgstr "Pasarela"
+
+msgid "Service"
+msgstr "Servicio"
+
+msgid "Services"
+msgstr "Servicios"
+
+msgid "Addon"
+msgstr "Complemento"
+
+msgid "Promo"
+msgstr "Promoción"
+
+msgid "Promos"
+msgstr "Promociones"
+
+msgid "Taxes"
+msgstr "Impuestos"
+
+msgid "API"
+msgstr "API"
+
+msgid "Key"
+msgstr "Clave"
+
+msgid "Secret"
+msgstr "Secreto"
+
+msgid "Token"
+msgstr "Token"
+
+msgid "Package"
+msgstr "Paquete"
+
+msgid "Packages"
+msgstr "Paquetes"
+
+msgid "Tickets"
+msgstr "Tickets"
+
+msgid "Low"
+msgstr "Baja"
+
+msgid "Medium"
+msgstr "Media"
+
+msgid "High"
+msgstr "Alta"
+
+msgid "Urgent"
+msgstr "Urgente"
+
+msgid "On hold"
+msgstr "En espera"
+
+msgid "In progress"
+msgstr "En progreso"
+
+msgid "Resolved"
+msgstr "Resuelto"
+
+msgid "Unresolved"
+msgstr "Sin resolver"
+
+msgid "Assigned"
+msgstr "Asignado"
+
+msgid "Unassigned"
+msgstr "Sin asignar"
+
+msgid "Notes"
+msgstr "Notas"
+
+msgid "Comment"
+msgstr "Comentario"
+
+msgid "Comments"
+msgstr "Comentarios"
+
+msgid "Attachment"
+msgstr "Adjunto"
+
+msgid "Attachments"
+msgstr "Adjuntos"
+
+msgid "Files"
+msgstr "Archivos"
+
+msgid "Folder"
+msgstr "Carpeta"
+
+msgid "Images"
+msgstr "Imágenes"
+
+msgid "Color"
+msgstr "Color"
+
+msgid "Template"
+msgstr "Plantilla"
+
+msgid "Layout"
+msgstr "Diseño"
+
+msgid "Module"
+msgstr "Módulo"
+
+msgid "Modules"
+msgstr "Módulos"
+
+msgid "Plugin"
+msgstr "Plugin"
+
+msgid "Plugins"
+msgstr "Plugins"
+
+msgid "Integration"
+msgstr "Integración"
+
+msgid "Preferences"
+msgstr "Preferencias"
+
+msgid "Locale"
+msgstr "Configuración regional"
+
+msgid "Privacy"
+msgstr "Privacidad"
+
+msgid "FAQ"
+msgstr "Preguntas frecuentes"
+
+msgid "Blog"
+msgstr "Blog"
+
+msgid "Announcement"
+msgstr "Anuncio"
+
+msgid "Goodbye"
+msgstr "Adiós"
+
+msgid "Please"
+msgstr "Por favor"
+
+msgid "Sorry"
+msgstr "Lo sentimos"
+
+msgid "Oops"
+msgstr "Ups"
+
+msgid "Congratulations"
+msgstr "Felicitaciones"
+
+msgid "Great"
+msgstr "Excelente"
+
+msgid "Good"
+msgstr "Bueno"
+
+msgid "Bad"
+msgstr "Malo"
+
+msgid "OK"
+msgstr "OK"
+
+msgid "Return"
+msgstr "Regresar"
+
+msgid "Skip"
+msgstr "Omitir"
+
+msgid "Retry"
+msgstr "Reintentar"
+
+msgid "Finish"
+msgstr "Finalizar"
+
+msgid "Complete"
+msgstr "Completar"
+
+msgid "Done"
+msgstr "Hecho"
+
+msgid "Start"
+msgstr "Iniciar"
+
+msgid "Stop"
+msgstr "Detener"
+
+msgid "Pause"
+msgstr "Pausar"
+
+msgid "Resume"
+msgstr "Reanudar"
+
+msgid "Restart"
+msgstr "Reiniciar"
+
+msgid "Connect"
+msgstr "Conectar"
+
+msgid "Disconnect"
+msgstr "Desconectar"
+
+msgid "Online"
+msgstr "En línea"
+
+msgid "Offline"
+msgstr "Fuera de línea"
+
+msgid "Away"
+msgstr "Ausente"
+
+msgid "Busy"
+msgstr "Ocupado"
+
+msgid "Available"
+msgstr "Disponible"
+
+msgid "Unavailable"
+msgstr "No disponible"
+
+msgid "Week"
+msgstr "Semana"
+
+msgid "Month"
+msgstr "Mes"
+
+msgid "Year"
+msgstr "Año"
+
+msgid "Day"
+msgstr "Día"
+
+msgid "Hour"
+msgstr "Hora"
+
+msgid "Minute"
+msgstr "Minuto"
+
+msgid "Second"
+msgstr "Segundo"
+
+msgid "Now"
+msgstr "Ahora"
+
+msgid "Later"
+msgstr "Después"
+
+msgid "Soon"
+msgstr "Pronto"
+
+msgid "Recently"
+msgstr "Recientemente"
+
+msgid "from now"
+msgstr "desde ahora"
+
+msgid "since"
+msgstr "desde"
+
+msgid "until"
+msgstr "hasta"
+
+msgid "before"
+msgstr "antes"
+
+msgid "after"
+msgstr "después"
+
+msgid "between"
+msgstr "entre"
+
+msgid "and"
+msgstr "y"
+
+msgid "or"
+msgstr "o"
+
+msgid "not"
+msgstr "no"
+
+msgid "with"
+msgstr "con"
+
+msgid "without"
+msgstr "sin"
+
+msgid "to"
+msgstr "a"
+
+msgid "from"
+msgstr "de"
+
+msgid "in"
+msgstr "en"
+
+msgid "at"
+msgstr "en"
+
+msgid "by"
+msgstr "por"
+
+msgid "for"
+msgstr "para"
+
+msgid "as"
+msgstr "como"
+
+msgid "is"
+msgstr "es"
+
+msgid "are"
+msgstr "son"
+
+msgid "was"
+msgstr "fue"
+
+msgid "were"
+msgstr "fueron"
+
+msgid "has"
+msgstr "tiene"
+
+msgid "have"
+msgstr "tienen"
+
+msgid "had"
+msgstr "tuvo"
+
+msgid "been"
+msgstr "sido"
+
+msgid "being"
+msgstr "siendo"
+
+msgid "will"
+msgstr "será"
+
+msgid "would"
+msgstr "sería"
+
+msgid "could"
+msgstr "podría"
+
+msgid "should"
+msgstr "debería"
+
+msgid "may"
+msgstr "puede"
+
+msgid "might"
+msgstr "podría"
+
+msgid "must"
+msgstr "debe"
+
+msgid "can"
+msgstr "puede"
+
+msgid "cannot"
+msgstr "no puede"
+
+msgid "do"
+msgstr "hacer"
+
+msgid "does"
+msgstr "hace"
+
+msgid "did"
+msgstr "hizo"
+
+msgid "doing"
+msgstr "haciendo"
+
+msgid "done"
+msgstr "hecho"
