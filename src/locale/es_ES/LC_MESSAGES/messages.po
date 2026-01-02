@@ -451,6 +451,8 @@ msgid ""
 "All of your invoices can be found here. You can choose to see either paid or "
 "unpaid invoices by clicking corresponding button."
 msgstr ""
+"Todas tus facturas se pueden encontrar aquí. Puedes elegir ver facturas "
+"pagadas o no pagadas haciendo clic en el botón correspondiente."
 
 msgid ""
 "All of your orders are displayed here. Click on any service to get full "
@@ -1668,6 +1670,11 @@ msgid ""
 "Billing and Admin contacts for this service. You can enable domain privacy "
 "protection if you want to hide your public WHOIS information."
 msgstr ""
+"Los detalles de contacto del dominio se mostrarán cuando alguien consulte el "
+"WHOIS (que es público) de tu servicio. Esto actualizará los contactos "
+"Técnico, de Facturación y Administrativo para este servicio. Puedes "
+"habilitar la protección de privacidad del dominio si deseas ocultar tu "
+"información pública de WHOIS."
 
 msgid "Domain data"
 msgstr ""
@@ -2011,6 +2018,8 @@ msgid ""
 "Enter your email to reset password. You will receive new password after "
 "reset link is confirmed."
 msgstr ""
+"Ingresa tu email para restablecer la contraseña. Recibirás una nueva "
+"contraseña después de confirmar el enlace de restablecimiento."
 
 msgid "Enter your password"
 msgstr ""
@@ -2834,11 +2843,19 @@ msgid ""
 "privacy protection, information that is listed above on \"Update Domain "
 "Contact Details\" section will be seen on domain WHOIS again."
 msgstr ""
+"Si deseas ocultar la información de contacto del dominio que se muestra en "
+"WHOIS, puedes habilitar la protección de privacidad. Una vez habilitada la "
+"protección de privacidad del dominio, nadie sabrá quién registró este "
+"servicio. Y una vez que decidas deshabilitar la protección de privacidad, la "
+"información que se muestra arriba en la sección \"Actualizar Detalles de "
+"Contacto del Dominio\" se verá de nuevo en el WHOIS del dominio."
 
 msgid ""
 "If you would like to host this domain with another company you can update "
 "nameservers."
 msgstr ""
+"Si deseas alojar este dominio con otra empresa, puedes actualizar los "
+"nameservers."
 
 msgid ""
 "If your server has multiple network interfaces, you may select the default "
@@ -4214,6 +4231,8 @@ msgid ""
 "Please click here to continue if this page does not redirect automatically "
 "in 5 seconds"
 msgstr ""
+"Por favor haz clic aquí para continuar si esta página no redirige "
+"automáticamente en 5 segundos"
 
 msgid "Please click on \"Edit\" in order to add options"
 msgstr ""
@@ -6298,7 +6317,7 @@ msgstr ""
 
 msgid ""
 "You will be automatically redirected back to the invoice after 1 minute."
-msgstr ""
+msgstr "Serás redirigido automáticamente a la factura después de 1 minuto."
 
 msgid "Your API key"
 msgstr ""
@@ -6330,6 +6349,8 @@ msgid ""
 "Your payment has been submitted and will be processed shortly. It may take "
 "some time for your invoice to be marked as paid."
 msgstr ""
+"Tu pago ha sido enviado y será procesado en breve. Puede tomar algún tiempo "
+"para que tu factura sea marcada como pagada."
 
 msgid "Your profile currency is"
 msgstr ""
@@ -6917,3 +6938,244 @@ msgstr "Actividad reciente de clientes"
 
 msgid "Toggle navigation"
 msgstr "Alternar navegación"
+
+# =====================================================
+# Common UI Translations
+# =====================================================
+msgid "Modules"
+msgstr "Módulos"
+
+msgid "Reports"
+msgstr "Reportes"
+
+msgid "Confirm"
+msgstr "Confirmar"
+
+msgid "Forgot password"
+msgstr "¿Olvidaste tu contraseña?"
+
+msgid "Sign in"
+msgstr "Iniciar sesión"
+
+msgid "Sign up"
+msgstr "Registrarse"
+
+msgid "Welcome"
+msgstr "Bienvenido"
+
+msgid "Success"
+msgstr "Éxito"
+
+msgid "Info"
+msgstr "Información"
+
+msgid "Loading"
+msgstr "Cargando"
+
+msgid "Please wait"
+msgstr "Por favor espera"
+
+msgid "OK"
+msgstr "Aceptar"
+
+msgid "Clear"
+msgstr "Limpiar"
+
+msgid "Refresh"
+msgstr "Actualizar"
+
+msgid "Import"
+msgstr "Importar"
+
+msgid "Export"
+msgstr "Exportar"
+
+msgid "Pending"
+msgstr "Pendiente"
+
+msgid "Completed"
+msgstr "Completado"
+
+msgid "Failed"
+msgstr "Fallido"
+
+msgid "Expired"
+msgstr "Expirado"
+
+msgid "New"
+msgstr "Nuevo"
+
+msgid "More"
+msgstr "Más"
+
+msgid "Less"
+msgstr "Menos"
+
+msgid "Show"
+msgstr "Mostrar"
+
+msgid "Hide"
+msgstr "Ocultar"
+
+msgid "Select"
+msgstr "Seleccionar"
+
+msgid "Selected"
+msgstr "Seleccionado"
+
+msgid "Optional"
+msgstr "Opcional"
+
+# =====================================================
+# Tide Theme Additional Translations
+# =====================================================
+msgid "Account has been created"
+msgstr "La cuenta ha sido creada"
+
+msgid ""
+"All domain names (except a .EU, .UK domain name) have a Domain (Transfer) "
+"Secret Key/Authorization Code (EPP Code) associated with them. This would be "
+"required if you want to transfer service."
+msgstr ""
+"Todos los nombres de dominio (excepto dominios .EU, .UK) tienen una Clave "
+"Secreta de Dominio/Código de Autorización (Código EPP) asociado. Esto sería "
+"requerido si deseas transferir el servicio."
+
+msgid "All ips"
+msgstr "Todas las IPs"
+
+msgid ""
+"All of your orders are displayed here. Click on any order to get full "
+"information about it."
+msgstr ""
+"Todos tus pedidos se muestran aquí. Haz clic en cualquier pedido para "
+"obtener información completa sobre él."
+
+msgid "Article Views"
+msgstr "Vistas del artículo"
+
+msgid "Back to Homepage"
+msgstr "Volver a la página principal"
+
+msgid "Back to List"
+msgstr "Volver a la lista"
+
+msgid "Back to emails list"
+msgstr "Volver a la lista de emails"
+
+msgid "Back to list"
+msgstr "Volver a la lista"
+
+msgid "Back to tickets list"
+msgstr "Volver a la lista de tickets"
+
+msgid "Change your FTP/cPanel/SSH password."
+msgstr "Cambia tu contraseña de FTP/cPanel/SSH."
+
+msgid "Created at:"
+msgstr "Creado el:"
+
+msgid ""
+"Domain locking is a security enhancement to prevent unauthorized transfers "
+"of your domain to another registrar or web host by \"locking\" your domain "
+"name servers."
+msgstr ""
+"El bloqueo de dominio es una mejora de seguridad para prevenir "
+"transferencias no autorizadas de tu dominio a otro registrador o host web "
+"\"bloqueando\" tus servidores de nombres de dominio."
+
+msgid "From:"
+msgstr "De:"
+
+msgid "Have coupon code?"
+msgstr "¿Tienes un código de cupón?"
+
+msgid ""
+"Here you can find all the emails we sent you. Please click on email topic in "
+"left column and it will be displayed in right side."
+msgstr ""
+"Aquí puedes encontrar todos los emails que te enviamos. Por favor haz clic "
+"en el tema del email en la columna izquierda y se mostrará en el lado "
+"derecho."
+
+msgid "Knowledge base"
+msgstr "Base de conocimientos"
+
+msgid "Knowledge base categories"
+msgstr "Categorías de la base de conocimientos"
+
+msgid "Last tickets"
+msgstr "Últimos tickets"
+
+msgid "List of invoices"
+msgstr "Lista de facturas"
+
+msgid "Login or register to continue"
+msgstr "Inicia sesión o regístrate para continuar"
+
+msgid "Password reset confirmation email was sent"
+msgstr "Se envió el email de confirmación de restablecimiento de contraseña"
+
+msgid "Please check your mailbox and confirm email address"
+msgstr "Por favor revisa tu buzón y confirma tu dirección de email"
+
+msgid "Please choose payment type and pay for your chosen products."
+msgstr "Por favor elige el tipo de pago y paga por los productos elegidos."
+
+msgid ""
+"Please try to read related topics in knowledge base before contacting "
+"support."
+msgstr ""
+"Por favor intenta leer temas relacionados en la base de conocimientos antes "
+"de contactar a soporte."
+
+msgid "Powered by the FOSSBilling Community"
+msgstr "Desarrollado por la Comunidad FOSSBilling"
+
+msgid "Proforma"
+msgstr "Proforma"
+
+msgid "Proforma Invoice"
+msgstr "Factura Proforma"
+
+msgid "Promo code was removed"
+msgstr "El código promocional fue eliminado"
+
+msgid "Quote"
+msgstr "Cotización"
+
+msgid "Read more ..."
+msgstr "Leer más ..."
+
+msgid "Redirecting to payment gateway.."
+msgstr "Redirigiendo a la pasarela de pago.."
+
+msgid "Remove "
+msgstr "Eliminar "
+
+msgid "Service does not have configuration page"
+msgstr "El servicio no tiene página de configuración"
+
+msgid "Signup"
+msgstr "Registrarse"
+
+msgid "Similar Articles"
+msgstr "Artículos similares"
+
+msgid "Ticket details"
+msgstr "Detalles del ticket"
+
+msgid "To:"
+msgstr "Para:"
+
+msgid "Try using other keyword. No matches found for keyword:"
+msgstr "Intenta usar otra palabra clave. No se encontraron resultados para:"
+
+msgid "Valid Install paths"
+msgstr "Rutas de instalación válidas"
+
+msgid "Whoops! This is not the web page you are looking for."
+msgstr "¡Ups! Esta no es la página web que estás buscando."
+
+msgid "by "
+msgstr "por "
