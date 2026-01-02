@@ -774,8 +774,13 @@ msgstr "Ciclo de facturación"
 msgid "Birthdate"
 msgstr "Ciclo de facturación"
 
+#, fuzzy
 msgid "Birthday"
-msgstr "Fecha de Nacimiento"
+msgstr ""
+"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
+"Fecha de Nacimiento\n"
+"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
+"Fecha de nacimiento"
 
 msgid ""
 "Blocked IPs are not allowed to login, register or open public ticket. (One "
@@ -1286,7 +1291,7 @@ msgid "Create account"
 msgstr "Crear cuenta"
 
 msgid "Create administrator account"
-msgstr ""
+msgstr "Crear cuenta de administrador"
 
 msgid "Create and edit administrators"
 msgstr ""
@@ -1300,8 +1305,9 @@ msgstr ""
 msgid "Create hosting plan"
 msgstr ""
 
+# Admin login
 msgid "Create main administrator account"
-msgstr ""
+msgstr "Crear cuenta de administrador principal"
 
 msgid "Create new addon"
 msgstr ""
@@ -2019,7 +2025,7 @@ msgid "Enter your domain name to transfer"
 msgstr ""
 
 msgid "Enter your email address"
-msgstr ""
+msgstr "Ingresa tu dirección de email"
 
 msgid ""
 "Enter your email address. You will receive a confirmation link if your "
@@ -2034,7 +2040,7 @@ msgstr ""
 "contraseña después de confirmar el enlace de restablecimiento."
 
 msgid "Enter your password"
-msgstr ""
+msgstr "Ingresa tu contraseña"
 
 msgid "Enter your secret code"
 msgstr ""
@@ -2365,7 +2371,7 @@ msgid "Favicon"
 msgstr "Favicon"
 
 msgid "Female"
-msgstr ""
+msgstr "Femenino"
 
 msgid "Fetching extension details."
 msgstr "Obteniendo detalles de la extensión."
@@ -2429,6 +2435,8 @@ msgstr ""
 msgid "Find answers to frequent questions"
 msgstr ""
 
+# #-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#
+# Signup page translations
 msgid "First Name"
 msgstr "Nombre"
 
@@ -2460,11 +2468,21 @@ msgstr ""
 msgid "Force the deletion of the item"
 msgstr ""
 
+#, fuzzy
 msgid "Forgot password?"
-msgstr "¿Olvidó su contraseña?"
+msgstr ""
+"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
+"¿Olvidó su contraseña?\n"
+"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
+"¿Olvidaste tu contraseña?"
 
+#, fuzzy
 msgid "Forgot your password?"
-msgstr "¿Olvidó su contraseña?"
+msgstr ""
+"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
+"¿Olvidó su contraseña?\n"
+"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
+"¿Olvidaste tu contraseña?"
 
 msgid "Form field type is invalid"
 msgstr "¿Olvidaste tu contraseña?"
@@ -3269,7 +3287,7 @@ msgid "Locked"
 msgstr "Bloqueado"
 
 msgid "Log into your account"
-msgstr ""
+msgstr "Inicia sesión en tu cuenta"
 
 msgid "Log sent emails to database"
 msgstr ""
@@ -3314,7 +3332,7 @@ msgid "Mail approved"
 msgstr ""
 
 msgid "Male"
-msgstr ""
+msgstr "Masculino"
 
 msgid "Manage"
 msgstr "Administrar"
@@ -3775,7 +3793,7 @@ msgid "No support tickets"
 msgstr ""
 
 msgid "Non-binary"
-msgstr ""
+msgstr "No binario"
 
 msgid "None"
 msgstr "Ninguno"
@@ -4083,8 +4101,13 @@ msgstr ""
 msgid "Password changed"
 msgstr "Contraseña cambiada"
 
+#, fuzzy
 msgid "Password confirm"
-msgstr "Confirmar Contraseña"
+msgstr ""
+"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
+"Confirmar Contraseña\n"
+"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
+"Confirmar contraseña"
 
 msgid "Password length"
 msgstr ""
@@ -6255,13 +6278,8 @@ msgstr ""
 "no se necesita ninguna acción en este momento. Si crees que esto es un "
 "error, puedes usar el botón de abajo para verificar de nuevo."
 
-#, fuzzy
 msgid "You are"
-msgstr ""
-"Ayer#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
-"Usted está\n"
-"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
-"Tú eres"
+msgstr "Eres"
 
 msgid "You are already registered as reseller"
 msgstr "Año"
@@ -6909,6 +6927,8 @@ msgstr "Tu dirección de email"
 msgid "Remember me"
 msgstr "Recordarme"
 
+# #-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#
+# Login page translations
 msgid "Log in"
 msgstr "Iniciar sesión"
 
@@ -7124,6 +7144,7 @@ msgstr "Seleccionado"
 msgid "Optional"
 msgstr "Opcional"
 
+# #-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#
 # =====================================================
 # Tide Theme Additional Translations
 # =====================================================
@@ -7214,8 +7235,13 @@ msgstr "Inicia sesión o regístrate para continuar"
 msgid "Password reset confirmation email was sent"
 msgstr "Se envió el email de confirmación de restablecimiento de contraseña"
 
+#, fuzzy
 msgid "Please check your mailbox and confirm email address"
-msgstr "Por favor revisa tu buzón y confirma tu dirección de email"
+msgstr ""
+"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
+"Por favor revisa tu buzón y confirma tu dirección de email\n"
+"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
+"Por favor revisa tu correo y confirma tu dirección de email"
 
 msgid "Please choose payment type and pay for your chosen products."
 msgstr "Por favor elige el tipo de pago y paga por los productos elegidos."
@@ -7854,3 +7880,21 @@ msgstr "Mi perfil"
 
 msgid "All systems have been operating normally."
 msgstr "Todos los sistemas han estado operando con normalidad."
+
+msgid "Don't have an account yet?"
+msgstr "¿Aún no tienes una cuenta?"
+
+msgid "Show password"
+msgstr "Mostrar contraseña"
+
+msgid "Hide password"
+msgstr "Ocultar contraseña"
+
+msgid "Enter email"
+msgstr "Ingresa email"
+
+msgid "Create new account"
+msgstr "Crear nueva cuenta"
+
+msgid "Already have an account?"
+msgstr "¿Ya tienes una cuenta?"
