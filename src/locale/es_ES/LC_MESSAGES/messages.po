@@ -276,17 +276,6 @@ msgid ""
 "example: "
 msgstr "Actividad"
 
-#, fuzzy
-msgid ""
-"Add data-product attribute to your element to open specific product. For "
-"example:"
-msgstr ""
-"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
-"Activar\n"
-"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
-"Agrega el atributo data-product a tu elemento para abrir un producto "
-"específico. Por ejemplo:"
-
 msgid "Add fund"
 msgstr "Agregar fondos"
 
@@ -322,16 +311,6 @@ msgstr "Agregar nota"
 
 msgid "Add note or todo task"
 msgstr "Agregar nota o tarea"
-
-#, fuzzy
-msgid ""
-"Add order-button class to your elements which must call popup. For example:"
-msgstr ""
-"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
-"Activo\n"
-"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
-"Agrega la clase order-button a tus elementos que deben llamar el popup. Por "
-"ejemplo:"
 
 msgid "Add page content"
 msgstr "Agregar contenido de página"
@@ -788,13 +767,8 @@ msgstr "Ciclo de facturación"
 msgid "Birthdate"
 msgstr "Ciclo de facturación"
 
-#, fuzzy
 msgid "Birthday"
-msgstr ""
-"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
-"Fecha de Nacimiento\n"
-"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
-"Fecha de nacimiento"
+msgstr "Fecha de nacimiento"
 
 msgid ""
 "Blocked IPs are not allowed to login, register or open public ticket. (One "
@@ -1018,13 +992,8 @@ msgstr ""
 msgid "City"
 msgstr "Ciudad"
 
-#, fuzzy
 msgid "Class name should start with dot (.) or hashtag (#) for ID"
-msgstr ""
-"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
-"Ciudad\n"
-"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
-"El nombre de clase debe comenzar con punto (.) o hashtag (#) para ID"
+msgstr "El nombre de clase debe comenzar con punto (.) o hashtag (#) para ID"
 
 msgid "Click on background closes popup"
 msgstr "Clic en el fondo cierra el popup"
@@ -1129,13 +1098,8 @@ msgstr "Clientes"
 msgid "Close"
 msgstr "Cerrar"
 
-#, fuzzy
 msgid "Close (ESC key by default)"
-msgstr ""
-"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
-"Cerrar\n"
-"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
-"Cerrar (tecla ESC por defecto)"
+msgstr "Cerrar (tecla ESC por defecto)"
 
 msgid "Close Tickets After"
 msgstr "Cerrar tickets después de"
@@ -1265,13 +1229,8 @@ msgstr "Contáctanos"
 msgid "Copy"
 msgstr "Copiar"
 
-#, fuzzy
 msgid "Copy this code to your website"
-msgstr ""
-"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
-"Copiar\n"
-"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
-"Copia este código a tu sitio web"
+msgstr "Copia este código a tu sitio web"
 
 msgid "Core modules cannot be updated"
 msgstr ""
@@ -1338,6 +1297,7 @@ msgstr "Crear grupo"
 msgid "Create hosting plan"
 msgstr ""
 
+# #-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#
 # Admin login
 msgid "Create main administrator account"
 msgstr "Crear cuenta de administrador principal"
@@ -1588,13 +1548,8 @@ msgstr "Deshabilitar"
 msgid "Disable Privacy protection"
 msgstr "Detalles"
 
-#, fuzzy
 msgid "Disable Public Tickets"
-msgstr ""
-"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
-"Deshabilitar\n"
-"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
-"Deshabilitar tickets públicos"
+msgstr "Deshabilitar tickets públicos"
 
 msgid "Disable email change"
 msgstr "Descripción"
@@ -1641,13 +1596,8 @@ msgstr ""
 msgid "Disk space"
 msgstr "Espacio en disco"
 
-#, fuzzy
 msgid "Display bank account information on documents?"
-msgstr ""
-"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
-"Espacio en disco\n"
-"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
-"¿Mostrar información de cuenta bancaria en documentos?"
+msgstr "¿Mostrar información de cuenta bancaria en documentos?"
 
 msgid "Display bank account information on the bottom of every page?"
 msgstr ""
@@ -1911,14 +1861,6 @@ msgstr "Cola de emails"
 msgid "Email resent"
 msgstr ""
 
-#, fuzzy
-msgid "Email settings"
-msgstr ""
-"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
-"Configuración de correo\n"
-"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
-"Configuración de email"
-
 msgid "Email settings updated"
 msgstr "Configuración de email"
 
@@ -1963,13 +1905,8 @@ msgstr ""
 msgid "Enable"
 msgstr "Habilitar"
 
-#, fuzzy
 msgid "Enable Auto Responder"
-msgstr ""
-"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
-"Habilitar\n"
-"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
-"Habilitar respuesta automática"
+msgstr "Habilitar respuesta automática"
 
 msgid "Enable Delay Message"
 msgstr "Habilitar mensaje de demora"
@@ -2505,14 +2442,6 @@ msgstr "Nombre"
 msgid "First name"
 msgstr "Nombre"
 
-#, fuzzy
-msgid "First payment sum"
-msgstr ""
-"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
-"Nombre\n"
-"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
-"Suma del primer pago"
-
 msgid "Follow instructions below to install new domain registrar."
 msgstr ""
 
@@ -2530,24 +2459,14 @@ msgstr ""
 msgid "Force the deletion of the item"
 msgstr ""
 
-#, fuzzy
 msgid "Forgot password?"
-msgstr ""
-"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
-"¿Olvidó su contraseña?\n"
-"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
-"¿Olvidaste tu contraseña?"
+msgstr "¿Olvidaste tu contraseña?"
 
-#, fuzzy
 msgid "Forgot your password?"
-msgstr ""
-"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
-"¿Olvidó su contraseña?\n"
-"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
-"¿Olvidaste tu contraseña?"
+msgstr "¿Olvidaste tu contraseña?"
 
 msgid "Form field type is invalid"
-msgstr "¿Olvidaste tu contraseña?"
+msgstr "El tipo de campo de formulario es inválido"
 
 msgid "Form id was not passed"
 msgstr ""
@@ -2960,18 +2879,6 @@ msgstr ""
 "Si deseas alojar este dominio con otra empresa, puedes actualizar los "
 "nameservers."
 
-#, fuzzy
-msgid ""
-"If your server has multiple network interfaces, you may select the default "
-"one for FOSSBilling to use when making requests here."
-msgstr ""
-"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
-"Si tu servidor tiene múltiples interfaces de red, puedes seleccionar la "
-"predeterminada para que FOSSBilling la use al hacer solicitudes.\n"
-"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
-"Si tu servidor tiene múltiples interfaces de red, puedes seleccionar la "
-"predeterminada para que FOSSBilling la use al hacer solicitudes aquí."
-
 msgid "Image"
 msgstr "Imagen"
 
@@ -2984,14 +2891,6 @@ msgstr ""
 msgid "Inactive"
 msgstr "Inactivo"
 
-#, fuzzy
-msgid "Income"
-msgstr ""
-"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
-"Inactivo\n"
-"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
-"Ingresos"
-
 msgid "Incorrect please try again"
 msgstr ""
 
@@ -3003,14 +2902,6 @@ msgstr "Información"
 
 msgid "Install"
 msgstr "Instalar"
-
-#, fuzzy
-msgid "Install extension"
-msgstr ""
-"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
-"Instalar\n"
-"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
-"Instalar extensión"
 
 msgid "Install from the Extension Directory"
 msgstr "Instalar extensión"
@@ -3166,14 +3057,6 @@ msgstr ""
 msgid "Item was removed from cart"
 msgstr ""
 
-#, fuzzy
-msgid "Items"
-msgstr ""
-"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
-"Elementos\n"
-"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
-"Artículos"
-
 msgid "John Smith"
 msgstr ""
 
@@ -3230,14 +3113,6 @@ msgstr "Última actualización"
 msgid "Last applicable behavior change: "
 msgstr "Último cambio de comportamiento aplicable: "
 
-#, fuzzy
-msgid "Last month"
-msgstr ""
-"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
-"Idiomas\n"
-"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
-"Último mes"
-
 msgid "Last name"
 msgstr "Apellido"
 
@@ -3264,14 +3139,6 @@ msgstr "Últimos pedidos"
 
 msgid "Learn more"
 msgstr "Más información"
-
-#, fuzzy
-msgid "Learn more about error reporting"
-msgstr ""
-"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
-"Aprender más sobre el reporte de errores\n"
-"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
-"Aprende más sobre el reporte de errores"
 
 msgid "Leave blank for unlimited uses"
 msgstr "Más información"
@@ -3473,14 +3340,6 @@ msgstr ""
 
 msgid "Manual. No actions performed"
 msgstr ""
-
-#, fuzzy
-msgid "Mark as paid"
-msgstr ""
-"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
-"Marcar como pagado\n"
-"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
-"Marcar como pagada"
 
 msgid "Mass Mail Settings"
 msgstr ""
@@ -3878,14 +3737,6 @@ msgstr "No binario"
 msgid "None"
 msgstr "Ninguno"
 
-#, fuzzy
-msgid "None (Default PHP Behavior)"
-msgstr ""
-"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
-"Ninguno\n"
-"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
-"Ninguna (Comportamiento predeterminado de PHP)"
-
 msgid "Note"
 msgstr "Nota"
 
@@ -4062,14 +3913,6 @@ msgstr "Notas del pedido"
 msgid "Order now"
 msgstr "Ordenar ahora"
 
-#, fuzzy
-msgid "Order popup settings"
-msgstr ""
-"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
-"Ordenar ahora\n"
-"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
-"Configuración del popup de pedido"
-
 msgid "Order promo code"
 msgstr ""
 
@@ -4087,14 +3930,6 @@ msgstr ""
 
 msgid "Order window settings"
 msgstr "Configuración de ventana de pedido"
-
-#, fuzzy
-msgid "Orders"
-msgstr ""
-"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
-"Órdenes\n"
-"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
-"Pedidos"
 
 msgid "Orders settings"
 msgstr "Pedidos"
@@ -4191,14 +4026,6 @@ msgstr ""
 
 msgid "Password changed"
 msgstr "Contraseña cambiada"
-
-#, fuzzy
-msgid "Password confirm"
-msgstr ""
-"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
-"Confirmar Contraseña\n"
-"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
-"Confirmar contraseña"
 
 msgid "Password length"
 msgstr ""
@@ -4324,14 +4151,6 @@ msgstr "Tipo de pago"
 msgid "Payments"
 msgstr "Pagos"
 
-#, fuzzy
-msgid "Pending Setup"
-msgstr ""
-"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
-"Pagos\n"
-"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
-"Configuración pendiente"
-
 msgid "Percentage"
 msgstr "Porcentaje"
 
@@ -4398,21 +4217,6 @@ msgstr ""
 msgid "Please click on \"Edit\" in order to add options"
 msgstr ""
 
-#, fuzzy
-msgid ""
-"Please consider enabling error reporting. Doing so allows us to provide you "
-"with better technical support and helps us to proactively improve "
-"FOSSBilling."
-msgstr ""
-"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
-"Por favor considera habilitar el reporte de errores. Hacerlo nos permite "
-"brindarte mejor soporte técnico y nos ayuda a mejorar FOSSBilling "
-"proactivamente.\n"
-"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
-"Por favor considera habilitar el reporte de errores. Hacerlo nos permite "
-"brindarte mejor soporte técnico y nos ayuda a mejorar proactivamente "
-"FOSSBilling."
-
 msgid "Please enter your message"
 msgstr ""
 
@@ -4471,14 +4275,6 @@ msgstr "Vista previa"
 
 msgid "Price"
 msgstr "Precio"
-
-#, fuzzy
-msgid "Price for period"
-msgstr ""
-"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
-"Precio\n"
-"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
-"Precio por período"
 
 msgid "Price format"
 msgstr ""
@@ -4686,13 +4482,8 @@ msgstr "Correos recientes"
 msgid "Recent orders"
 msgstr "Órdenes recientes"
 
-#, fuzzy
 msgid "Recent staff activity"
-msgstr ""
-"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
-"Pedidos recientes\n"
-"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
-"Actividad reciente del personal"
+msgstr "Actividad reciente del personal"
 
 msgid "Recipients"
 msgstr "Destinatarios"
@@ -4705,14 +4496,6 @@ msgstr "Recurrente"
 
 msgid "Recurring"
 msgstr "Recurrente"
-
-#, fuzzy
-msgid "Red"
-msgstr ""
-"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
-"Recurrente\n"
-"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
-"Rojo"
 
 msgid "Redirect not found"
 msgstr ""
@@ -4959,14 +4742,6 @@ msgstr ""
 
 msgid "Search"
 msgstr "Buscar"
-
-#, fuzzy
-msgid "Search settings"
-msgstr ""
-"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
-"Buscar\n"
-"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
-"Configuración de búsqueda"
 
 msgid "Search:"
 msgstr "Buscar:"
@@ -5325,16 +5100,6 @@ msgstr ""
 
 msgid "Support"
 msgstr "Soporte"
-
-# #-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#
-# Support settings
-#, fuzzy
-msgid "Support Settings"
-msgstr ""
-"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
-"Soporte\n"
-"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
-"Configuración de soporte"
 
 msgid "Support Tickets"
 msgstr ""
@@ -5704,14 +5469,6 @@ msgstr ""
 
 msgid "Ticket"
 msgstr "Ticket"
-
-#, fuzzy
-msgid "Ticket Delay"
-msgstr ""
-"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
-"Ticket\n"
-"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
-"Demora de tickets"
 
 msgid "Ticket ID"
 msgstr "ID de Ticket"
@@ -6148,15 +5905,6 @@ msgstr ""
 
 msgid "User"
 msgstr "Usuario"
-
-#, fuzzy
-msgid "User input will be shown before checkout for custom form"
-msgstr ""
-"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
-"Usuario\n"
-"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
-"La entrada del usuario se mostrará antes del pago para formularios "
-"personalizados"
 
 msgid "User profile settings"
 msgstr ""
@@ -6613,7 +6361,7 @@ msgid "changing the account domain"
 msgstr ""
 
 msgid "clients"
-msgstr ""
+msgstr "clientes"
 
 msgid "create account"
 msgstr ""
@@ -6677,7 +6425,7 @@ msgid "https://www.yourdomain.com/image.jpg"
 msgstr ""
 
 msgid "invoices"
-msgstr ""
+msgstr "facturas"
 
 msgid "management"
 msgstr ""
@@ -6710,7 +6458,7 @@ msgid "options"
 msgstr ""
 
 msgid "orders"
-msgstr ""
+msgstr "pedidos"
 
 msgid "parameters received"
 msgstr ""
@@ -6776,7 +6524,7 @@ msgid "suspend account"
 msgstr ""
 
 msgid "suspended"
-msgstr ""
+msgstr "suspendido"
 
 msgid "symbols"
 msgstr "símbolos"
@@ -6788,13 +6536,13 @@ msgid "terms of service"
 msgstr ""
 
 msgid "tickets"
-msgstr ""
+msgstr "tickets"
 
 msgid "to learn how to create your own domain registrar."
 msgstr ""
 
 msgid "unpaid"
-msgstr ""
+msgstr "sin pagar"
 
 msgid "unsuspend account"
 msgstr ""
@@ -6815,7 +6563,7 @@ msgid "views"
 msgstr ""
 
 msgid "waiting for staff reply"
-msgstr ""
+msgstr "esperando respuesta del personal"
 
 msgid "week"
 msgstr ""
@@ -6832,16 +6580,6 @@ msgstr ""
 msgid "Service Status"
 msgstr "Estado del Servicio"
 
-# #-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#
-# ServiceStatus module
-#, fuzzy
-msgid "System Status"
-msgstr ""
-"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
-"Estado del Sistema\n"
-"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
-"Estado del sistema"
-
 msgid "Components"
 msgstr "Componentes"
 
@@ -6853,14 +6591,6 @@ msgstr "Nuevo Componente"
 
 msgid "New Incident"
 msgstr "Nuevo Incidente"
-
-#, fuzzy
-msgid "Operational"
-msgstr ""
-"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
-"Operativo\n"
-"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
-"Operacional"
 
 msgid "Degraded"
 msgstr "Degradado"
@@ -6882,14 +6612,6 @@ msgstr "Interrupción Mayor del Sistema"
 
 msgid "Maintenance"
 msgstr "Mantenimiento"
-
-#, fuzzy
-msgid "Under Maintenance"
-msgstr ""
-"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
-"En Mantenimiento\n"
-"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
-"En mantenimiento"
 
 msgid "Investigating"
 msgstr "Investigando"
@@ -6921,14 +6643,6 @@ msgstr "Incidentes Activos"
 msgid "Scheduled Maintenance"
 msgstr "Mantenimiento Programado"
 
-#, fuzzy
-msgid "Incident History"
-msgstr ""
-"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
-"Historial de Incidentes\n"
-"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
-"Historial de incidentes"
-
 msgid "Past incidents from the last 90 days"
 msgstr "Incidentes pasados de los últimos 90 días"
 
@@ -6938,27 +6652,11 @@ msgstr "Sin incidentes en los últimos 90 días"
 msgid "All systems have been running smoothly."
 msgstr "Todos los sistemas han estado funcionando sin problemas."
 
-#, fuzzy
-msgid "All Systems Operational"
-msgstr ""
-"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
-"Todos los Sistemas Operativos\n"
-"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
-"Todos los sistemas operacionales"
-
 msgid "No components created yet"
 msgstr "No hay componentes creados aún"
 
 msgid "No incidents reported yet"
 msgstr "No hay incidentes reportados aún"
-
-#, fuzzy
-msgid "No components configured"
-msgstr ""
-"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
-"No hay componentes configurados\n"
-"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
-"Sin componentes configurados"
 
 msgid "Affected Components"
 msgstr "Componentes Afectados"
@@ -7076,14 +6774,6 @@ msgstr "Has cerrado sesión"
 msgid "Back"
 msgstr "Volver"
 
-#, fuzzy
-msgid "Back to Status"
-msgstr ""
-"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
-"Volver al Estado\n"
-"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
-"Volver al estado"
-
 msgid "Created"
 msgstr "Creado"
 
@@ -7099,30 +6789,6 @@ msgstr "Interfaces de red disponibles"
 
 msgid "Enabled modules"
 msgstr "Módulos habilitados"
-
-#, fuzzy
-msgid ""
-"This FOSSBilling instance is automatically sending error reports which "
-"allows us to more easily improve the software and keep it stable. Thanks!"
-msgstr ""
-"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
-"CreadoEsta instancia de FOSSBilling está enviando automáticamente reportes "
-"de errores, lo que nos permite mejorar el software más fácilmente y "
-"mantenerlo estable. ¡Gracias!\n"
-"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
-"Esta instancia de FOSSBilling está enviando automáticamente reportes de "
-"errores lo que nos permite mejorar más fácilmente el software y mantenerlo "
-"estable. ¡Gracias!"
-
-#, fuzzy
-msgid "This is a core module included with FOSSBilling and cannot be disabled."
-msgstr ""
-"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
-"ProgramadoEste es un módulo central incluido con FOSSBilling y no puede ser "
-"deshabilitado.\n"
-"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
-"Este es un módulo central incluido con FOSSBilling y no puede ser "
-"deshabilitado."
 
 msgid "Add a deposit"
 msgstr "Agregar un depósito"
@@ -7184,6 +6850,7 @@ msgstr ""
 "Rendimiento degradadopara cambiar tu imagen de perfil. Las actualizaciones "
 "de imagen de Gravatar pueden no aparecer inmediatamente."
 
+# #-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#
 # #-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#
 # =====================================================
 # Admin Dashboard Translations
@@ -7384,22 +7051,6 @@ msgstr "Lista de facturas"
 msgid "Login or register to continue"
 msgstr "Inicia sesión o regístrate para continuar"
 
-#, fuzzy
-msgid "Password reset confirmation email was sent"
-msgstr ""
-"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
-"Se envió el email de confirmación de restablecimiento de contraseña\n"
-"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
-"Se ha enviado el email de confirmación de restablecimiento de contraseña"
-
-#, fuzzy
-msgid "Please check your mailbox and confirm email address"
-msgstr ""
-"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
-"Por favor revisa tu buzón y confirma tu dirección de email\n"
-"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
-"Por favor revisa tu correo y confirma tu dirección de email"
-
 msgid "Please choose payment type and pay for your chosen products."
 msgstr "Por favor elige el tipo de pago y paga por los productos elegidos."
 
@@ -7468,14 +7119,6 @@ msgstr "Ver todo"
 
 msgid "Current Status"
 msgstr "Estado Actual"
-
-#, fuzzy
-msgid "Past Incidents"
-msgstr ""
-"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
-"Incidentes Pasados\n"
-"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
-"Incidentes pasados"
 
 msgid "No incidents in the past 7 days"
 msgstr "Sin incidentes en los últimos 7 días"
@@ -8094,3 +7737,51 @@ msgstr "Ver todo"
 
 msgid "Subscribe for Updates"
 msgstr "Suscribirse a actualizaciones"
+
+# Translations that were in fuzzy entries - now cleaned
+msgid ""
+"Add data-product attribute to your element to open specific product. For "
+"example:"
+msgstr ""
+"Agrega el atributo data-product a tu elemento para abrir un producto "
+"específico. Por ejemplo:"
+
+msgid ""
+"Add order-button class to your elements which must call popup. For example:"
+msgstr ""
+"Agrega la clase order-button a tus elementos que deben llamar el popup. Por "
+"ejemplo:"
+
+msgid "Email settings"
+msgstr "Configuración de email"
+
+msgid "First payment sum"
+msgstr "Suma del primer pago"
+
+msgid ""
+"If your server has multiple network interfaces, you may select the default "
+"one for FOSSBilling to use when making requests here."
+msgstr ""
+"Si tu servidor tiene múltiples interfaces de red, puedes seleccionar la "
+"predeterminada para que FOSSBilling la use al hacer solicitudes aquí."
+
+msgid "Income"
+msgstr "Ingresos"
+
+msgid "Install extension"
+msgstr "Instalar extensión"
+
+msgid "Items"
+msgstr "Elementos"
+
+msgid "Last month"
+msgstr "Mes pasado"
+
+msgid "Learn more about error reporting"
+msgstr "Aprende más sobre el reporte de errores"
+
+msgid "Mark as paid"
+msgstr "Marcar como pagado"
+
+msgid "None (Default PHP Behavior)"
+msgstr "Ninguna (Comportamiento predeterminado de PHP)"
