@@ -98,109 +98,99 @@ h5, .h5 { font-size: 1rem; }
 h6, .h6 { font-size: 0.875rem; }
 
 /* ========================================
-   Layout Structure
+   Layout Structure - Bootstrap Grid Based
    ======================================== */
-.app-wrapper {
-    display: flex;
-    min-height: 100vh;
-}
 
-.app-content {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    margin-left: var(--sidebar-width);
-    min-height: 100vh;
-    transition: var(--transition);
-}
-
-.app-main {
-    flex: 1;
-    padding: 1.5rem;
-    max-width: 100%;
-}
-
-/* ========================================
-   Sidebar - IngeWeb Style
-   ======================================== */
-.app-sidebar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: var(--sidebar-width);
-    height: 100vh;
-    background: var(--white);
-    border-right: 1px solid var(--border);
-    display: flex;
-    flex-direction: column;
-    z-index: 1040;
-    transition: var(--transition);
-}
-
-/* IngeWeb branded top bar */
-.app-sidebar::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
+/* IngeWeb Branded Top Bar */
+.flavor-topbar {
     height: 4px;
     background: var(--gradient-primary);
+    position: sticky;
+    top: 0;
+    z-index: 1030;
 }
 
-.sidebar-header {
-    padding: 1rem 1.25rem;
-    padding-top: 1.25rem; /* Extra padding for top bar */
+/* Header */
+.flavor-header {
+    background: var(--white);
     border-bottom: 1px solid var(--border);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    min-height: var(--header-height);
+    position: sticky;
+    top: 4px;
+    z-index: 1020;
 }
 
-.sidebar-brand {
-    text-decoration: none;
-    display: flex;
-    align-items: center;
+.flavor-header .navbar {
+    padding: 0.75rem 0;
 }
 
-.sidebar-logo {
-    max-height: 40px;
-    max-width: 180px;
-    object-fit: contain;
-}
-
-.sidebar-brand-text {
+.flavor-header .navbar-brand {
     font-family: 'Rubik', sans-serif;
-    font-size: 1.25rem;
     font-weight: 700;
+    font-size: 1.25rem;
+}
+
+.flavor-header .brand-text {
     background: var(--gradient-primary);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
 }
 
-.sidebar-close {
-    display: none;
-    background: none;
-    border: none;
-    font-size: 1.25rem;
-    color: var(--text-muted);
-    cursor: pointer;
-    padding: 0.25rem;
+.flavor-header .nav-link {
+    color: var(--text);
+    font-weight: 500;
+    padding: 0.5rem 1rem;
 }
 
-.sidebar-body {
-    flex: 1;
-    overflow-y: auto;
-    padding: 1rem 0;
+.flavor-header .nav-link:hover {
+    color: var(--primary);
 }
 
+/* Sidebar (Bootstrap Grid Column) */
+.flavor-sidebar {
+    position: sticky;
+    top: 80px;
+}
+
+.sidebar-client-card {
+    background: var(--gradient-primary);
+    border-radius: var(--border-radius-lg);
+    padding: 1.5rem;
+    text-align: center;
+    color: var(--white);
+}
+
+.sidebar-client-card .client-avatar img {
+    width: 64px;
+    height: 64px;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    margin-bottom: 0.75rem;
+}
+
+.sidebar-client-card .client-name {
+    font-family: 'Rubik', sans-serif;
+    font-weight: 600;
+    font-size: 1rem;
+    margin-bottom: 0.25rem;
+}
+
+.sidebar-client-card .client-email {
+    font-size: 0.8125rem;
+    opacity: 0.9;
+    margin-bottom: 1rem;
+}
+
+.sidebar-client-card .client-balance .balance-amount {
+    font-family: 'Rubik', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+/* Sidebar Navigation */
 .sidebar-nav {
     display: flex;
     flex-direction: column;
-    gap: 2px;
-    padding: 0 0.75rem;
+    gap: 4px;
 }
 
 .sidebar-link {
@@ -241,30 +231,8 @@ h6, .h6 { font-size: 0.875rem; }
     color: var(--white);
 }
 
-.sidebar-balance {
-    margin: 1rem;
-    padding: 1rem;
-    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-    border-radius: var(--border-radius);
-    color: var(--white);
-}
-
-.balance-label {
-    font-size: 0.75rem;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    opacity: 0.9;
-    margin-bottom: 0.25rem;
-}
-
-.balance-amount {
-    font-family: 'Rubik', sans-serif;
-    font-size: 1.5rem;
-    font-weight: 700;
-}
-
+/* Sidebar Note */
 .sidebar-note {
-    margin: 1rem;
     padding: 1rem;
     background: var(--light);
     border-radius: var(--border-radius);
@@ -283,15 +251,41 @@ h6, .h6 { font-size: 0.875rem; }
     color: var(--text-muted);
 }
 
-.sidebar-overlay {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.5);
-    z-index: 1035;
+/* Content Wrapper */
+.content-wrapper {
+    min-height: 400px;
+}
+
+/* Footer */
+.flavor-footer {
+    background: var(--white);
+    border-top: 1px solid var(--border);
+    padding: 1.5rem 0;
+    margin-top: 2rem;
+    font-size: 0.875rem;
+    color: var(--text-muted);
+}
+
+.flavor-footer .footer-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: flex-end;
+}
+
+.flavor-footer .footer-links a {
+    color: var(--text-muted);
+    text-decoration: none;
+}
+
+.flavor-footer .footer-links a:hover {
+    color: var(--primary);
+}
+
+.flavor-footer .footer-powered a {
+    color: var(--primary);
+    font-weight: 500;
+    text-decoration: none;
 }
 
 /* ========================================

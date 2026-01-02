@@ -1,36 +1,9 @@
 /**
  * FOSSBilling Flavor Theme JavaScript
+ * Powered by IngeWeb
  */
 
 document.addEventListener('DOMContentLoaded', function() {
-    /**
-     * Sidebar Toggle (Mobile)
-     */
-    const sidebar = document.getElementById('appSidebar');
-    const sidebarToggle = document.getElementById('sidebarToggle');
-    const sidebarClose = document.getElementById('sidebarClose');
-    const sidebarOverlay = document.getElementById('sidebarOverlay');
-
-    function openSidebar() {
-        if (sidebar) {
-            sidebar.classList.add('show');
-            sidebarOverlay?.classList.add('show');
-            document.body.style.overflow = 'hidden';
-        }
-    }
-
-    function closeSidebar() {
-        if (sidebar) {
-            sidebar.classList.remove('show');
-            sidebarOverlay?.classList.remove('show');
-            document.body.style.overflow = '';
-        }
-    }
-
-    sidebarToggle?.addEventListener('click', openSidebar);
-    sidebarClose?.addEventListener('click', closeSidebar);
-    sidebarOverlay?.addEventListener('click', closeSidebar);
-
     /**
      * Back to Top Button
      */
@@ -178,19 +151,6 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     /**
-     * Close sidebar on window resize (larger screens)
-     */
-    let resizeTimer;
-    window.addEventListener('resize', function() {
-        clearTimeout(resizeTimer);
-        resizeTimer = setTimeout(function() {
-            if (window.innerWidth >= 992) {
-                closeSidebar();
-            }
-        }, 250);
-    });
-
-    /**
      * Form validation styling
      */
     const forms = document.querySelectorAll('.needs-validation');
@@ -203,6 +163,31 @@ document.addEventListener('DOMContentLoaded', function() {
             form.classList.add('was-validated');
         });
     });
+
+    /**
+     * TomSelect initialization for language selector (if available)
+     */
+    const jsLanguageSelector = document.querySelector('.js-language-selector');
+    if (jsLanguageSelector && typeof TomSelect !== 'undefined') {
+        new TomSelect(jsLanguageSelector, {
+            render: {
+                option: function(data, escape) {
+                    const customProps = data.$option ? data.$option.dataset.customProperties : '';
+                    return '<div>' + customProps + ' ' + escape(data.text) + '</div>';
+                },
+                item: function(data, escape) {
+                    const customProps = data.$option ? data.$option.dataset.customProperties : '';
+                    return '<div>' + customProps + ' ' + escape(data.text) + '</div>';
+                }
+            },
+            onChange: function(value) {
+                if (value) {
+                    document.cookie = 'BBLANG=' + value + ';path=/';
+                    window.location.reload();
+                }
+            }
+        });
+    }
 });
 
 /**
