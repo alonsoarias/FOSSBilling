@@ -487,13 +487,20 @@ class Service implements InjectionAwareInterface
      * Each account is automatically associated with its cPanel package.
      * If the package doesn't exist in FOSSBilling, it will be created.
      *
+     * Important: By default, sub-accounts (accounts owned by resellers) are excluded from import.
+     * These accounts belong to reseller contracts and are not independent billable products.
+     * Only the reseller account itself represents the contractual relationship.
+     *
      * @param int    $serverId               Server ID
      * @param array  $usernames              Array of usernames to import
      * @param int    $clientGroupId          Client group ID
      * @param string $duplicateAction        Action for duplicate clients: use_existing, update_existing, create_new
      * @param string $accountDuplicateAction Action for duplicate accounts: skip, update, recreate
+     * @param bool   $skipSubAccounts        Skip accounts owned by resellers (default: true)
+     *
+     * @return array Import results with imported, skipped, skipped_sub_accounts, errors, and plans_created
      */
-    public function importAccounts(int $serverId, array $usernames, int $clientGroupId = 1, string $duplicateAction = 'use_existing', string $accountDuplicateAction = 'skip'): array
+    public function importAccounts(int $serverId, array $usernames, int $clientGroupId = 1, string $duplicateAction = 'use_existing', string $accountDuplicateAction = 'skip', bool $skipSubAccounts = true): array
     {
         $server = $this->getServer($serverId);
         $remoteAccounts = $this->getRemoteAccounts($serverId);
@@ -507,11 +514,25 @@ class Service implements InjectionAwareInterface
 
         $imported = [];
         $skipped = [];
+        $skippedSubAccounts = [];
         $errors = [];
         $plansCreated = [];
 
         foreach ($remoteAccounts as $acct) {
             if (!in_array($acct['user'], $usernames)) {
+                continue;
+            }
+
+            // Skip sub-accounts (accounts owned by resellers) if configured
+            // Sub-accounts belong to reseller contracts and are not independent billable products
+            $isSubAccount = $acct['is_owned_by_reseller'] ?? false;
+            if ($skipSubAccounts && $isSubAccount) {
+                $skippedSubAccounts[] = [
+                    'username' => $acct['user'],
+                    'domain' => $acct['domain'],
+                    'owner' => $acct['owner'] ?? 'unknown',
+                    'reason' => 'Sub-account owned by reseller - not an independent billable product',
+                ];
                 continue;
             }
 
@@ -593,14 +614,16 @@ class Service implements InjectionAwareInterface
             }
         }
 
-        $this->di['logger']->info('Imported :count WHM accounts from server :server', [
+        $this->di['logger']->info('Imported :count WHM accounts from server :server (:sub_count sub-accounts skipped)', [
             ':count' => count($imported),
             ':server' => $server->name,
+            ':sub_count' => count($skippedSubAccounts),
         ]);
 
         return [
             'imported' => $imported,
             'skipped' => $skipped,
+            'skipped_sub_accounts' => $skippedSubAccounts,
             'errors' => $errors,
             'plans_created' => array_values($plansCreated),
         ];

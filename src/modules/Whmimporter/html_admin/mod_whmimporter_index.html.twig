@@ -316,6 +316,16 @@
                         </div>
                     </div>
 
+                    <div class="alert alert-primary mb-3">
+                        <label class="form-check mb-0">
+                            <input type="checkbox" class="form-check-input" id="skipSubAccounts" checked>
+                            <span class="form-check-label">
+                                <strong>{{ 'Automatically skip sub-accounts (recommended)'|trans }}</strong>
+                                <div class="text-secondary small">{{ 'Sub-accounts belong to reseller contracts and are not independent billable products. Only the reseller account itself represents the contractual relationship.'|trans }}</div>
+                            </span>
+                        </label>
+                    </div>
+
                     <div class="mb-3">
                         <label class="form-check">
                             <input type="checkbox" class="form-check-input" id="selectAllAccounts">
@@ -693,6 +703,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const clientGroupId = document.getElementById('accountsClientGroup').value;
         const duplicateAction = document.getElementById('accountsDuplicateAction').value;
         const accountDuplicateAction = document.getElementById('accountsAccountDuplicateAction').value;
+        const skipSubAccounts = document.getElementById('skipSubAccounts').checked;
 
         const selectedAccounts = [];
         document.querySelectorAll('.account-checkbox:checked').forEach(cb => {
@@ -712,7 +723,8 @@ document.addEventListener('DOMContentLoaded', function() {
             usernames: JSON.stringify(selectedAccounts),
             client_group_id: clientGroupId,
             duplicate_action: duplicateAction,
-            account_duplicate_action: accountDuplicateAction
+            account_duplicate_action: accountDuplicateAction,
+            skip_sub_accounts: skipSubAccounts ? 1 : 0
         }, function(result) {
             importAccountsModal.hide();
 
@@ -760,6 +772,16 @@ document.addEventListener('DOMContentLoaded', function() {
                 html += '<ul class="list-unstyled">';
                 result.skipped.forEach(username => {
                     html += '<li>' + username + '</li>';
+                });
+                html += '</ul>';
+            }
+
+            if (result.skipped_sub_accounts && result.skipped_sub_accounts.length > 0) {
+                html += '<h6 class="text-info"><svg class="icon"><use xlink:href="#info" /></svg> Sub-accounts skipped (' + result.skipped_sub_accounts.length + ')</h6>';
+                html += '<div class="small text-muted mb-2">{{ 'These accounts belong to reseller contracts and are not independent products.'|trans }}</div>';
+                html += '<ul class="list-unstyled">';
+                result.skipped_sub_accounts.forEach(acct => {
+                    html += '<li><strong>' + acct.username + '</strong> - ' + acct.domain + ' <span class="badge bg-secondary">{{ 'Owner'|trans }}: ' + acct.owner + '</span></li>';
                 });
                 html += '</ul>';
             }

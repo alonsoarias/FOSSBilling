@@ -100,13 +100,18 @@ class Admin extends \Api_Abstract
      * Each account is automatically associated with its cPanel package.
      * If the package doesn't exist in FOSSBilling, it will be created.
      *
+     * Important: By default, sub-accounts (accounts owned by resellers) are excluded from import.
+     * These accounts belong to reseller contracts and are not independent billable products.
+     * Only the reseller account itself represents the contractual relationship.
+     *
      * @param int    $server_id                Server ID
      * @param array  $usernames                Array of usernames to import
      * @param int    $client_group_id          Client group ID (optional, default: 1)
      * @param string $duplicate_action         Action for duplicate clients: use_existing, update_existing, create_new (optional, default: use_existing)
      * @param string $account_duplicate_action Action for duplicate accounts: skip, update, recreate (optional, default: update)
+     * @param bool   $skip_sub_accounts        Skip accounts owned by resellers (optional, default: true)
      *
-     * @return array Import results with imported, skipped, errors, and plans_created
+     * @return array Import results with imported, skipped, skipped_sub_accounts, errors, and plans_created
      */
     public function import_accounts(array $data): array
     {
@@ -128,6 +133,8 @@ class Admin extends \Api_Abstract
         $clientGroupId = isset($data['client_group_id']) ? (int) $data['client_group_id'] : 1;
         $duplicateAction = $data['duplicate_action'] ?? 'use_existing';
         $accountDuplicateAction = $data['account_duplicate_action'] ?? 'update';
+        // By default, skip sub-accounts as they belong to reseller contracts
+        $skipSubAccounts = !isset($data['skip_sub_accounts']) || (bool) $data['skip_sub_accounts'];
 
         // Validate duplicate_action
         $validActions = ['use_existing', 'update_existing', 'create_new'];
@@ -146,7 +153,8 @@ class Admin extends \Api_Abstract
             $usernames,
             $clientGroupId,
             $duplicateAction,
-            $accountDuplicateAction
+            $accountDuplicateAction,
+            $skipSubAccounts
         );
     }
 
