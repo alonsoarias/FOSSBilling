@@ -1,3 +1,4 @@
+{% block content %}
 <fieldset>
     <legend>General</legend>
 
@@ -156,7 +157,7 @@
             <td><label for="announcement_bar_text">Announcement text</label></td>
             <td><input type="text" name="announcement_bar_text" id="announcement_bar_text" value=""/></td>
         </tr>
-		
+
         <tr>
             <td><label>Announcement bar color</label></td>
             <td>
@@ -247,9 +248,10 @@
     <h3>Javascript</h3>
     <table>
         <tr>
-            <td><label for="meta_title">Add javascript to client area footer</label></td>
+            <td><label for="inject_javascript">Add javascript to client area footer</label></td>
             <td><textarea name="inject_javascript" id="inject_javascript"></textarea></td>
         </tr>
     </table>
 
 </fieldset>
+{% endblock %}
