@@ -1205,13 +1205,8 @@ msgstr ""
 msgid "Contact not found"
 msgstr ""
 
-#, fuzzy
 msgid "Contact us"
-msgstr ""
-"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
-"Contáctenos\n"
-"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
-"Contáctanos"
+msgstr "Contáctenos"
 
 msgid "Content"
 msgstr "Contenido"
@@ -3713,13 +3708,8 @@ msgstr ""
 msgid "No detected issues."
 msgstr ""
 
-#, fuzzy
 msgid "No items selected"
-msgstr ""
-"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
-"Ningún elemento seleccionado\n"
-"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
-"No hay elementos seleccionados"
+msgstr "No hay elementos seleccionados"
 
 msgid "No news or announcements"
 msgstr ""
@@ -4194,13 +4184,8 @@ msgstr "Teléfono"
 msgid "Phone Country Code"
 msgstr ""
 
-#, fuzzy
 msgid "Phone Number"
-msgstr ""
-"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
-"Número de Teléfono\n"
-"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
-"Número de teléfono"
+msgstr "Número de teléfono"
 
 msgid "Phone number"
 msgstr "Número de teléfono"
@@ -4946,13 +4931,8 @@ msgstr ""
 msgid "Setup new TLD prices and properties"
 msgstr ""
 
-#, fuzzy
 msgid "Setup price"
-msgstr ""
-"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
-"Precio de configuración\n"
-"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
-"Precio de instalación"
+msgstr "Precio de configuración"
 
 msgid "Setup:"
 msgstr ""
@@ -6351,13 +6331,8 @@ msgstr ""
 msgid "Zip"
 msgstr ""
 
-#, fuzzy
 msgid "Zip/Postal Code"
-msgstr ""
-"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
-"Código Postal\n"
-"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
-"Código postal"
+msgstr "Código postal"
 
 msgid "account synchronization"
 msgstr ""
@@ -7087,13 +7062,8 @@ msgstr ""
 "SeleccionarPor favor intenta leer temas relacionados en la base de "
 "conocimientos antes de contactar a soporte."
 
-#, fuzzy
 msgid "Powered by the FOSSBilling Community"
-msgstr ""
-"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
-"Desarrollado por la Comunidad FOSSBilling\n"
-"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
-"Desarrollado por la comunidad FOSSBilling"
+msgstr "Desarrollado por la comunidad FOSSBilling"
 
 msgid "Proforma"
 msgstr "Proforma"
@@ -7726,13 +7696,8 @@ msgstr "Mostrar contraseña"
 msgid "Hide password"
 msgstr "Ocultar contraseña"
 
-#, fuzzy
 msgid "Enter email"
-msgstr ""
-"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
-"Ingresa email\n"
-"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
-"Ingresa tu email"
+msgstr "Ingresa tu email"
 
 msgid "Create new account"
 msgstr "Crear nueva cuenta"

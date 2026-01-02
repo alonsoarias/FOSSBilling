@@ -195,14 +195,14 @@ document.addEventListener("DOMContentLoaded", function() {
                 button.innerHTML = hideIconSvg;
                 tooltip.dispose();
                 tooltip = new bootstrap.Tooltip(button, {
-                    title: "Hide password"
+                    title: "{{ 'Hide password'|trans }}"
                 });
             } else {
                 passwordField.type = "password";
                 button.innerHTML = showIconSvg;
                 tooltip.dispose();
                 tooltip = new bootstrap.Tooltip(button, {
-                    title: "Show password"
+                    title: "{{ 'Show password'|trans }}"
                 });
             }
         });
