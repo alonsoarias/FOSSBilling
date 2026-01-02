@@ -1,10 +1,10 @@
 {
   "name": "FOSSBilling Flavor",
   "version": "1.0.0",
-  "description": "Modern client area theme inspired by Hostinger hPanel with IngeWeb branding",
+  "description": "Modern client area theme powered by IngeWeb",
   "icon": "screenshot.jpg",
-  "author": "FOSSBilling",
-  "author_url": "https://www.fossbilling.org/",
+  "author": "IngeWeb",
+  "author_url": "https://ingeweb.co/",
   "markdown_attributes": {
     "\\League\\CommonMark\\Extension\\Table\\Table": {
       "class": "table table-hover"

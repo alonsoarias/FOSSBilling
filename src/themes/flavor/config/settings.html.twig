@@ -4,8 +4,8 @@
 
     <h3>{{ 'Theme'|trans }}</h3>
     <select name="theme">
-        <option value="light" selected>{{ 'Light Mode'|trans }}</option>
-        <option value="dark">{{ 'Dark Mode'|trans }}</option>
+        <option value="light" selected>{{ 'Bootstrap Light'|trans }}</option>
+        <option value="dark">{{ 'Bootstrap Dark'|trans }}</option>
     </select>
 </fieldset>
 
@@ -23,7 +23,7 @@
         </tr>
 
         <tr>
-            <td><label>{{ 'Show client balance in sidebar'|trans }}</label></td>
+            <td><label>{{ 'Show client balance'|trans }}</label></td>
             <td>
                 <label><input type="radio" name="sidebar_balance_enabled" value="1" id="sidebar_balance_enabled_1" checked="checked">{{ 'Yes'|trans }}</label>
                 <label><input type="radio" name="sidebar_balance_enabled" value="0" id="sidebar_balance_enabled_0">{{ 'No'|trans }}</label>
@@ -31,18 +31,19 @@
         </tr>
     </table>
 
-    <h3>{{ 'Top navigation items'|trans }}</h3>
+    <h3>{{ 'Menu items which are visible in top right menu'|trans }}</h3>
     <table>
         <tr>
-            <td><label>{{ 'Select which items to show'|trans }}</label></td>
+            <td><label>{{ 'Select which menu items'|trans }}</label></td>
             <td>
-                <label><input type="checkbox" name="top_menu_dashboard" value="1" id="top_menu_dashboard">{{ 'Dashboard link'|trans }}</label>
-                <label><input type="checkbox" name="top_menu_order" value="1" id="top_menu_order">{{ 'Order link'|trans }}</label>
-                <label><input type="checkbox" name="top_menu_profile" value="1" id="top_menu_profile">{{ 'Profile/Login link'|trans }}</label>
-                <label><input type="checkbox" name="top_menu_signout" value="1" id="top_menu_signout">{{ 'User dropdown/Register'|trans }}</label>
+                <label><input type="checkbox" name="top_menu_dashboard" value="1" id="top_menu_dashboard">{{ 'Show dashboard link'|trans }}</label>
+                <label><input type="checkbox" name="top_menu_order" value="1" id="top_menu_order">{{ 'Show order link'|trans }}</label>
+                <label><input type="checkbox" name="top_menu_profile" value="1" id="top_menu_profile">{{ 'Show profile link'|trans }}</label>
+                <label><input type="checkbox" name="top_menu_signout" value="1" id="top_menu_signout">{{ 'Show sign out link'|trans }}</label>
             </td>
         </tr>
     </table>
+
 </fieldset>
 
 <fieldset>
@@ -58,7 +59,7 @@
         </tr>
 
         <tr>
-            <td><label>{{ 'Logo click URL'|trans }}</label></td>
+            <td><label>{{ 'Logo URL'|trans }}</label></td>
             <td><input type="text" name="login_page_logo_url" id="login_page_logo_url" value=""></td>
         </tr>
 
@@ -120,7 +121,6 @@
             </td>
         </tr>
     </table>
-
     <h3>{{ 'Showcase'|trans }}</h3>
     <table>
         <tr>
@@ -148,31 +148,31 @@
 <fieldset>
     <legend>{{ 'Sidebar'|trans }}</legend>
 
-    <h3>{{ 'Sidebar menu items'|trans }}</h3>
+    <h3>{{ 'Menu items which are visible in left menu'|trans }}</h3>
     <table>
         <tr>
             <td><label>{{ 'Select menu items'|trans }}</label></td>
             <td>
-                <label for="side_menu_dashboard"><input type="checkbox" name="side_menu_dashboard" value="1" id="side_menu_dashboard"> {{ 'Dashboard'|trans }}</label>
-                <label for="side_menu_order"><input type="checkbox" name="side_menu_order" value="1" id="side_menu_order"> {{ 'Order'|trans }}</label>
-                <label for="side_menu_services"><input type="checkbox" name="side_menu_services" value="1" id="side_menu_services"> {{ 'Services'|trans }}</label>
-                <label for="side_menu_support"><input type="checkbox" name="side_menu_support" value="1" id="side_menu_support"> {{ 'Support'|trans }}</label>
-                <label for="side_menu_invoices"><input type="checkbox" name="side_menu_invoices" value="1" id="side_menu_invoices"> {{ 'Invoices'|trans }}</label>
-                <label for="side_menu_emails"><input type="checkbox" name="side_menu_emails" value="1" id="side_menu_emails"> {{ 'Emails'|trans }}</label>
-                <label for="side_menu_payments"><input type="checkbox" name="side_menu_payments" value="1" id="side_menu_payments"> {{ 'Wallet'|trans }}</label>
-                <label for="side_menu_news"><input type="checkbox" name="side_menu_news" value="1" id="side_menu_news"> {{ 'News'|trans }}</label>
-                <label for="side_menu_kb"><input type="checkbox" name="side_menu_kb" value="1" id="side_menu_kb"> {{ 'Knowledge Base'|trans }}</label>
+                  <label for="side_menu_dashboard"><input type="checkbox" name="side_menu_dashboard" value="1" id="side_menu_dashboard"> {{ 'Show dashboard link'|trans }}</label>
+                  <label for="side_menu_order"><input type="checkbox" name="side_menu_order" value="1" id="side_menu_order"> {{ 'Show order link'|trans }}</label>
+                  <label for="side_menu_support"><input type="checkbox" name="side_menu_support" value="1" id="side_menu_support"> {{ 'Show support link'|trans }}</label>
+                  <label for="side_menu_kb"><input type="checkbox" name="side_menu_kb" value="1" id="side_menu_kb"> {{ 'Show knowledge base link'|trans }}</label>
+                  <label for="side_menu_services"><input type="checkbox" name="side_menu_services" value="1" id="side_menu_services"> {{ 'Show services link'|trans }}</label>
+                  <label for="side_menu_invoices"><input type="checkbox" name="side_menu_invoices" value="1" id="side_menu_invoices"> {{ 'Show invoices link'|trans }}</label>
+                  <label for="side_menu_emails"><input type="checkbox" name="side_menu_emails" value="1" id="side_menu_emails"> {{ 'Show emails link'|trans }}</label>
+                  <label for="side_menu_payments"><input type="checkbox" name="side_menu_payments" value="1" id="side_menu_payments"> {{ 'Show payments link'|trans }}</label>
+                  <label for="side_menu_news"><input type="checkbox" name="side_menu_news" value="1" id="side_menu_news"> {{ 'Show news link'|trans }}</label>
             </td>
         </tr>
     </table>
 
-    <h3>{{ 'Sidebar Note'|trans }}</h3>
+    <h3>{{ 'Simple Sidebar Note'|trans }}</h3>
     <table>
         <tr>
             <td><label>{{ 'Show sidebar note'|trans }}</label></td>
             <td>
-                <label><input type="radio" name="sidebar_note_enabled" value="1" id="sidebar_note_enabled_1">{{ 'Yes'|trans }}</label>
-                <label><input type="radio" name="sidebar_note_enabled" value="0" id="sidebar_note_enabled_0" checked="checked">{{ 'No'|trans }}</label>
+                <label><input type="radio" name="sidebar_note_enabled" value="1" id="sidebar_note_enabled_1" checked="checked">{{ 'Yes'|trans }}</label>
+                <label><input type="radio" name="sidebar_note_enabled" value="0" id="sidebar_note_enabled_0">{{ 'No'|trans }}</label>
             </td>
         </tr>
 
@@ -237,7 +237,7 @@
     </tr>
 
     <tr>
-        <td><label>{{ 'Show "Back to Top" button'|trans }}</label></td>
+        <td><label>{{ 'Show "Top" link'|trans }}</label></td>
         <td>
             <label><input type="radio" name="footer_to_top_enabled" value="1" id="footer_to_top_enabled_1" checked="checked">{{ 'Yes'|trans }}</label>
             <label><input type="radio" name="footer_to_top_enabled" value="0" id="footer_to_top_enabled_0">{{ 'No'|trans }}</label>
@@ -250,38 +250,39 @@
     </tr>
     </table>
 
-    <h3>{{ 'Footer Links'|trans }}</h3>
+    <h3>{{ 'Links'|trans }}</h3>
     <table>
         <tr>
             <td><label>{{ 'Footer link #1'|trans }}</label></td>
-            <td><label><input type="checkbox" name="footer_link_1_enabled"></label><input type="text" name="footer_link_1_title" placeholder="{{ 'Link title'|trans }}"><span> → </span><input type="text" name="footer_link_1_page" placeholder="{{ 'URL or page'|trans }}"></td>
+            <td><label><input type="checkbox" name="footer_link_1_enabled"></label><input type="text" name="footer_link_1_title" value=""><span> -> </span><input type="text" name="footer_link_1_page"></td>
         </tr>
 
         <tr>
             <td><label>{{ 'Footer link #2'|trans }}</label></td>
-            <td><label><input type="checkbox" name="footer_link_2_enabled"></label><input type="text" name="footer_link_2_title" placeholder="{{ 'Link title'|trans }}"><span> → </span><input type="text" name="footer_link_2_page" placeholder="{{ 'URL or page'|trans }}"></td>
+            <td><label><input type="checkbox" name="footer_link_2_enabled"></label><input type="text" name="footer_link_2_title" value=""><span> -> </span><input type="text" name="footer_link_2_page"></td>
         </tr>
 
         <tr>
             <td><label>{{ 'Footer link #3'|trans }}</label></td>
-            <td><label><input type="checkbox" name="footer_link_3_enabled"></label><input type="text" name="footer_link_3_title" placeholder="{{ 'Link title'|trans }}"><span> → </span><input type="text" name="footer_link_3_page" placeholder="{{ 'URL or page'|trans }}"></td>
+            <td><label><input type="checkbox" name="footer_link_3_enabled"></label><input type="text" name="footer_link_3_title" value=""><span> -> </span><input type="text" name="footer_link_3_page"></td>
         </tr>
 
         <tr>
             <td><label>{{ 'Footer link #4'|trans }}</label></td>
-            <td><label><input type="checkbox" name="footer_link_4_enabled"></label><input type="text" name="footer_link_4_title" placeholder="{{ 'Link title'|trans }}"><span> → </span><input type="text" name="footer_link_4_page" placeholder="{{ 'URL or page'|trans }}"></td>
+            <td><label><input type="checkbox" name="footer_link_4_enabled"></label><input type="text" name="footer_link_4_title" value=""><span> -> </span><input type="text" name="footer_link_4_page"></td>
         </tr>
 
         <tr>
             <td><label>{{ 'Footer link #5'|trans }}</label></td>
-            <td><label><input type="checkbox" name="footer_link_5_enabled"></label><input type="text" name="footer_link_5_title" placeholder="{{ 'Link title'|trans }}"><span> → </span><input type="text" name="footer_link_5_page" placeholder="{{ 'URL or page'|trans }}"></td>
+            <td><label><input type="checkbox" name="footer_link_5_enabled"></label><input type="text" name="footer_link_5_title" value=""><span> -> </span><input type="text" name="footer_link_5_page"></td>
         </tr>
+
     </table>
 
-    <h3>{{ 'Custom Javascript'|trans }}</h3>
+    <h3>{{ 'Javascript'|trans }}</h3>
     <table>
         <tr>
-            <td><label for="inject_javascript">{{ 'Add javascript to client area footer'|trans }}</label></td>
+            <td><label for="meta_title">{{ 'Add javascript to client area footer'|trans }}</label></td>
             <td><textarea name="inject_javascript" id="inject_javascript"></textarea></td>
         </tr>
     </table>

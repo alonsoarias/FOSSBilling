@@ -1,16 +1,15 @@
 /**
  * FOSSBilling Flavor Theme JavaScript
- * Powered by IngeWeb
+ * Powered by IngeWeb - https://ingeweb.co
+ *
+ * Standalone version that works without webpack
+ * Provides all necessary FOSSBilling compatibility
  */
 
 /**
- * FOSSBilling compatibility layer
- * Provides bb and FOSSBilling global objects required by FOSSBilling modules
+ * bb global object - FOSSBilling compatibility layer
  */
 globalThis.bb = {
-    /**
-     * @deprecated Use the new API wrapper instead.
-     */
     post: function(url, params, successHandler) {
         API.makeRequest(
             'POST',
@@ -23,9 +22,6 @@ globalThis.bb = {
         );
     },
 
-    /**
-     * @deprecated Use the new API wrapper instead.
-     */
     get: function(url, params, successHandler) {
         API.makeRequest(
             'GET',
@@ -122,6 +118,20 @@ globalThis.bb = {
                     event.preventDefault();
                     const formData = new FormData(formElement);
 
+                    // Handle CKEditor instances if present
+                    if (typeof editors !== 'undefined' && Array.isArray(editors) && editors.length > 0) {
+                        let editorContentOnRequiredAttr = false;
+                        Object.keys(editors).forEach(function(name) {
+                            editorContentOnRequiredAttr = editors[name].required
+                                ? editors[name].editor.getData() !== ''
+                                : true;
+                            formData.set(name, editors[name].editor.getData());
+                        });
+                        if (!editorContentOnRequiredAttr) {
+                            return FOSSBilling.message('At least one of the required fields are empty', 'error');
+                        }
+                    }
+
                     let data;
                     if (formElement.getAttribute('method').toLowerCase() !== 'get') {
                         data = formData.serializeJSON();
@@ -200,6 +210,13 @@ globalThis.bb = {
         }
     },
 
+    menuAutoActive: function() {
+        var matches = $('ul#menu li a').filter(function() {
+            return document.location.href == this.href;
+        });
+        matches.parents('li').addClass('active');
+    },
+
     cookieCreate: function(name, value, days) {
         var expires = '';
         if (days) {
@@ -221,6 +238,46 @@ globalThis.bb = {
         return null;
     },
 
+    insertToTextarea: function(areaId, text) {
+        var txtarea = document.getElementById(areaId);
+        var scrollPos = txtarea.scrollTop;
+        var strPos = 0;
+        var br = (txtarea.selectionStart || txtarea.selectionStart == '0') ? 'ff' : (document.selection ? 'ie' : false);
+
+        if (br == 'ie') {
+            txtarea.focus();
+            var range = document.selection.createRange();
+            range.moveStart('character', -txtarea.value.length);
+            strPos = range.text.length;
+        } else if (br == 'ff') {
+            strPos = txtarea.selectionStart;
+        }
+
+        var front = txtarea.value.substring(0, strPos);
+        var back = txtarea.value.substring(strPos, txtarea.value.length);
+        txtarea.value = front + text + back;
+        strPos = strPos + text.length;
+
+        if (br == 'ie') {
+            txtarea.focus();
+            var range = document.selection.createRange();
+            range.moveStart('character', -txtarea.value.length);
+            range.moveStart('character', strPos);
+            range.moveEnd('character', 0);
+            range.select();
+        } else if (br == 'ff') {
+            txtarea.selectionStart = strPos;
+            txtarea.selectionEnd = strPos;
+            txtarea.focus();
+        }
+        txtarea.scrollTop = scrollPos;
+
+        if (typeof CKEDITOR !== 'undefined') {
+            CKEDITOR.instances[areaId].insertText(text);
+        }
+        return false;
+    },
+
     currency: function(price, rate, title, multiply) {
         price = parseFloat(price) * parseFloat(rate);
         if (multiply !== undefined) {
@@ -231,7 +288,7 @@ globalThis.bb = {
 };
 
 /**
- * FOSSBilling message system
+ * FOSSBilling global object - Message system
  */
 globalThis.FOSSBilling = {
     message: function(message, type) {
@@ -298,6 +355,24 @@ globalThis.FOSSBilling = {
 
         const toast = new bootstrap.Toast(element);
         toast.show();
+    },
+
+    backToTop: function() {
+        const backToTopBtn = document.getElementById('backToTop');
+        if (backToTopBtn) {
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 300) {
+                    backToTopBtn.classList.add('show');
+                } else {
+                    backToTopBtn.classList.remove('show');
+                }
+            });
+
+            backToTopBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        }
     }
 };
 
@@ -325,6 +400,29 @@ globalThis.flashMessage = function({message = '', reload = false, type = 'info'}
 };
 
 /**
+ * jQuery Simple Tabs plugin
+ */
+$.fn.simpleTabs = function() {
+    $(this).find('.tab_content').hide();
+    $(this).find('ul.tabs li:first').addClass('activeTab').show();
+    $(this).find('.tab_content:first').show();
+
+    $('ul.tabs li').on('click', function() {
+        $(this).parent().parent().find('ul.tabs li').removeClass('activeTab');
+        $(this).addClass('activeTab');
+        $(this).parent().parent().find('.tab_content').hide();
+        var activeTab = $(this).find('a').attr('href');
+        $(activeTab).show();
+        return false;
+    });
+
+    if ($(document.location.hash).length) {
+        $('a[href="' + document.location.hash + '"]').parent().trigger('click');
+        $(window).scrollTop(window.location.href.indexOf('#'));
+    }
+};
+
+/**
  * DOMContentLoaded initialization
  */
 document.addEventListener('DOMContentLoaded', function() {
@@ -339,53 +437,15 @@ document.addEventListener('DOMContentLoaded', function() {
         bb.apiLink();
     }
 
-    /**
-     * Back to Top Button
-     */
-    const backToTop = document.getElementById('backToTop');
-    if (backToTop) {
-        window.addEventListener('scroll', function() {
-            if (window.scrollY > 300) {
-                backToTop.classList.add('show');
-            } else {
-                backToTop.classList.remove('show');
-            }
-        });
-
-        backToTop.addEventListener('click', function(e) {
-            e.preventDefault();
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
-    }
-
-    /**
-     * Enable Bootstrap Tooltips
-     */
+    // Enable Bootstrap Tooltips
     const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
     [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
 
-    /**
-     * Language Selector
-     */
-    const langItems = document.querySelectorAll('.lang-item');
-    langItems.forEach(item => {
-        item.addEventListener('click', function(e) {
-            e.preventDefault();
-            const locale = this.dataset.lang;
-            if (locale) {
-                document.cookie = 'BBLANG=' + locale + ';path=/';
-                window.location.reload();
-            }
-        });
-    });
-
-    /**
-     * Add asterisk to required field labels
-     */
+    // Add asterisk to required field labels
     const requiredInputs = document.querySelectorAll('input[required], textarea[required], select[required]');
     requiredInputs.forEach(input => {
         const label = input.previousElementSibling;
-        const isAuth = input.closest('.auth-card');
+        const isAuth = input.closest('.auth') || input.closest('.auth-card');
         if (!isAuth && label && label.tagName.toLowerCase() === 'label' && !label.querySelector('.text-danger')) {
             const asterisk = document.createElement('span');
             asterisk.textContent = ' *';
@@ -394,9 +454,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    /**
-     * Currency Selector
-     */
+    // Currency selector
     const currencySelector = document.querySelectorAll('select.currency_selector');
     currencySelector.forEach(function(select) {
         select.addEventListener('change', function() {
@@ -410,41 +468,63 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    /**
-     * Period Selector for Pricing
-     */
-    const periodSelector = document.getElementById('period-selector');
-    if (periodSelector) {
-        function updatePeriodVisibility() {
-            const selectedPeriod = periodSelector.value;
-            document.querySelectorAll('.period').forEach(el => {
-                el.style.display = 'none';
+    // Language selector
+    const jsLanguageSelector = document.querySelector('.js-language-selector');
+    if (jsLanguageSelector) {
+        if (typeof TomSelect !== 'undefined') {
+            new TomSelect(jsLanguageSelector, {
+                render: {
+                    option: function(data, escape) {
+                        const customProps = data.$option ? data.$option.dataset.customProperties : '';
+                        return '<div>' + customProps + ' ' + escape(data.text) + '</div>';
+                    },
+                    item: function(data, escape) {
+                        const customProps = data.$option ? data.$option.dataset.customProperties : '';
+                        return '<div>' + customProps + ' ' + escape(data.text) + '</div>';
+                    }
+                },
+                onChange: function(value) {
+                    if (value) {
+                        document.cookie = 'BBLANG=' + value + ';path=/';
+                        window.location.reload();
+                    }
+                }
             });
-            document.querySelectorAll('.period.' + selectedPeriod).forEach(el => {
-                el.style.display = '';
+        } else {
+            jsLanguageSelector.addEventListener('change', function() {
+                document.cookie = 'BBLANG=' + this.value + ';path=/';
+                window.location.reload();
             });
         }
-
-        periodSelector.addEventListener('change', updatePeriodVisibility);
-        updatePeriodVisibility();
     }
 
-    /**
-     * Auto-hide alerts after delay
-     */
-    const alerts = document.querySelectorAll('.alert-dismissible');
-    alerts.forEach(alert => {
-        setTimeout(() => {
-            const bsAlert = bootstrap.Alert.getOrCreateInstance(alert);
-            if (bsAlert) {
-                bsAlert.close();
-            }
-        }, 8000);
+    // Initialize simple tabs
+    if ($('div.simpleTabs').length) {
+        $('div.simpleTabs').simpleTabs();
+    }
+
+    // Ajax loading indicator
+    $(document).ajaxStart(function() {
+        $('.wait, .loading').show();
+    }).ajaxStop(function() {
+        $('.wait, .loading').hide();
     });
 
-    /**
-     * Smooth scroll for anchor links
-     */
+    // Close message boxes
+    $(document).on('click', 'div.msg span.close', function() {
+        $(this).parent().slideUp(70);
+        return false;
+    });
+
+    // Hideable elements
+    $('.hideit').on('click', function() {
+        $(this).fadeOut(400);
+    });
+
+    // Initialize back to top
+    FOSSBilling.backToTop();
+
+    // Smooth scroll for anchor links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function(e) {
             const targetId = this.getAttribute('href');
@@ -460,53 +540,5 @@ document.addEventListener('DOMContentLoaded', function() {
                 target.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }
         });
-    });
-
-    /**
-     * Form validation styling
-     */
-    const forms = document.querySelectorAll('.needs-validation');
-    forms.forEach(form => {
-        form.addEventListener('submit', function(event) {
-            if (!form.checkValidity()) {
-                event.preventDefault();
-                event.stopPropagation();
-            }
-            form.classList.add('was-validated');
-        });
-    });
-
-    /**
-     * TomSelect initialization for language selector (if available)
-     */
-    const jsLanguageSelector = document.querySelector('.js-language-selector');
-    if (jsLanguageSelector && typeof TomSelect !== 'undefined') {
-        new TomSelect(jsLanguageSelector, {
-            render: {
-                option: function(data, escape) {
-                    const customProps = data.$option ? data.$option.dataset.customProperties : '';
-                    return '<div>' + customProps + ' ' + escape(data.text) + '</div>';
-                },
-                item: function(data, escape) {
-                    const customProps = data.$option ? data.$option.dataset.customProperties : '';
-                    return '<div>' + customProps + ' ' + escape(data.text) + '</div>';
-                }
-            },
-            onChange: function(value) {
-                if (value) {
-                    document.cookie = 'BBLANG=' + value + ';path=/';
-                    window.location.reload();
-                }
-            }
-        });
-    }
-
-    /**
-     * Ajax loading indicator
-     */
-    $(document).ajaxStart(function() {
-        $('.wait').show();
-    }).ajaxStop(function() {
-        $('.wait').hide();
     });
 });

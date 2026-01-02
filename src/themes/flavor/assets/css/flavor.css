@@ -1,7 +1,9 @@
 /**
  * FOSSBilling Flavor Theme
  * Powered by IngeWeb - https://ingeweb.co
- * Modern client portal with clean, professional design
+ *
+ * CSS Variables and custom styles for Flavor theme
+ * Works with Bootstrap 5.3+ CDN
  */
 
 /* ========================================
@@ -9,613 +11,325 @@
    ======================================== */
 :root {
     /* Primary Colors - IngeWeb Blue */
-    --primary: #0080FE;
-    --primary-dark: #2B4D99;
-    --primary-hover: #0066cc;
-    --primary-light: #e8f4ff;
-    --primary-rgb: 0, 128, 254;
+    --bs-primary: #0080FE;
+    --bs-primary-rgb: 0, 128, 254;
+    --bs-link-color: #0080FE;
+    --bs-link-hover-color: #0066cc;
 
-    /* Accent Colors - IngeWeb Orange */
-    --accent: #FD5E1F;
-    --accent-hover: #e54d0f;
-    --accent-light: #fff5f0;
-    --accent-rgb: 253, 94, 31;
-
-    /* Gradients */
-    --gradient-primary: linear-gradient(135deg, #0080FE 0%, #2B4D99 100%);
-    --gradient-accent: linear-gradient(135deg, #FD5E1F 0%, #ff8c42 100%);
-
-    /* Neutral Colors */
-    --text: #1f2937;
-    --text-muted: #6b7280;
-    --text-light: #9ca3af;
-    --bg: #ffffff;
-    --bg-light: #f9fafb;
-    --bg-dark: #f3f4f6;
-    --border: #e5e7eb;
-    --border-light: #f3f4f6;
-
-    /* Status Colors */
-    --success: #10b981;
-    --warning: #f59e0b;
-    --danger: #ef4444;
-    --info: #3b82f6;
-
-    /* Typography */
-    --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    --font-size-sm: 0.875rem;
-    --font-size-base: 1rem;
-    --font-size-lg: 1.125rem;
-    --font-size-xl: 1.25rem;
-
-    /* Spacing & Sizing */
-    --radius: 0.5rem;
-    --radius-lg: 0.75rem;
-    --radius-xl: 1rem;
-    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-    --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
-    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
-    --transition: all 0.2s ease;
+    /* Custom IngeWeb colors */
+    --ingeweb-primary: #0080FE;
+    --ingeweb-primary-dark: #0066cc;
+    --ingeweb-accent: #FD5E1F;
+    --ingeweb-accent-hover: #e54d0f;
 }
 
-/* Dark Theme */
+/* Dark mode variables */
 [data-bs-theme="dark"] {
-    --text: #f9fafb;
-    --text-muted: #9ca3af;
-    --bg: #111827;
-    --bg-light: #1f2937;
-    --bg-dark: #374151;
-    --border: #374151;
-    --border-light: #4b5563;
+    --bs-primary: #0080FE;
+    --bs-primary-rgb: 0, 128, 254;
+    --bs-link-color: #4da3ff;
+    --bs-link-hover-color: #80bdff;
 }
 
 /* ========================================
    Base Styles
    ======================================== */
+html,
 body {
-    font-family: var(--font-family);
-    font-size: var(--font-size-base);
-    color: var(--text);
-    background-color: var(--bg-light);
-    line-height: 1.6;
+    width: 100%;
+    height: 100%;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
 }
 
 a {
-    color: var(--primary);
     text-decoration: none;
-    transition: var(--transition);
 }
 
 a:hover {
-    color: var(--primary-hover);
+    text-decoration: underline;
 }
 
 /* ========================================
-   Accent Bar (Top)
+   Typography
    ======================================== */
-.accent-bar {
-    height: 4px;
-    background: var(--gradient-primary);
+.fs-7 {
+    font-size: .875rem;
 }
 
 /* ========================================
-   Header
+   Sidebar / Offcanvas Menu
    ======================================== */
-.site-header {
-    background: var(--bg);
-    border-bottom: 1px solid var(--border);
-    position: sticky;
-    top: 0;
-    z-index: 1030;
+.offcanvas-item {
+    border-bottom: 1px rgba(0, 0, 0, .1) solid;
 }
 
-.site-header .navbar {
-    padding: 0.75rem 0;
+.offcanvas-item:first-child {
+    border-top: 1px rgba(0, 0, 0, .1) solid;
 }
 
-.site-header .navbar-brand {
-    font-weight: 700;
-    font-size: var(--font-size-xl);
-    color: var(--text);
+.offcanvas-item:hover {
+    background: #fafafa;
 }
 
-.site-header .logo-img {
-    max-height: 40px;
-    width: auto;
+[data-bs-theme="dark"] .offcanvas-item:hover {
+    background: rgba(255, 255, 255, .05);
 }
 
-.site-header .brand-text {
-    background: var(--gradient-primary);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-}
-
-.site-header .nav-link {
-    color: var(--text-muted);
-    font-weight: 500;
-    padding: 0.5rem 1rem;
-    transition: var(--transition);
-}
-
-.site-header .nav-link:hover {
-    color: var(--primary);
-}
-
-.site-header .user-avatar {
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    margin-right: 0.5rem;
-}
-
-.site-header .user-dropdown {
-    display: flex;
-    align-items: center;
-}
-
-/* ========================================
-   Sidebar
-   ======================================== */
-.sidebar {
-    position: sticky;
-    top: 100px;
-}
-
-/* User Card */
-.user-card {
-    background: var(--gradient-primary);
-    border-radius: var(--radius-lg);
-    padding: 1.25rem;
-    color: white;
-}
-
-.user-card-header {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    margin-bottom: 1rem;
-}
-
-.user-card-avatar {
-    width: 56px;
-    height: 56px;
-    border-radius: 50%;
-    border: 3px solid rgba(255, 255, 255, 0.2);
-}
-
-.user-card-name {
-    font-weight: 600;
-    font-size: var(--font-size-base);
-}
-
-.user-card-email {
-    font-size: var(--font-size-sm);
-    opacity: 0.9;
-}
-
-.user-card-balance {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding-top: 1rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.2);
-}
-
-.balance-label {
-    font-size: var(--font-size-sm);
-    opacity: 0.9;
-}
-
-.balance-amount {
-    font-weight: 700;
-    font-size: var(--font-size-lg);
-}
-
-/* Sidebar Navigation */
-.sidebar-nav {
-    background: var(--bg);
-    border-radius: var(--radius-lg);
-    padding: 0.5rem;
-    box-shadow: var(--shadow-sm);
-    border: 1px solid var(--border);
-}
-
-.sidebar-nav .nav-link {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    padding: 0.75rem 1rem;
-    color: var(--text-muted);
-    font-weight: 500;
-    border-radius: var(--radius);
-    transition: var(--transition);
-    margin: 2px 0;
-}
-
-.sidebar-nav .nav-link i,
-.sidebar-nav .nav-link .awe-icon,
-.sidebar-nav .nav-link [class^="awe-"] {
-    width: 20px;
-    text-align: center;
-    font-size: 1rem;
-}
-
-.sidebar-nav .nav-link:hover {
-    background: var(--primary-light);
-    color: var(--primary);
-}
-
-.sidebar-nav .nav-link.active {
-    background: var(--primary);
-    color: white;
-}
-
-/* Sidebar Note */
-.sidebar-note {
-    display: flex;
-    gap: 1rem;
-    padding: 1rem;
-    background: var(--accent-light);
-    border-radius: var(--radius-lg);
-    border-left: 4px solid var(--accent);
-}
-
-.sidebar-note .note-icon {
-    color: var(--accent);
-    font-size: 1.25rem;
-}
-
-.sidebar-note .note-content {
-    font-size: var(--font-size-sm);
-    color: var(--text);
-}
-
-/* ========================================
-   Content Area
-   ======================================== */
-.site-content {
-    min-height: calc(100vh - 200px);
-}
-
-.content-area {
-    background: var(--bg);
-    border-radius: var(--radius-lg);
-    padding: 1.5rem;
-    box-shadow: var(--shadow-sm);
-    border: 1px solid var(--border);
-}
-
-/* Breadcrumbs */
-.breadcrumb {
-    background: transparent;
-    padding: 0;
-    margin-bottom: 0;
-    font-size: var(--font-size-sm);
-}
-
-.breadcrumb-item + .breadcrumb-item::before {
-    content: ">";
-    color: var(--text-light);
-}
-
-.breadcrumb-item a {
-    color: var(--text-muted);
-}
-
-.breadcrumb-item a:hover {
-    color: var(--primary);
-}
-
-.breadcrumb-item.active {
-    color: var(--text);
+.offcanvas-item > a {
+    color: var(--bs-secondary);
 }
 
 /* ========================================
    Cards
    ======================================== */
-.card {
-    border: 1px solid var(--border);
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-sm);
-}
-
-.card-header {
-    background: var(--bg-light);
-    border-bottom: 1px solid var(--border);
-    padding: 1rem 1.25rem;
-    font-weight: 600;
-}
-
-.card-body {
-    padding: 1.25rem;
-}
-
-/* ========================================
-   Buttons
-   ======================================== */
-.btn {
-    font-weight: 500;
-    padding: 0.5rem 1rem;
-    border-radius: var(--radius);
-    transition: var(--transition);
-}
-
-.btn-primary {
-    background: var(--primary);
-    border-color: var(--primary);
-}
-
-.btn-primary:hover {
-    background: var(--primary-hover);
-    border-color: var(--primary-hover);
-}
-
-.btn-outline-primary {
-    color: var(--primary);
-    border-color: var(--primary);
-}
-
-.btn-outline-primary:hover {
-    background: var(--primary);
-    border-color: var(--primary);
-    color: white;
-}
-
-.btn-accent {
-    background: var(--accent);
-    border-color: var(--accent);
-    color: white;
-}
-
-.btn-accent:hover {
-    background: var(--accent-hover);
-    border-color: var(--accent-hover);
-    color: white;
-}
-
-/* ========================================
-   Forms
-   ======================================== */
-.form-control,
-.form-select {
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 0.625rem 0.875rem;
-    transition: var(--transition);
-}
-
-.form-control:focus,
-.form-select:focus {
-    border-color: var(--primary);
-    box-shadow: 0 0 0 3px rgba(var(--primary-rgb), 0.1);
-}
-
-.form-label {
-    font-weight: 500;
-    color: var(--text);
-    margin-bottom: 0.375rem;
+.card-header h1,
+.page-password-reset .card h1,
+.page-login .card h1,
+.page-signup .card h1 {
+    font-size: 1.25rem;
 }
 
 /* ========================================
    Tables
    ======================================== */
-.table {
-    border-color: var(--border);
-}
-
-.table > thead {
-    background: var(--bg-light);
-}
-
-.table > thead th {
+table > thead > tr > th {
+    font-size: 0.765625rem;
+    color: var(--bs-secondary);
     font-weight: 600;
-    color: var(--text);
-    border-bottom-width: 1px;
-    padding: 0.875rem 1rem;
+    text-transform: uppercase;
 }
 
-.table > tbody td {
-    padding: 0.875rem 1rem;
+table > tbody > tr > td {
     vertical-align: middle;
 }
 
 /* ========================================
-   Footer
+   SVG Icons
    ======================================== */
-.site-footer {
-    background: var(--bg);
-    border-top: 1px solid var(--border);
-    padding: 1.5rem 0;
-    margin-top: auto;
-}
-
-.footer-links {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1.5rem;
-    justify-content: flex-end;
-}
-
-.footer-links a {
-    color: var(--text-muted);
-    font-size: var(--font-size-sm);
-}
-
-.footer-links a:hover {
-    color: var(--primary);
-}
-
-.powered-by {
-    color: var(--text-light);
-}
-
-.powered-by a {
-    color: var(--primary);
-}
-
-.copyright {
-    color: var(--text-muted);
-    font-size: var(--font-size-sm);
+.svg-icon {
+    height: 20px;
+    width: 20px;
+    fill: currentColor;
 }
 
 /* ========================================
-   Back to Top Button
+   Order Manager Accordion
    ======================================== */
-.back-to-top {
-    position: fixed;
-    bottom: 2rem;
-    right: 2rem;
-    width: 40px;
-    height: 40px;
-    background: var(--primary);
-    color: white;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 0;
-    visibility: hidden;
-    transition: var(--transition);
-    box-shadow: var(--shadow-lg);
-    z-index: 1000;
-}
-
-.back-to-top:hover {
-    background: var(--primary-hover);
-    color: white;
-    transform: translateY(-2px);
-}
-
-.back-to-top.show {
-    opacity: 1;
-    visibility: visible;
+#orderManager {
+    --bs-accordion-btn-icon: none;
+    --bs-accordion-btn-active-icon: none;
 }
 
 /* ========================================
-   Loading Overlay
+   TomSelect Dropdown
    ======================================== */
-.loading-overlay {
+.ts-input {
+    color: inherit;
+}
+
+.ts-wrapper.form-select {
+    background-color: inherit;
+}
+
+.ts-wrapper .ts-control {
+    font-size: 14px;
+    width: 100%;
+    color: inherit;
+}
+
+.ts-wrapper .ts-control.locale {
+    width: 205px;
+}
+
+.ts-wrapper .ts-control .dropdown-menu {
+    width: 100%;
+    height: auto;
+}
+
+.ts-wrapper .ts-dropdown {
+    font-size: 14px;
+}
+
+.ts-wrapper .ts-dropdown .active {
+    background-color: rgba(108, 117, 125, .06);
+    color: inherit;
+}
+
+.ts-wrapper .ts-dropdown .selected {
+    background-color: rgba(108, 117, 125, .1);
+}
+
+@media (max-width: 768px) {
+    .ts-wrapper.js-language-selector {
+        width: 180px;
+    }
+}
+
+/* ========================================
+   Invoice Gateway
+   ======================================== */
+.invoice-gateway {
+    border: 1px var(--bs-border-color) solid;
+}
+
+.invoice-gateway:hover {
+    border: 1px var(--bs-primary) solid;
+}
+
+/* ========================================
+   Email List
+   ======================================== */
+.email-list {
+    border-radius: 0;
+}
+
+.email-list .list-group-item {
+    border: 0;
+    border-bottom: 1px solid var(--bs-border-color);
+    border-left: 2px solid transparent;
+}
+
+.email-list .list-group-item.active {
+    border-left: 2px solid var(--bs-primary-border-subtle);
+    background: rgba(0, 128, 254, .1);
+    color: var(--bs-dark);
+}
+
+/* ========================================
+   Flag Icons
+   ======================================== */
+.fi {
+    border-radius: 4px;
+}
+
+/* ========================================
+   Loading Spinner
+   ======================================== */
+.wait {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(255, 255, 255, 0.8);
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    background: rgba(255, 255, 255, 0.7);
+    z-index: 9998;
+    display: none;
+}
+
+[data-bs-theme="dark"] .wait {
+    background: rgba(0, 0, 0, 0.7);
+}
+
+.wait .spinner-border {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 4rem;
+    height: 4rem;
     z-index: 9999;
 }
 
-[data-bs-theme="dark"] .loading-overlay {
-    background: rgba(17, 24, 39, 0.8);
+/* ========================================
+   Toast Messages
+   ======================================== */
+.toast-container {
+    z-index: 1070 !important;
 }
 
 /* ========================================
-   Alerts & Messages
+   Buttons - IngeWeb Style
    ======================================== */
-.alert {
-    border-radius: var(--radius);
-    border: none;
-    padding: 1rem 1.25rem;
+.btn-primary {
+    --bs-btn-bg: var(--ingeweb-primary);
+    --bs-btn-border-color: var(--ingeweb-primary);
+    --bs-btn-hover-bg: var(--ingeweb-primary-dark);
+    --bs-btn-hover-border-color: var(--ingeweb-primary-dark);
+    --bs-btn-active-bg: var(--ingeweb-primary-dark);
+    --bs-btn-active-border-color: var(--ingeweb-primary-dark);
 }
 
-.h-block {
-    padding: 1rem 1.25rem;
-    border-radius: var(--radius);
-    margin-bottom: 1rem;
+.btn-outline-primary {
+    --bs-btn-color: var(--ingeweb-primary);
+    --bs-btn-border-color: var(--ingeweb-primary);
+    --bs-btn-hover-bg: var(--ingeweb-primary);
+    --bs-btn-hover-border-color: var(--ingeweb-primary);
+    --bs-btn-active-bg: var(--ingeweb-primary);
+    --bs-btn-active-border-color: var(--ingeweb-primary);
 }
 
-.h-block.info {
-    background: var(--primary-light);
-    color: var(--primary-dark);
+.btn-accent {
+    background-color: var(--ingeweb-accent);
+    border-color: var(--ingeweb-accent);
+    color: white;
 }
 
-.h-block.success {
-    background: #ecfdf5;
-    color: #065f46;
-}
-
-.h-block.warning {
-    background: #fffbeb;
-    color: #92400e;
-}
-
-.h-block.error {
-    background: #fef2f2;
-    color: #991b1b;
-}
-
-.h-block h2 {
-    font-size: var(--font-size-base);
-    font-weight: 600;
-    margin-bottom: 0.25rem;
-    text-transform: capitalize;
-}
-
-.h-block p {
-    margin: 0;
-    font-size: var(--font-size-sm);
+.btn-accent:hover {
+    background-color: var(--ingeweb-accent-hover);
+    border-color: var(--ingeweb-accent-hover);
+    color: white;
 }
 
 /* ========================================
-   Mobile Menu
+   Links
    ======================================== */
-.mobile-menu {
-    padding: 1rem 0;
+a {
+    color: var(--bs-link-color);
 }
 
-.mobile-menu .nav-link {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    padding: 0.75rem 0;
-    color: var(--text);
-    border-bottom: 1px solid var(--border);
-}
-
-.mobile-menu .nav-link:last-child {
-    border-bottom: none;
+a:hover {
+    color: var(--bs-link-hover-color);
 }
 
 /* ========================================
-   Utilities
+   Form Controls Focus
    ======================================== */
-.text-primary { color: var(--primary) !important; }
-.text-accent { color: var(--accent) !important; }
-.text-success { color: var(--success) !important; }
-.text-warning { color: var(--warning) !important; }
-.text-danger { color: var(--danger) !important; }
-
-.bg-primary-light { background-color: var(--primary-light) !important; }
-.bg-accent-light { background-color: var(--accent-light) !important; }
+.form-control:focus,
+.form-select:focus {
+    border-color: var(--ingeweb-primary);
+    box-shadow: 0 0 0 0.25rem rgba(0, 128, 254, 0.25);
+}
 
 /* ========================================
-   Responsive
+   Breadcrumb
    ======================================== */
-@media (max-width: 991.98px) {
-    .site-header .navbar-collapse {
-        padding: 1rem 0;
+.breadcrumb {
+    background: transparent;
+    padding: 0;
+    margin-bottom: 0;
+}
+
+/* ========================================
+   Highlight Effect (for removed rows)
+   ======================================== */
+tr.highlight {
+    background-color: rgba(220, 38, 38, 0.1);
+    transition: background-color 0.3s;
+}
+
+tr.highlight td {
+    text-decoration: line-through;
+    opacity: 0.6;
+}
+
+/* ========================================
+   Mobile Responsive Fixes
+   ======================================== */
+@media (max-width: 767.98px) {
+    .container {
+        padding-left: 15px;
+        padding-right: 15px;
     }
 
-    .sidebar {
-        position: static;
-    }
-
-    .content-area {
+    .card-body {
         padding: 1rem;
     }
-}
 
-@media (max-width: 767.98px) {
-    .footer-links {
-        justify-content: center;
-        margin-top: 1rem;
-    }
-
-    .site-footer .row > div {
-        text-align: center !important;
+    table {
+        font-size: 0.875rem;
     }
 }
 
@@ -623,15 +337,86 @@ a:hover {
    Print Styles
    ======================================== */
 @media print {
-    .site-header,
-    .sidebar,
-    .site-footer,
-    .back-to-top {
+    .navbar,
+    .offcanvas,
+    .toast-container,
+    .btn,
+    footer {
         display: none !important;
     }
 
-    .content-area {
-        box-shadow: none;
-        border: none;
+    .container {
+        max-width: 100%;
     }
+}
+
+/* ========================================
+   Markdown Content Styles
+   ======================================== */
+.markdown-content h1,
+.markdown-content h2,
+.markdown-content h3,
+.markdown-content h4,
+.markdown-content h5,
+.markdown-content h6 {
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+}
+
+.markdown-content p {
+    margin-bottom: 1rem;
+}
+
+.markdown-content ul,
+.markdown-content ol {
+    margin-bottom: 1rem;
+    padding-left: 2rem;
+}
+
+.markdown-content code {
+    padding: 0.2rem 0.4rem;
+    background-color: rgba(0, 0, 0, 0.05);
+    border-radius: 0.25rem;
+}
+
+[data-bs-theme="dark"] .markdown-content code {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.markdown-content pre {
+    padding: 1rem;
+    background-color: rgba(0, 0, 0, 0.05);
+    border-radius: 0.375rem;
+    overflow-x: auto;
+}
+
+[data-bs-theme="dark"] .markdown-content pre {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.markdown-content blockquote {
+    padding: 0.5rem 1rem;
+    margin: 1rem 0;
+    border-left: 4px solid var(--ingeweb-primary);
+    background-color: rgba(0, 128, 254, 0.05);
+}
+
+/* ========================================
+   Accessibility
+   ======================================== */
+:focus-visible {
+    outline: 2px solid var(--ingeweb-primary);
+    outline-offset: 2px;
+}
+
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
 }
