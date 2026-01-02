@@ -144,13 +144,9 @@ msgstr "Ver"
 msgid "Download"
 msgstr "Descargar"
 
-#, fuzzy
 msgid "Upload"
-msgstr ""
-"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
-"Subir\n"
-"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
-"Cargar"
+msgstr "Subir"
+"Subir"
 
 msgid "Print"
 msgstr "Imprimir"
@@ -193,12 +189,10 @@ msgstr "Deshabilitado"
 msgid "Paid"
 msgstr "Pagado"
 
-#, fuzzy
 msgid "Unpaid"
-msgstr ""
-"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
+msgstr "Sin pagar"
+"Sin pagar#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
 "No Pagado\n"
-"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
 "No pagado"
 
 msgid "Refunded"
@@ -287,12 +281,10 @@ msgstr "Número de teléfono"
 msgid "Company"
 msgstr "Empresa"
 
-#, fuzzy
 msgid "Company Name"
-msgstr ""
-"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
+msgstr "Nombre de la Empresa"
+"Nombre de la Empresa#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
 "Nombre de la Empresa\n"
-"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
 "Nombre de la empresa"
 
 msgid "Company name"
@@ -337,12 +329,10 @@ msgstr "ID de Pedido"
 msgid "Order Date"
 msgstr "Fecha del Pedido"
 
-#, fuzzy
 msgid "Order status"
-msgstr ""
-"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
+msgstr "Estado del pedido"
+"Estado del pedido#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
 "Estado del Pedido\n"
-"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
 "Estado del pedido"
 
 msgid "New Order"
@@ -422,12 +412,9 @@ msgstr "Fecha de Vencimiento"
 msgid "Due at"
 msgstr "Vence el"
 
-#, fuzzy
 msgid "Amount"
-msgstr ""
-"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
+msgstr "Monto"
 "Importe\n"
-"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
 "Monto"
 
 msgid "Total"
@@ -541,12 +528,9 @@ msgstr "Fecha de expiración"
 
 # #-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#
 # Hosting
-#, fuzzy
 msgid "Hosting"
-msgstr ""
-"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
+msgstr "Hospedaje"
 "Hosting\n"
-"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
 "Alojamiento"
 
 msgid "Hosting plan"
@@ -573,20 +557,14 @@ msgstr "Servidores"
 msgid "Server Name"
 msgstr "Nombre del Servidor"
 
-#, fuzzy
 msgid "Server Hostname"
-msgstr ""
-"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
+msgstr "Nombre del servidor"
 "Nombre de Host del Servidor\n"
-"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
 "Hostname del servidor"
 
-#, fuzzy
 msgid "Server IP"
-msgstr ""
-"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
+msgstr "IP del servidor"
 "IP del Servidor\n"
-"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
 "IP del servidor"
 
 msgid "Username"
@@ -1091,12 +1069,9 @@ msgstr "No se encontraron resultados"
 msgid "No results found for:"
 msgstr "No se encontraron resultados para:"
 
-#, fuzzy
 msgid "All"
-msgstr ""
-"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
+msgstr "Todos"
 "Todos\n"
-"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
 "Todo"
 
 msgid "None"
@@ -1105,12 +1080,9 @@ msgstr "Ninguno"
 msgid "Select All"
 msgstr "Seleccionar Todo"
 
-#, fuzzy
 msgid "Default"
-msgstr ""
-"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
+msgstr "Predeterminado"
 "Por defecto\n"
-"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
 "Predeterminado"
 
 # #-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#
@@ -1238,12 +1210,9 @@ msgstr "Ocultar"
 msgid "Expand"
 msgstr "Expandir"
 
-#, fuzzy
 msgid "Collapse"
-msgstr ""
-"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
+msgstr "Contraer"
 "Contraer\n"
-"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
 "Colapsar"
 
 # #-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#
@@ -1416,13 +1385,10 @@ msgstr "Debe ingresar su correo electrónico."
 msgid "You must fill in your password."
 msgstr "Debe ingresar su contraseña."
 
-#, fuzzy
 msgid "You must verify your email address before you may access our services."
 msgstr ""
-"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
 "Debe verificar su dirección de correo electrónico antes de poder acceder a "
 "nuestros servicios.\n"
-"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
 "Debe verificar su dirección de correo electrónico antes de acceder a "
 "nuestros servicios."
 
@@ -1500,12 +1466,9 @@ msgstr "Notas del pedido"
 msgid "Support tickets regarding this order"
 msgstr "Tickets de soporte relacionados con este pedido"
 
-#, fuzzy
 msgid "Addons you have ordered with this service"
 msgstr ""
-"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
 "Complementos que ha pedido con este servicio\n"
-"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
 "Complementos que has pedido con este servicio"
 
 msgid "All information about your service"
@@ -1819,12 +1782,9 @@ msgstr "Formulario de Pedido"
 
 # #-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#
 # Confirm
-#, fuzzy
 msgid "Password Confirm"
-msgstr ""
-"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
+msgstr "Confirmar Contraseña"
 "Confirmar Contraseña\n"
-"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
 "Confirmar contraseña"
 
 msgid "Password confirm"
@@ -1873,28 +1833,19 @@ msgstr "Mejorar"
 msgid "Upgrades"
 msgstr "Mejoras"
 
-#, fuzzy
 msgid "Upgrade to"
-msgstr ""
-"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
+msgstr "Actualizar a"
 "Mejorar a\n"
-"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
 "Actualizar a"
 
-#, fuzzy
 msgid "Request Upgrade"
-msgstr ""
-"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
+msgstr "Solicitar Actualización"
 "Solicitar Mejora\n"
-"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
 "Solicitar Actualización"
 
-#, fuzzy
 msgid "I would like to upgrade"
-msgstr ""
-"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
+msgstr "Me gustaría actualizar"
 "Me gustaría mejorar\n"
-"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
 "Me gustaría actualizar"
 
 # #-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#
