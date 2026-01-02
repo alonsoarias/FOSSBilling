@@ -567,8 +567,8 @@ class Service implements InjectionAwareInterface
                 $model->username = $acct['user'];
                 $model->pass = '********'; // We don't have access to real passwords
                 $model->reseller = $isReseller;
-                // Use cPanel account creation date
-                $createdAt = $this->parseWhmDate($acct['startdate'] ?? null);
+                // Use cPanel account creation date (prefer unix timestamp)
+                $createdAt = $this->parseWhmDate($acct['unix_startdate'] ?? null, $acct['startdate'] ?? null);
                 $model->created_at = $createdAt;
                 $model->updated_at = date('Y-m-d H:i:s');
                 $serviceId = $this->di['db']->store($model);
@@ -927,8 +927,8 @@ class Service implements InjectionAwareInterface
         $client->email_approved = true;
         $client->client_group_id = $clientGroupId;
 
-        // Use cPanel account creation date for client registration
-        $createdAt = $this->parseWhmDate($acct['startdate'] ?? null);
+        // Use cPanel account creation date for client registration (prefer unix timestamp)
+        $createdAt = $this->parseWhmDate($acct['unix_startdate'] ?? null, $acct['startdate'] ?? null);
         $client->created_at = $createdAt;
         $client->updated_at = date('Y-m-d H:i:s');
 
@@ -968,8 +968,8 @@ class Service implements InjectionAwareInterface
         // Find or create client
         $client = $this->findOrCreateClient($acct, $clientGroupId, $duplicateAction);
 
-        // Parse cPanel account creation date
-        $createdAt = $this->parseWhmDate($acct['startdate'] ?? null);
+        // Parse cPanel account creation date (prefer unix timestamp)
+        $createdAt = $this->parseWhmDate($acct['unix_startdate'] ?? null, $acct['startdate'] ?? null);
 
         // Update existing service with ALL data including dates
         $existingService->client_id = $client->id;
@@ -1093,8 +1093,8 @@ class Service implements InjectionAwareInterface
             ],
         ]);
 
-        // Parse WHM date format to MySQL datetime format
-        $createdAt = $this->parseWhmDate($acct['startdate'] ?? null);
+        // Parse WHM date format to MySQL datetime format (prefer unix timestamp)
+        $createdAt = $this->parseWhmDate($acct['unix_startdate'] ?? null, $acct['startdate'] ?? null);
         $order->created_at = $createdAt;
         $order->updated_at = date('Y-m-d H:i:s');
 
@@ -1130,30 +1130,37 @@ class Service implements InjectionAwareInterface
     }
 
     /**
-     * Parse WHM date format to MySQL datetime format.
-     * WHM returns dates in format: 'DD Mon YY HH:MM' (e.g., "01 May 25 01:00" = May 1, 2025).
+     * Parse WHM date to MySQL datetime format.
+     * WHM provides both a unix_startdate (Unix timestamp) and startdate (string format "YY Mon DD HH:MM").
+     * We prefer unix_startdate as it's unambiguous.
      *
-     * @param string|null $whmDate Date string from WHM
+     * @param string|int|null $unixStartDate Unix timestamp from WHM (preferred)
+     * @param string|null     $startDate     String date from WHM (format: "YY Mon DD HH:MM")
      *
      * @return string MySQL datetime format (Y-m-d H:i:s)
      */
-    protected function parseWhmDate(?string $whmDate): string
+    protected function parseWhmDate($unixStartDate = null, ?string $startDate = null): string
     {
-        if (empty($whmDate)) {
+        // Prefer unix timestamp as it's unambiguous
+        if (!empty($unixStartDate) && is_numeric($unixStartDate)) {
+            return date('Y-m-d H:i:s', (int) $unixStartDate);
+        }
+
+        if (empty($startDate)) {
             return date('Y-m-d H:i:s');
         }
 
-        // Handle unix timestamp
-        if (is_numeric($whmDate)) {
-            return date('Y-m-d H:i:s', (int) $whmDate);
+        // Handle if startDate is a unix timestamp (legacy support)
+        if (is_numeric($startDate)) {
+            return date('Y-m-d H:i:s', (int) $startDate);
         }
 
-        // Try to parse WHM format: "DD Mon YY HH:MM"
-        // Example: "01 May 25 01:00" -> 1 May 2025 01:00:00
-        if (preg_match('/^(\d{1,2})\s+(\w+)\s+(\d{2})\s+(\d{2}:\d{2})$/', $whmDate, $matches)) {
-            $day = (int) $matches[1];
+        // Try to parse WHM format: "YY Mon DD HH:MM"
+        // Example: "25 May 19 01:00" -> May 19, 2025 01:00:00
+        if (preg_match('/^(\d{2})\s+(\w+)\s+(\d{1,2})\s+(\d{2}:\d{2})$/', $startDate, $matches)) {
+            $year = (int) $matches[1];
             $month = $matches[2];
-            $year = (int) $matches[3];
+            $day = (int) $matches[3];
             $time = $matches[4];
 
             // Convert 2-digit year to 4-digit (assume 2000s for years < 70)
@@ -1167,13 +1174,13 @@ class Service implements InjectionAwareInterface
         }
 
         // Try standard parsing as fallback
-        $timestamp = strtotime($whmDate);
+        $timestamp = strtotime($startDate);
         if ($timestamp !== false) {
             return date('Y-m-d H:i:s', $timestamp);
         }
 
         // Fallback to current date
-        $this->di['logger']->warning('Could not parse WHM date: :date', [':date' => $whmDate]);
+        $this->di['logger']->warning('Could not parse WHM date: :date', [':date' => $startDate]);
 
         return date('Y-m-d H:i:s');
     }
@@ -1317,8 +1324,8 @@ class Service implements InjectionAwareInterface
             $rawStartDate = $acct->startdate ?? null;
             $unixStartDate = $acct->unix_startdate ?? null;
 
-            // Test our parsing function
-            $parsedDate = $this->parseWhmDate($rawStartDate);
+            // Test our parsing function (now uses unix_startdate preferentially)
+            $parsedDate = $this->parseWhmDate($unixStartDate, $rawStartDate);
 
             $results[] = [
                 'user' => $acct->user ?? 'unknown',
