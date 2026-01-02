@@ -1,5 +1,5 @@
 {% macro selectbox(name, options, selected, required, nullOption) %}
-    <select name="{{ name }}" class="form-select{% if required %} is-required{% endif %}">
+    <select name="{{ name }}" class="form-control{% if required %} is-required{% endif %}">
         {% if nullOption %}<option value="">{{ nullOption }}</option>{% endif %}
         {% for val, label in options %}
         <option value="{{ val }}" {% if selected == val %}selected{% endif %}>{{ label }}</option>
@@ -8,7 +8,7 @@
 {% endmacro %}
 
 {% macro selectboxtld(name, options, selected, required) %}
-    <select name="{{ name }}" class="form-select{% if required %} is-required{% endif %}" style="width: 80px;">
+    <select name="{{ name }}" class="form-control{% if required %} is-required{% endif %}" style="width: 80px;">
         {% for data in options %}
         <option value="{{ data.tld }}" {% if selected == data.tld %}selected{% endif %}>{{ data.tld }}</option>
         {% endfor %}
@@ -50,25 +50,6 @@
     {% endif %}
 {% endmacro %}
 
-{% macro status_badge(status) %}
-    {% set status_lower = status|lower|replace({'_': "-"}) %}
-    {% if status_lower == 'active' or status_lower == 'paid' %}
-        <span class="badge bg-success">{{ _self.status_name(status) }}</span>
-    {% elseif status_lower == 'pending-setup' or status_lower == 'pending' %}
-        <span class="badge bg-warning text-dark">{{ _self.status_name(status) }}</span>
-    {% elseif status_lower == 'suspended' or status_lower == 'failed-setup' or status_lower == 'failed-renew' %}
-        <span class="badge bg-danger">{{ _self.status_name(status) }}</span>
-    {% elseif status_lower == 'canceled' or status_lower == 'cancelled' %}
-        <span class="badge bg-secondary">{{ _self.status_name(status) }}</span>
-    {% elseif status_lower == 'unpaid' %}
-        <span class="badge bg-warning text-dark">{{ _self.status_name(status) }}</span>
-    {% elseif status_lower == 'refunded' %}
-        <span class="badge bg-info">{{ _self.status_name(status) }}</span>
-    {% else %}
-        <span class="badge bg-secondary">{{ _self.status_name(status) }}</span>
-    {% endif %}
-{% endmacro %}
-
 {# deprecated - use period_title filter #}
 {% macro period_name(period) %}
     {{ period | period_title }}
@@ -77,18 +58,21 @@
 {% macro markdown_quote(text) %}
 
 
+
 {% for line in text|split('\n') %}
 > {{ line }}
 {% endfor %}
 {% endmacro %}
 
+
 {% macro recaptcha() %}
+
 {% if guest.extension_is_on({"mod":"spamchecker"}) %}
 {% set rc = guest.spamchecker_recaptcha %}
     {% if rc.enabled %}
         {% if rc.version == 2 %}
             <script src='https://www.google.com/recaptcha/api.js' async defer></script>
-            <div class="g-recaptcha mb-3" data-sitekey="{{ rc.publickey }}"></div>
+            <div class="g-recaptcha" data-sitekey="{{ rc.publickey }}"></div>
         {% endif %}
     {% endif %}
 {% endif %}
@@ -100,21 +84,4 @@
 {% else %}
 <!-- No WYSIWYG, no fancy stuff. Enable the WYSIWYG extension for a better management experience. -->
 {% endif %}
-{% endmacro %}
-
-{% macro empty_state(icon, title, message, action_url, action_text) %}
-<div class="empty-state">
-    <div class="empty-icon">
-        <i class="fa-solid fa-{{ icon }}"></i>
-    </div>
-    <h4 class="empty-title">{{ title }}</h4>
-    {% if message %}
-    <p class="empty-message">{{ message }}</p>
-    {% endif %}
-    {% if action_url and action_text %}
-    <a href="{{ action_url }}" class="btn btn-primary">
-        <i class="fa-solid fa-plus me-2"></i>{{ action_text }}
-    </a>
-    {% endif %}
-</div>
 {% endmacro %}
