@@ -40,7 +40,7 @@
                 </td>
                 <td>
                     <strong>{{ extension.name }}</strong> {{ latest.tag }}<br>
-                    <span>by <a href="{{ extension.author.URL }}" target="_blank">{{ extension.author.id }}</a></span>
+                    <span>{{ 'by'|trans }} <a href="{{ extension.author.URL }}" target="_blank">{{ extension.author.id }}</a></span>
                 </td>
                 <td>
                     {{ extension.description|truncate(150) }}<br>
@@ -55,9 +55,9 @@
                 </td>
                 <td>
                     <a class="btn btn-icon api-link"
-                       data-api-confirm="Are you sure?"
-                       data-api-confirm-btn="Install"
-                       data-api-confirm-content='By installing "{{ extension.name }}", you agree with terms and conditions. Only install extensions you trust. You also might want to have a full backup ready in case something goes wrong.'
+                       data-api-confirm="{{ 'Are you sure?'|trans }}"
+                       data-api-confirm-btn="{{ 'Install'|trans }}"
+                       data-api-confirm-content="{{ 'By installing this extension, you agree with terms and conditions. Only install extensions you trust. You also might want to have a full backup ready in case something goes wrong.'|trans }}"
                        data-api-reload="1"
                        href="{{ 'api/admin/extension/install'|link ({ 'type': extension.type, 'id': extension.id, 'CSRFToken': CSRFToken }) }}"
                        data-bs-toggle="tooltip" data-bs-title="{{ 'Install extension'|trans }}">

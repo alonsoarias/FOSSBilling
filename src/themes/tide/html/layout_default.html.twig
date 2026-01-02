@@ -138,14 +138,14 @@
                         </div>
                      </div>
                      <div class="d-none d-md-flex me-3">
-                        <a href="?theme=dark" class="nav-link px-0 hide-theme-dark js-theme-toggler" title="Enable dark mode" data-bs-toggle="tooltip"
+                        <a href="?theme=dark" class="nav-link px-0 hide-theme-dark js-theme-toggler" title="{{ 'Enable dark mode'|trans }}" data-bs-toggle="tooltip"
                         data-bs-placement="bottom">
                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
                            <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
                            </svg>
                         </a>
-                        <a href="?theme=light" class="nav-link px-0 hide-theme-light js-theme-toggler" title="Enable light mode" data-bs-toggle="tooltip"
+                        <a href="?theme=light" class="nav-link px-0 hide-theme-light js-theme-toggler" title="{{ 'Enable light mode'|trans }}" data-bs-toggle="tooltip"
                         data-bs-placement="bottom">
                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
@@ -156,11 +156,11 @@
                      </div>
                      {% if client %}
                      <div class="nav-item dropdown">
-                        <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown" aria-label="Open user menu">
+                        <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown" aria-label="{{ 'Open user menu'|trans }}">
                            <span class="avatar avatar-sm" style="background-image: url({{ profile.email|gravatar(60) }})"></span>
                            <div class="d-none d-xl-block ps-2">
-                              <div>Welcome, {{profile.first_name}}</div>
-                              <div class="mt-1 small text-muted">Balance: {{ profile.balance | money(profile.currency) }}</div>
+                              <div>{{ 'Welcome,'|trans }} {{profile.first_name}}</div>
+                              <div class="mt-1 small text-muted">{{ 'Balance:'|trans }} {{ profile.balance | money(profile.currency) }}</div>
                            </div>
                         </a>
                         <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
@@ -616,7 +616,7 @@
             <img alt="loading gif" src="{{ 'img/loader.gif'|asset_url}}" style="position: absolute; display: block; margin-left: auto; margin-right: auto; position: relative; top: 50%; opacity: 1; filter: alpha(opacity=100); z-index: 1003">
          </div>
       </div>
-      <noscript>NOTE: Many features on FOSSBilling require Javascript and cookies. You can enable both via your browser's preference settings.</noscript>
+      <noscript>{{ 'NOTE: Many features on FOSSBilling require Javascript and cookies. You can enable both via your browser\'s preference settings.'|trans }}</noscript>
       {% endblock %}
       {% if settings.inject_javascript %}
       {{ settings.inject_javascript | raw}}

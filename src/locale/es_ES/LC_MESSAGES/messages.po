@@ -1205,8 +1205,13 @@ msgstr ""
 msgid "Contact not found"
 msgstr ""
 
+#, fuzzy
 msgid "Contact us"
-msgstr "Contáctenos"
+msgstr ""
+"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
+"Contáctenos\n"
+"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
+"Contáctanos"
 
 msgid "Content"
 msgstr "Contenido"
@@ -2007,6 +2012,7 @@ msgstr ""
 msgid "Enter page title here."
 msgstr ""
 
+# #-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#
 # Admin Dashboard strings
 msgid "Enter search text..."
 msgstr "Ingresa texto de búsqueda..."
@@ -3707,8 +3713,13 @@ msgstr ""
 msgid "No detected issues."
 msgstr ""
 
+#, fuzzy
 msgid "No items selected"
-msgstr "Ningún elemento seleccionado"
+msgstr ""
+"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
+"Ningún elemento seleccionado\n"
+"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
+"No hay elementos seleccionados"
 
 msgid "No news or announcements"
 msgstr ""
@@ -4442,7 +4453,7 @@ msgid "Quantity in stock"
 msgstr ""
 
 msgid "Quantity:"
-msgstr ""
+msgstr "Cantidad:"
 
 msgid "Quote reply"
 msgstr ""
@@ -4920,7 +4931,7 @@ msgid "Settings updated"
 msgstr ""
 
 msgid "Setup Price"
-msgstr ""
+msgstr "Precio de instalación"
 
 msgid ""
 "Setup domain pricing and allowed operations. Assign specific domain "
@@ -4930,8 +4941,13 @@ msgstr ""
 msgid "Setup new TLD prices and properties"
 msgstr ""
 
+#, fuzzy
 msgid "Setup price"
-msgstr "Precio de configuración"
+msgstr ""
+"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
+"Precio de configuración\n"
+"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
+"Precio de instalación"
 
 msgid "Setup:"
 msgstr ""
@@ -5570,7 +5586,7 @@ msgid "Total amount will be deducted from account balance"
 msgstr "Total"
 
 msgid "Total price:"
-msgstr ""
+msgstr "Precio total:"
 
 msgid "Total:"
 msgstr ""
@@ -7061,8 +7077,13 @@ msgstr ""
 "SeleccionarPor favor intenta leer temas relacionados en la base de "
 "conocimientos antes de contactar a soporte."
 
+#, fuzzy
 msgid "Powered by the FOSSBilling Community"
-msgstr "Desarrollado por la Comunidad FOSSBilling"
+msgstr ""
+"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
+"Desarrollado por la Comunidad FOSSBilling\n"
+"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
+"Desarrollado por la comunidad FOSSBilling"
 
 msgid "Proforma"
 msgstr "Proforma"
@@ -7785,3 +7806,32 @@ msgstr "Marcar como pagado"
 
 msgid "None (Default PHP Behavior)"
 msgstr "Ninguna (Comportamiento predeterminado de PHP)"
+
+# Tide theme layout translations
+msgid "Welcome,"
+msgstr "Bienvenido,"
+
+msgid "Balance:"
+msgstr "Saldo:"
+
+msgid ""
+"NOTE: Many features on FOSSBilling require Javascript and cookies. You can "
+"enable both via your browser's preference settings."
+msgstr ""
+"NOTA: Muchas funciones en FOSSBilling requieren Javascript y cookies. Puedes "
+"habilitarlos en la configuración de preferencias de tu navegador."
+
+msgid ""
+"By installing this extension, you agree with terms and conditions. Only "
+"install extensions you trust. You also might want to have a full backup "
+"ready in case something goes wrong."
+msgstr ""
+"Al instalar esta extensión, aceptas los términos y condiciones. Solo instala "
+"extensiones en las que confíes. También podrías querer tener una copia de "
+"seguridad completa lista en caso de que algo salga mal."
+
+msgid "Search settings"
+msgstr "Configuración de búsqueda"
+
+msgid "Price for period"
+msgstr "Precio por período"
