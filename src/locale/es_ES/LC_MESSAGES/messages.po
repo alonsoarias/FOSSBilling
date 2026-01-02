@@ -4194,8 +4194,13 @@ msgstr "Teléfono"
 msgid "Phone Country Code"
 msgstr ""
 
+#, fuzzy
 msgid "Phone Number"
-msgstr "Número de Teléfono"
+msgstr ""
+"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
+"Número de Teléfono\n"
+"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
+"Número de teléfono"
 
 msgid "Phone number"
 msgstr "Número de teléfono"
@@ -6346,8 +6351,13 @@ msgstr ""
 msgid "Zip"
 msgstr ""
 
+#, fuzzy
 msgid "Zip/Postal Code"
-msgstr "Código Postal"
+msgstr ""
+"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
+"Código Postal\n"
+"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
+"Código postal"
 
 msgid "account synchronization"
 msgstr ""
@@ -7716,8 +7726,13 @@ msgstr "Mostrar contraseña"
 msgid "Hide password"
 msgstr "Ocultar contraseña"
 
+#, fuzzy
 msgid "Enter email"
-msgstr "Ingresa email"
+msgstr ""
+"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
+"Ingresa email\n"
+"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
+"Ingresa tu email"
 
 msgid "Create new account"
 msgstr "Crear nueva cuenta"
@@ -7835,3 +7850,19 @@ msgstr "Configuración de búsqueda"
 
 msgid "Price for period"
 msgstr "Precio por período"
+
+# Missing translations
+msgid "Under Maintenance"
+msgstr "En mantenimiento"
+
+msgid "No components configured"
+msgstr "No hay componentes configurados"
+
+msgid "Password confirm"
+msgstr "Confirmar contraseña"
+
+msgid "Please check your mailbox and confirm email address"
+msgstr "Por favor revisa tu correo y confirma tu dirección de email"
+
+msgid "Orders"
+msgstr "Pedidos"
