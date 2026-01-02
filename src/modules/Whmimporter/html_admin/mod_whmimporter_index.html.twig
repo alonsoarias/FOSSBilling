@@ -731,10 +731,10 @@ document.addEventListener('DOMContentLoaded', function() {
             let html = '<div class="mb-3">';
 
             if (result.plans_created && result.plans_created.length > 0) {
-                html += '<h6 class="text-info"><svg class="icon"><use xlink:href="#package" /></svg> Hosting Plans Created (' + result.plans_created.length + ')</h6>';
+                html += '<h6 class="text-info"><svg class="icon"><use xlink:href="#package" /></svg> {{ 'Hosting Plans Created'|trans }} (' + result.plans_created.length + ')</h6>';
                 html += '<ul class="list-unstyled">';
-                result.plans_created.forEach(planId => {
-                    html += '<li>Plan ID: ' + planId + '</li>';
+                result.plans_created.forEach(plan => {
+                    html += '<li><strong>' + plan.name + '</strong> <span class="text-muted small">(HP #' + plan.hp_id + ', Product #' + plan.product_id + ')</span></li>';
                 });
                 html += '</ul>';
             }

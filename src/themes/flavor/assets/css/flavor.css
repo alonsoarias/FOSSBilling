@@ -1130,6 +1130,99 @@ h6, .h6 { font-size: 0.875rem; }
     display: flex;
     align-items: center;
     justify-content: center;
+    cursor: pointer;
+}
+
+.wait .spinner-border {
+    width: 4rem;
+    height: 4rem;
+}
+
+[data-bs-theme="dark"] .wait {
+    background: rgba(17, 24, 39, 0.8);
+}
+
+/* Modal improvements */
+.modal-content {
+    border-radius: var(--border-radius-lg);
+    border: 1px solid var(--border);
+}
+
+.modal-header {
+    border-bottom-color: var(--border);
+}
+
+.modal-footer {
+    border-top-color: var(--border);
+}
+
+/* List group improvements */
+.list-group-item {
+    border-color: var(--border);
+}
+
+.list-group-item.active {
+    background-color: var(--primary);
+    border-color: var(--primary);
+}
+
+/* Nav tabs */
+.nav-tabs .nav-link {
+    border-radius: var(--border-radius) var(--border-radius) 0 0;
+    color: var(--text-muted);
+}
+
+.nav-tabs .nav-link:hover {
+    border-color: var(--border);
+    color: var(--primary);
+}
+
+.nav-tabs .nav-link.active {
+    color: var(--primary);
+    border-color: var(--border) var(--border) var(--white);
+}
+
+/* Nav pills */
+.nav-pills .nav-link {
+    border-radius: var(--border-radius);
+    color: var(--text);
+}
+
+.nav-pills .nav-link:hover {
+    background-color: var(--light);
+}
+
+.nav-pills .nav-link.active {
+    background-color: var(--primary);
+    color: var(--white);
+}
+
+/* Accordion */
+.accordion-item {
+    border-color: var(--border);
+}
+
+.accordion-button {
+    font-weight: 500;
+}
+
+.accordion-button:not(.collapsed) {
+    background-color: var(--primary-light);
+    color: var(--primary);
+}
+
+.accordion-button:focus {
+    box-shadow: 0 0 0 3px rgba(var(--primary-rgb), 0.15);
+}
+
+/* Progress bars */
+.progress {
+    background-color: var(--light);
+    border-radius: var(--border-radius);
+}
+
+.progress-bar {
+    background-color: var(--primary);
 }
 
 /* ========================================

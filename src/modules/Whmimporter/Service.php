@@ -687,6 +687,7 @@ class Service implements InjectionAwareInterface
         $product = $this->createProductForHostingPlan($hp, $serverId, $planName);
 
         $plansCreated[$planName] = [
+            'name' => $planName,
             'hp_id' => $hpId,
             'product_id' => $product->id,
         ];
