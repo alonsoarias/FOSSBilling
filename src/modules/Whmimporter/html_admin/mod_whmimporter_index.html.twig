@@ -156,6 +156,18 @@
                         {{ 'Select the accounts you want to import. Each account will be automatically assigned to its corresponding cPanel package. If the package does not exist in FOSSBilling, it will be created.'|trans }}
                     </div>
 
+                    <div class="alert alert-warning mb-3">
+                        <svg class="icon"><use xlink:href="#alert-triangle" /></svg>
+                        <div>
+                            <strong>{{ 'About account types'|trans }}:</strong>
+                            <ul class="mb-0 mt-1">
+                                <li><span class="badge bg-purple">Reseller</span> - {{ 'A reseller is a single product that can contain its own sub-accounts.'|trans }}</li>
+                                <li><span class="badge bg-info">Sub-account</span> - {{ 'These accounts belong to a reseller and are NOT separate products. They should generally NOT be imported.'|trans }}</li>
+                                <li><span class="badge bg-secondary">Standard</span> - {{ 'Regular hosting accounts owned directly by root.'|trans }}</li>
+                            </ul>
+                        </div>
+                    </div>
+
                     <div class="row mb-3">
                         <div class="col-md-4">
                             <label class="form-label">{{ 'Client Group'|trans }}</label>
@@ -194,13 +206,19 @@
                     <div class="mb-3">
                         <div class="btn-group" role="group" aria-label="Account filter">
                             <input type="radio" class="btn-check" name="accountFilter" id="filterAll" value="all" checked>
-                            <label class="btn btn-outline-primary" for="filterAll">{{ 'All Accounts'|trans }}</label>
+                            <label class="btn btn-outline-primary" for="filterAll">{{ 'All'|trans }}</label>
+
+                            <input type="radio" class="btn-check" name="accountFilter" id="filterDirect" value="direct">
+                            <label class="btn btn-outline-success" for="filterDirect">{{ 'Direct Accounts (Recommended)'|trans }}</label>
 
                             <input type="radio" class="btn-check" name="accountFilter" id="filterResellers" value="reseller">
-                            <label class="btn btn-outline-primary" for="filterResellers">{{ 'Resellers Only'|trans }}</label>
+                            <label class="btn btn-outline-purple" for="filterResellers">{{ 'Resellers Only'|trans }}</label>
 
-                            <input type="radio" class="btn-check" name="accountFilter" id="filterRegular" value="regular">
-                            <label class="btn btn-outline-primary" for="filterRegular">{{ 'Regular Accounts'|trans }}</label>
+                            <input type="radio" class="btn-check" name="accountFilter" id="filterStandard" value="standard">
+                            <label class="btn btn-outline-secondary" for="filterStandard">{{ 'Standard Only'|trans }}</label>
+
+                            <input type="radio" class="btn-check" name="accountFilter" id="filterSubaccounts" value="subaccount">
+                            <label class="btn btn-outline-info" for="filterSubaccounts">{{ 'Sub-accounts'|trans }}</label>
                         </div>
                     </div>
 
@@ -253,6 +271,21 @@
 </div>
 
 {% endif %}
+{% endblock %}
+
+{% block head %}
+<style>
+    .btn-outline-purple {
+        color: #6f42c1;
+        border-color: #6f42c1;
+    }
+    .btn-outline-purple:hover,
+    .btn-check:checked + .btn-outline-purple {
+        color: #fff;
+        background-color: #6f42c1;
+        border-color: #6f42c1;
+    }
+</style>
 {% endblock %}
 
 {% block js %}
@@ -308,17 +341,30 @@ document.addEventListener('DOMContentLoaded', function() {
 
         let filtered;
         switch (filterType) {
+            case 'direct':
+                // Direct accounts: owned by root (resellers + standard), excludes sub-accounts
+                filtered = window.accountsData.filter(a => !a.is_owned_by_reseller);
+                break;
             case 'reseller':
+                // Reseller accounts only
                 filtered = window.accountsData.filter(a => a.is_reseller);
                 break;
-            case 'regular':
-                filtered = window.accountsData.filter(a => !a.is_reseller);
+            case 'standard':
+                // Standard accounts: owned by root and NOT resellers
+                filtered = window.accountsData.filter(a => !a.is_reseller && !a.is_owned_by_reseller);
+                break;
+            case 'subaccount':
+                // Sub-accounts: owned by a reseller (NOT root)
+                filtered = window.accountsData.filter(a => a.is_owned_by_reseller);
                 break;
             default:
                 filtered = window.accountsData;
         }
 
         renderAccountsList(filtered);
+
+        // Update select all checkbox state
+        document.getElementById('selectAllAccounts').checked = false;
     }
 
     // Make functions globally available
