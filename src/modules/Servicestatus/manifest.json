@@ -1,5 +1,5 @@
 {
-    "id": "Servicestatus",
+    "id": "servicestatus",
     "type": "mod",
     "name": "Service Status",
     "description": "Public status page showing the health and availability of your services. Similar to Statuspage.io or Blesta System Status.",
