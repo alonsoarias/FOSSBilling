@@ -577,6 +577,35 @@ class Service implements InjectionAwareInterface
         return $result;
     }
 
+    /**
+     * Get all unique domains owned by a client from their hosting services.
+     *
+     * @param int $clientId Client ID
+     *
+     * @return array List of domains with sld and tld
+     */
+    public function getClientDomains(int $clientId): array
+    {
+        $services = $this->di['db']->find('ServiceHosting', 'client_id = ?', [$clientId]);
+
+        $domains = [];
+        $seen = [];
+
+        foreach ($services as $service) {
+            $domain = $service->sld . $service->tld;
+            if (!empty($domain) && !isset($seen[$domain])) {
+                $seen[$domain] = true;
+                $domains[] = [
+                    'sld' => $service->sld,
+                    'tld' => $service->tld,
+                    'domain' => $domain,
+                ];
+            }
+        }
+
+        return $domains;
+    }
+
     private function _getDomainTuple($data): array
     {
         $required = [
@@ -630,6 +659,18 @@ class Service implements InjectionAwareInterface
             // Base domain becomes the TLD (e.g., ".orioncloud.com.co")
             $baseDomain = $data['domain']['subdomain_base'];
             $tld = str_contains($baseDomain, '.') ? '.' . ltrim($baseDomain, '.') : '.' . $baseDomain;
+        }
+
+        // New domain action: allows using any domain without validation
+        if ($data['domain']['action'] == 'newdomain') {
+            $required = [
+                'newdomain_sld' => 'Domain name is required',
+                'newdomain_tld' => 'Domain extension is required',
+            ];
+            $this->di['validator']->checkRequiredParamsForArray($required, $data['domain']);
+
+            $sld = $data['domain']['newdomain_sld'];
+            $tld = str_contains($data['domain']['newdomain_tld'], '.') ? $data['domain']['newdomain_tld'] : '.' . $data['domain']['newdomain_tld'];
         }
 
         return [$sld, $tld];

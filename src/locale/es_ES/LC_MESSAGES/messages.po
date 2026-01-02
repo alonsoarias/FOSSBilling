@@ -1978,6 +1978,12 @@ msgstr "Usaré mi dominio existente y actualizaré los nameservers"
 msgid "I want to use a subdomain"
 msgstr "Quiero usar un subdominio"
 
+msgid "I want to use a subdomain of my existing domains"
+msgstr "Quiero usar un subdominio de mis dominios existentes"
+
+msgid "I want to use a new domain"
+msgstr "Quiero usar un nuevo dominio"
+
 msgid "I want to register a new domain"
 msgstr "Quiero registrar un nuevo dominio"
 
@@ -1987,6 +1993,15 @@ msgstr "Tu dominio existente"
 msgid "Your new domain"
 msgstr "Tu nuevo dominio"
 
+msgid "Domain name"
+msgstr "Nombre de dominio"
+
+msgid "Extension"
+msgstr "Extensión"
+
+msgid "Enter the domain you own or will acquire"
+msgstr "Ingresa el dominio que posees o adquirirás"
+
 msgid "Subdomain"
 msgstr "Subdominio"
 
@@ -1995,6 +2010,9 @@ msgstr "Dominio base (ej: example.com)"
 
 msgid "Example: mysite.orioncloud.com.co"
 msgstr "Ejemplo: misitio.orioncloud.com.co"
+
+msgid "Example: mysite.yourdomain.com"
+msgstr "Ejemplo: misitio.tudominio.com"
 
 msgid "Check"
 msgstr "Verificar"

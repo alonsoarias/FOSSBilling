@@ -63,6 +63,19 @@ class Client extends \Api_Abstract
     }
 
     /**
+     * Get client's existing domains from their hosting services.
+     * Useful for selecting a base domain when creating subdomains.
+     *
+     * @return array List of domains
+     */
+    public function get_my_domains(): array
+    {
+        $identity = $this->getIdentity();
+
+        return $this->getService()->getClientDomains($identity->id);
+    }
+
+    /**
      * Returns the login URL for a given order ID.
      * If the associated server manager supports SSO, an SSO link will be given.
      * Will automatically return either a reseller URL or a standard URL depending on the order config.
