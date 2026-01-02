@@ -97,6 +97,126 @@
     {% endfor %}
 </div>
 
+<!-- Cleanup/Delete Section -->
+<div class="card mt-4">
+    <div class="card-header">
+        <h3 class="card-title">
+            <svg class="icon me-2"><use xlink:href="#trash-2" /></svg>
+            {{ 'Cleanup & Delete Imported Data'|trans }}
+        </h3>
+    </div>
+    <div class="card-body">
+        <div class="alert alert-danger">
+            <svg class="icon"><use xlink:href="#alert-triangle" /></svg>
+            <div>
+                <h4 class="alert-title">{{ 'Danger Zone'|trans }}</h4>
+                <div class="text-secondary">
+                    {{ 'These actions are irreversible. Make sure you have backups before proceeding.'|trans }}
+                </div>
+            </div>
+        </div>
+
+        <div class="row row-cards">
+            <div class="col-md-6 col-lg-3">
+                <div class="card card-sm">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center">
+                            <span class="avatar bg-danger text-white me-3">
+                                <svg class="icon"><use xlink:href="#server" /></svg>
+                            </span>
+                            <div>
+                                <div class="fw-bold">{{ 'Delete Hosting Services'|trans }}</div>
+                                <div class="text-secondary small">{{ 'Delete all hosting accounts and orders'|trans }}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <a href="#" class="btn btn-outline-danger btn-sm btn-delete-services">
+                            <svg class="icon"><use xlink:href="#trash-2" /></svg>
+                            {{ 'Delete Services'|trans }}
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-3">
+                <div class="card card-sm">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center">
+                            <span class="avatar bg-warning text-white me-3">
+                                <svg class="icon"><use xlink:href="#users" /></svg>
+                            </span>
+                            <div>
+                                <div class="fw-bold">{{ 'Delete Imported Clients'|trans }}</div>
+                                <div class="text-secondary small">{{ 'Delete clients with hosting services'|trans }}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <a href="#" class="btn btn-outline-warning btn-sm btn-delete-clients">
+                            <svg class="icon"><use xlink:href="#trash-2" /></svg>
+                            {{ 'Delete Clients'|trans }}
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-3">
+                <div class="card card-sm">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center">
+                            <span class="avatar bg-info text-white me-3">
+                                <svg class="icon"><use xlink:href="#package" /></svg>
+                            </span>
+                            <div>
+                                <div class="fw-bold">{{ 'Delete Hosting Products'|trans }}</div>
+                                <div class="text-secondary small">{{ 'Delete hosting product catalog'|trans }}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <a href="#" class="btn btn-outline-info btn-sm btn-delete-products">
+                            <svg class="icon"><use xlink:href="#trash-2" /></svg>
+                            {{ 'Delete Products'|trans }}
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-3">
+                <div class="card card-sm">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center">
+                            <span class="avatar bg-secondary text-white me-3">
+                                <svg class="icon"><use xlink:href="#layers" /></svg>
+                            </span>
+                            <div>
+                                <div class="fw-bold">{{ 'Delete Hosting Plans'|trans }}</div>
+                                <div class="text-secondary small">{{ 'Delete hosting plan configurations'|trans }}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <a href="#" class="btn btn-outline-secondary btn-sm btn-delete-plans">
+                            <svg class="icon"><use xlink:href="#trash-2" /></svg>
+                            {{ 'Delete Plans'|trans }}
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <hr class="my-4">
+
+        <div class="d-flex justify-content-end">
+            <a href="#" class="btn btn-danger btn-delete-all">
+                <svg class="icon"><use xlink:href="#alert-octagon" /></svg>
+                {{ 'Delete Everything (Full Reset)'|trans }}
+            </a>
+        </div>
+    </div>
+</div>
+
 <!-- Import Packages Modal -->
 <div class="modal modal-blur fade" id="importPackagesModal" tabindex="-1">
     <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
@@ -665,6 +785,237 @@ document.addEventListener('DOMContentLoaded', function() {
             alert('Import failed: ' + error);
             document.getElementById('btnDoImportAccounts').disabled = false;
             document.getElementById('btnDoImportAccounts').innerHTML = '<svg class="icon"><use xlink:href="#download" /></svg> Import Selected Accounts';
+        });
+    });
+
+    // Delete Services
+    document.querySelectorAll('.btn-delete-services').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            e.preventDefault();
+            if (!confirm('{{ 'Are you sure you want to delete ALL hosting services and their orders? This action cannot be undone!'|trans }}')) {
+                return;
+            }
+
+            const button = this;
+            button.disabled = true;
+            button.innerHTML = '<span class="spinner-border spinner-border-sm"></span> {{ 'Deleting...'|trans }}';
+
+            API.admin.post('whmimporter/delete_hosting_services', {}, function(result) {
+                button.disabled = false;
+                button.innerHTML = '<svg class="icon"><use xlink:href="#trash-2" /></svg> {{ 'Delete Services'|trans }}';
+
+                let html = '<div class="mb-3">';
+                html += '<h6 class="text-success">{{ 'Deleted'|trans }} (' + result.deleted_count + ' {{ 'services'|trans }})</h6>';
+                if (result.deleted.length > 0 && result.deleted.length <= 10) {
+                    html += '<ul class="list-unstyled">';
+                    result.deleted.forEach(item => {
+                        html += '<li>' + item.username + ' - ' + item.domain + '</li>';
+                    });
+                    html += '</ul>';
+                }
+                if (result.errors.length > 0) {
+                    html += '<h6 class="text-danger">{{ 'Errors'|trans }}</h6>';
+                    html += '<ul class="list-unstyled">';
+                    result.errors.forEach(err => {
+                        html += '<li>' + err.username + ': ' + err.error + '</li>';
+                    });
+                    html += '</ul>';
+                }
+                html += '</div>';
+
+                document.getElementById('resultsModalTitle').textContent = '{{ 'Delete Results'|trans }}';
+                document.getElementById('resultsModalBody').innerHTML = html;
+                resultsModal.show();
+            }, function(error) {
+                button.disabled = false;
+                button.innerHTML = '<svg class="icon"><use xlink:href="#trash-2" /></svg> {{ 'Delete Services'|trans }}';
+                alert('{{ 'Error'|trans }}: ' + error);
+            });
+        });
+    });
+
+    // Delete Clients
+    document.querySelectorAll('.btn-delete-clients').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            e.preventDefault();
+            if (!confirm('{{ 'Are you sure you want to delete ALL clients with hosting services? This will also delete their orders and services. This action cannot be undone!'|trans }}')) {
+                return;
+            }
+
+            const button = this;
+            button.disabled = true;
+            button.innerHTML = '<span class="spinner-border spinner-border-sm"></span> {{ 'Deleting...'|trans }}';
+
+            API.admin.post('whmimporter/delete_clients', { only_imported: true }, function(result) {
+                button.disabled = false;
+                button.innerHTML = '<svg class="icon"><use xlink:href="#trash-2" /></svg> {{ 'Delete Clients'|trans }}';
+
+                let html = '<div class="mb-3">';
+                html += '<h6 class="text-success">{{ 'Deleted'|trans }} (' + result.deleted_count + ' {{ 'clients'|trans }})</h6>';
+                if (result.deleted.length > 0 && result.deleted.length <= 10) {
+                    html += '<ul class="list-unstyled">';
+                    result.deleted.forEach(item => {
+                        html += '<li>' + item.email + ' - ' + item.name + '</li>';
+                    });
+                    html += '</ul>';
+                }
+                if (result.errors.length > 0) {
+                    html += '<h6 class="text-danger">{{ 'Errors'|trans }}</h6>';
+                    html += '<ul class="list-unstyled">';
+                    result.errors.forEach(err => {
+                        html += '<li>ID ' + err.id + ': ' + err.error + '</li>';
+                    });
+                    html += '</ul>';
+                }
+                html += '</div>';
+
+                document.getElementById('resultsModalTitle').textContent = '{{ 'Delete Results'|trans }}';
+                document.getElementById('resultsModalBody').innerHTML = html;
+                resultsModal.show();
+            }, function(error) {
+                button.disabled = false;
+                button.innerHTML = '<svg class="icon"><use xlink:href="#trash-2" /></svg> {{ 'Delete Clients'|trans }}';
+                alert('{{ 'Error'|trans }}: ' + error);
+            });
+        });
+    });
+
+    // Delete Products
+    document.querySelectorAll('.btn-delete-products').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            e.preventDefault();
+            if (!confirm('{{ 'Are you sure you want to delete ALL hosting products? Products in use cannot be deleted. This action cannot be undone!'|trans }}')) {
+                return;
+            }
+
+            const button = this;
+            button.disabled = true;
+            button.innerHTML = '<span class="spinner-border spinner-border-sm"></span> {{ 'Deleting...'|trans }}';
+
+            API.admin.post('whmimporter/delete_hosting_products', {}, function(result) {
+                button.disabled = false;
+                button.innerHTML = '<svg class="icon"><use xlink:href="#trash-2" /></svg> {{ 'Delete Products'|trans }}';
+
+                let html = '<div class="mb-3">';
+                html += '<h6 class="text-success">{{ 'Deleted'|trans }} (' + result.deleted_count + ' {{ 'products'|trans }})</h6>';
+                if (result.deleted.length > 0 && result.deleted.length <= 10) {
+                    html += '<ul class="list-unstyled">';
+                    result.deleted.forEach(item => {
+                        html += '<li>' + item.title + '</li>';
+                    });
+                    html += '</ul>';
+                }
+                if (result.errors.length > 0) {
+                    html += '<h6 class="text-warning">{{ 'Skipped (in use)'|trans }}</h6>';
+                    html += '<ul class="list-unstyled">';
+                    result.errors.forEach(err => {
+                        html += '<li>' + err.title + ': ' + err.error + '</li>';
+                    });
+                    html += '</ul>';
+                }
+                html += '</div>';
+
+                document.getElementById('resultsModalTitle').textContent = '{{ 'Delete Results'|trans }}';
+                document.getElementById('resultsModalBody').innerHTML = html;
+                resultsModal.show();
+            }, function(error) {
+                button.disabled = false;
+                button.innerHTML = '<svg class="icon"><use xlink:href="#trash-2" /></svg> {{ 'Delete Products'|trans }}';
+                alert('{{ 'Error'|trans }}: ' + error);
+            });
+        });
+    });
+
+    // Delete Plans
+    document.querySelectorAll('.btn-delete-plans').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            e.preventDefault();
+            if (!confirm('{{ 'Are you sure you want to delete ALL hosting plans? Plans in use cannot be deleted. This action cannot be undone!'|trans }}')) {
+                return;
+            }
+
+            const button = this;
+            button.disabled = true;
+            button.innerHTML = '<span class="spinner-border spinner-border-sm"></span> {{ 'Deleting...'|trans }}';
+
+            API.admin.post('whmimporter/delete_hosting_plans', {}, function(result) {
+                button.disabled = false;
+                button.innerHTML = '<svg class="icon"><use xlink:href="#trash-2" /></svg> {{ 'Delete Plans'|trans }}';
+
+                let html = '<div class="mb-3">';
+                html += '<h6 class="text-success">{{ 'Deleted'|trans }} (' + result.deleted_count + ' {{ 'plans'|trans }})</h6>';
+                if (result.deleted.length > 0 && result.deleted.length <= 10) {
+                    html += '<ul class="list-unstyled">';
+                    result.deleted.forEach(item => {
+                        html += '<li>' + item.name + '</li>';
+                    });
+                    html += '</ul>';
+                }
+                if (result.errors.length > 0) {
+                    html += '<h6 class="text-warning">{{ 'Skipped (in use)'|trans }}</h6>';
+                    html += '<ul class="list-unstyled">';
+                    result.errors.forEach(err => {
+                        html += '<li>' + err.name + ': ' + err.error + '</li>';
+                    });
+                    html += '</ul>';
+                }
+                html += '</div>';
+
+                document.getElementById('resultsModalTitle').textContent = '{{ 'Delete Results'|trans }}';
+                document.getElementById('resultsModalBody').innerHTML = html;
+                resultsModal.show();
+            }, function(error) {
+                button.disabled = false;
+                button.innerHTML = '<svg class="icon"><use xlink:href="#trash-2" /></svg> {{ 'Delete Plans'|trans }}';
+                alert('{{ 'Error'|trans }}: ' + error);
+            });
+        });
+    });
+
+    // Delete All
+    document.querySelectorAll('.btn-delete-all').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            e.preventDefault();
+            if (!confirm('{{ 'WARNING: This will delete ALL hosting services, imported clients, products, and plans! Are you absolutely sure?'|trans }}')) {
+                return;
+            }
+            if (!confirm('{{ 'This is your last chance to cancel. Type DELETE in the next prompt to confirm.'|trans }}')) {
+                return;
+            }
+
+            const confirmation = prompt('{{ 'Type DELETE to confirm complete deletion:'|trans }}');
+            if (confirmation !== 'DELETE') {
+                alert('{{ 'Deletion cancelled.'|trans }}');
+                return;
+            }
+
+            const button = this;
+            button.disabled = true;
+            button.innerHTML = '<span class="spinner-border spinner-border-sm"></span> {{ 'Deleting everything...'|trans }}';
+
+            API.admin.post('whmimporter/delete_all', {}, function(result) {
+                button.disabled = false;
+                button.innerHTML = '<svg class="icon"><use xlink:href="#alert-octagon" /></svg> {{ 'Delete Everything (Full Reset)'|trans }}';
+
+                let html = '<div class="mb-3">';
+                html += '<h5 class="text-success mb-3">{{ 'Complete cleanup finished!'|trans }}</h5>';
+                html += '<table class="table table-sm">';
+                html += '<tr><td>{{ 'Services deleted'|trans }}</td><td class="text-end"><strong>' + result.services.deleted_count + '</strong></td></tr>';
+                html += '<tr><td>{{ 'Clients deleted'|trans }}</td><td class="text-end"><strong>' + result.clients.deleted_count + '</strong></td></tr>';
+                html += '<tr><td>{{ 'Products deleted'|trans }}</td><td class="text-end"><strong>' + result.products.deleted_count + '</strong></td></tr>';
+                html += '<tr><td>{{ 'Plans deleted'|trans }}</td><td class="text-end"><strong>' + result.plans.deleted_count + '</strong></td></tr>';
+                html += '<tr class="table-success"><td><strong>{{ 'Total deleted'|trans }}</strong></td><td class="text-end"><strong>' + result.total_deleted + '</strong></td></tr>';
+                html += '</table>';
+                html += '</div>';
+
+                document.getElementById('resultsModalTitle').textContent = '{{ 'Complete Cleanup Results'|trans }}';
+                document.getElementById('resultsModalBody').innerHTML = html;
+                resultsModal.show();
+            }, function(error) {
+                button.disabled = false;
+                button.innerHTML = '<svg class="icon"><use xlink:href="#alert-octagon" /></svg> {{ 'Delete Everything (Full Reset)'|trans }}';
+                alert('{{ 'Error'|trans }}: ' + error);
+            });
         });
     });
 });

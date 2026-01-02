@@ -1309,6 +1309,285 @@ class Service implements InjectionAwareInterface
     }
 
     /**
+     * Delete all imported clients.
+     * This will delete clients that have orders for hosting products.
+     *
+     * @param bool $onlyImported If true, only delete clients with hosting services
+     *
+     * @return array Results with deleted count
+     */
+    public function deleteClients(bool $onlyImported = true): array
+    {
+        $deleted = [];
+        $errors = [];
+
+        if ($onlyImported) {
+            // Only delete clients that have hosting orders (imported from WHM)
+            $sql = "SELECT DISTINCT c.* FROM client c
+                    INNER JOIN client_order co ON c.id = co.client_id
+                    WHERE co.service_type = 'hosting'";
+            $clients = $this->di['db']->getAll($sql);
+
+            foreach ($clients as $clientData) {
+                try {
+                    $client = $this->di['db']->load('Client', $clientData['id']);
+                    if ($client) {
+                        // Delete all orders for this client
+                        $orders = $this->di['db']->find('ClientOrder', 'client_id = ?', [$client->id]);
+                        foreach ($orders as $order) {
+                            // Delete associated service if hosting
+                            if ($order->service_type === 'hosting' && $order->service_id) {
+                                $service = $this->di['db']->load('ServiceHosting', $order->service_id);
+                                if ($service) {
+                                    $this->di['db']->trash($service);
+                                }
+                            }
+                            $this->di['db']->trash($order);
+                        }
+
+                        // Delete client
+                        $this->di['db']->trash($client);
+                        $deleted[] = [
+                            'id' => $clientData['id'],
+                            'email' => $clientData['email'],
+                            'name' => $clientData['first_name'] . ' ' . $clientData['last_name'],
+                        ];
+                    }
+                } catch (\Exception $e) {
+                    $errors[] = [
+                        'id' => $clientData['id'],
+                        'error' => $e->getMessage(),
+                    ];
+                }
+            }
+        } else {
+            // Delete ALL clients (dangerous)
+            $clients = $this->di['db']->find('Client', '1');
+            foreach ($clients as $client) {
+                try {
+                    // Delete all orders for this client
+                    $orders = $this->di['db']->find('ClientOrder', 'client_id = ?', [$client->id]);
+                    foreach ($orders as $order) {
+                        if ($order->service_type === 'hosting' && $order->service_id) {
+                            $service = $this->di['db']->load('ServiceHosting', $order->service_id);
+                            if ($service) {
+                                $this->di['db']->trash($service);
+                            }
+                        }
+                        $this->di['db']->trash($order);
+                    }
+
+                    $deleted[] = [
+                        'id' => $client->id,
+                        'email' => $client->email,
+                        'name' => $client->first_name . ' ' . $client->last_name,
+                    ];
+                    $this->di['db']->trash($client);
+                } catch (\Exception $e) {
+                    $errors[] = [
+                        'id' => $client->id,
+                        'error' => $e->getMessage(),
+                    ];
+                }
+            }
+        }
+
+        $this->di['logger']->info('Deleted :count clients during WHM cleanup', [':count' => count($deleted)]);
+
+        return [
+            'deleted' => $deleted,
+            'deleted_count' => count($deleted),
+            'errors' => $errors,
+        ];
+    }
+
+    /**
+     * Delete all hosting packages (plans).
+     *
+     * @return array Results with deleted count
+     */
+    public function deleteHostingPlans(): array
+    {
+        $deleted = [];
+        $errors = [];
+
+        $plans = $this->di['db']->find('ServiceHostingHp', '1');
+
+        foreach ($plans as $plan) {
+            try {
+                // Check if plan is in use by any service
+                $inUse = $this->di['db']->findOne('ServiceHosting', 'service_hosting_hp_id = ?', [$plan->id]);
+
+                if ($inUse) {
+                    $errors[] = [
+                        'id' => $plan->id,
+                        'name' => $plan->name,
+                        'error' => 'Plan is in use by hosting services',
+                    ];
+                    continue;
+                }
+
+                $deleted[] = [
+                    'id' => $plan->id,
+                    'name' => $plan->name,
+                ];
+                $this->di['db']->trash($plan);
+            } catch (\Exception $e) {
+                $errors[] = [
+                    'id' => $plan->id,
+                    'name' => $plan->name ?? 'unknown',
+                    'error' => $e->getMessage(),
+                ];
+            }
+        }
+
+        $this->di['logger']->info('Deleted :count hosting plans during WHM cleanup', [':count' => count($deleted)]);
+
+        return [
+            'deleted' => $deleted,
+            'deleted_count' => count($deleted),
+            'errors' => $errors,
+        ];
+    }
+
+    /**
+     * Delete all hosting products.
+     *
+     * @return array Results with deleted count
+     */
+    public function deleteHostingProducts(): array
+    {
+        $deleted = [];
+        $errors = [];
+
+        $products = $this->di['db']->find('Product', "type = 'hosting'");
+
+        foreach ($products as $product) {
+            try {
+                // Check if product is in use by any order
+                $inUse = $this->di['db']->findOne('ClientOrder', 'product_id = ?', [$product->id]);
+
+                if ($inUse) {
+                    $errors[] = [
+                        'id' => $product->id,
+                        'title' => $product->title,
+                        'error' => 'Product is in use by client orders',
+                    ];
+                    continue;
+                }
+
+                // Delete associated payment configuration
+                if ($product->product_payment_id) {
+                    $payment = $this->di['db']->load('ProductPayment', $product->product_payment_id);
+                    if ($payment) {
+                        $this->di['db']->trash($payment);
+                    }
+                }
+
+                $deleted[] = [
+                    'id' => $product->id,
+                    'title' => $product->title,
+                ];
+                $this->di['db']->trash($product);
+            } catch (\Exception $e) {
+                $errors[] = [
+                    'id' => $product->id,
+                    'title' => $product->title ?? 'unknown',
+                    'error' => $e->getMessage(),
+                ];
+            }
+        }
+
+        $this->di['logger']->info('Deleted :count hosting products during WHM cleanup', [':count' => count($deleted)]);
+
+        return [
+            'deleted' => $deleted,
+            'deleted_count' => count($deleted),
+            'errors' => $errors,
+        ];
+    }
+
+    /**
+     * Delete all hosting services (without deleting clients).
+     *
+     * @return array Results with deleted count
+     */
+    public function deleteHostingServices(): array
+    {
+        $deleted = [];
+        $errors = [];
+
+        $services = $this->di['db']->find('ServiceHosting', '1');
+
+        foreach ($services as $service) {
+            try {
+                // Delete associated order
+                $order = $this->di['db']->findOne('ClientOrder', 'service_id = ? AND service_type = ?', [
+                    $service->id,
+                    'hosting',
+                ]);
+
+                if ($order) {
+                    $this->di['db']->trash($order);
+                }
+
+                $deleted[] = [
+                    'id' => $service->id,
+                    'username' => $service->username,
+                    'domain' => $service->sld . $service->tld,
+                ];
+                $this->di['db']->trash($service);
+            } catch (\Exception $e) {
+                $errors[] = [
+                    'id' => $service->id,
+                    'username' => $service->username ?? 'unknown',
+                    'error' => $e->getMessage(),
+                ];
+            }
+        }
+
+        $this->di['logger']->info('Deleted :count hosting services during WHM cleanup', [':count' => count($deleted)]);
+
+        return [
+            'deleted' => $deleted,
+            'deleted_count' => count($deleted),
+            'errors' => $errors,
+        ];
+    }
+
+    /**
+     * Delete everything imported from WHM (clients, services, orders, products, plans).
+     * This is a complete cleanup operation.
+     *
+     * @return array Results with all deleted counts
+     */
+    public function deleteAll(): array
+    {
+        // Order matters: delete in reverse dependency order
+        // 1. Delete hosting services (and their orders)
+        $services = $this->deleteHostingServices();
+
+        // 2. Delete clients that had hosting services
+        $clients = $this->deleteClients(true);
+
+        // 3. Delete hosting products
+        $products = $this->deleteHostingProducts();
+
+        // 4. Delete hosting plans
+        $plans = $this->deleteHostingPlans();
+
+        $this->di['logger']->info('Complete WHM cleanup performed');
+
+        return [
+            'services' => $services,
+            'clients' => $clients,
+            'products' => $products,
+            'plans' => $plans,
+            'total_deleted' => $services['deleted_count'] + $clients['deleted_count'] + $products['deleted_count'] + $plans['deleted_count'],
+        ];
+    }
+
+    /**
      * Debug: Get raw date information from WHM accounts.
      * This helps diagnose date parsing issues.
      */

@@ -197,4 +197,59 @@ class Admin extends \Api_Abstract
 
         return $this->getService()->debugDates((int) $data['server_id']);
     }
+
+    /**
+     * Delete all clients that have hosting services.
+     *
+     * @param bool $only_imported If true, only delete clients with hosting services (default: true)
+     *
+     * @return array Results with deleted count
+     */
+    public function delete_clients(array $data = []): array
+    {
+        $onlyImported = isset($data['only_imported']) ? (bool) $data['only_imported'] : true;
+
+        return $this->getService()->deleteClients($onlyImported);
+    }
+
+    /**
+     * Delete all hosting plans.
+     *
+     * @return array Results with deleted count
+     */
+    public function delete_hosting_plans(): array
+    {
+        return $this->getService()->deleteHostingPlans();
+    }
+
+    /**
+     * Delete all hosting products.
+     *
+     * @return array Results with deleted count
+     */
+    public function delete_hosting_products(): array
+    {
+        return $this->getService()->deleteHostingProducts();
+    }
+
+    /**
+     * Delete all hosting services (accounts) and their orders.
+     *
+     * @return array Results with deleted count
+     */
+    public function delete_hosting_services(): array
+    {
+        return $this->getService()->deleteHostingServices();
+    }
+
+    /**
+     * Delete everything imported from WHM (clients, services, orders, products, plans).
+     * This is a complete cleanup operation.
+     *
+     * @return array Results with all deleted counts
+     */
+    public function delete_all(): array
+    {
+        return $this->getService()->deleteAll();
+    }
 }
