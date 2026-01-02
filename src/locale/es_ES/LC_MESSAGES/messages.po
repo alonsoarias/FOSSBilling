@@ -107,7 +107,7 @@ msgid ""
 msgstr ""
 
 msgid "A ping wasn't sent yet"
-msgstr ""
+msgstr "Aún no se ha enviado un ping"
 
 msgid ""
 "A valid contact company number is mandatory for registering an .AU domain "
@@ -115,16 +115,16 @@ msgid ""
 msgstr ""
 
 msgid "A4"
-msgstr ""
+msgstr "A4"
 
 msgid "API Key"
 msgstr "Clave API"
 
 msgid "API Key settings"
-msgstr ""
+msgstr "Configuración de clave API"
 
 msgid "API call is missing arguments"
-msgstr ""
+msgstr "A la llamada API le faltan argumentos"
 
 msgid "API key"
 msgstr "Clave API"
@@ -140,25 +140,25 @@ msgstr ""
 "esta clave para la autenticación."
 
 msgid "API key capitalization"
-msgstr ""
+msgstr "Capitalización de clave API"
 
 msgid "API key configuration"
-msgstr ""
+msgstr "Configuración de clave API"
 
 msgid "API key details"
-msgstr ""
+msgstr "Detalles de clave API"
 
 msgid "API key does not exist"
-msgstr ""
+msgstr "La clave API no existe"
 
 msgid "API key settings updated"
-msgstr ""
+msgstr "Configuración de clave API actualizada"
 
 msgid "API key updated"
-msgstr ""
+msgstr "Clave API actualizada"
 
 msgid "ASN Organization"
-msgstr ""
+msgstr "Organización ASN"
 
 msgid ""
 "ASN stands for autonomous system number. IP address info may not always be "
@@ -166,61 +166,61 @@ msgid ""
 msgstr ""
 
 msgid "About"
-msgstr ""
+msgstr "Acerca de"
 
 msgid "About FOSSBilling"
 msgstr "Acerca de FOSSBilling"
 
 msgid "About us"
-msgstr ""
+msgstr "Sobre nosotros"
 
 msgid "Absolute"
-msgstr ""
+msgstr "Absoluto"
 
 msgid "Account"
 msgstr "Cuenta"
 
 msgid "Account IP"
-msgstr ""
+msgstr "IP de la cuenta"
 
 msgid "Account IP address is missing or is invalid"
 msgstr ""
 
 msgid "Account IP changed"
-msgstr ""
+msgstr "IP de la cuenta cambiada"
 
 msgid "Account Number"
-msgstr ""
+msgstr "Número de cuenta"
 
 msgid "Account Owner"
-msgstr ""
+msgstr "Propietario de la cuenta"
 
 msgid "Account balance"
-msgstr ""
+msgstr "Saldo de la cuenta"
 
 msgid "Account domain changed"
-msgstr ""
+msgstr "Dominio de la cuenta cambiado"
 
 msgid "Account number"
-msgstr ""
+msgstr "Número de cuenta"
 
 msgid "Account password changed"
-msgstr ""
+msgstr "Contraseña de la cuenta cambiada"
 
 msgid "Account password is missing or is invalid"
 msgstr ""
 
 msgid "Account username changed"
-msgstr ""
+msgstr "Nombre de usuario de la cuenta cambiado"
 
 msgid "Account username is missing or is invalid"
 msgstr ""
 
 msgid "Account was synced"
-msgstr ""
+msgstr "La cuenta fue sincronizada"
 
 msgid "Action code"
-msgstr ""
+msgstr "Código de acción"
 
 msgid "Actions"
 msgstr "Acciones"
@@ -229,19 +229,19 @@ msgid "Activate"
 msgstr "Activar"
 
 msgid "Activate or deactivate extensions"
-msgstr ""
+msgstr "Activar o desactivar extensiones"
 
 msgid "Activate order"
-msgstr ""
+msgstr "Activar pedido"
 
 msgid "Activated at"
 msgstr "Activado el"
 
 msgid "Activation"
-msgstr ""
+msgstr "Activación"
 
 msgid "Activation Date"
-msgstr ""
+msgstr "Fecha de activación"
 
 msgid "Active"
 msgstr "Activo"
@@ -250,16 +250,16 @@ msgid "Active support tickets"
 msgstr "Tickets de soporte activos"
 
 msgid "Active:"
-msgstr ""
+msgstr "Activo:"
 
 msgid "Activity"
 msgstr "Actividad"
 
 msgid "Activity log retention"
-msgstr ""
+msgstr "Retención del registro de actividad"
 
 msgid "Activity settings"
-msgstr ""
+msgstr "Configuración de actividad"
 
 msgid "Add"
 msgstr "Agregar"
@@ -267,66 +267,66 @@ msgstr "Agregar"
 msgid ""
 "Add \" + selector + \" ID to your element which must call popup. For "
 "example: "
-msgstr ""
+msgstr "Acciones"
 
 msgid ""
 "Add \" + selector + \" class to your elements which must call popup. For "
 "example: "
-msgstr ""
+msgstr "Actividad"
 
 msgid ""
 "Add data-product attribute to your element to open specific product. For "
 "example:"
-msgstr ""
+msgstr "Activar"
 
 msgid "Add fund"
-msgstr ""
+msgstr "Agregar fondos"
 
 msgid "Add funds"
 msgstr "Agregar fondos"
 
 msgid "Add funds for client"
-msgstr ""
+msgstr "Agregar fondos para el cliente"
 
 msgid "Add funds settings"
-msgstr ""
+msgstr "Configuración de agregar fondos"
 
 msgid "Add funds to account"
-msgstr ""
+msgstr "Agregar fondos a la cuenta"
 
 msgid "Add new"
 msgstr "Agregar nuevo"
 
 msgid "Add new currency"
-msgstr ""
+msgstr "Agregar nueva moneda"
 
 msgid "Add new field"
-msgstr ""
+msgstr "Agregar nuevo campo"
 
 msgid "Add new form"
-msgstr ""
+msgstr "Agregar nuevo formulario"
 
 msgid "Add new top level domain"
-msgstr ""
+msgstr "Agregar nuevo dominio de nivel superior"
 
 msgid "Add note"
-msgstr ""
+msgstr "Agregar nota"
 
 msgid "Add note or todo task"
-msgstr ""
+msgstr "Agregar nota o tarea"
 
 msgid ""
 "Add order-button class to your elements which must call popup. For example:"
-msgstr ""
+msgstr "Activo"
 
 msgid "Add page content"
-msgstr ""
+msgstr "Agregar contenido de página"
 
 msgid "Add products to your cart before applying promo code"
 msgstr ""
 
 msgid "Add server"
-msgstr ""
+msgstr "Agregar servidor"
 
 msgid "Add some content before sending message"
 msgstr ""
@@ -338,34 +338,34 @@ msgid "Add to cart"
 msgstr "Agregar al carrito"
 
 msgid "Adding new domain registrar"
-msgstr ""
+msgstr "Agregando nuevo registrador de dominios"
 
 msgid "Adding new hosting plan"
-msgstr ""
+msgstr "Agregando nuevo plan de hosting"
 
 msgid "Adding new payment gateway"
-msgstr ""
+msgstr "Agregando nueva pasarela de pago"
 
 msgid "Additional settings"
-msgstr ""
+msgstr "Configuración adicional"
 
 msgid "Addon domains"
-msgstr ""
+msgstr "Dominios adicionales"
 
 msgid "Addon not found"
-msgstr ""
+msgstr "Complemento no encontrado"
 
 msgid "Addon products cannot be added separately."
-msgstr ""
+msgstr "Agregar al carrito"
 
 msgid "Addon updated"
-msgstr ""
+msgstr "Complemento actualizado"
 
 msgid "Addons"
 msgstr "Complementos"
 
 msgid "Addons & extras"
-msgstr ""
+msgstr "Complementos y extras"
 
 msgid "Addons you have ordered with this service"
 msgstr "Complementos que has pedido con este servicio"
@@ -377,43 +377,43 @@ msgid "Address 2"
 msgstr "Dirección 2"
 
 msgid "Address Line 1"
-msgstr ""
+msgstr "Línea de dirección 1"
 
 msgid "Address Line 2"
-msgstr ""
+msgstr "Línea de dirección 2"
 
 msgid "Address and contact details"
-msgstr ""
+msgstr "Dirección y detalles de contacto"
 
 msgid "Address line 1"
-msgstr ""
+msgstr "Línea de dirección 1"
 
 msgid "Address line 2"
-msgstr ""
+msgstr "Línea de dirección 2"
 
 msgid "Address line 3"
-msgstr ""
+msgstr "Línea de dirección 3"
 
 msgid "Admin"
 msgstr "Administrador"
 
 msgid "Admin area themes"
-msgstr ""
+msgstr "Temas del área de administración"
 
 msgid "Admin is not logged in"
-msgstr ""
+msgstr "El administrador no ha iniciado sesión"
 
 msgid "Administrator account already exists"
-msgstr ""
+msgstr "La cuenta de administrador ya existe"
 
 msgid "Administrators group cannot be removed"
-msgstr ""
+msgstr "El grupo de administradores no puede ser eliminado"
 
 msgid "Advanced Ticket Search"
-msgstr ""
+msgstr "Búsqueda avanzada de tickets"
 
 msgid "Advanced search"
-msgstr ""
+msgstr "Búsqueda avanzada"
 
 msgid "Advanced settings"
 msgstr "Configuración avanzada"
@@ -421,10 +421,10 @@ msgstr "Configuración avanzada"
 msgid ""
 "After enabling this feature, all existing users will have to confirm their "
 "emails if it was not done before"
-msgstr ""
+msgstr "Dirección"
 
 msgid "After file is uploaded in place, reload this page."
-msgstr ""
+msgstr "Admin"
 
 msgid "After order is placed"
 msgstr ""
@@ -436,13 +436,13 @@ msgid "All"
 msgstr "Todo"
 
 msgid "All IPs"
-msgstr ""
+msgstr "Todas las IPs"
 
 msgid "All Invoices"
-msgstr ""
+msgstr "Todas las facturas"
 
 msgid "All hosts"
-msgstr ""
+msgstr "Todos los hosts"
 
 msgid "All information about your service"
 msgstr "Toda la información sobre tu servicio"
@@ -450,7 +450,7 @@ msgstr "Toda la información sobre tu servicio"
 msgid ""
 "All of your invoices can be found here. You can choose to see either paid or "
 "unpaid invoices by clicking corresponding button."
-msgstr ""
+msgstr "Todos"
 "Todas tus facturas se pueden encontrar aquí. Puedes elegir ver facturas "
 "pagadas o no pagadas haciendo clic en el botón correspondiente."
 
@@ -463,13 +463,13 @@ msgid "All orders"
 msgstr "Todas las órdenes"
 
 msgid "All paths"
-msgstr ""
+msgstr "Todas las rutas"
 
 msgid "All payment gateways installed"
-msgstr ""
+msgstr "Todas las pasarelas de pago instaladas"
 
 msgid "All statuses"
-msgstr ""
+msgstr "Todos los estados"
 
 msgid "All tested URLs were inaccessible."
 msgstr ""
@@ -478,34 +478,34 @@ msgid "All tickets"
 msgstr "Todos los tickets"
 
 msgid "All versions"
-msgstr ""
+msgstr "Todas las versiones"
 
 msgid "Allow access to invoices without authentication"
-msgstr ""
+msgstr "Permitir acceso a facturas sin autenticación"
 
 msgid "Allow one time payments"
-msgstr ""
+msgstr "Permitir pagos únicos"
 
 msgid "Allow register:"
-msgstr ""
+msgstr "Permitir registro:"
 
 msgid "Allow registration"
-msgstr ""
+msgstr "Permitir registro"
 
 msgid "Allow staff reset passwords"
-msgstr ""
+msgstr "Permitir que el personal restablezca contraseñas"
 
 msgid "Allow subscription payments"
-msgstr ""
+msgstr "Permitir pagos por suscripción"
 
 msgid "Allow subscriptions"
-msgstr ""
+msgstr "Permitir suscripciones"
 
 msgid "Allow transfer"
-msgstr ""
+msgstr "Permitir transferencia"
 
 msgid "Allow transfer:"
-msgstr ""
+msgstr "Permitir transferencia:"
 
 msgid "Allowed IPs. One per line"
 msgstr ""
@@ -569,7 +569,7 @@ msgid "Amount"
 msgstr "Monto"
 
 msgid "Amount cannot exceed :max_amount"
-msgstr ""
+msgstr "Monto"
 
 msgid "Amount must be at least :min_amount"
 msgstr ""
@@ -641,7 +641,7 @@ msgid "Approved"
 msgstr "Aprobado"
 
 msgid "Are you sure you want to delete the selected item?"
-msgstr ""
+msgstr "Aprobado"
 
 msgid "Are you sure you want to delete the selected items?"
 msgstr ""
@@ -659,7 +659,7 @@ msgid "Are you sure?"
 msgstr "¿Está seguro?"
 
 msgid "Article Category not found"
-msgstr ""
+msgstr "¿Estás seguro?"
 
 msgid "Article Updated"
 msgstr ""
@@ -683,7 +683,7 @@ msgid "Authentication Required"
 msgstr ""
 
 msgid "Author"
-msgstr ""
+msgstr "Autor"
 
 msgid "Auto"
 msgstr "Automático"
@@ -743,10 +743,10 @@ msgid "Bandwidth"
 msgstr "Ancho de banda"
 
 msgid "Bandwidth (MB)"
-msgstr ""
+msgstr "Saldo"
 
 msgid "Bank"
-msgstr ""
+msgstr "Ancho de banda"
 
 msgid "Bank Account"
 msgstr ""
@@ -770,7 +770,7 @@ msgid "Billing cycle"
 msgstr "Ciclo de facturación"
 
 msgid "Birthdate"
-msgstr ""
+msgstr "Ciclo de facturación"
 
 msgid "Birthday"
 msgstr "Fecha de Nacimiento"
@@ -801,7 +801,7 @@ msgstr "El directorio de caché ha sido limpiado"
 msgid ""
 "Can be disabled to prevent the staff member from using any part of this "
 "module."
-msgstr ""
+msgstr "Caché"
 
 msgid "Can't modify client"
 msgstr ""
@@ -810,7 +810,7 @@ msgid "Cancel"
 msgstr "Cancelar"
 
 msgid "Cancel Suspended Orders"
-msgstr ""
+msgstr "Cancelar"
 
 msgid "Cancel URL for the payment gateway was not set"
 msgstr ""
@@ -890,13 +890,13 @@ msgid "Category"
 msgstr "Categoría"
 
 msgid "Category ID or slug is missing"
-msgstr ""
+msgstr "Categoría"
 
 msgid "Category List"
-msgstr ""
+msgstr "Categorías"
 
 msgid "Category created"
-msgstr ""
+msgstr "Carrito"
 
 msgid "Category not found"
 msgstr ""
@@ -926,7 +926,7 @@ msgid "Change password"
 msgstr "Cambiar contraseña"
 
 msgid "Change staff member password"
-msgstr ""
+msgstr "Cambiar contraseña"
 
 msgid "Change username"
 msgstr ""
@@ -976,7 +976,7 @@ msgid "Checkout"
 msgstr "Pagar"
 
 msgid "Checks general information such as the FOSSBilling configuration."
-msgstr ""
+msgstr "Pagar"
 
 msgid ""
 "Checks if the PHP version FOSSBilling is running on is still receiving "
@@ -996,7 +996,7 @@ msgid "City"
 msgstr "Ciudad"
 
 msgid "Class name should start with dot (.) or hashtag (#) for ID"
-msgstr ""
+msgstr "Ciudad"
 
 msgid "Click on background closes popup"
 msgstr ""
@@ -1016,10 +1016,10 @@ msgid "Client"
 msgstr "Cliente"
 
 msgid "Client Area"
-msgstr ""
+msgstr "Área de Cliente"
 
 msgid "Client Groups"
-msgstr ""
+msgstr "Cliente"
 
 msgid "Client ID"
 msgstr "ID de Cliente"
@@ -1096,13 +1096,13 @@ msgid "Clients"
 msgstr "Clientes"
 
 msgid "Clients login history"
-msgstr ""
+msgstr "Clientes"
 
 msgid "Close"
 msgstr "Cerrar"
 
 msgid "Close (ESC key by default)"
-msgstr ""
+msgstr "Cerrar"
 
 msgid "Close Tickets After"
 msgstr ""
@@ -1111,7 +1111,7 @@ msgid "Close ticket"
 msgstr "Cerrar ticket"
 
 msgid "Close tickets after (in hours)"
-msgstr ""
+msgstr "Cerrar ticket"
 
 msgid "Code"
 msgstr "Código"
@@ -1123,7 +1123,7 @@ msgid "Company"
 msgstr "Empresa"
 
 msgid "Company Name"
-msgstr ""
+msgstr "Empresa"
 
 msgid "Company Number"
 msgstr ""
@@ -1144,7 +1144,7 @@ msgid "Company details"
 msgstr "Detalles de la empresa"
 
 msgid "Company details at the moment of purchase"
-msgstr ""
+msgstr "Detalles de la empresa"
 
 msgid "Company legal"
 msgstr "Legal de la empresa"
@@ -1153,7 +1153,7 @@ msgid "Company name"
 msgstr "Nombre de la empresa"
 
 msgid "Company number"
-msgstr ""
+msgstr "Nombre de empresa"
 
 msgid "Company number, chamber of commerce number"
 msgstr ""
@@ -1180,7 +1180,7 @@ msgid "Configuration"
 msgstr "Configuración"
 
 msgid "Configuration Updated"
-msgstr ""
+msgstr "Configuración"
 
 msgid "Configuration updated"
 msgstr ""
@@ -1198,7 +1198,7 @@ msgid "Confirm password"
 msgstr "Confirmar contraseña"
 
 msgid "Connection port"
-msgstr ""
+msgstr "Confirmar contraseña"
 
 msgid "Contact details updated"
 msgstr ""
@@ -1219,19 +1219,19 @@ msgid "Continue reading"
 msgstr "Continuar leyendo"
 
 msgid "Conversion rate"
-msgstr ""
+msgstr "Continuar"
 
 msgid "Converter"
-msgstr ""
+msgstr "Contenido"
 
 msgid "Cookie consent"
-msgstr ""
+msgstr "Contáctanos"
 
 msgid "Copy"
 msgstr "Copiar"
 
 msgid "Copy this code to your website"
-msgstr ""
+msgstr "Copiar"
 
 msgid "Core modules cannot be updated"
 msgstr ""
@@ -1266,13 +1266,13 @@ msgid "Country"
 msgstr "País"
 
 msgid "Country :code phone code is not registered"
-msgstr ""
+msgstr "País"
 
 msgid "Create"
 msgstr "Crear"
 
 msgid "Create New Helpdesk"
-msgstr ""
+msgstr "Crear"
 
 msgid "Create New Promotional Code"
 msgstr ""
@@ -1329,7 +1329,7 @@ msgid "Creation date"
 msgstr "Fecha de creación"
 
 msgid "Credit note. Generate credit note with unique numbering"
-msgstr ""
+msgstr "Fecha de creación"
 
 msgid "Cron executed"
 msgstr ""
@@ -1338,13 +1338,13 @@ msgid "Cron settings"
 msgstr ""
 
 msgid "Currencies"
-msgstr ""
+msgstr "Monedas"
 
 msgid "Currency"
 msgstr "Moneda"
 
 msgid "Currency already registered"
-msgstr ""
+msgstr "Moneda"
 
 msgid "Currency cannot be changed. Client already has invoices issued."
 msgstr ""
@@ -1455,7 +1455,7 @@ msgid "Date"
 msgstr "Fecha"
 
 msgid "Date Created"
-msgstr ""
+msgstr "Fecha"
 
 msgid "Date Due"
 msgstr ""
@@ -1476,10 +1476,10 @@ msgid "Default"
 msgstr "Predeterminado"
 
 msgid "Default domain nameservers are not configured"
-msgstr ""
+msgstr "Predeterminado"
 
 msgid "Default editor"
-msgstr ""
+msgstr "Desactivar"
 
 msgid "Default invoice note"
 msgstr ""
@@ -1504,7 +1504,7 @@ msgid "Delete"
 msgstr "Eliminar"
 
 msgid "Delete activity"
-msgstr ""
+msgstr "Eliminar"
 
 msgid "Delete administrators"
 msgstr ""
@@ -1540,13 +1540,13 @@ msgid "Disable"
 msgstr "Deshabilitar"
 
 msgid "Disable Privacy protection"
-msgstr ""
+msgstr "Detalles"
 
 msgid "Disable Public Tickets"
-msgstr ""
+msgstr "Deshabilitar"
 
 msgid "Disable email change"
-msgstr ""
+msgstr "Descripción"
 
 msgid "Disable error reporting"
 msgstr "Deshabilitar reporte de errores"
@@ -1561,7 +1561,7 @@ msgid "Disabled"
 msgstr "Deshabilitado"
 
 msgid "Disabled for security reasons (Demo mode enabled)"
-msgstr ""
+msgstr "Deshabilitado"
 
 msgid "Disabled translations"
 msgstr ""
@@ -1573,7 +1573,7 @@ msgid "Discount"
 msgstr "Descuento"
 
 msgid "Discount Type"
-msgstr ""
+msgstr "Descuento"
 
 msgid "Discount:"
 msgstr ""
@@ -1591,7 +1591,7 @@ msgid "Disk space"
 msgstr "Espacio en disco"
 
 msgid "Display bank account information on documents?"
-msgstr ""
+msgstr "Espacio en disco"
 
 msgid "Display bank account information on the bottom of every page?"
 msgstr ""
@@ -1620,10 +1620,10 @@ msgid "Domain"
 msgstr "Dominio"
 
 msgid "Domain :domain is invalid"
-msgstr ""
+msgstr "Dominio"
 
 msgid "Domain :domain registration"
-msgstr ""
+msgstr "Documentación"
 
 msgid "Domain :domain transfer"
 msgstr ""
@@ -1701,7 +1701,7 @@ msgid "Domain name"
 msgstr "Nombre de dominio"
 
 msgid "Domain name :domain is invalid"
-msgstr ""
+msgstr "Nombre de dominio"
 
 msgid "Domain name changed"
 msgstr ""
@@ -1737,7 +1737,7 @@ msgid "Domain registration"
 msgstr "Registro de dominio"
 
 msgid "Domain transfer code"
-msgstr ""
+msgstr "Registro de dominio"
 
 msgid "Domain transfer code is: "
 msgstr ""
@@ -1752,7 +1752,7 @@ msgid "Download"
 msgstr "Descargar"
 
 msgid "Download domain registrar file and place to"
-msgstr ""
+msgstr "Descargar"
 
 msgid "Download payment gateway extension file and place it to"
 msgstr ""
@@ -1764,7 +1764,7 @@ msgid "Draft"
 msgstr "Borrador"
 
 msgid "Dropdown"
-msgstr ""
+msgstr "Borrador"
 
 msgid "Due Date"
 msgstr ""
@@ -1779,10 +1779,10 @@ msgid "Edit"
 msgstr "Editar"
 
 msgid "Edit Custom Page"
-msgstr ""
+msgstr "Editar"
 
 msgid "Edit client group"
-msgstr ""
+msgstr "Fecha de vencimiento"
 
 msgid "Edit cookie consent message text"
 msgstr ""
@@ -1815,13 +1815,13 @@ msgid "Email Address"
 msgstr "Dirección de Email"
 
 msgid "Email Subject"
-msgstr ""
+msgstr "Email"
 
 msgid "Email address"
 msgstr "Dirección de correo electrónico"
 
 msgid "Email address cannot be changed"
-msgstr ""
+msgstr "Dirección de email"
 
 msgid "Email address was confirmed"
 msgstr ""
@@ -1847,7 +1847,7 @@ msgid "Email not found"
 msgstr ""
 
 msgid "Email queue"
-msgstr ""
+msgstr "Cola de emails"
 
 msgid "Email resent"
 msgstr ""
@@ -1856,7 +1856,7 @@ msgid "Email settings"
 msgstr "Configuración de correo"
 
 msgid "Email settings updated"
-msgstr ""
+msgstr "Configuración de email"
 
 msgid "Email subject"
 msgstr ""
@@ -1875,7 +1875,7 @@ msgid "Email templates"
 msgstr "Plantillas de correo"
 
 msgid "Email templates examples"
-msgstr ""
+msgstr "Plantillas de email"
 
 msgid "Email transport"
 msgstr ""
@@ -1900,7 +1900,7 @@ msgid "Enable"
 msgstr "Habilitar"
 
 msgid "Enable Auto Responder"
-msgstr ""
+msgstr "Habilitar"
 
 msgid "Enable Delay Message"
 msgstr ""
@@ -1957,7 +1957,7 @@ msgid "Enabled"
 msgstr "Habilitado"
 
 msgid "Enabled translations"
-msgstr ""
+msgstr "Habilitado"
 
 msgid "Enabling this functionality may affect modules that depend on it."
 msgstr ""
@@ -2031,7 +2031,7 @@ msgid "Error"
 msgstr "Error"
 
 msgid "Error creating "
-msgstr ""
+msgstr "Error"
 
 msgid "Error creating user"
 msgstr ""
@@ -2144,7 +2144,7 @@ msgid "Exempt from tax"
 msgstr ""
 
 msgid "Expiration date"
-msgstr ""
+msgstr "Fecha de expiración"
 
 msgid "Expires at"
 msgstr "Expira el"
@@ -2153,7 +2153,7 @@ msgid "Expires on"
 msgstr ""
 
 msgid "Expiring"
-msgstr ""
+msgstr "Por vencer"
 
 msgid "Explore FOSSBilling extensions"
 msgstr ""
@@ -2178,7 +2178,7 @@ msgid "Extension"
 msgstr "Extensión"
 
 msgid "Extension :id seems to be already installed."
-msgstr ""
+msgstr "Extensión"
 
 msgid "Extension Directory"
 msgstr ""
@@ -2195,7 +2195,7 @@ msgstr "Extensiones"
 msgid ""
 "External application can control every aspect of FOSSBilling using this API "
 "key."
-msgstr ""
+msgstr "Extensiones"
 
 msgid ""
 "FOSSBilling :version: requires at least PHP :min_php:, but you are running :"
@@ -2350,7 +2350,7 @@ msgid "Failed to send email via :transport with the exception :e"
 msgstr ""
 
 msgid "Favicon"
-msgstr ""
+msgstr "Favicon"
 
 msgid "Female"
 msgstr ""
@@ -2382,7 +2382,7 @@ msgid "File"
 msgstr "Archivo"
 
 msgid "File cannot be downloaded at the moment. Please contact support."
-msgstr ""
+msgstr "Archivo"
 
 msgid "File information"
 msgstr ""
@@ -2400,7 +2400,7 @@ msgid "Filter"
 msgstr "Filtrar"
 
 msgid "Filter Support Tickets"
-msgstr ""
+msgstr "Filtrar"
 
 msgid "Filter clients"
 msgstr ""
@@ -2424,7 +2424,7 @@ msgid "First name"
 msgstr "Nombre"
 
 msgid "First payment sum"
-msgstr ""
+msgstr "Nombre"
 
 msgid "Follow instructions below to install new domain registrar."
 msgstr ""
@@ -2450,7 +2450,7 @@ msgid "Forgot your password?"
 msgstr "¿Olvidó su contraseña?"
 
 msgid "Form field type is invalid"
-msgstr ""
+msgstr "¿Olvidaste tu contraseña?"
 
 msgid "Form id was not passed"
 msgstr ""
@@ -2516,13 +2516,13 @@ msgid "Funds description is invalid"
 msgstr ""
 
 msgid "GET"
-msgstr ""
+msgstr "GET"
 
 msgid "Gateway"
 msgstr "Pasarela"
 
 msgid "Gateway updated"
-msgstr ""
+msgstr "Pasarela"
 
 msgid "Gender"
 msgstr ""
@@ -2540,7 +2540,7 @@ msgid "General settings"
 msgstr "Configuración general"
 
 msgid "Generate a new key"
-msgstr ""
+msgstr "Configuración general"
 
 msgid "Generate new key"
 msgstr ""
@@ -2570,7 +2570,7 @@ msgid "Group"
 msgstr "Grupo"
 
 msgid "Group ID parameter is missing for addon product order"
-msgstr ""
+msgstr "Grupo"
 
 msgid "Group has clients assigned. Please reassign them first."
 msgstr ""
@@ -2579,7 +2579,7 @@ msgid "Groups"
 msgstr "Grupos"
 
 msgid "HTTP Error :err_code occurred while attempting to load :url"
-msgstr ""
+msgstr "Grupos"
 
 msgid "Has order"
 msgstr ""
@@ -2600,7 +2600,7 @@ msgid "Help desk"
 msgstr "Mesa de ayuda"
 
 msgid "Helpdesk"
-msgstr ""
+msgstr "Mesa de ayuda"
 
 msgid "Helpdesk -"
 msgstr ""
@@ -2643,7 +2643,7 @@ msgid "Hidden"
 msgstr "Oculto"
 
 msgid "Hide label"
-msgstr ""
+msgstr "Oculto"
 
 msgid "Hide some company information in the guest API"
 msgstr ""
@@ -2655,16 +2655,16 @@ msgid "Home"
 msgstr "Inicio"
 
 msgid "Hook"
-msgstr ""
+msgstr "Inicio"
 
 msgid "Hooks"
-msgstr ""
+msgstr "Hook"
 
 msgid "Hosting management"
-msgstr ""
+msgstr "Hooks"
 
 msgid "Hosting plan"
-msgstr ""
+msgstr "Plan de hosting"
 
 msgid "Hosting plan additional parameters"
 msgstr ""
@@ -2704,7 +2704,7 @@ msgid "Hosting settings updated"
 msgstr ""
 
 msgid "Hostname"
-msgstr ""
+msgstr "Nombre de host"
 
 msgid "Hourly"
 msgstr ""
@@ -2728,7 +2728,7 @@ msgid "ID"
 msgstr "ID"
 
 msgid "ID not found"
-msgstr ""
+msgstr "ID"
 
 msgid "ID on payment gateway"
 msgstr ""
@@ -2877,7 +2877,7 @@ msgid "Inactive"
 msgstr "Inactivo"
 
 msgid "Income"
-msgstr ""
+msgstr "Inactivo"
 
 msgid "Incorrect please try again"
 msgstr ""
@@ -2892,10 +2892,10 @@ msgid "Install"
 msgstr "Instalar"
 
 msgid "Install extension"
-msgstr ""
+msgstr "Instalar"
 
 msgid "Install from the Extension Directory"
-msgstr ""
+msgstr "Instalar extensión"
 
 msgid "Instance ID"
 msgstr "ID de instancia"
@@ -2959,7 +2959,7 @@ msgid "Invoice"
 msgstr "Factura"
 
 msgid "Invoice #:id not found"
-msgstr ""
+msgstr "Factura"
 
 msgid "Invoice Date"
 msgstr ""
@@ -3010,7 +3010,7 @@ msgid "Invoice prefix/series"
 msgstr ""
 
 msgid "Invoice settings"
-msgstr ""
+msgstr "Configuración de facturas"
 
 msgid "Invoice status"
 msgstr ""
@@ -3025,7 +3025,7 @@ msgid "Invoices"
 msgstr "Facturas"
 
 msgid "Invoices are not generated for 0 amount orders"
-msgstr ""
+msgstr "Facturas"
 
 msgid "Invoicing / Sequential Invoice Numbering"
 msgstr ""
@@ -3072,7 +3072,7 @@ msgid "Key"
 msgstr "Clave"
 
 msgid "Knowledge Base"
-msgstr ""
+msgstr "Clave"
 
 msgid "Knowledge Base Categories"
 msgstr ""
@@ -3086,7 +3086,7 @@ msgstr "Etiqueta"
 msgid ""
 "Labels on\n"
 "                            top"
-msgstr ""
+msgstr "Etiqueta"
 
 msgid "Labels on the left"
 msgstr ""
@@ -3104,22 +3104,22 @@ msgid "Last Name"
 msgstr "Apellido"
 
 msgid "Last Reminded"
-msgstr ""
+msgstr "Idioma"
 
 msgid "Last Updated"
-msgstr ""
+msgstr "Última actualización"
 
 msgid "Last applicable behavior change: "
 msgstr "Último cambio de comportamiento aplicable: "
 
 msgid "Last month"
-msgstr ""
+msgstr "Idiomas"
 
 msgid "Last name"
 msgstr "Apellido"
 
 msgid "Last ping"
-msgstr ""
+msgstr "Apellido"
 
 msgid "Last time a ping was sent"
 msgstr ""
@@ -3146,7 +3146,7 @@ msgid "Learn more about error reporting"
 msgstr "Aprender más sobre el reporte de errores"
 
 msgid "Leave blank for unlimited uses"
-msgstr ""
+msgstr "Más información"
 
 msgid "Leave blank to automatically set"
 msgstr ""
@@ -3174,7 +3174,7 @@ msgid "License"
 msgstr "Licencia"
 
 msgid "License configuration"
-msgstr ""
+msgstr "Licencia"
 
 msgid "License details"
 msgstr ""
@@ -3183,7 +3183,7 @@ msgid "License key"
 msgstr "Clave de licencia"
 
 msgid "License plugin :plugin was not found"
-msgstr ""
+msgstr "Clave de licencia"
 
 msgid "License plugin is PHP class \"License_PluginName\" with one method"
 msgstr ""
@@ -3252,7 +3252,7 @@ msgid "Login or Register"
 msgstr "Iniciar sesión o Registrarse"
 
 msgid "Login to client area"
-msgstr ""
+msgstr "Iniciar sesión"
 
 msgid "Login to control panel"
 msgstr ""
@@ -3273,7 +3273,7 @@ msgid "Logout"
 msgstr "Cerrar sesión"
 
 msgid "Lookup & discover info about IP addresses."
-msgstr ""
+msgstr "Cerrar sesión"
 
 msgid "Lowercase"
 msgstr ""
@@ -3405,7 +3405,7 @@ msgid "Message"
 msgstr "Mensaje"
 
 msgid "Message from name cannot be empty"
-msgstr ""
+msgstr "Mensaje"
 
 msgid "Message recipients"
 msgstr ""
@@ -3423,13 +3423,13 @@ msgid "Messages"
 msgstr "Mensajes"
 
 msgid "Meta Description"
-msgstr ""
+msgstr "Mensajes"
 
 msgid "Meta Keywords"
 msgstr ""
 
 msgid "Meta description"
-msgstr ""
+msgstr "Meta descripción"
 
 msgid "Method :method must contain underscore"
 msgstr ""
@@ -3492,10 +3492,10 @@ msgid ""
 "Most domain names (except a few top-level domains like .EU and .UK) have a "
 "Domain Secret Key/Authorization Code (EPP Code) associated with them. This "
 "code is typically required when transferring the domain to a new registrar."
-msgstr ""
+msgstr "Mes"
 
 msgid "Must start with a dot"
-msgstr ""
+msgstr "Mensual"
 
 msgid "My Products & Services"
 msgstr ""
@@ -3507,7 +3507,7 @@ msgid "Nameserver 1"
 msgstr "Nameserver 1"
 
 msgid "Nameserver 1 is required"
-msgstr ""
+msgstr "Nombre"
 
 msgid "Nameserver 2"
 msgstr "Nameserver 2"
@@ -3525,7 +3525,7 @@ msgid "Nameservers"
 msgstr "Servidores de nombres"
 
 msgid "Nameservers updated"
-msgstr ""
+msgstr "Servidores de nombres"
 
 msgid "Need an answer? We are here to help!"
 msgstr ""
@@ -3544,7 +3544,7 @@ msgid "Never"
 msgstr "Nunca"
 
 msgid "New API key generated. Applications using old key are now not working."
-msgstr ""
+msgstr "Nunca"
 
 msgid "New Addon"
 msgstr ""
@@ -3631,7 +3631,7 @@ msgid "New password"
 msgstr "Nueva contraseña"
 
 msgid "New payment gateway"
-msgstr ""
+msgstr "Nueva contraseña"
 
 msgid "New registrations are temporary disabled"
 msgstr ""
@@ -3670,7 +3670,7 @@ msgid "News & Announcements"
 msgstr "Noticias y Anuncios"
 
 msgid "News item not found"
-msgstr ""
+msgstr "Noticias"
 
 msgid "Next"
 msgstr "Siguiente"
@@ -3678,7 +3678,7 @@ msgstr "Siguiente"
 msgid ""
 "Next date is counted from last expiration date or renewal date whichever is "
 "greater"
-msgstr ""
+msgstr "Siguiente"
 
 msgid "Next date is counted from last order expiration date"
 msgstr ""
@@ -3699,7 +3699,7 @@ msgid "No"
 msgstr "No"
 
 msgid "No GET parameters received"
-msgstr ""
+msgstr "No"
 
 msgid "No POST parameters received"
 msgstr ""
@@ -3744,25 +3744,25 @@ msgid "None"
 msgstr "Ninguno"
 
 msgid "None (Default PHP Behavior)"
-msgstr ""
+msgstr "Ninguno"
 
 msgid "Note"
 msgstr "Nota"
 
 msgid "Note about this transaction"
-msgstr ""
+msgstr "Nota"
 
 msgid "Notes"
 msgstr "Notas"
 
 msgid "Notification message was not found"
-msgstr ""
+msgstr "Notas"
 
 msgid "Notifications"
 msgstr "Notificaciones"
 
 msgid "Notifications center"
-msgstr ""
+msgstr "Notificaciones"
 
 msgid "Number"
 msgstr "Número"
@@ -3774,7 +3774,7 @@ msgid "Number of days to generate new invoice before order expiration"
 msgstr ""
 
 msgid "On Hold"
-msgstr ""
+msgstr "En espera"
 
 msgid "Once per Client"
 msgstr ""
@@ -3787,7 +3787,7 @@ msgid "One time"
 msgstr "Una vez"
 
 msgid "One-time payment"
-msgstr ""
+msgstr "Una vez"
 
 msgid "Only active orders can be suspended"
 msgstr ""
@@ -3817,7 +3817,7 @@ msgid "Open"
 msgstr "Abrir"
 
 msgid "Open Public Ticket for Non-client"
-msgstr ""
+msgstr "Abrir"
 
 msgid "Open Ticket for Existing Client"
 msgstr ""
@@ -3835,7 +3835,7 @@ msgid "Operator"
 msgstr "Operador"
 
 msgid "Optional configuration"
-msgstr ""
+msgstr "Abrir ticket"
 
 msgid "Options"
 msgstr "Opciones"
@@ -3844,7 +3844,7 @@ msgid "Order"
 msgstr "Orden"
 
 msgid "Order :id has no active service"
-msgstr ""
+msgstr "Pedido"
 
 msgid "Order :id is free. No need to generate invoice."
 msgstr ""
@@ -3922,7 +3922,7 @@ msgid "Order now"
 msgstr "Ordenar ahora"
 
 msgid "Order popup settings"
-msgstr ""
+msgstr "Ordenar ahora"
 
 msgid "Order promo code"
 msgstr ""
@@ -3946,7 +3946,7 @@ msgid "Orders"
 msgstr "Órdenes"
 
 msgid "Orders settings"
-msgstr ""
+msgstr "Pedidos"
 
 msgid "Other"
 msgstr "Otro"
@@ -3961,10 +3961,10 @@ msgid "Overview"
 msgstr "Resumen"
 
 msgid "PDF"
-msgstr ""
+msgstr "Resumen"
 
 msgid "PHP :version: is out of date and does not get security patches."
-msgstr ""
+msgstr "PDF"
 
 msgid "PHP :version: is the latest version of PHP."
 msgstr ""
@@ -3976,10 +3976,10 @@ msgid "PHP Version Check"
 msgstr ""
 
 msgid "PHP version"
-msgstr ""
+msgstr "Versión de PHP"
 
 msgid "POST"
-msgstr ""
+msgstr "POST"
 
 msgid "Page :url not found"
 msgstr ""
@@ -3991,10 +3991,10 @@ msgid "Paid"
 msgstr "Pagado"
 
 msgid "Paid Date"
-msgstr ""
+msgstr "Pagado"
 
 msgid "Paid Invoice cannot be modified"
-msgstr ""
+msgstr "Página no encontrada"
 
 msgid "Paid at"
 msgstr ""
@@ -4033,13 +4033,13 @@ msgid "Password"
 msgstr "Contraseña"
 
 msgid "Password Changed"
-msgstr ""
+msgstr "Contraseña"
 
 msgid "Password Confirm"
 msgstr ""
 
 msgid "Password changed"
-msgstr ""
+msgstr "Contraseña cambiada"
 
 msgid "Password confirm"
 msgstr "Confirmar Contraseña"
@@ -4063,7 +4063,7 @@ msgid "Passwords do not match"
 msgstr "Las contraseñas no coinciden"
 
 msgid "Passwords do not match."
-msgstr ""
+msgstr "Las contraseñas no coinciden"
 
 msgid "Path"
 msgstr "Ruta"
@@ -4078,7 +4078,7 @@ msgid "Pay now"
 msgstr "Pagar ahora"
 
 msgid "Pay now and create a subscription"
-msgstr ""
+msgstr "Pagar ahora"
 
 msgid "Pay now with a one-time payment"
 msgstr ""
@@ -4090,7 +4090,7 @@ msgid "Payment"
 msgstr "Pago"
 
 msgid "Payment Gateway"
-msgstr ""
+msgstr "Pago"
 
 msgid "Payment Information"
 msgstr ""
@@ -4120,7 +4120,7 @@ msgid "Payment gateway"
 msgstr "Pasarela de pago"
 
 msgid "Payment gateway :adapter was not found"
-msgstr ""
+msgstr "Pasarela de pago"
 
 msgid ""
 "Payment gateway :id method getTransaction should return Payment_Transaction "
@@ -4151,7 +4151,7 @@ msgid "Payment method"
 msgstr "Método de pago"
 
 msgid "Payment method not enabled"
-msgstr ""
+msgstr "Método de pago"
 
 msgid "Payment method not found"
 msgstr ""
@@ -4169,7 +4169,7 @@ msgid "Payments"
 msgstr "Pagos"
 
 msgid "Pending Setup"
-msgstr ""
+msgstr "Pagos"
 
 msgid "Percentage"
 msgstr "Porcentaje"
@@ -4189,7 +4189,7 @@ msgid "Permissions"
 msgstr "Permisos"
 
 msgid "Permissions for: "
-msgstr ""
+msgstr "Permisos"
 
 msgid "Permissions updated"
 msgstr ""
@@ -4198,7 +4198,7 @@ msgid "Phone"
 msgstr "Teléfono"
 
 msgid "Phone Code"
-msgstr ""
+msgstr "Teléfono"
 
 msgid "Phone Country Code"
 msgstr ""
@@ -4210,7 +4210,7 @@ msgid "Phone number"
 msgstr "Número de teléfono"
 
 msgid "Place new order"
-msgstr ""
+msgstr "Número de teléfono"
 
 msgid ""
 "Please be cautious and make sure you know what you are doing when editing "
@@ -4306,7 +4306,7 @@ msgid "Price"
 msgstr "Precio"
 
 msgid "Price for period"
-msgstr ""
+msgstr "Precio"
 
 msgid "Price format"
 msgstr ""
@@ -4334,10 +4334,10 @@ msgid "Privacy"
 msgstr "Privacidad"
 
 msgid "Privacy Policy"
-msgstr ""
+msgstr "Prioridad"
 
 msgid "Privacy protection"
-msgstr ""
+msgstr "Imprimir"
 
 msgid "Privacy protection disabled"
 msgstr ""
@@ -4349,7 +4349,7 @@ msgid "Process"
 msgstr "Proceso"
 
 msgid "Processed"
-msgstr ""
+msgstr "Procesado"
 
 msgid "Processing payment ..."
 msgstr ""
@@ -4358,7 +4358,7 @@ msgid "Product"
 msgstr "Producto"
 
 msgid "Product :id is out of stock."
-msgstr ""
+msgstr "Producto"
 
 msgid "Product :id payment type is recurrent, but period was not selected"
 msgstr ""
@@ -4421,13 +4421,13 @@ msgid "Profile"
 msgstr "Perfil"
 
 msgid "Profile details"
-msgstr ""
+msgstr "Productos"
 
 msgid "Profile updated"
-msgstr ""
+msgstr "Perfil actualizado"
 
 msgid "Promo Code"
-msgstr ""
+msgstr "Perfil"
 
 msgid "Promo code cannot be applied to your account"
 msgstr ""
@@ -4468,7 +4468,7 @@ msgid "Quantity"
 msgstr "Cantidad"
 
 msgid "Quantity & Price"
-msgstr ""
+msgstr "Cantidad"
 
 msgid "Quantity in stock"
 msgstr ""
@@ -4509,13 +4509,13 @@ msgid "Receiver is not defined. Define to or to_client or to_staff parameter"
 msgstr ""
 
 msgid "Recent emails"
-msgstr ""
+msgstr "Correos recientes"
 
 msgid "Recent orders"
 msgstr "Órdenes recientes"
 
 msgid "Recent staff activity"
-msgstr ""
+msgstr "Pedidos recientes"
 
 msgid "Recipients"
 msgstr "Destinatarios"
@@ -4530,7 +4530,7 @@ msgid "Recurring"
 msgstr "Recurrente"
 
 msgid "Red"
-msgstr ""
+msgstr "Recurrente"
 
 msgid "Redirect not found"
 msgstr ""
@@ -4551,25 +4551,25 @@ msgid "Refunded"
 msgstr "Reembolsado"
 
 msgid "Refunds logic"
-msgstr ""
+msgstr "Reembolso"
 
 msgid "Refunds settings"
-msgstr ""
+msgstr "Reembolsado"
 
 msgid "Register"
 msgstr "Registrar"
 
 msgid "Register a new domain"
-msgstr ""
+msgstr "Registrarse"
 
 msgid "Register domain"
 msgstr "Registrar dominio"
 
 msgid "Registered on"
-msgstr ""
+msgstr "Registrar dominio"
 
 msgid "Registrar"
-msgstr ""
+msgstr "Registrador"
 
 msgid "Registrar :adapter was not found"
 msgstr ""
@@ -4620,7 +4620,7 @@ msgid "Remove"
 msgstr "Eliminar"
 
 msgid "Remove from cart"
-msgstr ""
+msgstr "Quitar del carrito"
 
 msgid "Remove item"
 msgstr ""
@@ -4653,7 +4653,7 @@ msgid "Reply"
 msgstr "Responder"
 
 msgid "Reply as"
-msgstr ""
+msgstr "Responder"
 
 msgid "Report a bug"
 msgstr ""
@@ -4665,7 +4665,7 @@ msgid "Request Upgrade"
 msgstr "Solicitar Mejora"
 
 msgid "Request cancellation"
-msgstr ""
+msgstr "Solicitud"
 
 msgid "Require email confirmation"
 msgstr ""
@@ -4674,7 +4674,7 @@ msgid "Required"
 msgstr "Requerido"
 
 msgid "Required PHP version:"
-msgstr ""
+msgstr "Requerido"
 
 msgid "Required fields"
 msgstr ""
@@ -4683,7 +4683,7 @@ msgid "Reseller control panel"
 msgstr ""
 
 msgid "Reseller hosting"
-msgstr ""
+msgstr "Hosting de revendedor"
 
 msgid "Resend"
 msgstr "Reenviar"
@@ -4695,7 +4695,7 @@ msgid "Reset"
 msgstr "Restablecer"
 
 msgid "Reset API key"
-msgstr ""
+msgstr "Restablecer"
 
 msgid "Reset administrator passwords"
 msgstr ""
@@ -4707,7 +4707,7 @@ msgid "Reset password"
 msgstr "Restablecer contraseña"
 
 msgid "Reset staff passwords"
-msgstr ""
+msgstr "Restablecer contraseña"
 
 msgid "Reset your password"
 msgstr ""
@@ -4743,7 +4743,7 @@ msgid "SMTP"
 msgstr "SMTP"
 
 msgid "SMTP Hostname"
-msgstr ""
+msgstr "SMTP"
 
 msgid "SMTP Password"
 msgstr ""
@@ -4761,7 +4761,7 @@ msgid "Save"
 msgstr "Guardar"
 
 msgid "Save config"
-msgstr ""
+msgstr "Guardar"
 
 msgid "Save current settings as a new preset called"
 msgstr ""
@@ -4779,7 +4779,7 @@ msgid "Search"
 msgstr "Buscar"
 
 msgid "Search settings"
-msgstr ""
+msgstr "Buscar"
 
 msgid "Search:"
 msgstr ""
@@ -4788,7 +4788,7 @@ msgid "Security"
 msgstr "Seguridad"
 
 msgid "Security dashboard"
-msgstr ""
+msgstr "Seguridad"
 
 # =====================================================
 # Order Module Translations
@@ -4869,13 +4869,13 @@ msgid "Sent"
 msgstr "Enviado"
 
 msgid "Serie and number"
-msgstr ""
+msgstr "Enviado"
 
 msgid "Server"
 msgstr "Servidor"
 
 msgid "Server Hostname"
-msgstr ""
+msgstr "Servidor"
 
 msgid "Server IP"
 msgstr ""
@@ -4913,7 +4913,7 @@ msgid "Servers"
 msgstr "Servidores"
 
 msgid "Service "
-msgstr ""
+msgstr "Servidores"
 
 msgid "Service #"
 msgstr ""
@@ -4931,7 +4931,7 @@ msgid "Services"
 msgstr "Servicios"
 
 msgid "Set 0 to keep invoices forever."
-msgstr ""
+msgstr "Servicios"
 
 msgid "Set Task Complete"
 msgstr ""
@@ -4992,7 +4992,7 @@ msgid "Sign out"
 msgstr "Cerrar sesión"
 
 msgid "Sign up for reCAPTCHA key for your domain at"
-msgstr ""
+msgstr "Cerrar sesión"
 
 msgid "Signature"
 msgstr ""
@@ -5007,7 +5007,7 @@ msgid "Slug"
 msgstr "Slug"
 
 msgid "Solved"
-msgstr ""
+msgstr "Slug"
 
 msgid ""
 "Some server managers may ignore this option due to limitations / "
@@ -5033,7 +5033,7 @@ msgid "Staff"
 msgstr "Personal"
 
 msgid "Staff Group management"
-msgstr ""
+msgstr "Personal"
 
 msgid "Staff group updated"
 msgstr ""
@@ -5066,7 +5066,7 @@ msgid "State"
 msgstr "Estado"
 
 msgid "State/Region"
-msgstr ""
+msgstr "Estado"
 
 msgid "Statistics"
 msgstr "Estadísticas"
@@ -5075,10 +5075,10 @@ msgid "Status"
 msgstr "Estado"
 
 msgid "Stock control settings"
-msgstr ""
+msgstr "Estadísticas"
 
 msgid "Stop Forum Spam settings"
-msgstr ""
+msgstr "Estado"
 
 msgid "Subject"
 msgstr "Asunto"
@@ -5102,13 +5102,13 @@ msgid "Subscription"
 msgstr "Suscripción"
 
 msgid "Subscription #:id was not found. Could not unsubscribe"
-msgstr ""
+msgstr "Enviar"
 
 msgid "Subscription ID on PG"
-msgstr ""
+msgstr "Suscripción"
 
 msgid "Subscription ID on payment gateway"
-msgstr ""
+msgstr "Asunto"
 
 msgid "Subscription details"
 msgstr ""
@@ -5123,10 +5123,10 @@ msgid "Subtotal"
 msgstr "Subtotal"
 
 msgid "Subtotal:"
-msgstr ""
+msgstr "Suscripciones"
 
 msgid "Successfully updated settings"
-msgstr ""
+msgstr "Subtotal"
 
 msgid "Suffix"
 msgstr ""
@@ -5135,7 +5135,7 @@ msgid "Support"
 msgstr "Soporte"
 
 msgid "Support Settings"
-msgstr ""
+msgstr "Soporte"
 
 msgid "Support Tickets"
 msgstr ""
@@ -5147,10 +5147,10 @@ msgid "Support tickets"
 msgstr "Tickets de soporte"
 
 msgid "Support tickets regarding this order"
-msgstr ""
+msgstr "Ticket de soporte"
 
 msgid "Supported Currencies"
-msgstr ""
+msgstr "Tickets de soporte"
 
 msgid "Supported currencies"
 msgstr ""
@@ -5165,7 +5165,7 @@ msgid "Suspended"
 msgstr "Suspendido"
 
 msgid "Suspension reason"
-msgstr ""
+msgstr "Suspendido"
 
 msgid "Suspension reasons"
 msgstr ""
@@ -5182,19 +5182,19 @@ msgid "System"
 msgstr "Sistema"
 
 msgid "System activity"
-msgstr ""
+msgstr "Sistema"
 
 msgid "System settings"
 msgstr "Configuración del sistema"
 
 msgid "System undergoing maintenance"
-msgstr ""
+msgstr "Configuración del sistema"
 
 msgid "TLD"
 msgstr "TLD"
 
 msgid "TLD already registered"
-msgstr ""
+msgstr "TLD"
 
 msgid "TLD is invalid"
 msgstr ""
@@ -5227,10 +5227,10 @@ msgid "Tax rate"
 msgstr "Tasa de impuesto"
 
 msgid "Tax rules"
-msgstr ""
+msgstr "Impuesto"
 
 msgid "Tax settings"
-msgstr ""
+msgstr "Tarea"
 
 msgid "Tax settings updated"
 msgstr ""
@@ -5263,7 +5263,7 @@ msgid "Test connection"
 msgstr "Probar conexión"
 
 msgid "Test emails will be sent to: "
-msgstr ""
+msgstr "Probar conexión"
 
 msgid "Text"
 msgstr "Texto"
@@ -5359,7 +5359,7 @@ msgid "The list is empty"
 msgstr "La lista está vacía"
 
 msgid "The list is empty."
-msgstr ""
+msgstr "La lista está vacía"
 
 msgid ""
 "The list is empty. Depending on modules enabled email templates will be "
@@ -5401,7 +5401,7 @@ msgid "Themes"
 msgstr "Temas"
 
 msgid "There are no available IPs on this server."
-msgstr ""
+msgstr "Temas"
 
 msgid "There are no emails to display"
 msgstr ""
@@ -5501,7 +5501,7 @@ msgid "Ticket"
 msgstr "Ticket"
 
 msgid "Ticket Delay"
-msgstr ""
+msgstr "Ticket"
 
 msgid "Ticket ID"
 msgstr "ID de Ticket"
@@ -5531,10 +5531,10 @@ msgid "Tickets"
 msgstr "Tickets"
 
 msgid "Tickets can be reopened?"
-msgstr ""
+msgstr "Tickets"
 
 msgid "Tickets waiting your reply"
-msgstr ""
+msgstr "Tickets esperando tu respuesta"
 
 msgid "Time Opened"
 msgstr ""
@@ -5552,13 +5552,13 @@ msgid "Title"
 msgstr "Título"
 
 msgid "Tld"
-msgstr ""
+msgstr "Título"
 
 msgid "To"
 msgstr "Para"
 
 msgid "To (Email)"
-msgstr ""
+msgstr "Zona horaria"
 
 msgid ""
 "To change the API key, please use the reset function rather than updating it."
@@ -5582,7 +5582,7 @@ msgid "Today"
 msgstr "Hoy"
 
 msgid "Too many iterations were performed while formatting the config file"
-msgstr ""
+msgstr "Hoy"
 
 msgid "Top"
 msgstr "Superior"
@@ -5600,7 +5600,7 @@ msgid "Total"
 msgstr "Total"
 
 msgid "Total amount will be deducted from account balance"
-msgstr ""
+msgstr "Total"
 
 msgid "Total price:"
 msgstr ""
@@ -5615,7 +5615,7 @@ msgid "Transaction"
 msgstr "Transacción"
 
 msgid "Transaction :id is not associated with an invoice."
-msgstr ""
+msgstr "Transacción"
 
 msgid "Transaction :id not found."
 msgstr ""
@@ -5668,7 +5668,7 @@ msgid "Transactions"
 msgstr "Transacciones"
 
 msgid "Transactions overview"
-msgstr ""
+msgstr "Transacciones"
 
 msgid "Transactions received"
 msgstr ""
@@ -5683,7 +5683,7 @@ msgid "Transfer a new domain"
 msgstr ""
 
 msgid "Transfer code"
-msgstr ""
+msgstr "Código de transferencia"
 
 msgid "Transfer code (EPP)"
 msgstr ""
@@ -5692,7 +5692,7 @@ msgid "Transfer domain"
 msgstr "Transferir dominio"
 
 msgid "Transfer price"
-msgstr ""
+msgstr "Transferir dominio"
 
 msgid "Transfer price is"
 msgstr ""
@@ -5709,7 +5709,7 @@ msgstr "Tipo"
 msgid ""
 "Unable to assign the Reseller ANY IPs. Make sure to have free, unassigned "
 "IPs."
-msgstr ""
+msgstr "Tipo"
 
 msgid ""
 "Unable to clear cache and/or remove install folder. Further details are "
@@ -5824,7 +5824,7 @@ msgid "Unpaid"
 msgstr "No pagado"
 
 msgid "Unrecognized Handler type: "
-msgstr ""
+msgstr "No pagado"
 
 msgid "Unsuspend"
 msgstr "Reactivar"
@@ -5833,7 +5833,7 @@ msgid "Update"
 msgstr "Actualizar"
 
 msgid "Update FOSSBilling"
-msgstr ""
+msgstr "Actualizar"
 
 msgid "Update Frequency"
 msgstr ""
@@ -5899,7 +5899,7 @@ msgid "Updated at"
 msgstr "Actualizado el"
 
 msgid "Upgrade To"
-msgstr ""
+msgstr "Fecha de actualización"
 
 msgid "Upgrade to"
 msgstr "Mejorar a"
@@ -5911,7 +5911,7 @@ msgid "Upload"
 msgstr "Subir"
 
 msgid "Upload new file"
-msgstr ""
+msgstr "Subir"
 
 msgid "Upload new file for this order"
 msgstr ""
@@ -5940,7 +5940,7 @@ msgid "User"
 msgstr "Usuario"
 
 msgid "User input will be shown before checkout for custom form"
-msgstr ""
+msgstr "Usuario"
 
 msgid "User profile settings"
 msgstr ""
@@ -5949,13 +5949,13 @@ msgid "Username"
 msgstr "Nombre de usuario"
 
 msgid "Username changed"
-msgstr ""
+msgstr "Nombre de usuario"
 
 msgid "Users prefix"
 msgstr ""
 
 msgid "VAT"
-msgstr ""
+msgstr "IVA"
 
 msgid "VAT ID"
 msgstr ""
@@ -5964,7 +5964,7 @@ msgid "VAT number"
 msgstr "Número de IVA"
 
 msgid "Valid Domains"
-msgstr ""
+msgstr "Número de IVA"
 
 msgid "Valid IPs"
 msgstr ""
@@ -6045,13 +6045,13 @@ msgid "Variables"
 msgstr "Variables"
 
 msgid "Verification email has been resent"
-msgstr ""
+msgstr "Valor"
 
 msgid "View"
 msgstr "Ver"
 
 msgid "View as Client"
-msgstr ""
+msgstr "Ver"
 
 msgid "View as client"
 msgstr ""
@@ -6089,7 +6089,7 @@ msgid "Warning"
 msgstr "Advertencia"
 
 msgid "Warning!"
-msgstr ""
+msgstr "Advertencia"
 
 msgid "Warning! Resetting the key will break existing applications using it."
 msgstr ""
@@ -6184,21 +6184,21 @@ msgid ""
 "You appear to be running the latest version of FOSSBilling, so no action is "
 "needed at the moment. If you think this is a mistake, you may use the button "
 "below to check again."
-msgstr ""
+msgstr "Sí"
 "Parece que estás ejecutando la última versión de FOSSBilling, por lo que no "
 "se necesita ninguna acción en este momento. Si crees que esto es un error, "
 "puedes usar el botón de abajo para verificar de nuevo."
 
 #, fuzzy
 msgid "You are"
-msgstr ""
+msgstr "Ayer"
 "#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
 "Usted está\n"
 "#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
 "Tú eres"
 
 msgid "You are already registered as reseller"
-msgstr ""
+msgstr "Año"
 
 msgid "You are currently logged out"
 msgstr ""
@@ -6377,7 +6377,7 @@ msgid "administrator"
 msgstr ""
 
 msgid "ago"
-msgstr ""
+msgstr "hace"
 
 msgid "by"
 msgstr "por"
@@ -6846,13 +6846,13 @@ msgstr "Módulos habilitados"
 msgid ""
 "This FOSSBilling instance is automatically sending error reports which "
 "allows us to more easily improve the software and keep it stable. Thanks!"
-msgstr ""
+msgstr "Creado"
 "Esta instancia de FOSSBilling está enviando automáticamente reportes de "
 "errores, lo que nos permite mejorar el software más fácilmente y mantenerlo "
 "estable. ¡Gracias!"
 
 msgid "This is a core module included with FOSSBilling and cannot be disabled."
-msgstr ""
+msgstr "Programado"
 "Este es un módulo central incluido con FOSSBilling y no puede ser "
 "deshabilitado."
 
@@ -6864,7 +6864,7 @@ msgstr "Fecha de nacimiento"
 
 msgid ""
 "Create new client profile if you want to manage your money in other currency"
-msgstr ""
+msgstr "Visible"
 "Crea un nuevo perfil de cliente si deseas administrar tu dinero en otra "
 "moneda"
 
@@ -7036,7 +7036,7 @@ msgid ""
 "All domain names (except a .EU, .UK domain name) have a Domain (Transfer) "
 "Secret Key/Authorization Code (EPP Code) associated with them. This would be "
 "required if you want to transfer service."
-msgstr ""
+msgstr "Cargando"
 "Todos los nombres de dominio (excepto dominios .EU, .UK) tienen una Clave "
 "Secreta de Dominio/Código de Autorización (Código EPP) asociado. Esto sería "
 "requerido si deseas transferir el servicio."
@@ -7047,7 +7047,7 @@ msgstr "Todas las IPs"
 msgid ""
 "All of your orders are displayed here. Click on any order to get full "
 "information about it."
-msgstr ""
+msgstr "Éxito"
 "Todos tus pedidos se muestran aquí. Haz clic en cualquier pedido para "
 "obtener información completa sobre él."
 
@@ -7079,7 +7079,7 @@ msgid ""
 "Domain locking is a security enhancement to prevent unauthorized transfers "
 "of your domain to another registrar or web host by \"locking\" your domain "
 "name servers."
-msgstr ""
+msgstr "Información"
 "El bloqueo de dominio es una mejora de seguridad para prevenir "
 "transferencias no autorizadas de tu dominio a otro registrador o host web "
 "\"bloqueando\" tus servidores de nombres de dominio."
@@ -7093,7 +7093,7 @@ msgstr "¿Tienes un código de cupón?"
 msgid ""
 "Here you can find all the emails we sent you. Please click on email topic in "
 "left column and it will be displayed in right side."
-msgstr ""
+msgstr "Confirmar"
 "Aquí puedes encontrar todos los emails que te enviamos. Por favor haz clic "
 "en el tema del email en la columna izquierda y se mostrará en el lado "
 "derecho."
@@ -7125,7 +7125,7 @@ msgstr "Por favor elige el tipo de pago y paga por los productos elegidos."
 msgid ""
 "Please try to read related topics in knowledge base before contacting "
 "support."
-msgstr ""
+msgstr "Seleccionar"
 "Por favor intenta leer temas relacionados en la base de conocimientos antes "
 "de contactar a soporte."
 
@@ -7179,3 +7179,6 @@ msgstr "¡Ups! Esta no es la página web que estás buscando."
 
 msgid "by "
 msgstr "por "
+
+msgid "View All"
+msgstr "Ver todo"
