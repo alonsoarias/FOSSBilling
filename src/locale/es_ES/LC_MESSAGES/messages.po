@@ -35,7 +35,9 @@ msgid " years @ "
 msgstr " años @ "
 
 msgid ""
-"\"Auto\" is only available for ExchangeRate-API and when used will cause API requests to be made only when new data is made available, preventing excess requests."
+"\"Auto\" is only available for ExchangeRate-API and when used will cause API "
+"requests to be made only when new data is made available, preventing excess "
+"requests."
 msgstr ""
 
 msgid "#"
@@ -69,7 +71,9 @@ msgid ":friendlyName: is invalid"
 msgstr ":friendlyName: es inválido"
 
 msgid ":function: is enabled, potentially being a security concern."
-msgstr ":function: está habilitado, lo que potencialmente es una preocupación de seguridad."
+msgstr ""
+":function: está habilitado, lo que potencialmente es una preocupación de "
+"seguridad."
 
 msgid ":hosting for :domain"
 msgstr ":hosting para :domain"
@@ -93,17 +97,21 @@ msgid ":url: returned HTTP 200 when it shouldn't have."
 msgstr ":url: devolvió HTTP 200 cuando no debería."
 
 msgid "A SendGrid API key is required to send emails via SendGrid"
-msgstr "Se requiere una clave API de SendGrid para enviar correos a través de SendGrid"
+msgstr ""
+"Se requiere una clave API de SendGrid para enviar correos a través de "
+"SendGrid"
 
 msgid ""
-"A password reset confirmation email will be sent to you if we found an account with that email address."
+"A password reset confirmation email will be sent to you if we found an "
+"account with that email address."
 msgstr ""
 
 msgid "A ping wasn't sent yet"
 msgstr ""
 
 msgid ""
-"A valid contact company number is mandatory for registering an .AU domain name"
+"A valid contact company number is mandatory for registering an .AU domain "
+"name"
 msgstr ""
 
 msgid "A4"
@@ -122,7 +130,8 @@ msgid "API key"
 msgstr "Clave API"
 
 msgid ""
-"API key allows integration with external applications. You will need this key for authentication."
+"API key allows integration with external applications. You will need this "
+"key for authentication."
 msgstr ""
 
 msgid "API key capitalization"
@@ -147,7 +156,8 @@ msgid "ASN Organization"
 msgstr ""
 
 msgid ""
-"ASN stands for autonomous system number. IP address info may not always be accurate."
+"ASN stands for autonomous system number. IP address info may not always be "
+"accurate."
 msgstr ""
 
 msgid "About"
@@ -220,7 +230,7 @@ msgid "Activate order"
 msgstr ""
 
 msgid "Activated at"
-msgstr ""
+msgstr "Activado el"
 
 msgid "Activation"
 msgstr ""
@@ -232,7 +242,7 @@ msgid "Active"
 msgstr "Activo"
 
 msgid "Active support tickets"
-msgstr ""
+msgstr "Tickets de soporte activos"
 
 msgid "Active:"
 msgstr ""
@@ -250,15 +260,18 @@ msgid "Add"
 msgstr "Agregar"
 
 msgid ""
-"Add \" + selector + \" ID to your element which must call popup. For example: "
+"Add \" + selector + \" ID to your element which must call popup. For "
+"example: "
 msgstr ""
 
 msgid ""
-"Add \" + selector + \" class to your elements which must call popup. For example: "
+"Add \" + selector + \" class to your elements which must call popup. For "
+"example: "
 msgstr ""
 
 msgid ""
-"Add data-product attribute to your element to open specific product. For example:"
+"Add data-product attribute to your element to open specific product. For "
+"example:"
 msgstr ""
 
 msgid "Add fund"
@@ -313,8 +326,7 @@ msgstr ""
 msgid "Add some content before sending message"
 msgstr ""
 
-msgid ""
-"Add the transaction ID of the payment to mark the invoice as paid."
+msgid "Add the transaction ID of the payment to mark the invoice as paid."
 msgstr ""
 
 msgid "Add to cart"
@@ -345,13 +357,13 @@ msgid "Addon updated"
 msgstr ""
 
 msgid "Addons"
-msgstr ""
+msgstr "Complementos"
 
 msgid "Addons & extras"
 msgstr ""
 
 msgid "Addons you have ordered with this service"
-msgstr ""
+msgstr "Complementos que has pedido con este servicio"
 
 msgid "Address"
 msgstr "Dirección"
@@ -402,7 +414,8 @@ msgid "Advanced settings"
 msgstr "Configuración avanzada"
 
 msgid ""
-"After enabling this feature, all existing users will have to confirm their emails if it was not done before"
+"After enabling this feature, all existing users will have to confirm their "
+"emails if it was not done before"
 msgstr ""
 
 msgid "After file is uploaded in place, reload this page."
@@ -427,14 +440,16 @@ msgid "All hosts"
 msgstr ""
 
 msgid "All information about your service"
+msgstr "Toda la información sobre tu servicio"
+
+msgid ""
+"All of your invoices can be found here. You can choose to see either paid or "
+"unpaid invoices by clicking corresponding button."
 msgstr ""
 
 msgid ""
-"All of your invoices can be found here. You can choose to see either paid or unpaid invoices by clicking corresponding button."
-msgstr ""
-
-msgid ""
-"All of your orders are displayed here. Click on any service to get full information about it."
+"All of your orders are displayed here. Click on any service to get full "
+"information about it."
 msgstr ""
 
 msgid "All orders"
@@ -501,37 +516,40 @@ msgid "Allows the staff member to edit settings for this module."
 msgstr ""
 
 msgid ""
-"Allows the staff member to fetch a list of all local interface IP addresses and set the default network interface for FOSSBilling to use."
+"Allows the staff member to fetch a list of all local interface IP addresses "
+"and set the default network interface for FOSSBilling to use."
+msgstr ""
+
+msgid "Allows the staff member to install, update, or remove extensions."
 msgstr ""
 
 msgid ""
-"Allows the staff member to install, update, or remove extensions."
-msgstr ""
-
-msgid ""
-"Allows the staff member to invalidate the FOSSBilling cache from within the system settings."
+"Allows the staff member to invalidate the FOSSBilling cache from within the "
+"system settings."
 msgstr ""
 
 msgid "Allows the staff member to manage staff member groups."
 msgstr ""
 
-msgid ""
-"Allows the staff member to perform password resets on :type: accounts."
+msgid "Allows the staff member to perform password resets on :type: accounts."
 msgstr ""
 
 msgid ""
-"Allows the staff member to run security checks on the FOSSBilling installation."
+"Allows the staff member to run security checks on the FOSSBilling "
+"installation."
 msgstr ""
 
 msgid "Allows the staff member to update FOSSBilling."
 msgstr ""
 
 msgid ""
-"Allows the staff member to update company details as set under the system module."
+"Allows the staff member to update company details as set under the system "
+"module."
 msgstr ""
 
 msgid ""
-"Allows the staff member to update company legal as set under the system module."
+"Allows the staff member to update company legal as set under the system "
+"module."
 msgstr ""
 
 msgid "Already a user?"
@@ -549,15 +567,13 @@ msgstr ""
 msgid "Amount must be at least :min_amount"
 msgstr ""
 
-msgid ""
-"An error occurred when creating a backup of the configuration file."
+msgid "An error occurred when creating a backup of the configuration file."
 msgstr ""
 
 msgid "An error occurred when fetching the extensions releases"
 msgstr ""
 
-msgid ""
-"An error occurred when writing the updated configuration file."
+msgid "An error occurred when writing the updated configuration file."
 msgstr ""
 
 msgid "Announcement"
@@ -606,7 +622,9 @@ msgid "Apply to first order only"
 msgstr ""
 
 msgid ""
-"Applying patches and updating the configuration should be performed automatically, you don't need to use that button unless you are experiencing issues."
+"Applying patches and updating the configuration should be performed "
+"automatically, you don't need to use that button unless you are experiencing "
+"issues."
 msgstr ""
 
 msgid "Approve"
@@ -739,7 +757,7 @@ msgid "Billing & Delivery address"
 msgstr ""
 
 msgid "Billing Cycle"
-msgstr ""
+msgstr "Ciclo de Facturación"
 
 msgid "Billing cycle"
 msgstr "Ciclo de facturación"
@@ -748,10 +766,11 @@ msgid "Birthdate"
 msgstr ""
 
 msgid "Birthday"
-msgstr ""
+msgstr "Fecha de Nacimiento"
 
 msgid ""
-"Blocked IPs are not allowed to login, register or open public ticket. (One IP per line)"
+"Blocked IPs are not allowed to login, register or open public ticket. (One "
+"IP per line)"
 msgstr ""
 
 msgid "Blue"
@@ -773,7 +792,8 @@ msgid "Cache directory is cleared"
 msgstr ""
 
 msgid ""
-"Can be disabled to prevent the staff member from using any part of this module."
+"Can be disabled to prevent the staff member from using any part of this "
+"module."
 msgstr ""
 
 msgid "Can't modify client"
@@ -788,8 +808,7 @@ msgstr ""
 msgid "Cancel URL for the payment gateway was not set"
 msgstr ""
 
-msgid ""
-"Cancel sending email after unsuccessful tries (0 = do not cancel)"
+msgid "Cancel sending email after unsuccessful tries (0 = do not cancel)"
 msgstr ""
 
 msgid "Canceled"
@@ -807,8 +826,7 @@ msgstr ""
 msgid "Canned response"
 msgstr ""
 
-msgid ""
-"Cannot add negative amount to client balance for debit transaction"
+msgid "Cannot add negative amount to client balance for debit transaction"
 msgstr ""
 
 msgid "Cannot cancel "
@@ -818,11 +836,11 @@ msgid "Cannot checkout an empty cart"
 msgstr ""
 
 msgid ""
-"Cannot create subscription. Subscription ID from payment gateway was not received"
+"Cannot create subscription. Subscription ID from payment gateway was not "
+"received"
 msgstr ""
 
-msgid ""
-"Cannot handle transaction received from unknown payment gateway: :id"
+msgid "Cannot handle transaction received from unknown payment gateway: :id"
 msgstr ""
 
 msgid "Cannot process duplicate IPN"
@@ -916,7 +934,8 @@ msgid "Changes status without performing action"
 msgstr ""
 
 msgid ""
-"Changing the API key generation options will not automatically regenerate the API key. You must do so manually."
+"Changing the API key generation options will not automatically regenerate "
+"the API key. You must do so manually."
 msgstr ""
 
 msgid "Changing the default language"
@@ -949,16 +968,15 @@ msgstr ""
 msgid "Checkout"
 msgstr "Pagar"
 
-msgid ""
-"Checks general information such as the FOSSBilling configuration."
+msgid "Checks general information such as the FOSSBilling configuration."
 msgstr ""
 
 msgid ""
-"Checks if the PHP version FOSSBilling is running on is still receiving security support."
+"Checks if the PHP version FOSSBilling is running on is still receiving "
+"security support."
 msgstr ""
 
-msgid ""
-"Checks to see if potentially dangerous PHP functions are enabled."
+msgid "Checks to see if potentially dangerous PHP functions are enabled."
 msgstr ""
 
 msgid "Choose which addons you would like to offer with"
@@ -977,7 +995,8 @@ msgid "Click on background closes popup"
 msgstr ""
 
 msgid ""
-"Click on install button. Now you will be able to create top level domains with new domain registrar"
+"Click on install button. Now you will be able to create top level domains "
+"with new domain registrar"
 msgstr ""
 
 msgid "Click on the update and preview button"
@@ -1017,7 +1036,8 @@ msgid "Client credentials"
 msgstr ""
 
 msgid ""
-"Client currency must match subscription currency. Check if clients currency is defined."
+"Client currency must match subscription currency. Check if clients currency "
+"is defined."
 msgstr ""
 
 msgid "Client details at the moment of purchase"
@@ -1222,7 +1242,8 @@ msgid "Could not determine domain price. Domain action is missing"
 msgstr ""
 
 msgid ""
-"Could not determine transaction origin. Transaction payment gateway is unknown."
+"Could not determine transaction origin. Transaction payment gateway is "
+"unknown."
 msgstr ""
 
 msgid "Could not find main domain product"
@@ -1285,8 +1306,7 @@ msgstr ""
 msgid "Create new redirect"
 msgstr ""
 
-msgid ""
-"Create special offers for your clients by creating promo codes."
+msgid "Create special offers for your clients by creating promo codes."
 msgstr ""
 
 msgid "Create your plugin and place it to"
@@ -1319,8 +1339,7 @@ msgstr "Moneda"
 msgid "Currency already registered"
 msgstr ""
 
-msgid ""
-"Currency cannot be changed. Client already has invoices issued."
+msgid "Currency cannot be changed. Client already has invoices issued."
 msgstr ""
 
 msgid "Currency cannot be changed. Client already has orders."
@@ -1404,8 +1423,7 @@ msgstr ""
 msgid "Custom plugin method :method is forbidden"
 msgstr ""
 
-msgid ""
-"Custom port. Use blank to use default. Used to connect to the API"
+msgid "Custom port. Use blank to use default. Used to connect to the API"
 msgstr ""
 
 msgid "Custom_"
@@ -1494,11 +1512,15 @@ msgid "Delete staff members"
 msgstr ""
 
 msgid ""
-"Depending on server manager used to setup hosting account you may require provide additional parameters in next step. In this step provide basic hosting plan information."
+"Depending on server manager used to setup hosting account you may require "
+"provide additional parameters in next step. In this step provide basic "
+"hosting plan information."
 msgstr ""
 
 msgid ""
-"Depending on server manager used to setup hosting account you may require provide additional parameters. List of parameters server managers requires you can find on extensions page."
+"Depending on server manager used to setup hosting account you may require "
+"provide additional parameters. List of parameters server managers requires "
+"you can find on extensions page."
 msgstr ""
 
 msgid "Description"
@@ -1564,8 +1586,7 @@ msgstr "Espacio en disco"
 msgid "Display bank account information on documents?"
 msgstr ""
 
-msgid ""
-"Display bank account information on the bottom of every page?"
+msgid "Display bank account information on the bottom of every page?"
 msgstr ""
 
 msgid "Disposable email addresses are not allowed"
@@ -1574,7 +1595,9 @@ msgstr ""
 msgid "Do Not Cancel Suspended Orders"
 msgstr ""
 
-msgid "Do not show form\n                            title"
+msgid ""
+"Do not show form\n"
+"                            title"
 msgstr ""
 
 msgid "Document format"
@@ -1616,8 +1639,7 @@ msgstr ""
 msgid "Domain action"
 msgstr ""
 
-msgid ""
-"Domain availability could not be determined. TLD is not active."
+msgid "Domain availability could not be determined. TLD is not active."
 msgstr ""
 
 msgid "Domain cannot be registered"
@@ -1630,13 +1652,16 @@ msgid "Domain cannot be transferred."
 msgstr ""
 
 msgid "Domain configuration"
-msgstr ""
+msgstr "Configuración de dominio"
 
 msgid "Domain contact details updated"
 msgstr ""
 
 msgid ""
-"Domain contact details will be displayed once someone will check WHOIS output (which is public) of your service. This will update Technical, Billing and Admin contacts for this service. You can enable domain privacy protection if you want to hide your public WHOIS information."
+"Domain contact details will be displayed once someone will check WHOIS "
+"output (which is public) of your service. This will update Technical, "
+"Billing and Admin contacts for this service. You can enable domain privacy "
+"protection if you want to hide your public WHOIS information."
 msgstr ""
 
 msgid "Domain data"
@@ -1775,7 +1800,7 @@ msgid "Email"
 msgstr "Correo electrónico"
 
 msgid "Email Address"
-msgstr ""
+msgstr "Dirección de Email"
 
 msgid "Email Subject"
 msgstr ""
@@ -1799,7 +1824,8 @@ msgid "Email log retention"
 msgstr ""
 
 msgid ""
-"Email logging is not enabled. If you want to log sent mails to database, enable it in"
+"Email logging is not enabled. If you want to log sent mails to database, "
+"enable it in"
 msgstr ""
 
 msgid "Email message"
@@ -1921,12 +1947,12 @@ msgstr "Habilitado"
 msgid "Enabled translations"
 msgstr ""
 
-msgid ""
-"Enabling this functionality may affect modules that depend on it."
+msgid "Enabling this functionality may affect modules that depend on it."
 msgstr ""
 
 msgid ""
-"Enabling this will hide some information from the \"company\" guest API endpoint such as the address, phone number, email, VAT number, and more."
+"Enabling this will hide some information from the \"company\" guest API "
+"endpoint such as the address, phone number, email, VAT number, and more."
 msgstr ""
 
 msgid "Enter Custom Transaction ID"
@@ -1939,7 +1965,7 @@ msgid "Enter code"
 msgstr ""
 
 msgid "Enter domain transfer code"
-msgstr ""
+msgstr "Ingresa el código de transferencia del dominio"
 
 msgid "Enter new domain name to register"
 msgstr ""
@@ -1972,11 +1998,13 @@ msgid "Enter your email address"
 msgstr ""
 
 msgid ""
-"Enter your email address. You will receive a confirmation link if your account exists."
+"Enter your email address. You will receive a confirmation link if your "
+"account exists."
 msgstr ""
 
 msgid ""
-"Enter your email to reset password. You will receive new password after reset link is confirmed."
+"Enter your email to reset password. You will receive new password after "
+"reset link is confirmed."
 msgstr ""
 
 msgid "Enter your password"
@@ -1998,7 +2026,8 @@ msgid "Error message"
 msgstr ""
 
 msgid ""
-"Error message truncated due to length, please check the error log for the complete message: "
+"Error message truncated due to length, please check the error log for the "
+"complete message: "
 msgstr ""
 
 msgid "Error reporting"
@@ -2087,7 +2116,8 @@ msgid "Examples"
 msgstr ""
 
 msgid ""
-"Exchange rate syncing runs via the cronjob and as such is limited by the frequency of your cron schedule (typically 5 minutes)."
+"Exchange rate syncing runs via the cronjob and as such is limited by the "
+"frequency of your cron schedule (typically 5 minutes)."
 msgstr ""
 
 msgid "ExchangeRate-API (Open Access Endpoint)"
@@ -2149,18 +2179,23 @@ msgid "Extensions"
 msgstr "Extensiones"
 
 msgid ""
-"External application can control every aspect of FOSSBilling using this API key."
+"External application can control every aspect of FOSSBilling using this API "
+"key."
 msgstr ""
 
 msgid ""
-"FOSSBilling :version: requires at least PHP :min_php:, but you are running :current_php:."
+"FOSSBilling :version: requires at least PHP :min_php:, but you are running :"
+"current_php:."
 msgstr ""
 
 msgid "FOSSBilling Community"
 msgstr ""
 
 msgid ""
-"FOSSBilling can split the generated API key with dashes depending on the following options. The dashes will not count towards the API key length. If any API key is generated with dashes, they must be included in order for it to be considered valid."
+"FOSSBilling can split the generated API key with dashes depending on the "
+"following options. The dashes will not count towards the API key length. If "
+"any API key is generated with dashes, they must be included in order for it "
+"to be considered valid."
 msgstr ""
 
 msgid "FOSSBilling core modules cannot be installed or removed"
@@ -2173,7 +2208,8 @@ msgid "FOSSBilling documentation"
 msgstr ""
 
 msgid ""
-"FOSSBilling gives developers all the capabilities to customize, integrate & extend the core system into your own website & applications."
+"FOSSBilling gives developers all the capabilities to customize, integrate & "
+"extend the core system into your own website & applications."
 msgstr ""
 
 msgid "FOSSBilling in your language"
@@ -2191,23 +2227,32 @@ msgid "FOSSBilling module :mod is not installed/activated"
 msgstr ""
 
 msgid ""
-"FOSSBilling optionally includes automated error reporting to help aid the project's development and stability. To find the most up-to-date information about it, you should review the links and information below."
+"FOSSBilling optionally includes automated error reporting to help aid the "
+"project's development and stability. To find the most up-to-date information "
+"about it, you should review the links and information below."
 msgstr ""
 
 msgid ""
-"FOSSBilling provides integration with various currency exchange rate data providers, allowing you to choose whichever one best suits your needs. By default, FOSSBilling will use the ExchangeRate-API \"Open Access Endpoint\" which does not require any configuration."
+"FOSSBilling provides integration with various currency exchange rate data "
+"providers, allowing you to choose whichever one best suits your needs. By "
+"default, FOSSBilling will use the ExchangeRate-API \"Open Access Endpoint\" "
+"which does not require any configuration."
 msgstr ""
 
 msgid ""
-"FOSSBilling queues emails to have them be sent via cron in the background. Here you may find the list of queued emails and how many times the system has tried to send them."
+"FOSSBilling queues emails to have them be sent via cron in the background. "
+"Here you may find the list of queued emails and how many times the system "
+"has tried to send them."
 msgstr ""
 
 msgid ""
-"FOSSBilling requires the proc_open PHP function to be enabled when using the sendmail transport"
+"FOSSBilling requires the proc_open PHP function to be enabled when using the "
+"sendmail transport"
 msgstr ""
 
 msgid ""
-"FOSSBilling sends emails using <em>sendmail</em> by default or you can configure your own SMTP server"
+"FOSSBilling sends emails using <em>sendmail</em> by default or you can "
+"configure your own SMTP server"
 msgstr ""
 
 msgid "FOSSBilling version"
@@ -2217,15 +2262,19 @@ msgid "FOSSBilling will automatically detect new plugin"
 msgstr ""
 
 msgid ""
-"FOSSBilling will automatically ping every enabled search engine every 24 hours. Cron jobs must be working for this to work."
+"FOSSBilling will automatically ping every enabled search engine every 24 "
+"hours. Cron jobs must be working for this to work."
 msgstr ""
 
 msgid ""
-"FOSSBilling will automatically remove activity logs that are older than the configured number of days. Set to 0 to disable this behavior"
+"FOSSBilling will automatically remove activity logs that are older than the "
+"configured number of days. Set to 0 to disable this behavior"
 msgstr ""
 
 msgid ""
-"FOSSBilling will remove the \"custom_\" prefix from the value name when requesting them from the API. IE: custom_monthlyLimit will be named monthlyLimit when fetched through the API."
+"FOSSBilling will remove the \"custom_\" prefix from the value name when "
+"requesting them from the API. IE: custom_monthlyLimit will be named "
+"monthlyLimit when fetched through the API."
 msgstr ""
 
 msgid "Fail: HTTPS is not enforced."
@@ -2238,41 +2287,49 @@ msgid "Failed Setup"
 msgstr ""
 
 msgid ""
-"Failed to :action1: on the :type: server after failed to :action2:, check the error logs for further details"
+"Failed to :action1: on the :type: server after failed to :action2:, check "
+"the error logs for further details"
 msgstr ""
 
 msgid ""
-"Failed to :action: on the :type: server, check the error logs for further details"
+"Failed to :action: on the :type: server, check the error logs for further "
+"details"
 msgstr ""
 
 msgid ""
-"Failed to :action: with the :type: registrar, check the error logs for further details"
+"Failed to :action: with the :type: registrar, check the error logs for "
+"further details"
 msgstr ""
 
 msgid ""
-"Failed to connect to the :type: server. Please verify your credentials and configuration"
+"Failed to connect to the :type: server. Please verify your credentials and "
+"configuration"
 msgstr ""
 
 msgid "Failed to download the extension with error :code"
 msgstr ""
 
 msgid ""
-"Failed to download the latest version information. Further details are available in the error log."
+"Failed to download the latest version information. Further details are "
+"available in the error log."
 msgstr ""
 
 msgid ""
-"Failed to download the update archive. Further details are available in the error log."
+"Failed to download the update archive. Further details are available in the "
+"error log."
 msgstr ""
 
 msgid ""
-"Failed to extract file, please check file and folder permissions. Further details are available in the error log."
+"Failed to extract file, please check file and folder permissions. Further "
+"details are available in the error log."
 msgstr ""
 
 msgid "Failed to lookup PHP version status."
 msgstr ""
 
 msgid ""
-"Failed to move extension to it's final destination. Please check permissions for the destination folder. (:destination)"
+"Failed to move extension to it's final destination. Please check permissions "
+"for the destination folder. (:destination)"
 msgstr ""
 
 msgid "Failed to send email via :transport with the exception :e"
@@ -2294,7 +2351,8 @@ msgid "Field :field cannot be empty"
 msgstr ""
 
 msgid ""
-"Field name cannot be empty. Please make sure it is not empty and does not contain special characters."
+"Field name cannot be empty. Please make sure it is not empty and does not "
+"contain special characters."
 msgstr ""
 
 msgid "Field name cannot start with number."
@@ -2309,8 +2367,7 @@ msgstr ""
 msgid "File"
 msgstr "Archivo"
 
-msgid ""
-"File cannot be downloaded at the moment. Please contact support."
+msgid "File cannot be downloaded at the moment. Please contact support."
 msgstr ""
 
 msgid "File information"
@@ -2347,7 +2404,7 @@ msgid "Find answers to frequent questions"
 msgstr ""
 
 msgid "First Name"
-msgstr ""
+msgstr "Nombre"
 
 msgid "First name"
 msgstr "Nombre"
@@ -2359,7 +2416,8 @@ msgid "Follow instructions below to install new domain registrar."
 msgstr ""
 
 msgid ""
-"Follow the instructions on the FOSSBilling documentation to install the new language's translation files."
+"Follow the instructions on the FOSSBilling documentation to install the new "
+"language's translation files."
 msgstr ""
 
 msgid "Follow these instructions to install new payment gateway."
@@ -2536,19 +2594,22 @@ msgstr ""
 msgid "Helpdesk Updated"
 msgstr ""
 
-msgid ""
-"Helpdesk name will be visible for clients when submitting a new ticket."
+msgid "Helpdesk name will be visible for clients when submitting a new ticket."
 msgstr ""
 
 msgid "Helpdesks"
 msgstr ""
 
 msgid ""
-"Here you can configure the length of the API keys that will be generated. We recommend making this no less than 16 at a minimum. When in doubt, leave this at 32."
+"Here you can configure the length of the API keys that will be generated. We "
+"recommend making this no less than 16 at a minimum. When in doubt, leave "
+"this at 32."
 msgstr ""
 
 msgid ""
-"Here you can configure what case you want the API keys to be generated with. \"Uppercase\" makes all letters uppercase, \"lowercase\" makes them all lowercase, and \"mixed\" does a combination of the two options."
+"Here you can configure what case you want the API keys to be generated with. "
+"\"Uppercase\" makes all letters uppercase, \"lowercase\" makes them all "
+"lowercase, and \"mixed\" does a combination of the two options."
 msgstr ""
 
 msgid "Here you can find all the emails we've sent you."
@@ -2558,7 +2619,10 @@ msgid "Here you can manage and track your account balance."
 msgstr ""
 
 msgid ""
-"Here, you have the option to include custom parameters that can be requested from the API. This is particularly useful if you want to set specific limits for API keys. Your application can connect to the FOSSBilling API and retrieve the custom parameters you have defined for an API key."
+"Here, you have the option to include custom parameters that can be requested "
+"from the API. This is particularly useful if you want to set specific limits "
+"for API keys. Your application can connect to the FOSSBilling API and "
+"retrieve the custom parameters you have defined for an API key."
 msgstr ""
 
 msgid "Hidden"
@@ -2607,11 +2671,13 @@ msgid "Hosting plans and servers"
 msgstr ""
 
 msgid ""
-"Hosting product is not configured completely. Configure hosting plan for hosting product."
+"Hosting product is not configured completely. Configure hosting plan for "
+"hosting product."
 msgstr ""
 
 msgid ""
-"Hosting product is not configured completely. Configure server for hosting product."
+"Hosting product is not configured completely. Configure server for hosting "
+"product."
 msgstr ""
 
 msgid "Hosting server is used by :count: service hostings"
@@ -2633,16 +2699,16 @@ msgid "HttpClientException: :error"
 msgstr ""
 
 msgid "I want to register a new domain"
-msgstr ""
+msgstr "Quiero registrar un nuevo dominio"
 
 msgid "I want to use my nameservers"
-msgstr ""
+msgstr "Quiero usar mis nameservers"
 
 msgid "I will use my existing domain and update nameservers"
-msgstr ""
+msgstr "Usaré mi dominio existente y actualizaré los nameservers"
 
 msgid "I would like to upgrade"
-msgstr ""
+msgstr "Me gustaría mejorar"
 
 msgid "ID"
 msgstr "ID"
@@ -2705,58 +2771,73 @@ msgid "Identity is invalid"
 msgstr ""
 
 msgid ""
-"If enabled, client IP will be checked on the <a href=\"https://stopforumspam.com/\" target=\"_blank\">Stop Forum Spam</a> database before registration"
+"If enabled, client IP will be checked on the <a href=\"https://stopforumspam."
+"com/\" target=\"_blank\">Stop Forum Spam</a> database before registration"
 msgstr ""
 
 msgid ""
-"If enabled, email addresses will be checked against a database of disposable email domains."
+"If enabled, email addresses will be checked against a database of disposable "
+"email domains."
 msgstr ""
 
 msgid ""
-"If enabled, the selected canned response will be added to default reply message."
+"If enabled, the selected canned response will be added to default reply "
+"message."
 msgstr ""
 
 msgid "If enabled, this URL can be used to execute the cronjob:"
 msgstr ""
 
 msgid ""
-"If set, the time in hour(s) the user must wait between consequent ticket submission."
+"If set, the time in hour(s) the user must wait between consequent ticket "
+"submission."
 msgstr ""
 
 msgid ""
-"If the dropdown menu doesn't have the appropriate network interface, please enter the IP address or name (e.g., eth0) of the correct one above."
+"If the dropdown menu doesn't have the appropriate network interface, please "
+"enter the IP address or name (e.g., eth0) of the correct one above."
 msgstr ""
 
 msgid ""
-"If there is a need to change the way notification looks or is being displayed, you can do it by editing"
+"If there is a need to change the way notification looks or is being "
+"displayed, you can do it by editing"
+msgstr ""
+
+msgid "If this is disabled they are shown in master order view \"Addons\" tab."
 msgstr ""
 
 msgid ""
-"If this is disabled they are shown in master order view \"Addons\" tab."
+"If you are happy with the selected payment gateway, please use the button "
+"below to continue with it."
 msgstr ""
 
 msgid ""
-"If you are happy with the selected payment gateway, please use the button below to continue with it."
+"If you are happy with the selected payment gateway, please use the button "
+"below to continue with it. Optionally, you may choose a different payment "
+"gateway if you wish to pay using a subscription."
 msgstr ""
 
 msgid ""
-"If you are happy with the selected payment gateway, please use the button below to continue with it. Optionally, you may choose a different payment gateway if you wish to pay using a subscription."
+"If you are sure that this transaction is valid you can update transaction "
+"details in &quot;Manage&quot; tab and try processing transaction again"
 msgstr ""
 
 msgid ""
-"If you are sure that this transaction is valid you can update transaction details in &quot;Manage&quot; tab and try processing transaction again"
+"If you would like to hide domain contact information which is shown on WHOIS "
+"you can enable privacy protection. Once domain privacy protection is enabled "
+"no one will know who registered this service. And once you decide to disable "
+"privacy protection, information that is listed above on \"Update Domain "
+"Contact Details\" section will be seen on domain WHOIS again."
 msgstr ""
 
 msgid ""
-"If you would like to hide domain contact information which is shown on WHOIS you can enable privacy protection. Once domain privacy protection is enabled no one will know who registered this service. And once you decide to disable privacy protection, information that is listed above on \"Update Domain Contact Details\" section will be seen on domain WHOIS again."
+"If you would like to host this domain with another company you can update "
+"nameservers."
 msgstr ""
 
 msgid ""
-"If you would like to host this domain with another company you can update nameservers."
-msgstr ""
-
-msgid ""
-"If your server has multiple network interfaces, you may select the default one for FOSSBilling to use when making requests here."
+"If your server has multiple network interfaces, you may select the default "
+"one for FOSSBilling to use when making requests here."
 msgstr ""
 
 msgid "Image"
@@ -2795,12 +2876,12 @@ msgstr ""
 msgid "Instance ID"
 msgstr ""
 
-msgid ""
-"Instant payment notification (IPN) did not pass gateway :id validation"
+msgid "Instant payment notification (IPN) did not pass gateway :id validation"
 msgstr ""
 
 msgid ""
-"Instructions for changing the default language can be found on the FOSSBilling documentation."
+"Instructions for changing the default language can be found on the "
+"FOSSBilling documentation."
 msgstr ""
 
 msgid "Integrations / Automation"
@@ -2827,12 +2908,12 @@ msgstr ""
 msgid "Invalid per page number"
 msgstr ""
 
-msgid ""
-"Invalid period code. Period definition must be 2 chars length"
+msgid "Invalid period code. Period definition must be 2 chars length"
 msgstr ""
 
 msgid ""
-"Invalid period quantity :qty for unit :unit. Allowed range is from :from to :to"
+"Invalid period quantity :qty for unit :unit. Allowed range is from :from to :"
+"to"
 msgstr ""
 
 msgid "Invalid request. Make sure request origin is :from"
@@ -2943,8 +3024,13 @@ msgstr ""
 msgid "Item was removed from cart"
 msgstr ""
 
+#, fuzzy
 msgid "Items"
-msgstr "Elementos"
+msgstr ""
+"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
+"Elementos\n"
+"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
+"Artículos"
 
 msgid "John Smith"
 msgstr ""
@@ -2973,7 +3059,9 @@ msgstr ""
 msgid "Label"
 msgstr "Etiqueta"
 
-msgid "Labels on\n                            top"
+msgid ""
+"Labels on\n"
+"                            top"
 msgstr ""
 
 msgid "Labels on the left"
@@ -2989,7 +3077,7 @@ msgid "Languages"
 msgstr "Idiomas"
 
 msgid "Last Name"
-msgstr ""
+msgstr "Apellido"
 
 msgid "Last Reminded"
 msgstr ""
@@ -3022,7 +3110,7 @@ msgid "Last update check:"
 msgstr ""
 
 msgid "Latest news and announcements"
-msgstr ""
+msgstr "Últimas noticias y anuncios"
 
 msgid "Latest orders"
 msgstr ""
@@ -3045,8 +3133,7 @@ msgstr ""
 msgid "Leave empty to apply to all states"
 msgstr ""
 
-msgid ""
-"Leave this blank to use the ExchangeRate-API \"Open Access Endpoint\"."
+msgid "Leave this blank to use the ExchangeRate-API \"Open Access Endpoint\"."
 msgstr ""
 
 msgid "Length"
@@ -3074,8 +3161,7 @@ msgstr "Clave de licencia"
 msgid "License plugin :plugin was not found"
 msgstr ""
 
-msgid ""
-"License plugin is PHP class \"License_PluginName\" with one method"
+msgid "License plugin is PHP class \"License_PluginName\" with one method"
 msgstr ""
 
 msgid "License plugins"
@@ -3139,7 +3225,7 @@ msgid "Login history"
 msgstr "Historial de inicio de sesión"
 
 msgid "Login or Register"
-msgstr ""
+msgstr "Iniciar sesión o Registrarse"
 
 msgid "Login to client area"
 msgstr ""
@@ -3267,19 +3353,16 @@ msgstr ""
 msgid "Max Uses (Zero for Unlimited)"
 msgstr ""
 
-msgid ""
-"Max email sending time in minutes (0 = unlimited, default 5 min.)"
+msgid "Max email sending time in minutes (0 = unlimited, default 5 min.)"
 msgstr ""
 
 msgid "Maximum amount for add funds invoice"
 msgstr ""
 
-msgid ""
-"Maximum number of iterations reached while generating API key"
+msgid "Maximum number of iterations reached while generating API key"
 msgstr ""
 
-msgid ""
-"Maximum number of iterations reached while generating license key"
+msgid "Maximum number of iterations reached while generating license key"
 msgstr ""
 
 msgid "Maximum password length is 256 characters."
@@ -3306,8 +3389,7 @@ msgstr ""
 msgid "Message subject"
 msgstr ""
 
-msgid ""
-"Message was added to mail queue and will be sent with scheduled tasks."
+msgid "Message was added to mail queue and will be sent with scheduled tasks."
 msgstr ""
 
 msgid "Message was sent."
@@ -3366,7 +3448,8 @@ msgid "Module access"
 msgstr ""
 
 msgid ""
-"Module cannot be installed. It requires at least :min version of FOSSBilling. You are using :v"
+"Module cannot be installed. It requires at least :min version of "
+"FOSSBilling. You are using :v"
 msgstr ""
 
 msgid "Month"
@@ -3382,7 +3465,9 @@ msgid "More information"
 msgstr "Más información"
 
 msgid ""
-"Most domain names (except a few top-level domains like .EU and .UK) have a Domain Secret Key/Authorization Code (EPP Code) associated with them. This code is typically required when transferring the domain to a new registrar."
+"Most domain names (except a few top-level domains like .EU and .UK) have a "
+"Domain Secret Key/Authorization Code (EPP Code) associated with them. This "
+"code is typically required when transferring the domain to a new registrar."
 msgstr ""
 
 msgid "Must start with a dot"
@@ -3395,22 +3480,22 @@ msgid "Name"
 msgstr "Nombre"
 
 msgid "Nameserver 1"
-msgstr ""
+msgstr "Nameserver 1"
 
 msgid "Nameserver 1 is required"
 msgstr ""
 
 msgid "Nameserver 2"
-msgstr ""
+msgstr "Nameserver 2"
 
 msgid "Nameserver 2 is required"
 msgstr ""
 
 msgid "Nameserver 3"
-msgstr ""
+msgstr "Nameserver 3"
 
 msgid "Nameserver 4"
-msgstr ""
+msgstr "Nameserver 4"
 
 msgid "Nameservers"
 msgstr "Servidores de nombres"
@@ -3434,8 +3519,7 @@ msgstr ""
 msgid "Never"
 msgstr "Nunca"
 
-msgid ""
-"New API key generated. Applications using old key are now not working."
+msgid "New API key generated. Applications using old key are now not working."
 msgstr ""
 
 msgid "New Addon"
@@ -3552,8 +3636,7 @@ msgstr ""
 msgid "New translations"
 msgstr ""
 
-msgid ""
-"Newly created email templates can be used in custom event hooks."
+msgid "Newly created email templates can be used in custom event hooks."
 msgstr ""
 
 msgid "News"
@@ -3569,7 +3652,8 @@ msgid "Next"
 msgstr "Siguiente"
 
 msgid ""
-"Next date is counted from last expiration date or renewal date whichever is greater"
+"Next date is counted from last expiration date or renewal date whichever is "
+"greater"
 msgstr ""
 
 msgid "Next date is counted from last order expiration date"
@@ -3579,7 +3663,7 @@ msgid "Next date is counted from renewal (payment) date"
 msgstr ""
 
 msgid "Next due date"
-msgstr ""
+msgstr "Próxima fecha de vencimiento"
 
 msgid "Next paid invoice number"
 msgstr ""
@@ -3614,8 +3698,7 @@ msgstr ""
 msgid "No orders yet"
 msgstr ""
 
-msgid ""
-"No potentially dangerous PHP functions were detected as enabled"
+msgid "No potentially dangerous PHP functions were detected as enabled"
 msgstr ""
 
 msgid "No recent orders"
@@ -3663,8 +3746,7 @@ msgstr "Número"
 msgid "Number of days"
 msgstr ""
 
-msgid ""
-"Number of days to generate new invoice before order expiration"
+msgid "Number of days to generate new invoice before order expiration"
 msgstr ""
 
 msgid "On Hold"
@@ -3786,7 +3868,7 @@ msgid "Order config not passed"
 msgstr ""
 
 msgid "Order created"
-msgstr ""
+msgstr "Pedido creado"
 
 msgid "Order discount"
 msgstr ""
@@ -3810,7 +3892,7 @@ msgid "Order not found"
 msgstr ""
 
 msgid "Order notes"
-msgstr ""
+msgstr "Notas del pedido"
 
 msgid "Order now"
 msgstr "Ordenar ahora"
@@ -3825,7 +3907,7 @@ msgid "Order renewed"
 msgstr ""
 
 msgid "Order status"
-msgstr ""
+msgstr "Estado del pedido"
 
 msgid "Order status history"
 msgstr ""
@@ -3857,8 +3939,7 @@ msgstr "Resumen"
 msgid "PDF"
 msgstr ""
 
-msgid ""
-"PHP :version: is out of date and does not get security patches."
+msgid "PHP :version: is out of date and does not get security patches."
 msgstr ""
 
 msgid "PHP :version: is the latest version of PHP."
@@ -3937,7 +4018,7 @@ msgid "Password changed"
 msgstr ""
 
 msgid "Password confirm"
-msgstr ""
+msgstr "Confirmar Contraseña"
 
 msgid "Password length"
 msgstr ""
@@ -3994,7 +4075,7 @@ msgid "Payment adapter :adapter does not support action :action"
 msgstr ""
 
 msgid "Payment amount"
-msgstr ""
+msgstr "Monto del pago"
 
 msgid "Payment amount after discount"
 msgstr ""
@@ -4018,7 +4099,8 @@ msgid "Payment gateway :adapter was not found"
 msgstr ""
 
 msgid ""
-"Payment gateway :id method getTransaction should return Payment_Transaction object"
+"Payment gateway :id method getTransaction should return Payment_Transaction "
+"object"
 msgstr ""
 
 msgid "Payment gateway ID is missing"
@@ -4034,7 +4116,8 @@ msgid "Payment gateway title"
 msgstr ""
 
 msgid ""
-"Payment gateway will be installed in FOSSBilling and can be configured in \"Payment gateways\" tab."
+"Payment gateway will be installed in FOSSBilling and can be configured in "
+"\"Payment gateways\" tab."
 msgstr ""
 
 msgid "Payment gateways"
@@ -4068,7 +4151,8 @@ msgid "Percentage"
 msgstr "Porcentaje"
 
 msgid ""
-"Performs simple checks to validate your if webserver blocks access to sensitive files."
+"Performs simple checks to validate your if webserver blocks access to "
+"sensitive files."
 msgstr ""
 
 msgid "Period"
@@ -4096,7 +4180,7 @@ msgid "Phone Country Code"
 msgstr ""
 
 msgid "Phone Number"
-msgstr ""
+msgstr "Número de Teléfono"
 
 msgid "Phone number"
 msgstr "Número de teléfono"
@@ -4105,7 +4189,9 @@ msgid "Place new order"
 msgstr ""
 
 msgid ""
-"Please be cautious and make sure you know what you are doing when editing order config! FOSSBilling relies on these parameters and you might get unexpected results if you change some of them."
+"Please be cautious and make sure you know what you are doing when editing "
+"order config! FOSSBilling relies on these parameters and you might get "
+"unexpected results if you change some of them."
 msgstr ""
 
 msgid "Please check your login details."
@@ -4114,26 +4200,29 @@ msgstr ""
 msgid "Please check your mailbox and confirm your email address."
 msgstr ""
 
-msgid ""
-"Please choose a payment type and pay for your chosen products."
+msgid "Please choose a payment type and pay for your chosen products."
 msgstr ""
 
 msgid ""
-"Please click here to continue if this page does not redirect automatically in 5 seconds"
+"Please click here to continue if this page does not redirect automatically "
+"in 5 seconds"
 msgstr ""
 
 msgid "Please click on \"Edit\" in order to add options"
 msgstr ""
 
 msgid ""
-"Please consider enabling error reporting. Doing so allows us to provide you with better technical support and helps us to proactively improve FOSSBilling."
+"Please consider enabling error reporting. Doing so allows us to provide you "
+"with better technical support and helps us to proactively improve "
+"FOSSBilling."
 msgstr ""
 
 msgid "Please enter your message"
 msgstr ""
 
 msgid ""
-"Please keep in mind that field name cannot start with a number. Special characters will be replaced with underscores ( _ )"
+"Please keep in mind that field name cannot start with a number. Special "
+"characters will be replaced with underscores ( _ )"
 msgstr ""
 
 msgid "Plugin"
@@ -4242,15 +4331,14 @@ msgstr "Producto"
 msgid "Product :id is out of stock."
 msgstr ""
 
-msgid ""
-"Product :id payment type is recurrent, but period was not selected"
+msgid "Product :id payment type is recurrent, but period was not selected"
 msgstr ""
 
 msgid "Product Addons"
 msgstr ""
 
 msgid "Product Configuration"
-msgstr ""
+msgstr "Configuración del Producto"
 
 msgid "Product ID or slug is missing"
 msgstr ""
@@ -4274,7 +4362,7 @@ msgid "Product is disabled in configuration"
 msgstr ""
 
 msgid "Product name"
-msgstr ""
+msgstr "Nombre del producto"
 
 msgid "Product not found"
 msgstr ""
@@ -4289,10 +4377,10 @@ msgid "Product type :type is not registered"
 msgstr ""
 
 msgid "Product was added to shopping cart"
-msgstr ""
+msgstr "El producto fue agregado al carrito"
 
 msgid "Product/Service"
-msgstr ""
+msgstr "Producto/Servicio"
 
 msgid "Products"
 msgstr "Productos"
@@ -4316,7 +4404,7 @@ msgid "Promo code cannot be applied to your account"
 msgstr ""
 
 msgid "Promo code was applied for your order"
-msgstr ""
+msgstr "El código promocional fue aplicado a tu pedido"
 
 msgid "Promotion Limitations"
 msgstr ""
@@ -4334,7 +4422,8 @@ msgid "Protection"
 msgstr ""
 
 msgid ""
-"Provided priority (:priority) is invalid. Please provide an integer between 1 and 5 or use the pre-defined symfony constants."
+"Provided priority (:priority) is invalid. Please provide an integer between "
+"1 and 5 or use the pre-defined symfony constants."
 msgstr ""
 
 msgid "Provider"
@@ -4383,11 +4472,11 @@ msgid "Receiver Name"
 msgstr ""
 
 msgid ""
-"Receiver is not defined. Define to or to_client or to_staff or to_admin parameter"
+"Receiver is not defined. Define to or to_client or to_staff or to_admin "
+"parameter"
 msgstr ""
 
-msgid ""
-"Receiver is not defined. Define to or to_client or to_staff parameter"
+msgid "Receiver is not defined. Define to or to_client or to_staff parameter"
 msgstr ""
 
 msgid "Recent emails"
@@ -4456,8 +4545,7 @@ msgstr ""
 msgid "Registrar :adapter was not found"
 msgstr ""
 
-msgid ""
-"Registrar adapter :adapter should extend Registrar_AdapterAbstract"
+msgid "Registrar adapter :adapter should extend Registrar_AdapterAbstract"
 msgstr ""
 
 msgid "Registrar configuration"
@@ -4515,7 +4603,7 @@ msgid "Renew"
 msgstr "Renovar"
 
 msgid "Renew now"
-msgstr ""
+msgstr "Renovar ahora"
 
 msgid "Renewal Date"
 msgstr ""
@@ -4545,7 +4633,7 @@ msgid "Request"
 msgstr "Solicitud"
 
 msgid "Request Upgrade"
-msgstr ""
+msgstr "Solicitar Mejora"
 
 msgid "Request cancellation"
 msgstr ""
@@ -4650,7 +4738,9 @@ msgid "Save current settings as a new preset called"
 msgstr ""
 
 msgid ""
-"Scheduled tasks must be enabled immediately after installation. Cron is responsible for sending your clients reminder about payments, domain renewal notices and many more."
+"Scheduled tasks must be enabled immediately after installation. Cron is "
+"responsible for sending your clients reminder about payments, domain renewal "
+"notices and many more."
 msgstr ""
 
 msgid "Scheduled tasks were never executed"
@@ -4671,8 +4761,11 @@ msgstr "Seguridad"
 msgid "Security dashboard"
 msgstr ""
 
+# =====================================================
+# Order Module Translations
+# =====================================================
 msgid "Select Product"
-msgstr ""
+msgstr "Seleccionar Producto"
 
 msgid "Select free TLDs"
 msgstr ""
@@ -4687,7 +4780,8 @@ msgid "Select uploaded file name and click on install."
 msgstr ""
 
 msgid ""
-"Select which currencies can accept this payment gateway (Select none to allow all currencies)"
+"Select which currencies can accept this payment gateway (Select none to "
+"allow all currencies)"
 msgstr ""
 
 msgid "Selected billing period is invalid"
@@ -4697,14 +4791,16 @@ msgid "Selected billing period is invalid for the selected add-on"
 msgstr ""
 
 msgid ""
-"Selected currency :selected does not match your profile currency :code. Please change cart currency to continue."
+"Selected currency :selected does not match your profile currency :code. "
+"Please change cart currency to continue."
 msgstr ""
 
 msgid "Selected price is 0.00"
 msgstr ""
 
 msgid ""
-"Selecting this will force the item to be removed from the database even if errors occur."
+"Selecting this will force the item to be removed from the database even if "
+"errors occur."
 msgstr ""
 
 msgid "Send"
@@ -4755,12 +4851,12 @@ msgstr ""
 msgid "Server IP"
 msgstr ""
 
-msgid ""
-"Server Manager DirectAdmin Error: \"Account is not suspended\""
+msgid "Server Manager DirectAdmin Error: \"Account is not suspended\""
 msgstr ""
 
 msgid ""
-"Server Manager DirectAdmin Error: \"The request you have made cannot be executed because it does not exist in your authority level\""
+"Server Manager DirectAdmin Error: \"The request you have made cannot be "
+"executed because it does not exist in your authority level\""
 msgstr ""
 
 msgid "Server Name"
@@ -4797,7 +4893,7 @@ msgid "Service class :class was not found in :path"
 msgstr ""
 
 msgid "Service details"
-msgstr ""
+msgstr "Detalles del servicio"
 
 msgid "Service management"
 msgstr ""
@@ -4836,7 +4932,8 @@ msgid "Setup Price"
 msgstr ""
 
 msgid ""
-"Setup domain pricing and allowed operations. Assign specific domain registrars for each Top Level Domain (TLD)"
+"Setup domain pricing and allowed operations. Assign specific domain "
+"registrars for each Top Level Domain (TLD)"
 msgstr ""
 
 msgid "Setup new TLD prices and properties"
@@ -4851,7 +4948,9 @@ msgstr ""
 msgid "Show addon orders in orders list"
 msgstr ""
 
-msgid "Show form\n                            title"
+msgid ""
+"Show form\n"
+"                            title"
 msgstr ""
 
 msgid "Show values of custom form before checkout"
@@ -4882,11 +4981,11 @@ msgid "Solved"
 msgstr ""
 
 msgid ""
-"Some server managers may ignore this option due to limitations / requirements for usernames imposed by the control panel."
+"Some server managers may ignore this option due to limitations / "
+"requirements for usernames imposed by the control panel."
 msgstr ""
 
-msgid ""
-"Sorry, but \":product\" is not allowed to be upgraded to \":upgrade\""
+msgid "Sorry, but \":product\" is not allowed to be upgraded to \":upgrade\""
 msgstr ""
 
 msgid "SpamChecker settings"
@@ -4959,13 +5058,13 @@ msgid "Submit"
 msgstr "Enviar"
 
 msgid "Submit cancellation request"
-msgstr ""
+msgstr "Enviar solicitud de cancelación"
 
 msgid "Submit new support ticket"
-msgstr ""
+msgstr "Enviar nuevo ticket de soporte"
 
 msgid "Submit upgrade request"
-msgstr ""
+msgstr "Enviar solicitud de mejora"
 
 msgid "Submitted"
 msgstr "Enviado"
@@ -5043,7 +5142,8 @@ msgid "Suspension reasons"
 msgstr ""
 
 msgid ""
-"Switch to a predefined set of theme settings from the dropdown. Adjust each section and apply the changes once you're done."
+"Switch to a predefined set of theme settings from the dropdown. Adjust each "
+"section and apply the changes once you're done."
 msgstr ""
 
 msgid "Sync with server"
@@ -5164,15 +5264,18 @@ msgid "Thank you for your patience."
 msgstr ""
 
 msgid ""
-"The \":domain_registrar\" domain registrar is not fully configured. Please configure the :missing"
+"The \":domain_registrar\" domain registrar is not fully configured. Please "
+"configure the :missing"
 msgstr ""
 
 msgid ""
-"The \":pay_gateway\" payment gateway is not fully configured. Please configure the :missing"
+"The \":pay_gateway\" payment gateway is not fully configured. Please "
+"configure the :missing"
 msgstr ""
 
 msgid ""
-"The \":server_manager\" server manager is not fully configured. Please configure the :missing"
+"The \":server_manager\" server manager is not fully configured. Please "
+"configure the :missing"
 msgstr ""
 
 msgid "The \"from\" email address cannot be empty"
@@ -5188,27 +5291,37 @@ msgid "The check :checkName: does not seem to be a valid check."
 msgstr ""
 
 msgid ""
-"The currently selected network interface does not appear to be able to reach the internet!"
+"The currently selected network interface does not appear to be able to reach "
+"the internet!"
 msgstr ""
 
 msgid ""
-"The default currency is the one you define product pricing in. If your client chooses a different currency, pricing will be recalculated according to the conversion rate. Changing the default currency after orders have been placed may have unexpected issues. Nothing is recalculated on default currency change. Your income is calculated in the default currency. Changing the default currency after you have paid invoices will distort income statistics."
+"The default currency is the one you define product pricing in. If your "
+"client chooses a different currency, pricing will be recalculated according "
+"to the conversion rate. Changing the default currency after orders have been "
+"placed may have unexpected issues. Nothing is recalculated on default "
+"currency change. Your income is calculated in the default currency. Changing "
+"the default currency after you have paid invoices will distort income "
+"statistics."
 msgstr ""
 
 msgid ""
-"The download URL for this release was not specified as a trusted one. Update canceled for security reasons."
+"The download URL for this release was not specified as a trusted one. Update "
+"canceled for security reasons."
 msgstr ""
 
 msgid ""
-"The invoice you are paying and your chosen payment gateway both support subscription payments. What type of payment would you like to continue with?"
+"The invoice you are paying and your chosen payment gateway both support "
+"subscription payments. What type of payment would you like to continue with?"
 msgstr ""
 
 msgid ""
-"The last applicable behavior change represents the most recent FOSSBilling version that changed error reporting which also applies to this current version. There may have been more recent changes than what's listed."
+"The last applicable behavior change represents the most recent FOSSBilling "
+"version that changed error reporting which also applies to this current "
+"version. There may have been more recent changes than what's listed."
 msgstr ""
 
-msgid ""
-"The link has expired or you have already reset your password."
+msgid "The link has expired or you have already reset your password."
 msgstr ""
 
 msgid "The list is empty"
@@ -5218,7 +5331,8 @@ msgid "The list is empty."
 msgstr ""
 
 msgid ""
-"The list is empty. Depending on modules enabled email templates will be inserted after first event occurrence."
+"The list is empty. Depending on modules enabled email templates will be "
+"inserted after first event occurrence."
 msgstr ""
 
 msgid "The password you chose when creating your account."
@@ -5231,11 +5345,13 @@ msgid "The system is undergoing maintenance. Please try again later"
 msgstr ""
 
 msgid ""
-"Theme \":name\" assets folder is not writable. Files cannot be uploaded and settings cannot be saved. Set folder permissions to 755"
+"Theme \":name\" assets folder is not writable. Files cannot be uploaded and "
+"settings cannot be saved. Set folder permissions to 755"
 msgstr ""
 
 msgid ""
-"Theme \":name\" assets folder is not writable. Set folder :folder permissions to 777"
+"Theme \":name\" assets folder is not writable. Set folder :folder "
+"permissions to 777"
 msgstr ""
 
 msgid "Theme \":name\" does not exist"
@@ -5263,41 +5379,48 @@ msgid "There is no update available"
 msgstr ""
 
 msgid ""
-"There was an error when fetching currency rates from Currency Data API. See the error log for details."
+"There was an error when fetching currency rates from Currency Data API. See "
+"the error log for details."
 msgstr ""
 
 msgid ""
-"There was an error when fetching currency rates from ExchangeRate-API. See the error log for details."
+"There was an error when fetching currency rates from ExchangeRate-API. See "
+"the error log for details."
 msgstr ""
 
 msgid ""
-"There was an error when fetching currency rates from currencylayer. See the error log for details."
+"There was an error when fetching currency rates from currencylayer. See the "
+"error log for details."
 msgstr ""
 
 msgid "There was an error when processing the transaction"
 msgstr ""
 
 msgid ""
-"There was an error while applying database patches. Please check the error log for information on the error, correct it, and then perform the backup patching method to complete the update."
+"There was an error while applying database patches. Please check the error "
+"log for information on the error, correct it, and then perform the backup "
+"patching method to complete the update."
 msgstr ""
 
 msgid ""
-"These values will change when real email is sent. You can pass these variables to admin or guest API to get additional information from database."
+"These values will change when real email is sent. You can pass these "
+"variables to admin or guest API to get additional information from database."
+msgstr ""
+
+msgid "This administrator account is protected and cannot be removed"
 msgstr ""
 
 msgid ""
-"This administrator account is protected and cannot be removed"
-msgstr ""
-
-msgid ""
-"This database is updated daily and provided free of charge by the FakeFilter project under the BSD 3-Clause License."
+"This database is updated daily and provided free of charge by the FakeFilter "
+"project under the BSD 3-Clause License."
 msgstr ""
 
 msgid "This email address is already registered."
 msgstr ""
 
 msgid ""
-"This extension is not compatible with your version of FOSSBilling. Please update FOSSBilling to the latest version and try again."
+"This extension is not compatible with your version of FOSSBilling. Please "
+"update FOSSBilling to the latest version and try again."
 msgstr ""
 
 msgid "This input type must have unique values"
@@ -5317,23 +5440,26 @@ msgid ""
 msgstr ""
 
 msgid ""
-"This staff member is used by FOSSBilling to perform system tasks and cannot be removed."
+"This staff member is used by FOSSBilling to perform system tasks and cannot "
+"be removed."
 msgstr ""
 
 msgid ""
-"This template has no known parameters, you may need to take an action to trigger its sending before they become known."
+"This template has no known parameters, you may need to take an action to "
+"trigger its sending before they become known."
+msgstr ""
+
+msgid "This ticket was closed, but you can still reopen it by replying."
 msgstr ""
 
 msgid ""
-"This ticket was closed, but you can still reopen it by replying."
+"This update is considered to be a major update, you should check the release "
+"notes for any breaking changes."
 msgstr ""
 
 msgid ""
-"This update is considered to be a major update, you should check the release notes for any breaking changes."
-msgstr ""
-
-msgid ""
-"This update is considered to be a minor update, there are low chances of incompatibilities."
+"This update is considered to be a minor update, there are low chances of "
+"incompatibilities."
 msgstr ""
 
 msgid "Ticket"
@@ -5407,18 +5533,20 @@ msgid "To change your avatar visit"
 msgstr ""
 
 msgid ""
-"To the best of our knowledge, \"Currency Data API\" and \"currencylayer\" are both owned by APILayer and provide the same data, but through a different API."
+"To the best of our knowledge, \"Currency Data API\" and \"currencylayer\" "
+"are both owned by APILayer and provide the same data, but through a "
+"different API."
 msgstr ""
 
 msgid ""
-"To use reCAPTCHA you must get an API key from <a href='https://www.google.com/recaptcha/admin/create'>here</a>"
+"To use reCAPTCHA you must get an API key from <a href='https://www.google."
+"com/recaptcha/admin/create'>here</a>"
 msgstr ""
 
 msgid "Today"
 msgstr "Hoy"
 
-msgid ""
-"Too many iterations were performed while formatting the config file"
+msgid "Too many iterations were performed while formatting the config file"
 msgstr ""
 
 msgid "Top"
@@ -5491,7 +5619,8 @@ msgid "Transaction status on payment gateway"
 msgstr ""
 
 msgid ""
-"Transaction status on payment gateway is Pending. Only Complete or Unknown transactions can be processed."
+"Transaction status on payment gateway is Pending. Only Complete or Unknown "
+"transactions can be processed."
 msgstr ""
 
 msgid "Transaction type"
@@ -5543,11 +5672,13 @@ msgid "Type"
 msgstr "Tipo"
 
 msgid ""
-"Unable to assign the Reseller ANY IPs. Make sure to have free, unassigned IPs."
+"Unable to assign the Reseller ANY IPs. Make sure to have free, unassigned "
+"IPs."
 msgstr ""
 
 msgid ""
-"Unable to clear cache and/or remove install folder. Further details are available in the error log."
+"Unable to clear cache and/or remove install folder. Further details are "
+"available in the error log."
 msgstr ""
 
 msgid ""
@@ -5564,15 +5695,18 @@ msgid "Unable to determine the next invoice number"
 msgstr ""
 
 msgid ""
-"Unable to enable / disable the locale as it is not present in the locale folder."
+"Unable to enable / disable the locale as it is not present in the locale "
+"folder."
 msgstr ""
 
 msgid ""
-"Unable to fetch alerts from Central Alerts System. See the error log for more information."
+"Unable to fetch alerts from Central Alerts System. See the error log for "
+"more information."
 msgstr ""
 
 msgid ""
-"Unable to fetch the extension details from the FOSSBilling extension directory."
+"Unable to fetch the extension details from the FOSSBilling extension "
+"directory."
 msgstr ""
 
 msgid "Unable to fetch the latest extension release."
@@ -5591,7 +5725,8 @@ msgid "Unable to load existing configuration"
 msgstr ""
 
 msgid ""
-"Unable to send email: 'Custom' transport method was selected without a custom DSN"
+"Unable to send email: 'Custom' transport method was selected without a "
+"custom DSN"
 msgstr ""
 
 msgid ""
@@ -5602,7 +5737,8 @@ msgid "Unauthorized IP"
 msgstr ""
 
 msgid ""
-"Unfortunately field with this name exists in this form already. Form must have different field names."
+"Unfortunately field with this name exists in this form already. Form must "
+"have different field names."
 msgstr ""
 
 msgid "Unique name to identify this hosting plan"
@@ -5639,7 +5775,8 @@ msgid "Unknown transaction #:id type: :type"
 msgstr ""
 
 msgid ""
-"Unknown uppercase option ':case:'. API generator only accepts 'lower', 'upper', or 'mixed'."
+"Unknown uppercase option ':case:'. API generator only accepts 'lower', "
+"'upper', or 'mixed'."
 msgstr ""
 
 msgid "Unlimited"
@@ -5730,7 +5867,7 @@ msgid "Upgrade To"
 msgstr ""
 
 msgid "Upgrade to"
-msgstr ""
+msgstr "Mejorar a"
 
 msgid "Upgrades"
 msgstr ""
@@ -5757,11 +5894,11 @@ msgid "Use these fields to define custom client details"
 msgstr ""
 
 msgid ""
-"Use this function to update existing order file. Client will be able to download new file from client area"
+"Use this function to update existing order file. Client will be able to "
+"download new file from client area"
 msgstr ""
 
-msgid ""
-"Used to identify client on foreign system. Usually used by importers"
+msgid "Used to identify client on foreign system. Usually used by importers"
 msgstr ""
 
 msgid "User"
@@ -5806,20 +5943,22 @@ msgstr ""
 msgid "Valid Versions"
 msgstr ""
 
-msgid ""
-"Valid contact birthdate is required while registering RU domain name"
+msgid "Valid contact birthdate is required while registering RU domain name"
 msgstr ""
 
 msgid ""
-"Valid contact passport information is required while registering ASIA domain name"
+"Valid contact passport information is required while registering ASIA domain "
+"name"
 msgstr ""
 
 msgid ""
-"Valid contact passport information is required while registering ES domain name"
+"Valid contact passport information is required while registering ES domain "
+"name"
 msgstr ""
 
 msgid ""
-"Valid contact passport information is required while registering RU domain name"
+"Valid contact passport information is required while registering RU domain "
+"name"
 msgstr ""
 
 msgid "Valid hosts (one per line)"
@@ -5892,11 +6031,14 @@ msgid "Views"
 msgstr ""
 
 msgid ""
-"Visit the extension directory for more information on updating this extension."
+"Visit the extension directory for more information on updating this "
+"extension."
 msgstr ""
 
 msgid ""
-"WARNING! Incorrect configuration of allowed IPs can lead to a complete lockout of the administrator panel. Only use when you have static IP addresses."
+"WARNING! Incorrect configuration of allowed IPs can lead to a complete "
+"lockout of the administrator panel. Only use when you have static IP "
+"addresses."
 msgstr ""
 
 msgid "WYSIWYG settings"
@@ -5914,41 +6056,38 @@ msgstr "Advertencia"
 msgid "Warning!"
 msgstr ""
 
-msgid ""
-"Warning! Resetting the key will break existing applications using it."
+msgid "Warning! Resetting the key will break existing applications using it."
 msgstr ""
 
 msgid "Warning: CSRF prevention is not enabled for the API."
 msgstr ""
 
-msgid ""
-"Warning: Debug mode is enabled for the Twig templating engine."
+msgid "Warning: Debug mode is enabled for the Twig templating engine."
+msgstr ""
+
+msgid "Warning: Debug mode is enabled for your FOSSBilling installation."
 msgstr ""
 
 msgid ""
-"Warning: Debug mode is enabled for your FOSSBilling installation."
-msgstr ""
-
-msgid ""
-"Warning: FOSSBilling is configured to update to non-release versions of FOSSBilling."
+"Warning: FOSSBilling is configured to update to non-release versions of "
+"FOSSBilling."
 msgstr ""
 
 msgid "Warning: Prevention against session hijacking is disabled."
 msgstr ""
 
-msgid ""
-"Warning: You appear to be using a non-release version of FOSSBilling."
+msgid "Warning: You appear to be using a non-release version of FOSSBilling."
 msgstr ""
 
 msgid ""
-"We currently aren't accepting support tickets from unregistered users. Please use another contact method."
+"We currently aren't accepting support tickets from unregistered users. "
+"Please use another contact method."
 msgstr ""
 
 msgid "We have already received this request."
 msgstr ""
 
-msgid ""
-"We were unable to generate a password with the required parameters"
+msgid "We were unable to generate a password with the required parameters"
 msgstr ""
 
 msgid "Webserver Check"
@@ -5964,14 +6103,15 @@ msgid "What are you looking for?"
 msgstr ""
 
 msgid ""
-"When using ExchangeRate-API, their API informs FOSSBilling when the next update will occur which makes it more efficient for automated exchange rate syncing."
+"When using ExchangeRate-API, their API informs FOSSBilling when the next "
+"update will occur which makes it more efficient for automated exchange rate "
+"syncing."
 msgstr ""
 
 msgid "Where I can use new email template?"
 msgstr ""
 
-msgid ""
-"While we're away, you can still reach us over other channels."
+msgid "While we're away, you can still reach us over other channels."
 msgstr ""
 
 msgid "Whois"
@@ -5984,7 +6124,8 @@ msgid "Width"
 msgstr "Ancho"
 
 msgid ""
-"With the current settings, your FOSSBilling instance will have an external IP address of: "
+"With the current settings, your FOSSBilling instance will have an external "
+"IP address of: "
 msgstr ""
 
 msgid "Year"
@@ -6003,11 +6144,18 @@ msgid "You"
 msgstr "Usted"
 
 msgid ""
-"You appear to be running the latest version of FOSSBilling, so no action is needed at the moment. If you think this is a mistake, you may use the button below to check again."
+"You appear to be running the latest version of FOSSBilling, so no action is "
+"needed at the moment. If you think this is a mistake, you may use the button "
+"below to check again."
 msgstr ""
 
+#, fuzzy
 msgid "You are"
-msgstr "Usted está"
+msgstr ""
+"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
+"Usted está\n"
+"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
+"Tú eres"
 
 msgid "You are already registered as reseller"
 msgstr ""
@@ -6019,11 +6167,11 @@ msgid "You are not allowed to login to admin area from :ip address"
 msgstr ""
 
 msgid ""
-"You can print this invoice or export it to a PDF file by clicking on the corresponding button."
+"You can print this invoice or export it to a PDF file by clicking on the "
+"corresponding button."
 msgstr ""
 
-msgid ""
-"You can reset your license parameters if you have changed your server"
+msgid "You can reset your license parameters if you have changed your server"
 msgstr ""
 
 msgid "You do not have access to the :mod module"
@@ -6036,35 +6184,38 @@ msgid "You do not have permission to perform this action"
 msgstr ""
 
 msgid ""
-"You do not yet have a currency associated with your profile. You can select the correct one when making your first order."
+"You do not yet have a currency associated with your profile. You can select "
+"the correct one when making your first order."
 msgstr ""
 
 msgid "You have already created domain product."
 msgstr ""
 
 msgid ""
-"You have already used this promo code. Please remove the promo code and checkout again."
+"You have already used this promo code. Please remove the promo code and "
+"checkout again."
 msgstr ""
 
-msgid ""
-"You have the latest version of FOSSBilling. You do not need to update."
+msgid "You have the latest version of FOSSBilling. You do not need to update."
 msgstr ""
 
 msgid "You have to complete the CAPTCHA to continue"
 msgstr ""
 
 msgid "You logged in successfully"
-msgstr ""
+msgstr "Has iniciado sesión correctamente"
 
 msgid "You may not pay a deposit invoice with this payment gateway."
 msgstr ""
 
 msgid ""
-"You must configure your API key to use Currency Data API as an exchange rate data source."
+"You must configure your API key to use Currency Data API as an exchange rate "
+"data source."
 msgstr ""
 
 msgid ""
-"You must configure your API key to use currencylayer as an exchange rate data source."
+"You must configure your API key to use currencylayer as an exchange rate "
+"data source."
 msgstr ""
 
 msgid "You must define the client's currency before adding funds."
@@ -6074,20 +6225,22 @@ msgid "You must fill in all required fields. "
 msgstr ""
 
 msgid "You must fill in your email."
-msgstr ""
+msgstr "Debes ingresar tu email."
 
 msgid "You must fill in your password."
-msgstr ""
+msgstr "Debes ingresar tu contraseña."
 
 msgid ""
-"You must have at least one active order before you can add funds so you cannot proceed at the current time!"
+"You must have at least one active order before you can add funds so you "
+"cannot proceed at the current time!"
 msgstr ""
 
 msgid "You must provide an API key to check it's validity."
 msgstr ""
 
 msgid ""
-"You must provide both an order ID and a new product ID in order to request an upgrade."
+"You must provide both an order ID and a new product ID in order to request "
+"an upgrade."
 msgstr ""
 
 msgid ""
@@ -6098,7 +6251,8 @@ msgid "You must provide the API key order ID in order to update it."
 msgstr ""
 
 msgid ""
-"You must set the payment gateway in the invoice manage tab before marking it as paid."
+"You must set the payment gateway in the invoice manage tab before marking it "
+"as paid."
 msgstr ""
 
 msgid "You must specify a check ID to run."
@@ -6107,12 +6261,12 @@ msgstr ""
 msgid "You must specify an IP address to lookup."
 msgstr ""
 
-msgid ""
-"You must verify your email address before you may access our services."
+msgid "You must verify your email address before you may access our services."
 msgstr ""
 
 msgid ""
-"You need to add ID (if you want to use it for one html element) or class (if you want to use it for multiple elements) in order for it to work"
+"You need to add ID (if you want to use it for one html element) or class (if "
+"you want to use it for multiple elements) in order for it to work"
 msgstr ""
 
 msgid "You need to enter numeric value"
@@ -6129,11 +6283,11 @@ msgid "Your API key"
 msgstr ""
 
 msgid ""
-"Your IP address (:ip) is blocked. Please contact our support to lift your block."
+"Your IP address (:ip) is blocked. Please contact our support to lift your "
+"block."
 msgstr ""
 
-msgid ""
-"Your IP address is blacklisted in the Stop Forum Spam database"
+msgid "Your IP address is blacklisted in the Stop Forum Spam database"
 msgstr ""
 
 msgid "Your account balance is insufficient to cover this invoice."
@@ -6152,14 +6306,17 @@ msgid "Your new domain"
 msgstr ""
 
 msgid ""
-"Your payment has been submitted and will be processed shortly. It may take some time for your invoice to be marked as paid."
+"Your payment has been submitted and will be processed shortly. It may take "
+"some time for your invoice to be marked as paid."
 msgstr ""
 
 msgid "Your profile currency is"
 msgstr ""
 
 msgid ""
-"Your profile currency is defined after your first order. Once your currency is set, all your profile accounting will be managed in that currency and cannot be changed."
+"Your profile currency is defined after your first order. Once your currency "
+"is set, all your profile accounting will be managed in that currency and "
+"cannot be changed."
 msgstr ""
 
 msgid "Your username is blacklisted in the Stop Forum Spam database"
@@ -6169,7 +6326,7 @@ msgid "Zip"
 msgstr ""
 
 msgid "Zip/Postal Code"
-msgstr ""
+msgstr "Código Postal"
 
 msgid "account synchronization"
 msgstr ""
@@ -6211,7 +6368,8 @@ msgid "create user"
 msgstr ""
 
 msgid ""
-"data-product attribute value will be overridden if popup's product is selected from select-box above"
+"data-product attribute value will be overridden if popup's product is "
+"selected from select-box above"
 msgstr ""
 
 msgid "day"
@@ -6409,3 +6567,215 @@ msgstr ""
 msgid "year"
 msgstr ""
 
+# =====================================================
+# Servicestatus Module Translations
+# =====================================================
+msgid "Service Status"
+msgstr "Estado del Servicio"
+
+msgid "System Status"
+msgstr "Estado del Sistema"
+
+msgid "Components"
+msgstr "Componentes"
+
+msgid "Incidents"
+msgstr "Incidentes"
+
+msgid "New Component"
+msgstr "Nuevo Componente"
+
+msgid "New Incident"
+msgstr "Nuevo Incidente"
+
+msgid "Operational"
+msgstr "Operativo"
+
+msgid "Degraded"
+msgstr "Degradado"
+
+msgid "Degraded Performance"
+msgstr "Rendimiento Degradado"
+
+msgid "Partial Outage"
+msgstr "Interrupción Parcial"
+
+msgid "Partial System Outage"
+msgstr "Interrupción Parcial del Sistema"
+
+msgid "Major Outage"
+msgstr "Interrupción Mayor"
+
+msgid "Major System Outage"
+msgstr "Interrupción Mayor del Sistema"
+
+msgid "Maintenance"
+msgstr "Mantenimiento"
+
+msgid "Under Maintenance"
+msgstr "En Mantenimiento"
+
+msgid "Investigating"
+msgstr "Investigando"
+
+msgid "Identified"
+msgstr "Identificado"
+
+msgid "Monitoring"
+msgstr "Monitoreando"
+
+msgid "Resolved"
+msgstr "Resuelto"
+
+msgid "Scheduled"
+msgstr "Programado"
+
+msgid "Impact"
+msgstr "Impacto"
+
+msgid "Major"
+msgstr "Mayor"
+
+msgid "Partial"
+msgstr "Parcial"
+
+msgid "Active Incidents"
+msgstr "Incidentes Activos"
+
+msgid "Scheduled Maintenance"
+msgstr "Mantenimiento Programado"
+
+msgid "Incident History"
+msgstr "Historial de Incidentes"
+
+msgid "Past incidents from the last 90 days"
+msgstr "Incidentes de los últimos 90 días"
+
+msgid "No incidents in the past 90 days"
+msgstr "Sin incidentes en los últimos 90 días"
+
+msgid "All systems have been running smoothly."
+msgstr "Todos los sistemas han funcionado correctamente."
+
+msgid "All Systems Operational"
+msgstr "Todos los Sistemas Operativos"
+
+msgid "No components created yet"
+msgstr "No hay componentes creados aún"
+
+msgid "No incidents reported yet"
+msgstr "No hay incidentes reportados aún"
+
+msgid "No components configured"
+msgstr "No hay componentes configurados"
+
+msgid "Affected Components"
+msgstr "Componentes Afectados"
+
+msgid "No components available. Create components first."
+msgstr "No hay componentes disponibles. Crea componentes primero."
+
+msgid "Display Order"
+msgstr "Orden de Visualización"
+
+msgid "Create Component"
+msgstr "Crear Componente"
+
+msgid "Create Incident"
+msgstr "Crear Incidente"
+
+msgid "Update Component"
+msgstr "Actualizar Componente"
+
+msgid "Update Incident"
+msgstr "Actualizar Incidente"
+
+msgid "Edit Component"
+msgstr "Editar Componente"
+
+msgid "Edit Incident"
+msgstr "Editar Incidente"
+
+msgid "Initial update message..."
+msgstr "Mensaje de actualización inicial..."
+
+msgid "Scheduled At"
+msgstr "Programado Para"
+
+msgid "Only for scheduled maintenance"
+msgstr "Solo para mantenimiento programado"
+
+msgid "Add Update"
+msgstr "Agregar Actualización"
+
+msgid "Post Update"
+msgstr "Publicar Actualización"
+
+msgid "Update History"
+msgstr "Historial de Actualizaciones"
+
+msgid "No updates yet"
+msgstr "Sin actualizaciones aún"
+
+msgid "No updates available"
+msgstr "No hay actualizaciones disponibles"
+
+msgid "Timeline"
+msgstr "Cronología"
+
+msgid "View Incident History"
+msgstr "Ver Historial de Incidentes"
+
+msgid "View History"
+msgstr "Ver Historial"
+
+msgid "Choose products we offer for selling"
+msgstr "Elige entre los productos que ofrecemos"
+
+msgid "Choose"
+msgstr "Elegir"
+
+msgid "Products and services"
+msgstr "Productos y servicios"
+
+msgid "Configure Your Product"
+msgstr "Configura Tu Producto"
+
+msgid "Your Shopping Cart"
+msgstr "Tu Carrito de Compras"
+
+msgid "mydomain"
+msgstr "midominio"
+
+msgid "Need ideas? Explore:"
+msgstr "¿Necesitas ideas? Explora:"
+
+msgid "Domain Suggestions"
+msgstr "Sugerencias de Dominio"
+
+msgid "Renewal"
+msgstr "Renovación"
+
+msgid "Request Cancellation"
+msgstr "Solicitar Cancelación"
+
+msgid "Back to services"
+msgstr "Volver a servicios"
+
+msgid "I would like to cancel"
+msgstr "Me gustaría cancelar"
+
+msgid "Your email address"
+msgstr "Tu dirección de email"
+
+msgid "Remember me"
+msgstr "Recordarme"
+
+msgid "Log in"
+msgstr "Iniciar sesión"
+
+msgid "FREE"
+msgstr "GRATIS"
+
+msgid "You are logged out"
+msgstr "Has cerrado sesión"
