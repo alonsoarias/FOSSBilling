@@ -180,4 +180,21 @@ class Admin extends \Api_Abstract
     {
         return $this->getService()->fixAllProductPayments();
     }
+
+    /**
+     * Debug: Get raw account data from WHM to inspect date formats.
+     *
+     * @param int $server_id Server ID
+     *
+     * @return array Raw account data with date fields highlighted
+     */
+    public function debug_dates(array $data): array
+    {
+        $required = [
+            'server_id' => 'Server ID is required',
+        ];
+        $this->di['validator']->checkRequiredParamsForArray($required, $data);
+
+        return $this->getService()->debugDates((int) $data['server_id']);
+    }
 }

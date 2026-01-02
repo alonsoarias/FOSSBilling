@@ -1294,4 +1294,52 @@ class Service implements InjectionAwareInterface
             'already_ok' => $alreadyOk,
         ];
     }
+
+    /**
+     * Debug: Get raw date information from WHM accounts.
+     * This helps diagnose date parsing issues.
+     */
+    public function debugDates(int $serverId): array
+    {
+        $server = $this->getServer($serverId);
+        $response = $this->whmRequest($server, 'listaccts');
+
+        // Get raw account list
+        $accountList = [];
+        if (isset($response->acct) && is_array($response->acct)) {
+            $accountList = $response->acct;
+        } elseif (isset($response->data->acct) && is_array($response->data->acct)) {
+            $accountList = $response->data->acct;
+        }
+
+        $results = [];
+        foreach ($accountList as $acct) {
+            $rawStartDate = $acct->startdate ?? null;
+            $unixStartDate = $acct->unix_startdate ?? null;
+
+            // Test our parsing function
+            $parsedDate = $this->parseWhmDate($rawStartDate);
+
+            $results[] = [
+                'user' => $acct->user ?? 'unknown',
+                'domain' => $acct->domain ?? 'unknown',
+                'raw_startdate' => $rawStartDate,
+                'unix_startdate' => $unixStartDate,
+                'unix_as_date' => $unixStartDate ? date('Y-m-d H:i:s', (int) $unixStartDate) : null,
+                'parsed_result' => $parsedDate,
+                'raw_type' => gettype($rawStartDate),
+            ];
+
+            // Only show first 10 for debugging
+            if (count($results) >= 10) {
+                break;
+            }
+        }
+
+        return [
+            'server' => $server->name,
+            'accounts' => $results,
+            'note' => 'Showing first 10 accounts. raw_startdate is what WHM returns, parsed_result is what our function produces.',
+        ];
+    }
 }
