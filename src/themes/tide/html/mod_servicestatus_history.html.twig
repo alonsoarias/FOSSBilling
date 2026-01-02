@@ -1,0 +1,105 @@
+{% extends request.ajax ? "layout_blank.html.twig" : "layout_default.html.twig" %}
+
+{% block meta_title %}{{ 'Incident History'|trans }} - {{ 'System Status'|trans }}{% endblock %}
+
+{% block body_class %}status-history{% endblock %}
+
+{% block breadcrumb %}
+    <li class="breadcrumb-item"><a href="{{ '/servicestatus'|link }}">{{ 'System Status'|trans }}</a></li>
+    <li class="breadcrumb-item active" aria-current="page">{{ 'History'|trans }}</li>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="card mb-4">
+            <div class="card-header">
+                <h3 class="card-title">{{ 'Incident History'|trans }}</h3>
+                <p class="text-muted mb-0">{{ 'Past incidents from the last 90 days'|trans }}</p>
+            </div>
+            <div class="card-body">
+                {% set history = guest.servicestatus_incident_history({ 'days': 90 }) %}
+                {% if history|length > 0 %}
+                    {% set current_date = null %}
+                    {% for incident in history %}
+                        {% set incident_date = incident.created_at|date('Y-m-d') %}
+
+                        {% if current_date != incident_date %}
+                            {% if current_date is not null %}
+                                </div>
+                            {% endif %}
+                            <div class="mb-4">
+                                <h5 class="text-muted mb-3">{{ incident.created_at|format_date }}</h5>
+                            {% set current_date = incident_date %}
+                        {% endif %}
+
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-start">
+                                    <div>
+                                        <h5 class="mb-1">
+                                            <a href="{{ '/servicestatus/incident'|link }}/{{ incident.id }}">{{ incident.title }}</a>
+                                        </h5>
+                                        <div class="mb-2">
+                                            {% if incident.status == 'resolved' %}
+                                                <span class="badge bg-success">{{ 'Resolved'|trans }}</span>
+                                            {% elseif incident.status == 'investigating' %}
+                                                <span class="badge bg-warning">{{ 'Investigating'|trans }}</span>
+                                            {% elseif incident.status == 'identified' %}
+                                                <span class="badge bg-info">{{ 'Identified'|trans }}</span>
+                                            {% elseif incident.status == 'monitoring' %}
+                                                <span class="badge bg-primary">{{ 'Monitoring'|trans }}</span>
+                                            {% endif %}
+
+                                            {% if incident.impact == 'major_outage' %}
+                                                <span class="badge bg-danger">{{ 'Major Outage'|trans }}</span>
+                                            {% elseif incident.impact == 'partial_outage' %}
+                                                <span class="badge bg-orange">{{ 'Partial Outage'|trans }}</span>
+                                            {% elseif incident.impact == 'degraded_performance' %}
+                                                <span class="badge bg-warning">{{ 'Degraded'|trans }}</span>
+                                            {% elseif incident.impact == 'maintenance' %}
+                                                <span class="badge bg-info">{{ 'Maintenance'|trans }}</span>
+                                            {% endif %}
+                                        </div>
+                                        <div>
+                                            {% for component in incident.components %}
+                                                <span class="badge bg-secondary">{{ component.name }}</span>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                    <div class="text-end">
+                                        <small class="text-muted d-block">{{ incident.created_at|format_time }}</small>
+                                        {% if incident.resolved_at %}
+                                            <small class="text-success">{{ 'Resolved'|trans }}: {{ incident.resolved_at|format_time }}</small>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                {% if incident.updates|length > 0 %}
+                                    <p class="mb-0 mt-2 text-muted">{{ incident.updates[0].message|truncate(150) }}</p>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                    {% endfor %}
+                    </div>
+                {% else %}
+                    <div class="text-center py-5">
+                        <div class="text-success mb-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                                <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                            </svg>
+                        </div>
+                        <h4 class="text-success">{{ 'No incidents in the past 90 days'|trans }}</h4>
+                        <p class="text-muted">{{ 'All systems have been running smoothly.'|trans }}</p>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="text-center">
+            <a href="{{ '/servicestatus'|link }}" class="btn btn-outline-primary">{{ 'Back to Status'|trans }}</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

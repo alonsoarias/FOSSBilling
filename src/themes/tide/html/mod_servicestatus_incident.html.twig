@@ -1,0 +1,97 @@
+{% extends request.ajax ? "layout_blank.html.twig" : "layout_default.html.twig" %}
+
+{% block meta_title %}{{ incident.title }} - {{ 'System Status'|trans }}{% endblock %}
+
+{% block body_class %}status-incident{% endblock %}
+
+{% block breadcrumb %}
+    <li class="breadcrumb-item"><a href="{{ '/servicestatus'|link }}">{{ 'System Status'|trans }}</a></li>
+    <li class="breadcrumb-item active" aria-current="page">{{ incident.title }}</li>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="card mb-4">
+            <div class="card-header">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h3 class="card-title mb-0">{{ incident.title }}</h3>
+                    <div>
+                        {% if incident.status == 'investigating' %}
+                            <span class="badge bg-warning">{{ 'Investigating'|trans }}</span>
+                        {% elseif incident.status == 'identified' %}
+                            <span class="badge bg-info">{{ 'Identified'|trans }}</span>
+                        {% elseif incident.status == 'monitoring' %}
+                            <span class="badge bg-primary">{{ 'Monitoring'|trans }}</span>
+                        {% elseif incident.status == 'resolved' %}
+                            <span class="badge bg-success">{{ 'Resolved'|trans }}</span>
+                        {% elseif incident.status == 'scheduled' %}
+                            <span class="badge bg-secondary">{{ 'Scheduled'|trans }}</span>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                {# Affected Components #}
+                {% if incident.components|length > 0 %}
+                <div class="mb-4">
+                    <h5>{{ 'Affected Components'|trans }}</h5>
+                    <div>
+                        {% for component in incident.components %}
+                            <span class="badge bg-secondary me-1">{{ component.name }}</span>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+
+                {# Incident Timeline #}
+                <h5>{{ 'Timeline'|trans }}</h5>
+                <div class="timeline mt-3">
+                    {% for update in incident.updates %}
+                    <div class="mb-4 pb-3 {{ not loop.last ? 'border-bottom' : '' }}">
+                        <div class="d-flex justify-content-between align-items-start mb-2">
+                            <strong>
+                                {% if update.status == 'investigating' %}
+                                    <span class="text-warning">{{ 'Investigating'|trans }}</span>
+                                {% elseif update.status == 'identified' %}
+                                    <span class="text-info">{{ 'Identified'|trans }}</span>
+                                {% elseif update.status == 'monitoring' %}
+                                    <span class="text-primary">{{ 'Monitoring'|trans }}</span>
+                                {% elseif update.status == 'resolved' %}
+                                    <span class="text-success">{{ 'Resolved'|trans }}</span>
+                                {% elseif update.status == 'scheduled' %}
+                                    <span class="text-secondary">{{ 'Scheduled'|trans }}</span>
+                                {% endif %}
+                            </strong>
+                            <small class="text-muted">{{ update.created_at|format_datetime }}</small>
+                        </div>
+                        <p class="mb-0">{{ update.message|nl2br }}</p>
+                    </div>
+                    {% else %}
+                    <p class="text-muted">{{ 'No updates available'|trans }}</p>
+                    {% endfor %}
+                </div>
+
+                {# Incident Info #}
+                <div class="mt-4 pt-3 border-top">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <small class="text-muted">{{ 'Created'|trans }}: {{ incident.created_at|format_datetime }}</small>
+                        </div>
+                        {% if incident.resolved_at %}
+                        <div class="col-md-6 text-md-end">
+                            <small class="text-muted">{{ 'Resolved'|trans }}: {{ incident.resolved_at|format_datetime }}</small>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center">
+            <a href="{{ '/servicestatus'|link }}" class="btn btn-outline-primary">{{ 'Back to Status'|trans }}</a>
+            <a href="{{ '/servicestatus/history'|link }}" class="btn btn-outline-secondary">{{ 'View History'|trans }}</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

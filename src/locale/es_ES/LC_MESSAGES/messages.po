@@ -565,6 +565,8 @@ msgstr ""
 msgid "Alternative ID"
 msgstr ""
 
+# #-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#
+# Money and currency
 msgid "Amount"
 msgstr "Monto"
 
@@ -584,7 +586,7 @@ msgid "An error occurred when writing the updated configuration file."
 msgstr ""
 
 msgid "Announcement"
-msgstr ""
+msgstr "Anuncio"
 
 msgid "Announcements"
 msgstr "Anuncios"
@@ -644,7 +646,7 @@ msgid "Are you sure you want to delete the selected item?"
 msgstr "Aprobado"
 
 msgid "Are you sure you want to delete the selected items?"
-msgstr ""
+msgstr "¿Estás seguro de que deseas eliminar los elementos seleccionados?"
 
 msgid "Are you sure you want to delete this template?"
 msgstr ""
@@ -722,7 +724,7 @@ msgid "BIC / SWIFT Code"
 msgstr ""
 
 msgid "Back to Dashboard"
-msgstr ""
+msgstr "Volver al Panel"
 
 msgid "Back to login"
 msgstr ""
@@ -1051,10 +1053,10 @@ msgid "Client details at the moment of purchase"
 msgstr ""
 
 msgid "Client groups"
-msgstr ""
+msgstr "Grupos de clientes"
 
 msgid "Client invoices"
-msgstr ""
+msgstr "Facturas del cliente"
 
 msgid "Client is not logged in"
 msgstr ""
@@ -1066,7 +1068,7 @@ msgid "Client not found"
 msgstr ""
 
 msgid "Client orders"
-msgstr ""
+msgstr "Pedidos del cliente"
 
 msgid "Client payments history"
 msgstr ""
@@ -1440,7 +1442,7 @@ msgid "Daily"
 msgstr "Diario"
 
 msgid "Danger!"
-msgstr ""
+msgstr "¡Peligro!"
 
 msgid "Dangerous PHP functions"
 msgstr ""
@@ -1448,6 +1450,8 @@ msgstr ""
 msgid "Dark"
 msgstr ""
 
+# #-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#
+# Menu items
 msgid "Dashboard"
 msgstr "Panel de control"
 
@@ -1492,7 +1496,7 @@ msgid ""
 msgstr ""
 
 msgid "Define date interval for graphs"
-msgstr ""
+msgstr "Definir intervalo de fechas para gráficos"
 
 msgid "Delay (in hours)"
 msgstr ""
@@ -1513,7 +1517,7 @@ msgid "Delete all"
 msgstr ""
 
 msgid "Delete selected"
-msgstr ""
+msgstr "Eliminar seleccionados"
 
 msgid "Delete staff members"
 msgstr ""
@@ -1697,6 +1701,8 @@ msgstr ""
 msgid "Domain management"
 msgstr ""
 
+# #-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#
+# Domain specific
 msgid "Domain name"
 msgstr "Nombre de dominio"
 
@@ -1852,8 +1858,13 @@ msgstr "Cola de emails"
 msgid "Email resent"
 msgstr ""
 
+#, fuzzy
 msgid "Email settings"
-msgstr "Configuración de correo"
+msgstr ""
+"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
+"Configuración de correo\n"
+"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
+"Configuración de email"
 
 msgid "Email settings updated"
 msgstr "Configuración de email"
@@ -1921,13 +1932,13 @@ msgid "Enable captcha for client registration and contact forms"
 msgstr ""
 
 msgid "Enable dark mode"
-msgstr ""
+msgstr "Habilitar modo oscuro"
 
 msgid "Enable error reporting"
 msgstr "Habilitar reporte de errores"
 
 msgid "Enable light mode"
-msgstr ""
+msgstr "Habilitar modo claro"
 
 msgid "Enable or disable this email template."
 msgstr ""
@@ -1997,8 +2008,9 @@ msgstr ""
 msgid "Enter page title here."
 msgstr ""
 
+# Admin Dashboard strings
 msgid "Enter search text..."
-msgstr ""
+msgstr "Ingresa texto de búsqueda..."
 
 msgid "Enter the words above"
 msgstr ""
@@ -2075,19 +2087,19 @@ msgid "Every 10 minutes"
 msgstr ""
 
 msgid "Every 2 years"
-msgstr ""
+msgstr "Cada 2 años"
 
 msgid "Every 3 months"
-msgstr ""
+msgstr "Cada 3 meses"
 
 msgid "Every 3 years"
-msgstr ""
+msgstr "Cada 3 años"
 
 msgid "Every 5 minutes"
 msgstr ""
 
 msgid "Every 6 months"
-msgstr ""
+msgstr "Cada 6 meses"
 
 msgid "Every :number day"
 msgstr ""
@@ -2111,7 +2123,7 @@ msgid "Every week"
 msgstr ""
 
 msgid "Every year"
-msgstr ""
+msgstr "Cada año"
 
 msgid ""
 "Exact matches cannot be provided unless you provide an Alpha2 language code."
@@ -2156,7 +2168,7 @@ msgid "Expiring"
 msgstr "Por vencer"
 
 msgid "Explore FOSSBilling extensions"
-msgstr ""
+msgstr "Explorar extensiones de FOSSBilling"
 
 msgid ""
 "Explore our knowledge base categories and their associated articles below."
@@ -2295,10 +2307,10 @@ msgid "Fail: HTTPS is not enforced."
 msgstr ""
 
 msgid "Failed Renewal"
-msgstr ""
+msgstr "Renovación fallida"
 
 msgid "Failed Setup"
-msgstr ""
+msgstr "Configuración fallida"
 
 msgid ""
 "Failed to :action1: on the :type: server after failed to :action2:, check "
@@ -2356,7 +2368,7 @@ msgid "Female"
 msgstr ""
 
 msgid "Fetching extension details."
-msgstr ""
+msgstr "Obteniendo detalles de la extensión."
 
 msgid "Field "
 msgstr ""
@@ -2423,8 +2435,13 @@ msgstr "Nombre"
 msgid "First name"
 msgstr "Nombre"
 
+#, fuzzy
 msgid "First payment sum"
-msgstr "Nombre"
+msgstr ""
+"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
+"Nombre\n"
+"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
+"Suma del primer pago"
 
 msgid "Follow instructions below to install new domain registrar."
 msgstr ""
@@ -2746,7 +2763,7 @@ msgid "IP"
 msgstr "IP"
 
 msgid "IP Address"
-msgstr ""
+msgstr "Dirección IP"
 
 msgid "IP lookup"
 msgstr ""
@@ -2876,8 +2893,13 @@ msgstr ""
 msgid "Inactive"
 msgstr "Inactivo"
 
+#, fuzzy
 msgid "Income"
-msgstr "Inactivo"
+msgstr ""
+"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
+"Inactivo\n"
+"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
+"Ingresos"
 
 msgid "Incorrect please try again"
 msgstr ""
@@ -2891,8 +2913,13 @@ msgstr "Información"
 msgid "Install"
 msgstr "Instalar"
 
+#, fuzzy
 msgid "Install extension"
-msgstr "Instalar"
+msgstr ""
+"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
+"Instalar\n"
+"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
+"Instalar extensión"
 
 msgid "Install from the Extension Directory"
 msgstr "Instalar extensión"
@@ -2977,7 +3004,7 @@ msgid "Invoice date"
 msgstr "Fecha de factura"
 
 msgid "Invoice due days"
-msgstr ""
+msgstr "Días de vencimiento de factura"
 
 msgid "Invoice hash not passed. Missing param hash"
 msgstr ""
@@ -2989,7 +3016,7 @@ msgid "Invoice item title is missing"
 msgstr ""
 
 msgid "Invoice items"
-msgstr ""
+msgstr "Artículos de factura"
 
 msgid "Invoice management"
 msgstr ""
@@ -3013,7 +3040,7 @@ msgid "Invoice settings"
 msgstr "Configuración de facturas"
 
 msgid "Invoice status"
-msgstr ""
+msgstr "Estado de factura"
 
 msgid "Invoice updated"
 msgstr ""
@@ -3031,7 +3058,7 @@ msgid "Invoicing / Sequential Invoice Numbering"
 msgstr ""
 
 msgid "Issue date"
-msgstr ""
+msgstr "Fecha de emisión"
 
 msgid "Issue invoice"
 msgstr ""
@@ -3112,8 +3139,13 @@ msgstr "Última actualización"
 msgid "Last applicable behavior change: "
 msgstr "Último cambio de comportamiento aplicable: "
 
+#, fuzzy
 msgid "Last month"
-msgstr "Idiomas"
+msgstr ""
+"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
+"Idiomas\n"
+"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
+"Último mes"
 
 msgid "Last name"
 msgstr "Apellido"
@@ -3137,7 +3169,7 @@ msgid "Latest news and announcements"
 msgstr "Últimas noticias y anuncios"
 
 msgid "Latest orders"
-msgstr ""
+msgstr "Últimos pedidos"
 
 msgid "Learn more"
 msgstr "Más información"
@@ -3344,8 +3376,13 @@ msgstr ""
 msgid "Manual. No actions performed"
 msgstr ""
 
+#, fuzzy
 msgid "Mark as paid"
-msgstr "Marcar como pagado"
+msgstr ""
+"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
+"Marcar como pagado\n"
+"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
+"Marcar como pagada"
 
 msgid "Mass Mail Settings"
 msgstr ""
@@ -3714,7 +3751,7 @@ msgid "No detected issues."
 msgstr ""
 
 msgid "No items selected"
-msgstr ""
+msgstr "Ningún elemento seleccionado"
 
 msgid "No news or announcements"
 msgstr ""
@@ -3808,7 +3845,7 @@ msgid "Only suspended orders can be unsuspended"
 msgstr ""
 
 msgid "Oops... You just found an error page"
-msgstr ""
+msgstr "Ups... Acabas de encontrar una página de error"
 
 msgid "Opacity"
 msgstr ""
@@ -3942,8 +3979,13 @@ msgstr ""
 msgid "Order window settings"
 msgstr ""
 
+#, fuzzy
 msgid "Orders"
-msgstr "Órdenes"
+msgstr ""
+"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
+"Órdenes\n"
+"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
+"Pedidos"
 
 msgid "Orders settings"
 msgstr "Pedidos"
@@ -4163,13 +4205,18 @@ msgid "Payment methods"
 msgstr "Métodos de pago"
 
 msgid "Payment type"
-msgstr ""
+msgstr "Tipo de pago"
 
 msgid "Payments"
 msgstr "Pagos"
 
+#, fuzzy
 msgid "Pending Setup"
-msgstr "Pagos"
+msgstr ""
+"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
+"Pagos\n"
+"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
+"Configuración pendiente"
 
 msgid "Percentage"
 msgstr "Porcentaje"
@@ -4305,8 +4352,13 @@ msgstr "Vista previa"
 msgid "Price"
 msgstr "Precio"
 
+#, fuzzy
 msgid "Price for period"
-msgstr "Precio"
+msgstr ""
+"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
+"Precio\n"
+"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
+"Precio por período"
 
 msgid "Price format"
 msgstr ""
@@ -4514,8 +4566,13 @@ msgstr "Correos recientes"
 msgid "Recent orders"
 msgstr "Órdenes recientes"
 
+#, fuzzy
 msgid "Recent staff activity"
-msgstr "Pedidos recientes"
+msgstr ""
+"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
+"Pedidos recientes\n"
+"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
+"Actividad reciente del personal"
 
 msgid "Recipients"
 msgstr "Destinatarios"
@@ -4524,7 +4581,7 @@ msgid "Recipients filter"
 msgstr ""
 
 msgid "Recurrent"
-msgstr ""
+msgstr "Recurrente"
 
 msgid "Recurring"
 msgstr "Recurrente"
@@ -4623,7 +4680,7 @@ msgid "Remove from cart"
 msgstr "Quitar del carrito"
 
 msgid "Remove item"
-msgstr ""
+msgstr "Eliminar elemento"
 
 msgid "Remove unpaid invoices after days"
 msgstr ""
@@ -4656,7 +4713,7 @@ msgid "Reply as"
 msgstr "Responder"
 
 msgid "Report a bug"
-msgstr ""
+msgstr "Reportar un error"
 
 msgid "Request"
 msgstr "Solicitud"
@@ -4734,7 +4791,7 @@ msgid "Run security checks"
 msgstr ""
 
 msgid "SEO settings"
-msgstr ""
+msgstr "Configuración SEO"
 
 msgid "SERVER"
 msgstr ""
@@ -4778,11 +4835,16 @@ msgstr ""
 msgid "Search"
 msgstr "Buscar"
 
+#, fuzzy
 msgid "Search settings"
-msgstr "Buscar"
+msgstr ""
+"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
+"Buscar\n"
+"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
+"Configuración de búsqueda"
 
 msgid "Search:"
-msgstr ""
+msgstr "Buscar:"
 
 msgid "Security"
 msgstr "Seguridad"
@@ -4969,7 +5031,7 @@ msgid "Setup new TLD prices and properties"
 msgstr ""
 
 msgid "Setup price"
-msgstr ""
+msgstr "Precio de configuración"
 
 msgid "Setup:"
 msgstr ""
@@ -5027,7 +5089,7 @@ msgid "Split Interval"
 msgstr ""
 
 msgid "Sponsor"
-msgstr ""
+msgstr "Patrocinador"
 
 msgid "Staff"
 msgstr "Personal"
@@ -5050,6 +5112,8 @@ msgstr ""
 msgid "Staff member with email :email is already registered"
 msgstr ""
 
+# #-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#
+# Staff management
 msgid "Staff members"
 msgstr "Miembros del personal"
 
@@ -5184,6 +5248,8 @@ msgstr "Sistema"
 msgid "System activity"
 msgstr "Sistema"
 
+# #-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#
+# System/Settings page
 msgid "System settings"
 msgstr "Configuración del sistema"
 
@@ -5461,7 +5527,7 @@ msgid "This item is currently out of stock"
 msgstr ""
 
 msgid "This month so far"
-msgstr ""
+msgstr "Este mes hasta ahora"
 
 msgid "This promotion code already exists."
 msgstr ""
@@ -5863,7 +5929,7 @@ msgid "Update email settings"
 msgstr ""
 
 msgid "Update graphs"
-msgstr ""
+msgstr "Actualizar gráficos"
 
 msgid "Update hosting plan"
 msgstr ""
@@ -6057,10 +6123,10 @@ msgid "View as client"
 msgstr ""
 
 msgid "View extension README"
-msgstr ""
+msgstr "Ver README de la extensión"
 
 msgid "View on the extension directory"
-msgstr ""
+msgstr "Ver en el directorio de extensiones"
 
 msgid "Views"
 msgstr ""
@@ -6313,7 +6379,7 @@ msgid "You need to enter numeric value"
 msgstr ""
 
 msgid "You need to select at least one item to delete"
-msgstr ""
+msgstr "Necesitas seleccionar al menos un elemento para eliminar"
 
 msgid ""
 "You will be automatically redirected back to the invoice after 1 minute."
@@ -6936,6 +7002,7 @@ msgstr ""
 "Rendimiento degradadopara cambiar tu imagen de perfil. Las actualizaciones "
 "de imagen de Gravatar pueden no aparecer inmediatamente."
 
+# #-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#
 # =====================================================
 # Admin Dashboard Translations
 # =====================================================
@@ -7183,6 +7250,8 @@ msgstr "Registrarse"
 msgid "Similar Articles"
 msgstr "Artículos similares"
 
+# #-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#
+# Support/Tickets
 msgid "Ticket details"
 msgstr "Detalles del ticket"
 
@@ -7218,3 +7287,557 @@ msgstr "Última actualización"
 
 msgid "components"
 msgstr "componentes"
+
+msgid "Localization"
+msgstr "Localización"
+
+msgid "Maintenance mode settings"
+msgstr "Configuración de modo de mantenimiento"
+
+msgid "Company email"
+msgstr "Email de la empresa"
+
+msgid "Company address"
+msgstr "Dirección de la empresa"
+
+msgid "Company phone"
+msgstr "Teléfono de la empresa"
+
+msgid "Company logo"
+msgstr "Logo de la empresa"
+
+msgid "Company signature"
+msgstr "Firma de la empresa"
+
+msgid "Invoice number format"
+msgstr "Formato de número de factura"
+
+msgid "Invoice starting number"
+msgstr "Número inicial de factura"
+
+msgid "Invoice reminder"
+msgstr "Recordatorio de factura"
+
+msgid "Auto payment reminder"
+msgstr "Recordatorio de pago automático"
+
+msgid "SMTP host"
+msgstr "Host SMTP"
+
+msgid "SMTP port"
+msgstr "Puerto SMTP"
+
+msgid "SMTP security"
+msgstr "Seguridad SMTP"
+
+msgid "SMTP username"
+msgstr "Usuario SMTP"
+
+msgid "SMTP password"
+msgstr "Contraseña SMTP"
+
+msgid "Mail from"
+msgstr "Correo remitente"
+
+msgid "Mail from name"
+msgstr "Nombre del remitente"
+
+msgid "Enable maintenance mode"
+msgstr "Habilitar modo de mantenimiento"
+
+msgid "Maintenance mode message"
+msgstr "Mensaje de modo de mantenimiento"
+
+msgid "Display errors"
+msgstr "Mostrar errores"
+
+msgid "Report all errors"
+msgstr "Reportar todos los errores"
+
+msgid "Log errors"
+msgstr "Registrar errores"
+
+msgid "Time zone"
+msgstr "Zona horaria"
+
+msgid "Date format"
+msgstr "Formato de fecha"
+
+msgid "Date/Time format"
+msgstr "Formato de fecha/hora"
+
+msgid "Thousands separator"
+msgstr "Separador de miles"
+
+msgid "Decimal separator"
+msgstr "Separador decimal"
+
+msgid "Decimal places"
+msgstr "Lugares decimales"
+
+msgid "Meta title"
+msgstr "Meta título"
+
+msgid "Meta keywords"
+msgstr "Palabras clave"
+
+# Client management
+msgid "Client details"
+msgstr "Detalles del cliente"
+
+msgid "Client profile"
+msgstr "Perfil del cliente"
+
+msgid "Client activity"
+msgstr "Actividad del cliente"
+
+msgid "Client tickets"
+msgstr "Tickets del cliente"
+
+msgid "Client balance"
+msgstr "Saldo del cliente"
+
+msgid "Create new client"
+msgstr "Crear nuevo cliente"
+
+msgid "Edit client"
+msgstr "Editar cliente"
+
+msgid "Delete client"
+msgstr "Eliminar cliente"
+
+msgid "Client list"
+msgstr "Lista de clientes"
+
+msgid "Client group"
+msgstr "Grupo de cliente"
+
+# Order management
+msgid "Order details"
+msgstr "Detalles del pedido"
+
+msgid "Order history"
+msgstr "Historial de pedido"
+
+msgid "Order date"
+msgstr "Fecha de pedido"
+
+msgid "Activation date"
+msgstr "Fecha de activación"
+
+msgid "Next renewal date"
+msgstr "Fecha de próxima renovación"
+
+msgid "Create order"
+msgstr "Crear pedido"
+
+msgid "Suspend order"
+msgstr "Suspender pedido"
+
+msgid "Unsuspend order"
+msgstr "Reactivar pedido"
+
+msgid "Cancel order"
+msgstr "Cancelar pedido"
+
+msgid "Delete order"
+msgstr "Eliminar pedido"
+
+msgid "Renew order"
+msgstr "Renovar pedido"
+
+# Invoice management
+msgid "Invoice details"
+msgstr "Detalles de factura"
+
+msgid "Invoice notes"
+msgstr "Notas de factura"
+
+msgid "Paid date"
+msgstr "Fecha de pago"
+
+msgid "Create invoice"
+msgstr "Crear factura"
+
+msgid "Send invoice"
+msgstr "Enviar factura"
+
+msgid "Add payment"
+msgstr "Agregar pago"
+
+msgid "Void invoice"
+msgstr "Anular factura"
+
+msgid "Refund invoice"
+msgstr "Reembolsar factura"
+
+# Product management
+msgid "Product details"
+msgstr "Detalles del producto"
+
+msgid "Product settings"
+msgstr "Configuración del producto"
+
+msgid "Product pricing"
+msgstr "Precios del producto"
+
+msgid "Product addons"
+msgstr "Complementos del producto"
+
+msgid "Create product"
+msgstr "Crear producto"
+
+msgid "Edit product"
+msgstr "Editar producto"
+
+msgid "Delete product"
+msgstr "Eliminar producto"
+
+msgid "Product category"
+msgstr "Categoría del producto"
+
+msgid "Product categories"
+msgstr "Categorías de productos"
+
+msgid "Create category"
+msgstr "Crear categoría"
+
+msgid "Ticket status"
+msgstr "Estado del ticket"
+
+msgid "Ticket priority"
+msgstr "Prioridad del ticket"
+
+msgid "Ticket department"
+msgstr "Departamento del ticket"
+
+msgid "Reply to ticket"
+msgstr "Responder al ticket"
+
+msgid "Reopen ticket"
+msgstr "Reabrir ticket"
+
+msgid "Delete ticket"
+msgstr "Eliminar ticket"
+
+msgid "Ticket notes"
+msgstr "Notas del ticket"
+
+msgid "Support departments"
+msgstr "Departamentos de soporte"
+
+msgid "Create department"
+msgstr "Crear departamento"
+
+msgid "Canned responses"
+msgstr "Respuestas predefinidas"
+
+msgid "Create canned response"
+msgstr "Crear respuesta predefinida"
+
+msgid "Staff roles"
+msgstr "Roles del personal"
+
+msgid "Create staff member"
+msgstr "Crear miembro del personal"
+
+msgid "Edit staff member"
+msgstr "Editar miembro del personal"
+
+msgid "Delete staff member"
+msgstr "Eliminar miembro del personal"
+
+msgid "Staff permissions"
+msgstr "Permisos del personal"
+
+msgid "Create role"
+msgstr "Crear rol"
+
+# Extensions
+msgid "Extension details"
+msgstr "Detalles de la extensión"
+
+msgid "Installed extensions"
+msgstr "Extensiones instaladas"
+
+msgid "Available extensions"
+msgstr "Extensiones disponibles"
+
+msgid "Uninstall"
+msgstr "Desinstalar"
+
+msgid "Configure"
+msgstr "Configurar"
+
+# Activity log
+msgid "Activity log"
+msgstr "Registro de actividad"
+
+msgid "View activity"
+msgstr "Ver actividad"
+
+msgid "Clear activity log"
+msgstr "Limpiar registro de actividad"
+
+msgid "IP address"
+msgstr "Dirección IP"
+
+msgid "User agent"
+msgstr "Agente de usuario"
+
+msgid "Action"
+msgstr "Acción"
+
+msgid "Date/Time"
+msgstr "Fecha/Hora"
+
+# Common actions and buttons
+msgid "Save changes"
+msgstr "Guardar cambios"
+
+msgid "Discard changes"
+msgstr "Descartar cambios"
+
+msgid "Add item"
+msgstr "Agregar elemento"
+
+msgid "Move up"
+msgstr "Mover arriba"
+
+msgid "Move down"
+msgstr "Mover abajo"
+
+msgid "Duplicate"
+msgstr "Duplicar"
+
+msgid "Export data"
+msgstr "Exportar datos"
+
+msgid "Import data"
+msgstr "Importar datos"
+
+msgid "Bulk actions"
+msgstr "Acciones masivas"
+
+msgid "Select action"
+msgstr "Seleccionar acción"
+
+msgid "Execute"
+msgstr "Ejecutar"
+
+# Tables and lists
+msgid "No records found"
+msgstr "No se encontraron registros"
+
+msgid "Loading data..."
+msgstr "Cargando datos..."
+
+msgid "Processing..."
+msgstr "Procesando..."
+
+msgid "Showing :from to :to of :total entries"
+msgstr "Mostrando :from a :to de :total entradas"
+
+msgid "Show entries"
+msgstr "Mostrar entradas"
+
+msgid "rows"
+msgstr "filas"
+
+msgid "per page"
+msgstr "por página"
+
+# Modals and confirmations
+msgid "Confirm action"
+msgstr "Confirmar acción"
+
+msgid "Please confirm"
+msgstr "Por favor confirma"
+
+msgid "This operation cannot be undone"
+msgstr "Esta operación no se puede deshacer"
+
+msgid "Yes, proceed"
+msgstr "Sí, proceder"
+
+msgid "No, cancel"
+msgstr "No, cancelar"
+
+msgid "Processing request..."
+msgstr "Procesando solicitud..."
+
+msgid "Operation completed successfully"
+msgstr "Operación completada exitosamente"
+
+msgid "Operation failed"
+msgstr "Operación fallida"
+
+# Dates and times
+msgid "Select date"
+msgstr "Seleccionar fecha"
+
+msgid "Select time"
+msgstr "Seleccionar hora"
+
+msgid "From date"
+msgstr "Desde fecha"
+
+msgid "To date"
+msgstr "Hasta fecha"
+
+msgid "Start date"
+msgstr "Fecha de inicio"
+
+msgid "End date"
+msgstr "Fecha de fin"
+
+msgid "Date range"
+msgstr "Rango de fechas"
+
+msgid "This week"
+msgstr "Esta semana"
+
+msgid "This month"
+msgstr "Este mes"
+
+msgid "This year"
+msgstr "Este año"
+
+msgid "Last week"
+msgstr "Semana pasada"
+
+msgid "Last year"
+msgstr "Año pasado"
+
+msgid "Custom range"
+msgstr "Rango personalizado"
+
+# Form fields
+msgid "Required field"
+msgstr "Campo requerido"
+
+msgid "Enter value"
+msgstr "Ingresa valor"
+
+msgid "Select option"
+msgstr "Seleccionar opción"
+
+msgid "Choose..."
+msgstr "Elegir..."
+
+msgid "Type to search..."
+msgstr "Escribe para buscar..."
+
+msgid "No options available"
+msgstr "No hay opciones disponibles"
+
+msgid "Clear selection"
+msgstr "Limpiar selección"
+
+msgid "Select all"
+msgstr "Seleccionar todo"
+
+msgid "Deselect all"
+msgstr "Deseleccionar todo"
+
+# Validation messages
+msgid "This field is required"
+msgstr "Este campo es requerido"
+
+msgid "Invalid email address"
+msgstr "Dirección de email inválida"
+
+msgid "Invalid phone number"
+msgstr "Número de teléfono inválido"
+
+msgid "Invalid URL"
+msgstr "URL inválida"
+
+msgid "Value must be a number"
+msgstr "El valor debe ser un número"
+
+msgid "Value is too short"
+msgstr "El valor es muy corto"
+
+msgid "Value is too long"
+msgstr "El valor es muy largo"
+
+msgid "Passwords must match"
+msgstr "Las contraseñas deben coincidir"
+
+msgid "Invalid date format"
+msgstr "Formato de fecha inválido"
+
+msgid "Exchange rate"
+msgstr "Tasa de cambio"
+
+msgid "Tax amount"
+msgstr "Monto de impuesto"
+
+msgid "Grand total"
+msgstr "Total general"
+
+msgid "Balance due"
+msgstr "Saldo pendiente"
+
+msgid "Amount paid"
+msgstr "Monto pagado"
+
+msgid "Amount due"
+msgstr "Monto adeudado"
+
+msgid "Domain status"
+msgstr "Estado del dominio"
+
+msgid "WHOIS privacy"
+msgstr "Privacidad WHOIS"
+
+msgid "Domain lock"
+msgstr "Bloqueo de dominio"
+
+msgid "Registration period"
+msgstr "Período de registro"
+
+msgid "Auto renew"
+msgstr "Renovación automática"
+
+# Hosting specific
+msgid "Hosting account"
+msgstr "Cuenta de hosting"
+
+msgid "Disk usage"
+msgstr "Uso de disco"
+
+msgid "Bandwidth usage"
+msgstr "Uso de ancho de banda"
+
+msgid "Suspend account"
+msgstr "Suspender cuenta"
+
+msgid "Unsuspend account"
+msgstr "Reactivar cuenta"
+
+msgid "Terminate account"
+msgstr "Terminar cuenta"
+
+msgid "Change package"
+msgstr "Cambiar paquete"
+
+# Notifications
+msgid "New notification"
+msgstr "Nueva notificación"
+
+msgid "Mark as read"
+msgstr "Marcar como leído"
+
+msgid "Mark all as read"
+msgstr "Marcar todo como leído"
+
+msgid "Clear notifications"
+msgstr "Limpiar notificaciones"
+
+msgid "No new notifications"
+msgstr "Sin nuevas notificaciones"
+
+msgid "My profile"
+msgstr "Mi perfil"
