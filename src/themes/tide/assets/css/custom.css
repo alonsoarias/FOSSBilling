@@ -1,32 +1,360 @@
-/* Tide template custom CSS style v1.0 */
-/* Using the examples, provide your own styling */
+/**
+ * IngeWeb Branding for FOSSBilling Tide Theme
+ * https://ingeweb.co
+ *
+ * Primary: #0080FE (Blue)
+ * Accent: #FD5E1F (Orange)
+ * Font: Inter
+ */
 
-/*
+/* ========================================
+   CSS Variables - IngeWeb Brand
+   ======================================== */
+:root {
+    /* Primary Colors */
+    --tblr-primary: #0080FE;
+    --tblr-primary-rgb: 0, 128, 254;
+    --tblr-link-color: #0080FE;
+    --tblr-link-hover-color: #0066cc;
+
+    /* IngeWeb Custom Colors */
+    --ingeweb-primary: #0080FE;
+    --ingeweb-primary-dark: #0066cc;
+    --ingeweb-primary-light: #4da3ff;
+    --ingeweb-accent: #FD5E1F;
+    --ingeweb-accent-dark: #e54d0f;
+    --ingeweb-accent-light: #ff7a42;
+}
+
+/* Dark mode variables */
+[data-bs-theme="dark"] {
+    --tblr-primary: #0080FE;
+    --tblr-primary-rgb: 0, 128, 254;
+    --tblr-link-color: #4da3ff;
+    --tblr-link-hover-color: #80bdff;
+}
+
+/* ========================================
+   Typography - Inter Font
+   ======================================== */
+@import url('https://rsms.me/inter/inter.css');
+
+:root {
+    --tblr-font-sans-serif: 'Inter Var', -apple-system, BlinkMacSystemFont, San Francisco, Segoe UI, Roboto, Helvetica Neue, sans-serif;
+}
+
+body {
+    font-feature-settings: "cv03", "cv04", "cv11";
+}
+
+/* ========================================
+   Primary Color Overrides
+   ======================================== */
 .bg-primary {
-     background-color: #your-color !important;
+    background-color: var(--ingeweb-primary) !important;
 }
+
 .text-primary {
-     color: #your-color !important;
+    color: var(--ingeweb-primary) !important;
 }
+
+.border-primary {
+    border-color: var(--ingeweb-primary) !important;
+}
+
+/* ========================================
+   Buttons
+   ======================================== */
 .btn-primary {
-     background-color: #your-color !important;
-     border-color: #your-color !important;
+    background-color: var(--ingeweb-primary) !important;
+    border-color: var(--ingeweb-primary) !important;
 }
+
 .btn-primary:hover {
-     background-color: #your-hover-color !important;
-     border-color: #your-hover-color !important;
+    background-color: var(--ingeweb-primary-dark) !important;
+    border-color: var(--ingeweb-primary-dark) !important;
 }
+
 .btn-primary:focus {
-     background-color: #your-focus-color !important;
-     border-color: #your-focus-color !important;
-     box-shadow: 0 0 0 0.2rem rgba(#your-color, 0.5) !important;
+    background-color: var(--ingeweb-primary-dark) !important;
+    border-color: var(--ingeweb-primary-dark) !important;
+    box-shadow: 0 0 0 0.25rem rgba(0, 128, 254, 0.5) !important;
 }
+
 .btn-primary:active {
-     background-color: #your-active-color !important;
-     border-color: #your-active-color !important;
+    background-color: var(--ingeweb-primary-dark) !important;
+    border-color: var(--ingeweb-primary-dark) !important;
 }
-.btn-primary:disabled {
-     background-color: #your-disabled-color !important;
-     border-color: #your-disabled-color !important;
+
+.btn-outline-primary {
+    color: var(--ingeweb-primary) !important;
+    border-color: var(--ingeweb-primary) !important;
 }
-*/
+
+.btn-outline-primary:hover {
+    background-color: var(--ingeweb-primary) !important;
+    border-color: var(--ingeweb-primary) !important;
+    color: #fff !important;
+}
+
+/* Accent Button */
+.btn-accent {
+    background-color: var(--ingeweb-accent) !important;
+    border-color: var(--ingeweb-accent) !important;
+    color: #fff !important;
+}
+
+.btn-accent:hover {
+    background-color: var(--ingeweb-accent-dark) !important;
+    border-color: var(--ingeweb-accent-dark) !important;
+    color: #fff !important;
+}
+
+/* ========================================
+   Links
+   ======================================== */
+a {
+    color: var(--ingeweb-primary);
+}
+
+a:hover {
+    color: var(--ingeweb-primary-dark);
+}
+
+/* ========================================
+   Form Controls
+   ======================================== */
+.form-control:focus,
+.form-select:focus {
+    border-color: var(--ingeweb-primary);
+    box-shadow: 0 0 0 0.25rem rgba(0, 128, 254, 0.25);
+}
+
+.form-check-input:checked {
+    background-color: var(--ingeweb-primary);
+    border-color: var(--ingeweb-primary);
+}
+
+.form-check-input:focus {
+    border-color: var(--ingeweb-primary-light);
+    box-shadow: 0 0 0 0.25rem rgba(0, 128, 254, 0.25);
+}
+
+/* ========================================
+   Navigation
+   ======================================== */
+.navbar {
+    background-color: #fff;
+}
+
+[data-bs-theme="dark"] .navbar {
+    background-color: #1a1d21;
+}
+
+.nav-link.active,
+.nav-item.active .nav-link {
+    color: var(--ingeweb-primary) !important;
+}
+
+.navbar-brand-image {
+    max-height: 40px;
+}
+
+/* ========================================
+   Cards
+   ======================================== */
+.card {
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.card-header {
+    background-color: transparent;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+[data-bs-theme="dark"] .card-header {
+    border-bottom-color: rgba(255, 255, 255, 0.1);
+}
+
+/* ========================================
+   Announcement Bar Colors
+   ======================================== */
+.bg-purple {
+    background-color: var(--ingeweb-primary) !important;
+}
+
+/* ========================================
+   Page Header
+   ======================================== */
+.page-title {
+    color: var(--ingeweb-primary);
+    font-weight: 600;
+}
+
+/* ========================================
+   Breadcrumbs
+   ======================================== */
+.breadcrumb-item a {
+    color: var(--ingeweb-primary);
+}
+
+.breadcrumb-item.active {
+    color: #6c757d;
+}
+
+/* ========================================
+   Tables
+   ======================================== */
+.table > thead > tr > th {
+    background-color: rgba(0, 128, 254, 0.05);
+    border-bottom: 2px solid var(--ingeweb-primary);
+}
+
+/* ========================================
+   Alerts & Badges
+   ======================================== */
+.alert-primary {
+    background-color: rgba(0, 128, 254, 0.1);
+    border-color: rgba(0, 128, 254, 0.2);
+    color: var(--ingeweb-primary-dark);
+}
+
+.badge.bg-primary {
+    background-color: var(--ingeweb-primary) !important;
+}
+
+/* ========================================
+   Progress Bars
+   ======================================== */
+.progress-bar {
+    background-color: var(--ingeweb-primary);
+}
+
+/* ========================================
+   Dropdown
+   ======================================== */
+.dropdown-item:hover,
+.dropdown-item:focus {
+    background-color: rgba(0, 128, 254, 0.1);
+    color: var(--ingeweb-primary);
+}
+
+.dropdown-item.active,
+.dropdown-item:active {
+    background-color: var(--ingeweb-primary);
+    color: #fff;
+}
+
+/* ========================================
+   Toast Messages
+   ======================================== */
+.toast-container {
+    z-index: 1070 !important;
+}
+
+/* ========================================
+   Footer
+   ======================================== */
+.footer {
+    background-color: #f8f9fa;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+[data-bs-theme="dark"] .footer {
+    background-color: #1a1d21;
+    border-top-color: rgba(255, 255, 255, 0.1);
+}
+
+.footer a {
+    color: var(--ingeweb-primary);
+}
+
+.footer a:hover {
+    color: var(--ingeweb-primary-dark);
+}
+
+/* ========================================
+   Scrollbar (WebKit browsers)
+   ======================================== */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--ingeweb-primary);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--ingeweb-primary-dark);
+}
+
+/* ========================================
+   Selection
+   ======================================== */
+::selection {
+    background-color: var(--ingeweb-primary);
+    color: #fff;
+}
+
+/* ========================================
+   Accent Highlights
+   ======================================== */
+.accent-border-left {
+    border-left: 4px solid var(--ingeweb-accent);
+}
+
+.accent-border-top {
+    border-top: 4px solid var(--ingeweb-accent);
+}
+
+.text-accent {
+    color: var(--ingeweb-accent) !important;
+}
+
+.bg-accent {
+    background-color: var(--ingeweb-accent) !important;
+}
+
+/* ========================================
+   Loading Spinner
+   ======================================== */
+.spinner-border {
+    color: var(--ingeweb-primary);
+}
+
+/* ========================================
+   Pagination
+   ======================================== */
+.page-link {
+    color: var(--ingeweb-primary);
+}
+
+.page-link:hover {
+    color: var(--ingeweb-primary-dark);
+    background-color: rgba(0, 128, 254, 0.1);
+}
+
+.page-item.active .page-link {
+    background-color: var(--ingeweb-primary);
+    border-color: var(--ingeweb-primary);
+}
+
+/* ========================================
+   Responsive Adjustments
+   ======================================== */
+@media (max-width: 767.98px) {
+    .navbar-brand-image {
+        max-height: 32px;
+    }
+
+    .page-title {
+        font-size: 1.25rem;
+    }
+}

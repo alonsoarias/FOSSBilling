@@ -1,8 +1,19 @@
 {
-    "name": "FOSSBilling Tide",
-    "version": "0.9.6",
-    "description": "Tide client area theme",
+    "name": "IngeWeb Tide",
+    "version": "1.0.0",
+    "description": "Modern client area theme powered by IngeWeb",
     "icon": "tide.png",
-    "author": "Tanglin",
-    "author_url": "https://tanglin.io/"
+    "author": "IngeWeb",
+    "author_url": "https://ingeweb.co/",
+    "markdown_attributes": {
+        "\\League\\CommonMark\\Extension\\Table\\Table": {
+            "class": "table table-hover"
+        },
+        "\\League\\CommonMark\\Extension\\CommonMark\\Node\\Inline\\Image": {
+            "class": "img-fluid"
+        },
+        "\\League\\CommonMark\\Extension\\CommonMark\\Node\\Block\\BlockQuote": {
+            "class": "blockquote"
+        }
+    }
 }
