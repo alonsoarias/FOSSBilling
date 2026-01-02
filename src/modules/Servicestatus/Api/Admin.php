@@ -34,6 +34,16 @@ class Admin extends \Api_Abstract
     }
 
     /**
+     * Alias for status() - backwards compatibility.
+     *
+     * @return array
+     */
+    public function get_overall_status($data = [])
+    {
+        return $this->status($data);
+    }
+
+    /**
      * Get available status types.
      *
      * @return array
