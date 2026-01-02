@@ -1,25 +1,29 @@
 <!DOCTYPE html>
-<html lang="en" data-bs-theme="{{ settings.theme|default('light') }}">
+<html class="no-js" lang="en" data-bs-theme="{{ settings.theme|default('light') }}">
 <head>
     <meta charset="utf-8">
-    <title>{% block meta_title %}{% endblock %} - {{ guest.system_company.name }}</title>
+    <title>{{ settings.meta_title_prefix }} {% block meta_title %}{% endblock %} {{ settings.meta_title_suffix }}</title>
 
     <meta property="bb:url" content="{{ constant('SYSTEM_URL') }}">
     <meta property="bb:client_area" content="{{ '/'|link }}">
     <meta name="csrf-token" content="{{ CSRFToken }}">
 
     <meta name="description" content="{% block meta_description %}{{ settings.meta_description }}{% endblock %}">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="{{ settings.meta_keywords }}">
+    <meta name="robots" content="{{ settings.meta_robots }}">
+    <meta name="author" content="{{ settings.meta_author }}">
     <meta name="generator" content="FOSSBilling">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     {% block opengraph %}{% endblock %}
 
     <!-- Favicon -->
     <link rel="shortcut icon" href="{{ guest.system_company.favicon_url }}">
 
-    <!-- Google Fonts - Preconnect (fonts loaded via CSS) -->
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
 
     <!-- Bootstrap 5.3 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -34,13 +38,15 @@
     {{ "Api/API.js" | library_url | script_tag }}
 
     {% block head %}{% endblock %}
+    {% block js %}{% endblock %}
 </head>
-
-<body class="page-public {% block body_class %}{% endblock %}">
+<body class="{% block body_class %}{% endblock %}">
     {% block body %}{% endblock %}
 
     <!-- Toast Container -->
-    <div class="toast-container position-fixed bottom-0 end-0 p-3"></div>
+    <div aria-live="polite" aria-atomic="true" class="position-relative">
+        <div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 1070;"></div>
+    </div>
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>

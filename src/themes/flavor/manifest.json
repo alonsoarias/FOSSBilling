@@ -1,8 +1,8 @@
 {
-  "name": "Flavor",
+  "name": "FOSSBilling Flavor",
   "version": "1.0.0",
-  "description": "Modern client area theme with improved navigation and accessibility",
-  "icon": "screenshot.png",
+  "description": "Modern client area theme inspired by Hostinger hPanel with IngeWeb branding",
+  "icon": "screenshot.jpg",
   "author": "FOSSBilling",
   "author_url": "https://www.fossbilling.org/",
   "markdown_attributes": {

@@ -1,116 +1,82 @@
 /**
- * Flavor Theme - Main JavaScript
- * Modern client area theme for FOSSBilling
+ * FOSSBilling Flavor Theme JavaScript
  */
 
-// Global bb object for compatibility
-window.bb = {
-    restUrl: function(url) {
-        if (url.indexOf('http://') > -1 || url.indexOf('https://') > -1) {
-            return url;
-        }
-        return document.querySelector('meta[property="bb:url"]').getAttribute('content') + 'index.php?_url=/api/' + url;
-    },
-
-    redirect: function(url) {
-        if (url === undefined) {
-            this.reload();
-            return;
-        }
-        window.location = url;
-    },
-
-    reload: function() {
-        window.location.reload(true);
-    },
-
-    // Deprecated methods for backwards compatibility
-    post: function(url, params, successHandler) {
-        API.makeRequest('POST', bb.restUrl(url), JSON.stringify(params), successHandler, function(error) {
-            FOSSBilling.message(error.message, 'error');
-        });
-    },
-
-    get: function(url, params, successHandler) {
-        API.makeRequest('GET', bb.restUrl(url), params, successHandler, function(error) {
-            FOSSBilling.message(error.message, 'error');
-        });
-    }
-};
-
-// FOSSBilling global object
-window.FOSSBilling = {
-    /**
-     * Display a toast notification
-     * @param {string} message - The message to display
-     * @param {string} type - The type of message (success, error, warning, info)
-     */
-    message: function(message, type = 'info') {
-        const toastContainer = document.querySelector('.toast-container');
-        if (!toastContainer) return;
-
-        const iconMap = {
-            success: 'fa-circle-check',
-            error: 'fa-circle-exclamation',
-            warning: 'fa-triangle-exclamation',
-            info: 'fa-circle-info'
-        };
-
-        const bgMap = {
-            success: 'bg-success',
-            error: 'bg-danger',
-            warning: 'bg-warning',
-            info: 'bg-primary'
-        };
-
-        const toastId = 'toast-' + Date.now();
-        const toastHtml = `
-            <div id="${toastId}" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
-                <div class="toast-header">
-                    <span class="rounded me-2 ${bgMap[type] || bgMap.info}" style="width: 20px; height: 20px; display: inline-flex; align-items: center; justify-content: center;">
-                        <i class="fa-solid ${iconMap[type] || iconMap.info} text-white" style="font-size: 12px;"></i>
-                    </span>
-                    <strong class="me-auto">${type.charAt(0).toUpperCase() + type.slice(1)}</strong>
-                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-                </div>
-                <div class="toast-body">
-                    ${message}
-                </div>
-            </div>
-        `;
-
-        toastContainer.insertAdjacentHTML('beforeend', toastHtml);
-
-        const toastElement = document.getElementById(toastId);
-        const toast = new bootstrap.Toast(toastElement, {
-            autohide: true,
-            delay: 5000
-        });
-        toast.show();
-
-        toastElement.addEventListener('hidden.bs.toast', function() {
-            toastElement.remove();
-        });
-    }
-};
-
-// Document Ready
 document.addEventListener('DOMContentLoaded', function() {
     /**
-     * Initialize Bootstrap Tooltips
+     * Sidebar Toggle (Mobile)
+     */
+    const sidebar = document.getElementById('appSidebar');
+    const sidebarToggle = document.getElementById('sidebarToggle');
+    const sidebarClose = document.getElementById('sidebarClose');
+    const sidebarOverlay = document.getElementById('sidebarOverlay');
+
+    function openSidebar() {
+        if (sidebar) {
+            sidebar.classList.add('show');
+            sidebarOverlay?.classList.add('show');
+            document.body.style.overflow = 'hidden';
+        }
+    }
+
+    function closeSidebar() {
+        if (sidebar) {
+            sidebar.classList.remove('show');
+            sidebarOverlay?.classList.remove('show');
+            document.body.style.overflow = '';
+        }
+    }
+
+    sidebarToggle?.addEventListener('click', openSidebar);
+    sidebarClose?.addEventListener('click', closeSidebar);
+    sidebarOverlay?.addEventListener('click', closeSidebar);
+
+    /**
+     * Back to Top Button
+     */
+    const btnToTop = document.getElementById('btnToTop');
+    if (btnToTop) {
+        window.addEventListener('scroll', function() {
+            if (window.scrollY > 300) {
+                btnToTop.classList.add('show');
+            } else {
+                btnToTop.classList.remove('show');
+            }
+        });
+    }
+
+    /**
+     * Enable Bootstrap Tooltips
      */
     const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
     [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
 
     /**
-     * Flash Message Handler
+     * Language Selector
      */
-    window.flashMessage = function({message = '', reload = false, type = 'info'}) {
+    const langItems = document.querySelectorAll('.lang-item');
+    langItems.forEach(item => {
+        item.addEventListener('click', function(e) {
+            e.preventDefault();
+            const locale = this.dataset.lang;
+            if (locale) {
+                document.cookie = 'BBLANG=' + locale + ';path=/';
+                window.location.reload();
+            }
+        });
+    });
+
+    /**
+     * Manage flash message to show after page reload
+     */
+    globalThis.flashMessage = function({message = '', reload = false, type = 'info'}) {
         const key = 'flash-message';
         const sessionMessage = sessionStorage.getItem(key);
 
         if (message === '' && sessionMessage) {
-            FOSSBilling.message(sessionMessage, type);
+            if (typeof FOSSBilling !== 'undefined' && FOSSBilling.message) {
+                FOSSBilling.message(sessionMessage, type);
+            }
             sessionStorage.removeItem(key);
             return;
         }
@@ -118,52 +84,22 @@ document.addEventListener('DOMContentLoaded', function() {
         if (message) {
             sessionStorage.setItem(key, message);
             if (typeof reload === 'boolean' && reload) {
-                bb.reload();
+                window.location.reload();
             } else if (typeof reload === 'string') {
-                bb.redirect(reload);
+                window.location.href = reload;
             }
         }
     };
     flashMessage({});
 
     /**
-     * Language Selector Handler
-     */
-    function handleLanguageChange(locale) {
-        // Set cookie
-        document.cookie = `BBLANG=${locale};path=/;max-age=31536000`;
-        // Reload page
-        window.location.reload();
-    }
-
-    // Dropdown language items
-    document.querySelectorAll('.lang-item').forEach(function(item) {
-        item.addEventListener('click', function(e) {
-            e.preventDefault();
-            handleLanguageChange(this.dataset.lang);
-        });
-    });
-
-    // Select language selector (mobile)
-    document.querySelectorAll('.lang-selector').forEach(function(select) {
-        select.addEventListener('change', function() {
-            handleLanguageChange(this.value);
-        });
-
-        // Set current language
-        const currentLang = document.cookie.split('; ').find(row => row.startsWith('BBLANG='));
-        if (currentLang) {
-            select.value = currentLang.split('=')[1];
-        }
-    });
-
-    /**
      * Add asterisk to required field labels
      */
     const requiredInputs = document.querySelectorAll('input[required], textarea[required], select[required]');
-    requiredInputs.forEach(function(input) {
-        const label = input.closest('.mb-3, .form-group')?.querySelector('label');
-        if (label && !label.querySelector('.text-danger')) {
+    requiredInputs.forEach(input => {
+        const label = input.previousElementSibling;
+        const isAuth = input.closest('.auth-card');
+        if (!isAuth && label && label.tagName.toLowerCase() === 'label' && !label.querySelector('.text-danger')) {
             const asterisk = document.createElement('span');
             asterisk.textContent = ' *';
             asterisk.classList.add('text-danger');
@@ -172,133 +108,145 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     /**
-     * API Form Handler
+     * Currency Selector
      */
-    document.querySelectorAll('.api-form').forEach(function(form) {
-        form.addEventListener('submit', function(e) {
-            e.preventDefault();
-
-            const formData = new FormData(form);
-            const action = form.getAttribute('action');
-            const redirectUrl = form.dataset.apiRedirect;
-            const successMessage = form.dataset.apiMsg || 'Operation completed successfully';
-
-            // Add CSRF token
-            const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
-            if (csrfToken) {
-                formData.append('CSRFToken', csrfToken);
-            }
-
-            // Convert FormData to object
-            const data = {};
-            formData.forEach((value, key) => {
-                if (key.endsWith('[]')) {
-                    const arrayKey = key.slice(0, -2);
-                    if (!data[arrayKey]) data[arrayKey] = [];
-                    data[arrayKey].push(value);
-                } else {
-                    data[key] = value;
-                }
-            });
-
-            // Make API request
-            fetch(action, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json'
-                },
-                body: JSON.stringify(data)
-            })
-            .then(response => response.json())
-            .then(response => {
-                if (response.error) {
-                    FOSSBilling.message(response.error.message, 'error');
-                    return;
-                }
-
-                if (redirectUrl) {
-                    if (successMessage) {
-                        sessionStorage.setItem('flash-message', successMessage);
+    const currencySelector = document.querySelectorAll('select.currency_selector');
+    currencySelector.forEach(function(select) {
+        select.addEventListener('change', function() {
+            if (typeof API !== 'undefined') {
+                API.guest.post('cart/set_currency', { currency: select.value }, function(response) {
+                    location.reload();
+                }, function(error) {
+                    if (typeof FOSSBilling !== 'undefined' && FOSSBilling.message) {
+                        FOSSBilling.message(error);
                     }
-                    window.location.href = redirectUrl;
-                } else {
-                    FOSSBilling.message(successMessage, 'success');
-                }
-            })
-            .catch(error => {
-                FOSSBilling.message('An error occurred. Please try again.', 'error');
-                console.error('API Form Error:', error);
-            });
+                });
+            }
         });
     });
 
     /**
-     * API Link Handler
+     * Period Selector for Pricing
      */
-    document.querySelectorAll('.api-link').forEach(function(link) {
-        link.addEventListener('click', function(e) {
-            e.preventDefault();
+    const periodSelector = document.getElementById('period-selector');
+    if (periodSelector) {
+        function updatePeriodVisibility() {
+            const selectedPeriod = periodSelector.value;
+            document.querySelectorAll('.period').forEach(el => {
+                el.style.display = 'none';
+            });
+            document.querySelectorAll('.period.' + selectedPeriod).forEach(el => {
+                el.style.display = '';
+            });
+        }
 
-            const url = this.getAttribute('href');
-            const confirmMsg = this.dataset.apiConfirm;
-            const successMessage = this.dataset.apiMsg || 'Operation completed successfully';
-            const reloadOnSuccess = this.dataset.apiReload !== 'false';
+        periodSelector.addEventListener('change', updatePeriodVisibility);
+        updatePeriodVisibility();
+    }
 
-            if (confirmMsg && !confirm(confirmMsg)) {
+    /**
+     * Auto-hide alerts after delay
+     */
+    const alerts = document.querySelectorAll('.alert-dismissible');
+    alerts.forEach(alert => {
+        setTimeout(() => {
+            const bsAlert = bootstrap.Alert.getOrCreateInstance(alert);
+            if (bsAlert) {
+                bsAlert.close();
+            }
+        }, 8000);
+    });
+
+    /**
+     * Smooth scroll for anchor links
+     */
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            const targetId = this.getAttribute('href');
+            if (targetId === '#' || targetId === '#top') {
+                e.preventDefault();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
                 return;
             }
 
-            const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
-
-            fetch(url, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json'
-                },
-                body: JSON.stringify({ CSRFToken: csrfToken })
-            })
-            .then(response => response.json())
-            .then(response => {
-                if (response.error) {
-                    FOSSBilling.message(response.error.message, 'error');
-                    return;
-                }
-
-                FOSSBilling.message(successMessage, 'success');
-
-                if (reloadOnSuccess) {
-                    setTimeout(() => window.location.reload(), 1000);
-                }
-            })
-            .catch(error => {
-                FOSSBilling.message('An error occurred. Please try again.', 'error');
-                console.error('API Link Error:', error);
-            });
+            const target = document.querySelector(targetId);
+            if (target) {
+                e.preventDefault();
+                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
         });
     });
 
     /**
-     * Currency Selector Handler
+     * Close sidebar on window resize (larger screens)
      */
-    document.querySelectorAll('.currency_selector').forEach(function(select) {
-        select.addEventListener('change', function() {
-            API.guest.post('cart/set_currency', { currency: this.value }, function(response) {
-                location.reload();
-            }, function(error) {
-                FOSSBilling.message(error.message || 'Failed to change currency', 'error');
-            });
-        });
+    let resizeTimer;
+    window.addEventListener('resize', function() {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(function() {
+            if (window.innerWidth >= 992) {
+                closeSidebar();
+            }
+        }, 250);
     });
 
     /**
-     * Auto-hide alerts after 5 seconds
+     * Form validation styling
      */
-    document.querySelectorAll('.alert:not(.alert-permanent)').forEach(function(alert) {
-        setTimeout(function() {
-            const bsAlert = new bootstrap.Alert(alert);
-            bsAlert.close();
-        }, 5000);
+    const forms = document.querySelectorAll('.needs-validation');
+    forms.forEach(form => {
+        form.addEventListener('submit', function(event) {
+            if (!form.checkValidity()) {
+                event.preventDefault();
+                event.stopPropagation();
+            }
+            form.classList.add('was-validated');
+        });
     });
 });
+
+/**
+ * Global helper for displaying toast messages
+ */
+globalThis.showToast = function(message, type = 'info') {
+    const toastContainer = document.querySelector('.toast-container');
+    if (!toastContainer) return;
+
+    const icons = {
+        success: 'fa-circle-check',
+        error: 'fa-circle-exclamation',
+        warning: 'fa-triangle-exclamation',
+        info: 'fa-circle-info'
+    };
+
+    const bgColors = {
+        success: 'bg-success',
+        error: 'bg-danger',
+        warning: 'bg-warning',
+        info: 'bg-primary'
+    };
+
+    const toastEl = document.createElement('div');
+    toastEl.className = 'toast align-items-center text-white ' + (bgColors[type] || bgColors.info);
+    toastEl.setAttribute('role', 'alert');
+    toastEl.setAttribute('aria-live', 'assertive');
+    toastEl.setAttribute('aria-atomic', 'true');
+
+    toastEl.innerHTML = `
+        <div class="d-flex">
+            <div class="toast-body">
+                <i class="fa-solid ${icons[type] || icons.info} me-2"></i>
+                ${message}
+            </div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+    `;
+
+    toastContainer.appendChild(toastEl);
+    const toast = new bootstrap.Toast(toastEl, { delay: 5000 });
+    toast.show();
+
+    toastEl.addEventListener('hidden.bs.toast', function() {
+        toastEl.remove();
+    });
+};

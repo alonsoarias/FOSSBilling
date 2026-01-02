@@ -8,11 +8,21 @@
 {% endmacro %}
 
 {% macro selectboxtld(name, options, selected, required) %}
-    <select name="{{ name }}" class="form-select{% if required %} is-required{% endif %}" style="width: 100px;">
+    <select name="{{ name }}" class="form-select{% if required %} is-required{% endif %}" style="width: 80px;">
         {% for data in options %}
         <option value="{{ data.tld }}" {% if selected == data.tld %}selected{% endif %}>{{ data.tld }}</option>
         {% endfor %}
     </select>
+{% endmacro %}
+
+{# deprecated - use money filter #}
+{% macro currency_format(price, currency) %}
+    {{ price | money(currency) }}
+{% endmacro %}
+
+{# deprecated - use money_convert filter #}
+{% macro currency(price, currency) %}
+    {{ price | money_convert(currency) }}
 {% endmacro %}
 
 {% macro status_name(status) %}
@@ -35,30 +45,41 @@
         {{ 'Unpaid'|trans }}
     {% elseif status == 'Refunded' %}
         {{ 'Refunded'|trans }}
-    {% elseif status == 'Open' %}
-        {{ 'Open'|trans }}
-    {% elseif status == 'On Hold' %}
-        {{ 'On Hold'|trans }}
-    {% elseif status == 'Closed' %}
-        {{ 'Closed'|trans }}
     {% else %}
         {{ status|trans }}
     {% endif %}
 {% endmacro %}
 
 {% macro status_badge(status) %}
-    {% set status_lower = status|lower|replace({' ': '_'}) %}
-    {% if status_lower == 'active' or status_lower == 'paid' or status_lower == 'open' %}
-        <span class="badge badge-success">{{ _self.status_name(status) }}</span>
-    {% elseif status_lower == 'pending_setup' or status_lower == 'unpaid' or status_lower == 'on_hold' %}
-        <span class="badge badge-warning">{{ _self.status_name(status) }}</span>
-    {% elseif status_lower == 'failed_setup' or status_lower == 'suspended' or status_lower == 'failed_renew' %}
-        <span class="badge badge-danger">{{ _self.status_name(status) }}</span>
-    {% elseif status_lower == 'canceled' or status_lower == 'closed' or status_lower == 'refunded' %}
-        <span class="badge badge-secondary">{{ _self.status_name(status) }}</span>
+    {% set status_lower = status|lower|replace({'_': "-"}) %}
+    {% if status_lower == 'active' or status_lower == 'paid' %}
+        <span class="badge bg-success">{{ _self.status_name(status) }}</span>
+    {% elseif status_lower == 'pending-setup' or status_lower == 'pending' %}
+        <span class="badge bg-warning text-dark">{{ _self.status_name(status) }}</span>
+    {% elseif status_lower == 'suspended' or status_lower == 'failed-setup' or status_lower == 'failed-renew' %}
+        <span class="badge bg-danger">{{ _self.status_name(status) }}</span>
+    {% elseif status_lower == 'canceled' or status_lower == 'cancelled' %}
+        <span class="badge bg-secondary">{{ _self.status_name(status) }}</span>
+    {% elseif status_lower == 'unpaid' %}
+        <span class="badge bg-warning text-dark">{{ _self.status_name(status) }}</span>
+    {% elseif status_lower == 'refunded' %}
+        <span class="badge bg-info">{{ _self.status_name(status) }}</span>
     {% else %}
-        <span class="badge badge-info">{{ _self.status_name(status) }}</span>
+        <span class="badge bg-secondary">{{ _self.status_name(status) }}</span>
     {% endif %}
+{% endmacro %}
+
+{# deprecated - use period_title filter #}
+{% macro period_name(period) %}
+    {{ period | period_title }}
+{% endmacro %}
+
+{% macro markdown_quote(text) %}
+
+
+{% for line in text|split('\n') %}
+> {{ line }}
+{% endfor %}
 {% endmacro %}
 
 {% macro recaptcha() %}
@@ -67,7 +88,7 @@
     {% if rc.enabled %}
         {% if rc.version == 2 %}
             <script src='https://www.google.com/recaptcha/api.js' async defer></script>
-            <div class="g-recaptcha" data-sitekey="{{ rc.publickey }}"></div>
+            <div class="g-recaptcha mb-3" data-sitekey="{{ rc.publickey }}"></div>
         {% endif %}
     {% endif %}
 {% endif %}
@@ -77,17 +98,19 @@
 {% if guest.extension_is_on({"mod":"wysiwyg"}) %}
 {{ include('mod_wysiwyg_js.html.twig', { 'class': selector|trim('.#') }) }}
 {% else %}
-<!-- WYSIWYG not enabled -->
+<!-- No WYSIWYG, no fancy stuff. Enable the WYSIWYG extension for a better management experience. -->
 {% endif %}
 {% endmacro %}
 
-{% macro empty_state(icon, title, description, action_url, action_text) %}
+{% macro empty_state(icon, title, message, action_url, action_text) %}
 <div class="empty-state">
-    <div class="empty-state-icon">
+    <div class="empty-icon">
         <i class="fa-solid fa-{{ icon }}"></i>
     </div>
-    <h5 class="empty-state-title">{{ title }}</h5>
-    <p class="empty-state-text">{{ description }}</p>
+    <h4 class="empty-title">{{ title }}</h4>
+    {% if message %}
+    <p class="empty-message">{{ message }}</p>
+    {% endif %}
     {% if action_url and action_text %}
     <a href="{{ action_url }}" class="btn btn-primary">
         <i class="fa-solid fa-plus me-2"></i>{{ action_text }}

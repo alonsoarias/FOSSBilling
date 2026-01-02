@@ -5,7 +5,7 @@
 {% block body_class %}error-page{% endblock %}
 
 {% block breadcrumb %}
-    <li class="breadcrumb-item active" aria-current="page">{{ 'Error'|trans }}</li>
+    <li class="breadcrumb-item active" aria-current="page">{{ exception.getCode }}</li>
 {% endblock %}
 
 {% block content %}
@@ -18,13 +18,16 @@
                 404
             {% endif %}
         </div>
-        <h1 class="error-title">{{ 'Oops! Something went wrong'|trans }}</h1>
-        <p class="error-message">{{ exception.getMessage|default("The page you are looking for could not be found."|trans) }}</p>
+        <h1 class="error-title">{{ 'Whoops! Something went wrong'|trans }}</h1>
+        <p class="error-message">{{ 'Unable to find the page you are looking for'|trans }}.</p>
+        {% if exception.getMessage %}
+        <p class="error-details">{{ exception.getMessage }}</p>
+        {% endif %}
         <div class="error-actions">
             <a href="{{ '/' | link }}" class="btn btn-primary">
-                <i class="fa-solid fa-house me-2"></i>{{ 'Go to Dashboard'|trans }}
+                <i class="fa-solid fa-home me-2"></i>{{ 'Go back to home'|trans }}
             </a>
-            <a href="{{ '/support'|link({ 'ticket': 1 }) }}" class="btn btn-outline-primary">
+            <a href="{{ '/support' | link }}" class="btn btn-outline-primary">
                 <i class="fa-solid fa-headset me-2"></i>{{ 'Contact Support'|trans }}
             </a>
         </div>

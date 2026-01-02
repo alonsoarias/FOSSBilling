@@ -2,24 +2,28 @@
 <html lang="en" data-bs-theme="{{ settings.theme|default('light') }}">
 <head>
     <meta charset="utf-8">
-    <title>{% block meta_title %}{% endblock %} - {{ guest.system_company.name }}</title>
+    <title>{{ settings.meta_title_prefix }} {% block meta_title %}{% endblock %} {{ settings.meta_title_suffix }}</title>
 
     <meta property="bb:url" content="{{ constant('SYSTEM_URL') }}">
     <meta property="bb:client_area" content="{{ '/'|link }}">
     <meta name="csrf-token" content="{{ CSRFToken }}">
 
     <meta name="description" content="{% block meta_description %}{{ settings.meta_description }}{% endblock %}">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="{{ settings.meta_keywords }}">
+    <meta name="robots" content="{{ settings.meta_robots }}">
+    <meta name="author" content="{{ settings.meta_author }}">
     <meta name="generator" content="FOSSBilling">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     {% block opengraph %}{% endblock %}
 
     <!-- Favicon -->
     <link rel="shortcut icon" href="{{ guest.system_company.favicon_url }}">
 
-    <!-- Google Fonts - Preconnect -->
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
 
     <!-- Bootstrap 5.3 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -39,18 +43,14 @@
     {{ DebugBar_renderHead() }}
 
     {% block head %}{% endblock %}
+    {% block js %}{% endblock %}
 </head>
 
 <body class="{% block body_class %}{% endblock %}">
+
 {% block body %}
 
-{# Load client profile if logged in #}
-{% if client %}
-    {% set profile = client.profile_get %}
-{% endif %}
-{% set company = guest.system_company %}
-
-{# Check for require login setting #}
+{# Require login redirect #}
 {% if not client and settings.require_login %}
 <script>
     document.addEventListener("DOMContentLoaded", function () {
@@ -64,230 +64,225 @@
 </script>
 {% endif %}
 
-<div class="app">
-    <!-- Header -->
-    <header class="app-header">
-        <div class="container-xl">
-            <div class="header-content">
-                <!-- Logo -->
-                <a href="{{ '/'|link }}" class="header-brand">
-                    {% if company.logo_url and settings.show_company_logo %}
-                        <img src="{{ settings.theme == 'dark' ? company.logo_url_dark : company.logo_url }}" alt="{{ company.name }}" class="header-logo">
-                    {% else %}
-                        <span class="header-brand-text">{{ company.name }}</span>
-                    {% endif %}
-                </a>
+{# Load client profile if logged in #}
+{% if client %}
+    {% set profile = client.profile_get %}
+{% endif %}
+{% set company = guest.system_company %}
 
-                <!-- Desktop Navigation -->
-                <nav class="header-nav d-none d-lg-flex">
-                    <a href="{{ '/'|link }}" class="nav-link {% if request.uri == '/' %}active{% endif %}">
-                        <i class="fa-solid fa-house"></i>
-                        <span>{{ 'Dashboard'|trans }}</span>
-                    </a>
-                    <a href="{{ '/order/service'|link }}" class="nav-link {% if '/order/service' in request.uri %}active{% endif %}">
+{# Set logo based on theme #}
+{% if settings.theme == 'dark' %}
+    {% set logo_url = company.logo_url_dark %}
+{% else %}
+    {% set logo_url = company.logo_url %}
+{% endif %}
+
+<div class="app-wrapper">
+    <!-- Sidebar -->
+    <aside class="app-sidebar" id="appSidebar">
+        <div class="sidebar-header">
+            <a href="{{ '/'|link }}" class="sidebar-brand">
+                {% if logo_url and settings.show_company_logo %}
+                    <img src="{{ logo_url }}" alt="{{ company.name }}" class="sidebar-logo">
+                {% else %}
+                    <span class="sidebar-brand-text">{{ company.name }}</span>
+                {% endif %}
+            </a>
+            <button type="button" class="sidebar-close d-lg-none" id="sidebarClose">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+
+        <div class="sidebar-body">
+            <nav class="sidebar-nav">
+                {% if settings.side_menu_dashboard %}
+                <a href="{{ '/'|link }}" class="sidebar-link {% if request.uri == '/' %}active{% endif %}">
+                    <i class="fa-solid fa-gauge-high"></i>
+                    <span>{{ 'Dashboard'|trans }}</span>
+                </a>
+                {% endif %}
+
+                {% if settings.side_menu_order %}
+                <a href="{{ '/order'|link }}" class="sidebar-link {% if '/order' in request.uri and '/order/service' not in request.uri %}active{% endif %}">
+                    <i class="fa-solid fa-cart-shopping"></i>
+                    <span>{{ 'Order'|trans }}</span>
+                </a>
+                {% endif %}
+
+                {% if client or not settings.hide_menu %}
+                    {% if settings.side_menu_services %}
+                    <a href="{{ '/order/service'|link }}" class="sidebar-link {% if '/order/service' in request.uri %}active{% endif %}">
                         <i class="fa-solid fa-server"></i>
                         <span>{{ 'Services'|trans }}</span>
                     </a>
-                    <a href="{{ '/invoice'|link }}" class="nav-link {% if '/invoice' in request.uri %}active{% endif %}">
-                        <i class="fa-solid fa-file-invoice-dollar"></i>
-                        <span>{{ 'Billing'|trans }}</span>
-                    </a>
-                    <a href="{{ '/support'|link }}" class="nav-link {% if '/support' in request.uri %}active{% endif %}">
+                    {% endif %}
+
+                    {% if settings.side_menu_support %}
+                    <a href="{{ '/support'|link }}" class="sidebar-link {% if '/support' in request.uri %}active{% endif %}">
                         <i class="fa-solid fa-headset"></i>
                         <span>{{ 'Support'|trans }}</span>
                     </a>
-                    {% if guest.extension_is_on({"mod":"news"}) %}
-                    <a href="{{ '/news'|link }}" class="nav-link {% if '/news' in request.uri %}active{% endif %}">
+                    {% endif %}
+
+                    {% if settings.side_menu_invoices %}
+                    <a href="{{ '/invoice'|link }}" class="sidebar-link {% if '/invoice' in request.uri %}active{% endif %}">
+                        <i class="fa-solid fa-file-invoice-dollar"></i>
+                        <span>{{ 'Invoices'|trans }}</span>
+                    </a>
+                    {% endif %}
+
+                    {% if settings.side_menu_emails %}
+                    <a href="{{ '/email'|link }}" class="sidebar-link {% if '/email' in request.uri %}active{% endif %}">
+                        <i class="fa-solid fa-envelope"></i>
+                        <span>{{ 'Email'|trans }}</span>
+                    </a>
+                    {% endif %}
+
+                    {% if settings.side_menu_payments %}
+                    <a href="{{ '/client/balance'|link }}" class="sidebar-link {% if '/client/balance' in request.uri %}active{% endif %}">
+                        <i class="fa-solid fa-wallet"></i>
+                        <span>{{ 'Wallet'|trans }}</span>
+                    </a>
+                    {% endif %}
+
+                    {% if guest.extension_is_on({"mod":"news"}) and settings.side_menu_news %}
+                    <a href="{{ '/news'|link }}" class="sidebar-link {% if '/news' in request.uri %}active{% endif %}">
                         <i class="fa-solid fa-newspaper"></i>
                         <span>{{ 'News'|trans }}</span>
                     </a>
                     {% endif %}
-                </nav>
 
-                <!-- Header Actions -->
-                <div class="header-actions">
-                    <!-- Language Selector -->
-                    {% set languages = guest.extension_languages(true) %}
-                    {% if languages|length > 1 %}
-                    <div class="dropdown d-none d-md-block">
-                        <button class="btn btn-icon" type="button" data-bs-toggle="dropdown" aria-expanded="false" title="{{ 'Language'|trans }}">
-                            <i class="fa-solid fa-globe"></i>
-                        </button>
-                        <ul class="dropdown-menu dropdown-menu-end">
-                            {% for lang in languages %}
-                            <li>
-                                <a class="dropdown-item lang-item" href="#" data-lang="{{ lang.locale }}">
-                                    <span class="fi fi-{{ lang.locale|split('_')[1]|lower }}"></span>
-                                    {{ lang.title }}
-                                </a>
-                            </li>
-                            {% endfor %}
-                        </ul>
-                    </div>
+                    {% if guest.support_kb_enabled() and settings.side_menu_kb %}
+                    <a href="{{ 'support/kb'|link }}" class="sidebar-link {% if '/support/kb' in request.uri %}active{% endif %}">
+                        <i class="fa-solid fa-book"></i>
+                        <span>{{ 'Knowledge Base'|trans }}</span>
+                    </a>
                     {% endif %}
-
-                    {% if client %}
-                        <!-- New Order Button -->
-                        <a href="{{ '/order'|link }}" class="btn btn-primary d-none d-md-inline-flex">
-                            <i class="fa-solid fa-plus me-2"></i>
-                            {{ 'New Order'|trans }}
-                        </a>
-
-                        <!-- User Menu -->
-                        <div class="dropdown">
-                            <button class="btn-user-menu" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                <img src="{{ profile.email|gravatar(80) }}" alt="{{ profile.first_name }}" class="user-avatar">
-                                <div class="user-info d-none d-md-block">
-                                    <span class="user-name">{{ profile.first_name }}</span>
-                                    <span class="user-balance">{{ profile.balance | money(profile.currency) }}</span>
-                                </div>
-                                <i class="fa-solid fa-chevron-down ms-2 d-none d-md-block"></i>
-                            </button>
-                            <ul class="dropdown-menu dropdown-menu-end user-dropdown">
-                                <li class="dropdown-header">
-                                    <div class="d-flex align-items-center gap-3">
-                                        <img src="{{ profile.email|gravatar(80) }}" alt="{{ profile.first_name }}" class="user-avatar-lg">
-                                        <div>
-                                            <div class="fw-semibold">{{ profile.first_name }} {{ profile.last_name }}</div>
-                                            <div class="text-muted small">{{ profile.email }}</div>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li><hr class="dropdown-divider"></li>
-                                <li class="dropdown-item-balance">
-                                    <span class="text-muted">{{ 'Balance'|trans }}</span>
-                                    <span class="balance-amount">{{ profile.balance | money(profile.currency) }}</span>
-                                </li>
-                                <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" href="{{ 'client/profile'|link }}"><i class="fa-solid fa-user me-2"></i>{{ 'Profile'|trans }}</a></li>
-                                <li><a class="dropdown-item" href="{{ 'client/balance'|link }}"><i class="fa-solid fa-wallet me-2"></i>{{ 'Wallet'|trans }}</a></li>
-                                <li><a class="dropdown-item" href="{{ '/email'|link }}"><i class="fa-solid fa-envelope me-2"></i>{{ 'Emails'|trans }}</a></li>
-                                <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item text-danger" href="{{ 'client/logout'|link }}"><i class="fa-solid fa-right-from-bracket me-2"></i>{{ 'Sign Out'|trans }}</a></li>
-                            </ul>
-                        </div>
-                    {% else %}
-                        <!-- Login/Register for guests -->
-                        <a href="{{ '/login'|link }}" class="btn btn-outline-primary d-none d-md-inline-flex">{{ 'Login'|trans }}</a>
-                        <a href="{{ '/signup'|link }}" class="btn btn-primary d-none d-md-inline-flex">{{ 'Register'|trans }}</a>
-                    {% endif %}
-
-                    <!-- Mobile Menu Toggle -->
-                    <button class="btn btn-icon d-lg-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileMenu" aria-controls="mobileMenu">
-                        <i class="fa-solid fa-bars"></i>
-                    </button>
-                </div>
-            </div>
-        </div>
-    </header>
-
-    <!-- Mobile Menu Offcanvas -->
-    <div class="offcanvas offcanvas-end" tabindex="-1" id="mobileMenu" aria-labelledby="mobileMenuLabel">
-        <div class="offcanvas-header">
-            {% if client %}
-            <div class="d-flex align-items-center gap-3">
-                <img src="{{ profile.email|gravatar(80) }}" alt="{{ profile.first_name }}" class="user-avatar-lg">
-                <div>
-                    <div class="fw-semibold">{{ profile.first_name }} {{ profile.last_name }}</div>
-                    <div class="text-muted small">{{ profile.balance | money(profile.currency) }}</div>
-                </div>
-            </div>
-            {% else %}
-            <span class="offcanvas-title" id="mobileMenuLabel">{{ 'Menu'|trans }}</span>
-            {% endif %}
-            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-        </div>
-        <div class="offcanvas-body">
-            <nav class="mobile-nav">
-                <a href="{{ '/'|link }}" class="mobile-nav-link">
-                    <i class="fa-solid fa-house"></i>
-                    {{ 'Dashboard'|trans }}
-                </a>
-                <a href="{{ '/order/service'|link }}" class="mobile-nav-link">
-                    <i class="fa-solid fa-server"></i>
-                    {{ 'Services'|trans }}
-                </a>
-                <a href="{{ '/invoice'|link }}" class="mobile-nav-link">
-                    <i class="fa-solid fa-file-invoice-dollar"></i>
-                    {{ 'Billing'|trans }}
-                </a>
-                <a href="{{ '/support'|link }}" class="mobile-nav-link">
-                    <i class="fa-solid fa-headset"></i>
-                    {{ 'Support'|trans }}
-                </a>
-                <a href="{{ '/order'|link }}" class="mobile-nav-link">
-                    <i class="fa-solid fa-cart-shopping"></i>
-                    {{ 'Order'|trans }}
-                </a>
-                {% if guest.extension_is_on({"mod":"news"}) %}
-                <a href="{{ '/news'|link }}" class="mobile-nav-link">
-                    <i class="fa-solid fa-newspaper"></i>
-                    {{ 'News'|trans }}
-                </a>
                 {% endif %}
-                {% if guest.support_kb_enabled() %}
-                <a href="{{ '/support/kb'|link }}" class="mobile-nav-link">
-                    <i class="fa-solid fa-book"></i>
-                    {{ 'Knowledge Base'|trans }}
-                </a>
+            </nav>
+
+            {% if settings.sidebar_balance_enabled and client %}
+            <div class="sidebar-balance">
+                <div class="balance-label">{{ 'Account Balance'|trans }}</div>
+                <div class="balance-amount">{{ profile.balance | money(profile.currency) }}</div>
+            </div>
+            {% endif %}
+
+            {% if settings.sidebar_note_enabled %}
+            <div class="sidebar-note">
+                <div class="note-title">{{ settings.sidebar_note_title }}</div>
+                <div class="note-content">{{ settings.sidebar_note_content }}</div>
+            </div>
+            {% endif %}
+        </div>
+    </aside>
+
+    <!-- Sidebar Overlay -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- Main Content -->
+    <div class="app-content">
+        <!-- Top Header -->
+        <header class="app-header">
+            <div class="header-left">
+                <button type="button" class="header-toggle d-lg-none" id="sidebarToggle">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+
+                {% if settings.show_breadcrumb %}
+                <nav aria-label="{{ 'breadcrumb'|trans }}" class="header-breadcrumb d-none d-md-block">
+                    {% block breadcrumbs %}
+                    <ol class="breadcrumb mb-0">
+                        <li class="breadcrumb-item"><a href="{{ '/'|link }}">{{ 'Home'|trans }}</a></li>
+                        {% block breadcrumb %}
+                            <li class="breadcrumb-item active" aria-current="page">{{ 'Dashboard'|trans }}</li>
+                        {% endblock %}
+                    </ol>
+                    {% endblock %}
+                </nav>
+                {% endif %}
+            </div>
+
+            <div class="header-right">
+                <!-- Language Selector -->
+                {% set languages = guest.extension_languages(true) %}
+                {% if languages|length > 1 %}
+                <div class="dropdown header-dropdown">
+                    <button class="header-btn" type="button" data-bs-toggle="dropdown" aria-expanded="false" title="{{ 'Language'|trans }}">
+                        <i class="fa-solid fa-globe"></i>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        {% for lang in languages %}
+                        <li>
+                            <a class="dropdown-item lang-item" href="#" data-lang="{{ lang.locale }}">
+                                <span class="fi fi-{{ lang.locale|split('_')[1]|lower }} me-2"></span>
+                                {{ lang.title }}
+                            </a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
                 {% endif %}
 
                 {% if client %}
-                <div class="mobile-nav-divider"></div>
-                <a href="{{ 'client/profile'|link }}" class="mobile-nav-link">
-                    <i class="fa-solid fa-user"></i>
-                    {{ 'Profile'|trans }}
-                </a>
-                <a href="{{ 'client/balance'|link }}" class="mobile-nav-link">
-                    <i class="fa-solid fa-wallet"></i>
-                    {{ 'Wallet'|trans }}
-                </a>
-                <a href="{{ '/email'|link }}" class="mobile-nav-link">
-                    <i class="fa-solid fa-envelope"></i>
-                    {{ 'Emails'|trans }}
-                </a>
-                <div class="mobile-nav-divider"></div>
-                <a href="{{ 'client/logout'|link }}" class="mobile-nav-link text-danger">
-                    <i class="fa-solid fa-right-from-bracket"></i>
-                    {{ 'Sign Out'|trans }}
-                </a>
+                    <!-- New Order Button -->
+                    <a href="{{ '/order'|link }}" class="btn btn-primary d-none d-md-inline-flex">
+                        <i class="fa-solid fa-plus me-2"></i>
+                        {{ 'New Order'|trans }}
+                    </a>
+
+                    <!-- User Dropdown -->
+                    <div class="dropdown header-dropdown">
+                        <button class="header-user" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <img src="{{ profile.email|gravatar(80) }}" alt="{{ profile.first_name }}" class="user-avatar">
+                            <div class="user-info d-none d-md-block">
+                                <span class="user-name">
+                                    {% if profile.company %}
+                                        {{ profile.first_name }} {{ profile.last_name }} ({{ profile.company }})
+                                    {% else %}
+                                        {{ profile.first_name }} {{ profile.last_name }}
+                                    {% endif %}
+                                </span>
+                                <span class="user-email">{{ profile.email }}</span>
+                            </div>
+                            <i class="fa-solid fa-chevron-down ms-2 d-none d-md-block"></i>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end user-menu">
+                            <li class="dropdown-header">
+                                <div class="d-flex align-items-center gap-3">
+                                    <img src="{{ profile.email|gravatar(80) }}" alt="{{ profile.first_name }}" class="user-avatar-lg">
+                                    <div>
+                                        <div class="fw-semibold">{{ profile.first_name }} {{ profile.last_name }}</div>
+                                        <div class="text-muted small">{{ profile.email }}</div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li class="dropdown-balance">
+                                <span class="text-muted">{{ 'Balance'|trans }}</span>
+                                <span class="balance-value">{{ profile.balance | money(profile.currency) }}</span>
+                            </li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="{{ 'client/profile'|link }}"><i class="fa-solid fa-user me-2"></i>{{ 'Profile'|trans }}</a></li>
+                            <li><a class="dropdown-item" href="{{ 'client/balance'|link }}"><i class="fa-solid fa-wallet me-2"></i>{{ 'Wallet'|trans }}</a></li>
+                            <li><a class="dropdown-item" href="{{ '/email'|link }}"><i class="fa-solid fa-envelope me-2"></i>{{ 'Emails'|trans }}</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item text-danger" href="{{ 'client/logout'|link }}"><i class="fa-solid fa-right-from-bracket me-2"></i>{{ 'Sign Out'|trans }}</a></li>
+                        </ul>
+                    </div>
                 {% else %}
-                <div class="mobile-nav-divider"></div>
-                <div class="d-grid gap-2 p-3">
-                    <a href="{{ '/login'|link }}" class="btn btn-outline-primary">{{ 'Login'|trans }}</a>
-                    <a href="{{ '/signup'|link }}" class="btn btn-primary">{{ 'Register'|trans }}</a>
-                </div>
+                    {% if settings.top_menu_profile %}
+                    <a href="{{ 'login'|link }}" class="btn btn-outline-primary">{{ 'Login'|trans }}</a>
+                    {% endif %}
+                    {% if settings.top_menu_signout %}
+                    <a href="{{ 'signup'|link }}" class="btn btn-primary">{{ 'Register'|trans }}</a>
+                    {% endif %}
                 {% endif %}
+            </div>
+        </header>
 
-                <!-- Language Selector for Mobile -->
-                {% if languages|length > 1 %}
-                <div class="mobile-nav-divider"></div>
-                <div class="p-3">
-                    <label class="form-label text-muted small">{{ 'Language'|trans }}</label>
-                    <select class="form-select form-select-sm lang-selector">
-                        {% for lang in languages %}
-                        <option value="{{ lang.locale }}">{{ lang.title }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-                {% endif %}
-            </nav>
-        </div>
-    </div>
-
-    <!-- Main Content -->
-    <main class="app-main">
-        <div class="container-xl py-4">
-            <!-- Breadcrumb -->
-            {% if settings.show_breadcrumb %}
-            <nav aria-label="breadcrumb" class="mb-4">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="{{ '/'|link }}">{{ 'Home'|trans }}</a></li>
-                    {% block breadcrumb %}{% endblock %}
-                </ol>
-            </nav>
-            {% endif %}
-
+        <!-- Main Area -->
+        <main class="app-main">
             <!-- Flash Messages -->
             {{ include('partial_message.html.twig') }}
 
@@ -295,25 +290,59 @@
             {% block content_before %}{% endblock %}
             {% block content %}{% endblock %}
             {% block content_after %}{% endblock %}
-        </div>
-    </main>
+        </main>
 
-    <!-- Footer -->
-    <footer class="app-footer">
-        <div class="container-xl">
+        <!-- Footer -->
+        {% if settings.footer_enabled %}
+        <footer class="app-footer">
             <div class="footer-content">
-                <div class="footer-brand">
-                    &copy; {{ now|format_date(pattern='yyyy') }} {{ company.name }}
+                <div class="footer-copyright">
+                    &copy; {{ now|format_date(pattern='yyyy') }} {{ settings.footer_signature | default(company.signature) }}
+                    {% if company.bank_info_pagebottom == 1 %}
+                        <br>
+                        <small>
+                            <b>{{ 'Payment Information'|trans }}</b> -
+                            {{ 'Bank Name'|trans }}: {{ company.bank_name }} |
+                            {{ 'BIC / SWIFT Code'|trans }}: {{ company.bic }} |
+                            {{ 'Account Number'|trans }}: {{ company.account_number }}
+                        </small>
+                    {% endif %}
                 </div>
                 <div class="footer-links">
                     {% if settings.footer_link_1_enabled %}
-                    <a href="{{ settings.footer_link_1_page|link }}">{{ settings.footer_link_1_title }}</a>
+                        {% if 'http://' in settings.footer_link_1_page or 'https://' in settings.footer_link_1_page %}
+                            <a href="{{ settings.footer_link_1_page }}">{{ settings.footer_link_1_title }}</a>
+                        {% else %}
+                            <a href="{{ settings.footer_link_1_page | link }}">{{ settings.footer_link_1_title }}</a>
+                        {% endif %}
                     {% endif %}
                     {% if settings.footer_link_2_enabled %}
-                    <a href="{{ settings.footer_link_2_page|link }}">{{ settings.footer_link_2_title }}</a>
+                        {% if 'http://' in settings.footer_link_2_page or 'https://' in settings.footer_link_2_page %}
+                            <a href="{{ settings.footer_link_2_page }}">{{ settings.footer_link_2_title }}</a>
+                        {% else %}
+                            <a href="{{ settings.footer_link_2_page | link }}">{{ settings.footer_link_2_title }}</a>
+                        {% endif %}
                     {% endif %}
                     {% if settings.footer_link_3_enabled %}
-                    <a href="{{ settings.footer_link_3_page|link }}">{{ settings.footer_link_3_title }}</a>
+                        {% if 'http://' in settings.footer_link_3_page or 'https://' in settings.footer_link_3_page %}
+                            <a href="{{ settings.footer_link_3_page }}">{{ settings.footer_link_3_title }}</a>
+                        {% else %}
+                            <a href="{{ settings.footer_link_3_page | link }}">{{ settings.footer_link_3_title }}</a>
+                        {% endif %}
+                    {% endif %}
+                    {% if settings.footer_link_4_enabled %}
+                        {% if 'http://' in settings.footer_link_4_page or 'https://' in settings.footer_link_4_page %}
+                            <a href="{{ settings.footer_link_4_page }}">{{ settings.footer_link_4_title }}</a>
+                        {% else %}
+                            <a href="{{ settings.footer_link_4_page | link }}">{{ settings.footer_link_4_title }}</a>
+                        {% endif %}
+                    {% endif %}
+                    {% if settings.footer_link_5_enabled %}
+                        {% if 'http://' in settings.footer_link_5_page or 'https://' in settings.footer_link_5_page %}
+                            <a href="{{ settings.footer_link_5_page }}">{{ settings.footer_link_5_title }}</a>
+                        {% else %}
+                            <a href="{{ settings.footer_link_5_page | link }}">{{ settings.footer_link_5_title }}</a>
+                        {% endif %}
                     {% endif %}
                 </div>
                 {% if guest.extension_is_on({"mod":'branding'}) %}
@@ -322,12 +351,26 @@
                 </div>
                 {% endif %}
             </div>
-        </div>
-    </footer>
+        </footer>
+        {% endif %}
+    </div>
 </div>
 
 <!-- Toast Container -->
-<div class="toast-container position-fixed bottom-0 end-0 p-3"></div>
+<div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 1070;"></div>
+
+{% if settings.footer_to_top_enabled %}
+<a href="#top" class="btn-to-top" id="btnToTop">
+    <i class="fa-solid fa-arrow-up"></i>
+</a>
+{% endif %}
+
+<!-- Loading Overlay -->
+<div class="wait" style="display:none" onclick="$(this).hide();">
+    <div class="spinner-border" style="width: 4rem; height: 4rem; top: 50%; left: 50%; position: fixed; z-index: 999"></div>
+</div>
+
+<noscript>{{ "NOTE: Many features on FOSSBilling require Javascript and cookies. You can enable both in your browser's preference settings."|trans }}</noscript>
 
 {% endblock %}
 
