@@ -34,6 +34,16 @@ class Guest extends \Api_Abstract
     }
 
     /**
+     * Alias for status() for backwards compatibility.
+     *
+     * @return array
+     */
+    public function get_overall_status($data = [])
+    {
+        return $this->status($data);
+    }
+
+    /**
      * Get list of all visible components.
      *
      * @return array
