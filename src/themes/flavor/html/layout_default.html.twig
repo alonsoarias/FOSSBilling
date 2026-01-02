@@ -40,6 +40,9 @@
     <!-- Theme CSS -->
     <link rel="stylesheet" href="{{ 'css/flavor.css' | asset_url }}">
 
+    <!-- jQuery (required for FOSSBilling modules) -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+
     <!-- API -->
     {{ "Api/API.js" | library_url | script_tag }}
 
@@ -282,9 +285,22 @@
             <!-- Content Column -->
             <div class="{% if client or not settings.hide_menu %}col-lg-9{% else %}col-12{% endif %}">
                 <!-- Mobile Menu -->
+                {% if client or not settings.hide_menu %}
                 <div class="d-lg-none mb-4">
-                    {{ include('mobile_menu.html.twig') }}
+                    <div class="card">
+                        <div class="card-body">
+                            <button class="btn btn-outline-primary w-100 mb-3" type="button" data-bs-toggle="collapse" data-bs-target="#mobileNavMenu" aria-expanded="false" aria-controls="mobileNavMenu">
+                                <i class="fa-solid fa-bars me-2"></i>{{ 'Menu'|trans }}
+                            </button>
+                            <div class="collapse" id="mobileNavMenu">
+                                <ul class="nav flex-column">
+                                    {{ include('mobile_menu.html.twig') }}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+                {% endif %}
 
                 <!-- Breadcrumbs -->
                 {% if settings.show_breadcrumb %}
