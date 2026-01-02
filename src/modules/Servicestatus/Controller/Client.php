@@ -27,7 +27,7 @@ class Client implements \FOSSBilling\InjectionAwareInterface
     /**
      * Register public routes.
      */
-    public function register(\Box_App &$app): void
+    public function register(\Box_App &$app)
     {
         $app->get('/status', 'get_index', [], static::class);
         $app->get('/status/', 'get_index', [], static::class);
@@ -38,7 +38,7 @@ class Client implements \FOSSBilling\InjectionAwareInterface
     /**
      * Display public status page.
      */
-    public function get_index(\Box_App $app): string
+    public function get_index(\Box_App $app)
     {
         return $app->render('mod_servicestatus_index');
     }
@@ -46,7 +46,7 @@ class Client implements \FOSSBilling\InjectionAwareInterface
     /**
      * Display incident details.
      */
-    public function get_incident(\Box_App $app, $id): string
+    public function get_incident(\Box_App $app, $id)
     {
         $api = $this->di['api_guest'];
         $incident = $api->servicestatus_incident_get(['id' => $id]);
@@ -57,7 +57,7 @@ class Client implements \FOSSBilling\InjectionAwareInterface
     /**
      * Display incident history.
      */
-    public function get_history(\Box_App $app): string
+    public function get_history(\Box_App $app)
     {
         return $app->render('mod_servicestatus_history');
     }

@@ -27,7 +27,7 @@ class Admin implements \FOSSBilling\InjectionAwareInterface
     /**
      * Return admin navigation items.
      */
-    public function fetchNavigation(): array
+    public function fetchNavigation()
     {
         return [
             'subpages' => [
@@ -45,19 +45,18 @@ class Admin implements \FOSSBilling\InjectionAwareInterface
     /**
      * Register admin routes.
      */
-    public function register(\Box_App &$app): void
+    public function register(\Box_App &$app)
     {
         $app->get('/servicestatus', 'get_index', [], static::class);
         $app->get('/servicestatus/', 'get_index', [], static::class);
         $app->get('/servicestatus/component/:id', 'get_component', ['id' => '[0-9]+'], static::class);
         $app->get('/servicestatus/incident/:id', 'get_incident', ['id' => '[0-9]+'], static::class);
-        $app->get('/servicestatus/incident/new', 'get_incident_new', [], static::class);
     }
 
     /**
      * Display admin index page.
      */
-    public function get_index(\Box_App $app): string
+    public function get_index(\Box_App $app)
     {
         $this->di['is_admin_logged'];
 
@@ -67,7 +66,7 @@ class Admin implements \FOSSBilling\InjectionAwareInterface
     /**
      * Display component edit page.
      */
-    public function get_component(\Box_App $app, $id): string
+    public function get_component(\Box_App $app, $id)
     {
         $this->di['is_admin_logged'];
         $api = $this->di['api_admin'];
@@ -79,22 +78,12 @@ class Admin implements \FOSSBilling\InjectionAwareInterface
     /**
      * Display incident edit page.
      */
-    public function get_incident(\Box_App $app, $id): string
+    public function get_incident(\Box_App $app, $id)
     {
         $this->di['is_admin_logged'];
         $api = $this->di['api_admin'];
         $incident = $api->servicestatus_incident_get(['id' => $id]);
 
         return $app->render('mod_servicestatus_incident', ['incident' => $incident]);
-    }
-
-    /**
-     * Display new incident form.
-     */
-    public function get_incident_new(\Box_App $app): string
-    {
-        $this->di['is_admin_logged'];
-
-        return $app->render('mod_servicestatus_incident_new');
     }
 }
