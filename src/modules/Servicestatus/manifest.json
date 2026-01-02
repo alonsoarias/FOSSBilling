@@ -1,10 +1,12 @@
 {
-    "id": "servicestatus",
-    "type": "mod",
-    "name": "Service Status",
-    "description": "Public status page showing the health and availability of your services. Similar to Statuspage.io or Blesta System Status.",
-    "homepage_url": "https://github.com/FOSSBilling/FOSSBilling",
-    "author": "FOSSBilling",
-    "version": "1.0.0",
-    "minimum_boxbilling_version": "0.0.1"
+  "id": "servicestatus",
+  "type": "mod",
+  "name": "Service Status",
+  "description": "Public status page showing the health and availability of your services",
+  "homepage_url": "https://github.com/FOSSBilling/FOSSBilling",
+  "icon_url": "icon.svg",
+  "author": "FOSSBilling",
+  "author_url": "https://extensions.fossbilling.org/",
+  "license": "https://github.com/FOSSBilling/FOSSBilling/blob/main/LICENSE",
+  "version": "1.0.0"
 }

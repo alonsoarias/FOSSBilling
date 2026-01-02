@@ -1,7 +1,6 @@
 {% extends request.ajax ? "layout_blank.html.twig" : "layout_default.html.twig" %}
 
 {% block meta_title %}{{ 'System Status'|trans }}{% endblock %}
-{% block meta_description %}{{ 'Check the current status of our services and infrastructure.'|trans }}{% endblock %}
 
 {% block body_class %}status-page{% endblock %}
 
@@ -10,73 +9,91 @@
 {% endblock %}
 
 {% block content %}
-    {% set overall = guest.servicestatus_get_overall_status %}
-    {% set components = guest.servicestatus_component_get_grouped %}
-    {% set active_incidents = guest.servicestatus_incident_get_active %}
-    {% set maintenance = guest.servicestatus_maintenance_get_scheduled %}
-    {% set recent = guest.servicestatus_incident_get_recent({'days': 7}) %}
-
-    <div class="container py-4">
-        {# Overall Status Banner #}
-        <div class="card mb-4 border-{{ overall.color }}">
+<div class="row">
+    <div class="col-md-12">
+        {# Overall Status #}
+        {% set status = guest.servicestatus_status %}
+        <div class="card mb-4">
             <div class="card-body text-center py-4">
-                <div class="mb-3">
-                    {% if overall.status == 'operational' %}
-                        <span class="status-icon status-operational">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                                <polyline points="22 4 12 14.01 9 11.01"></polyline>
-                            </svg>
-                        </span>
-                    {% else %}
-                        <span class="status-icon status-{{ overall.status }}">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
-                                <line x1="12" y1="9" x2="12" y2="13"></line>
-                                <line x1="12" y1="17" x2="12.01" y2="17"></line>
-                            </svg>
-                        </span>
-                    {% endif %}
-                </div>
-                <h1 class="h2 mb-1 text-{{ overall.color }}">{{ overall.label }}</h1>
-                <p class="text-muted mb-0">{{ 'Last updated'|trans }}: {{ "now"|date("Y-m-d H:i:s") }}</p>
+                {% if status.status == 'operational' %}
+                    <div class="text-success mb-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                            <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                        </svg>
+                    </div>
+                    <h2 class="text-success mb-0">{{ 'All Systems Operational'|trans }}</h2>
+                {% elseif status.status == 'degraded_performance' %}
+                    <div class="text-warning mb-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+                            <line x1="12" y1="9" x2="12" y2="13"></line>
+                            <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                        </svg>
+                    </div>
+                    <h2 class="text-warning mb-0">{{ 'Degraded Performance'|trans }}</h2>
+                {% elseif status.status == 'partial_outage' %}
+                    <div class="text-orange mb-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="12" y1="8" x2="12" y2="12"></line>
+                            <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                        </svg>
+                    </div>
+                    <h2 class="text-orange mb-0">{{ 'Partial System Outage'|trans }}</h2>
+                {% elseif status.status == 'major_outage' %}
+                    <div class="text-danger mb-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="15" y1="9" x2="9" y2="15"></line>
+                            <line x1="9" y1="9" x2="15" y2="15"></line>
+                        </svg>
+                    </div>
+                    <h2 class="text-danger mb-0">{{ 'Major System Outage'|trans }}</h2>
+                {% elseif status.status == 'maintenance' %}
+                    <div class="text-info mb-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="3"></circle>
+                            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                        </svg>
+                    </div>
+                    <h2 class="text-info mb-0">{{ 'Under Maintenance'|trans }}</h2>
+                {% endif %}
             </div>
         </div>
 
         {# Active Incidents #}
-        {% if active_incidents|length > 0 %}
-        <div class="card mb-4 border-warning">
-            <div class="card-header bg-warning text-dark">
-                <h3 class="card-title mb-0">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="me-2">
-                        <circle cx="12" cy="12" r="10"></circle>
-                        <line x1="12" y1="8" x2="12" y2="12"></line>
-                        <line x1="12" y1="16" x2="12.01" y2="16"></line>
-                    </svg>
-                    {{ 'Active Incidents'|trans }}
-                </h3>
+        {% set incidents = guest.servicestatus_incident_list %}
+        {% if incidents|length > 0 %}
+        <div class="card mb-4">
+            <div class="card-header">
+                <h3 class="card-title">{{ 'Active Incidents'|trans }}</h3>
             </div>
             <div class="card-body">
-                {% for incident in active_incidents %}
-                <div class="incident-item {% if not loop.last %}mb-3 pb-3 border-bottom{% endif %}">
-                    <div class="d-flex justify-content-between align-items-start mb-2">
-                        <h5 class="mb-0">
-                            <a href="{{ '/status/incident'|link }}/{{ incident.id }}" class="text-dark text-decoration-none">
-                                {{ incident.title }}
-                            </a>
-                        </h5>
-                        <span class="badge bg-warning text-dark">{{ incident.status_label }}</span>
+                {% for incident in incidents %}
+                <div class="mb-4 pb-3 {{ not loop.last ? 'border-bottom' : '' }}">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <div>
+                            <h4 class="mb-1">
+                                <a href="{{ '/status/incident'|link }}/{{ incident.id }}">{{ incident.title }}</a>
+                            </h4>
+                            <div class="mb-2">
+                                {% if incident.status == 'investigating' %}
+                                    <span class="badge bg-warning">{{ 'Investigating'|trans }}</span>
+                                {% elseif incident.status == 'identified' %}
+                                    <span class="badge bg-info">{{ 'Identified'|trans }}</span>
+                                {% elseif incident.status == 'monitoring' %}
+                                    <span class="badge bg-primary">{{ 'Monitoring'|trans }}</span>
+                                {% endif %}
+                                {% for component in incident.components %}
+                                    <span class="badge bg-secondary">{{ component.name }}</span>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <small class="text-muted">{{ incident.created_at|format_datetime }}</small>
                     </div>
-                    {% if incident.components|length > 0 %}
-                    <div class="mb-2">
-                        {% for comp in incident.components %}
-                            <span class="badge bg-secondary">{{ comp.name }}</span>
-                        {% endfor %}
-                    </div>
-                    {% endif %}
                     {% if incident.updates|length > 0 %}
-                    <p class="mb-1 text-muted small">{{ incident.updates[0].message|truncate(200) }}</p>
-                    <small class="text-muted">{{ incident.updates[0].created_at|format_datetime }}</small>
+                        <p class="mb-0 text-muted">{{ incident.updates[0].message|truncate(200) }}</p>
                     {% endif %}
                 </div>
                 {% endfor %}
@@ -85,148 +102,70 @@
         {% endif %}
 
         {# Scheduled Maintenance #}
+        {% set maintenance = guest.servicestatus_maintenance_list %}
         {% if maintenance|length > 0 %}
-        <div class="card mb-4 border-info">
-            <div class="card-header bg-info text-white">
-                <h3 class="card-title mb-0">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="me-2">
-                        <circle cx="12" cy="12" r="3"></circle>
-                        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
-                    </svg>
-                    {{ 'Scheduled Maintenance'|trans }}
-                </h3>
+        <div class="card mb-4">
+            <div class="card-header">
+                <h3 class="card-title">{{ 'Scheduled Maintenance'|trans }}</h3>
             </div>
             <div class="card-body">
                 {% for item in maintenance %}
-                <div class="maintenance-item {% if not loop.last %}mb-3 pb-3 border-bottom{% endif %}">
-                    <h5 class="mb-1">
-                        <a href="{{ '/status/incident'|link }}/{{ item.id }}" class="text-dark text-decoration-none">
-                            {{ item.title }}
-                        </a>
-                    </h5>
-                    <p class="mb-1">
-                        <strong>{{ 'Scheduled for'|trans }}:</strong>
-                        {{ item.scheduled_for|format_datetime }}
-                        {% if item.scheduled_until %}
-                            - {{ item.scheduled_until|format_datetime }}
-                        {% endif %}
-                    </p>
-                    {% if item.components|length > 0 %}
-                    <div class="mb-1">
-                        <strong>{{ 'Affected'|trans }}:</strong>
-                        {% for comp in item.components %}
-                            <span class="badge bg-secondary">{{ comp.name }}</span>
-                        {% endfor %}
+                <div class="mb-3 {{ not loop.last ? 'border-bottom pb-3' : '' }}">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <div>
+                            <h5 class="mb-1">{{ item.title }}</h5>
+                            <span class="badge bg-info">{{ 'Scheduled'|trans }}</span>
+                            {% for component in item.components %}
+                                <span class="badge bg-secondary">{{ component.name }}</span>
+                            {% endfor %}
+                        </div>
+                        <small class="text-muted">{{ item.scheduled_at|format_datetime }}</small>
                     </div>
-                    {% endif %}
                 </div>
                 {% endfor %}
             </div>
         </div>
         {% endif %}
 
-        {# Components Status #}
+        {# Components List #}
         <div class="card mb-4">
             <div class="card-header">
-                <h3 class="card-title mb-0">{{ 'Current Status'|trans }}</h3>
+                <h3 class="card-title">{{ 'Components'|trans }}</h3>
             </div>
-            <div class="card-body p-0">
-                {% for group_name, group_components in components %}
-                <div class="component-group">
-                    {% if group_name %}
-                    <div class="component-group-header bg-light px-3 py-2 border-bottom">
-                        <strong>{{ group_name }}</strong>
+            <div class="list-group list-group-flush">
+                {% set components = guest.servicestatus_component_list %}
+                {% for component in components %}
+                <div class="list-group-item d-flex justify-content-between align-items-center">
+                    <div>
+                        <strong>{{ component.name }}</strong>
+                        {% if component.description %}
+                            <br><small class="text-muted">{{ component.description }}</small>
+                        {% endif %}
                     </div>
-                    {% endif %}
-                    {% for component in group_components %}
-                    <div class="component-item d-flex justify-content-between align-items-center px-3 py-3 border-bottom">
-                        <div>
-                            <span class="component-name">{{ component.name }}</span>
-                            {% if component.description %}
-                                <small class="text-muted d-block">{{ component.description }}</small>
-                            {% endif %}
-                        </div>
-                        <span class="badge bg-{{ component.status_color }}">{{ component.status_label }}</span>
+                    <div>
+                        {% if component.status == 'operational' %}
+                            <span class="badge bg-success">{{ 'Operational'|trans }}</span>
+                        {% elseif component.status == 'degraded_performance' %}
+                            <span class="badge bg-warning">{{ 'Degraded'|trans }}</span>
+                        {% elseif component.status == 'partial_outage' %}
+                            <span class="badge bg-orange">{{ 'Partial Outage'|trans }}</span>
+                        {% elseif component.status == 'major_outage' %}
+                            <span class="badge bg-danger">{{ 'Major Outage'|trans }}</span>
+                        {% elseif component.status == 'maintenance' %}
+                            <span class="badge bg-info">{{ 'Maintenance'|trans }}</span>
+                        {% endif %}
                     </div>
-                    {% endfor %}
                 </div>
                 {% else %}
-                <div class="text-center py-4 text-muted">
-                    {{ 'No components configured.'|trans }}
-                </div>
+                <div class="list-group-item text-muted">{{ 'No components configured'|trans }}</div>
                 {% endfor %}
             </div>
         </div>
 
-        {# Recent Incidents History #}
-        {% if recent|length > 0 %}
-        <div class="card">
-            <div class="card-header d-flex justify-content-between align-items-center">
-                <h3 class="card-title mb-0">{{ 'Past Incidents'|trans }}</h3>
-                <a href="{{ '/status/history'|link }}" class="btn btn-sm btn-outline-primary">{{ 'View All'|trans }}</a>
-            </div>
-            <div class="card-body">
-                {% for incident in recent %}
-                <div class="incident-history-item {% if not loop.last %}mb-3 pb-3 border-bottom{% endif %}">
-                    <div class="d-flex justify-content-between align-items-start mb-1">
-                        <h6 class="mb-0">
-                            <a href="{{ '/status/incident'|link }}/{{ incident.id }}" class="text-decoration-none">
-                                {{ incident.title }}
-                            </a>
-                        </h6>
-                        <span class="badge bg-{{ incident.is_resolved ? 'success' : 'warning' }}">
-                            {{ incident.status_label }}
-                        </span>
-                    </div>
-                    <small class="text-muted">
-                        {{ incident.created_at|format_datetime }}
-                        {% if incident.resolved_at %}
-                            - {{ 'Resolved'|trans }}: {{ incident.resolved_at|format_datetime }}
-                        {% endif %}
-                    </small>
-                </div>
-                {% endfor %}
-            </div>
+        {# Link to History #}
+        <div class="text-center">
+            <a href="{{ '/status/history'|link }}" class="btn btn-outline-primary">{{ 'View Incident History'|trans }}</a>
         </div>
-        {% endif %}
     </div>
-{% endblock %}
-
-{% block head %}
-<style>
-.status-icon {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-}
-.status-icon.status-operational {
-    background-color: rgba(47, 179, 68, 0.1);
-    color: #2fb344;
-}
-.status-icon.status-degraded_performance {
-    background-color: rgba(247, 191, 0, 0.1);
-    color: #f7bf00;
-}
-.status-icon.status-partial_outage,
-.status-icon.status-major_outage {
-    background-color: rgba(214, 57, 57, 0.1);
-    color: #d63939;
-}
-.status-icon.status-maintenance {
-    background-color: rgba(66, 153, 225, 0.1);
-    color: #4299e1;
-}
-.component-item:last-child {
-    border-bottom: none !important;
-}
-.border-orange {
-    border-color: #fd7e14 !important;
-}
-.bg-orange {
-    background-color: #fd7e14 !important;
-}
-</style>
+</div>
 {% endblock %}

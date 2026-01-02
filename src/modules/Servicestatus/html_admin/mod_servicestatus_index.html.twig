@@ -2,504 +2,289 @@
 
 {% import 'macro_functions.html.twig' as mf %}
 
-{% set active_menu = 'extensions' %}
+{% set active_menu = 'system' %}
 
 {% block meta_title %}{{ 'Service Status'|trans }}{% endblock %}
 
-{% block breadcrumbs %}
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item">
-            <a href="{{ '/'|alink }}">
-                <svg class="icon">
-                    <use xlink:href="#home" />
+{% block content %}
+    <ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item" role="presentation">
+            <a class="nav-link active" href="#tab-components" data-bs-toggle="tab" role="tab">{{ 'Components'|trans }}</a>
+        </li>
+        <li class="nav-item" role="presentation">
+            <a class="nav-link" href="#tab-incidents" data-bs-toggle="tab" role="tab">{{ 'Incidents'|trans }}</a>
+        </li>
+        <li class="nav-item" role="presentation">
+            <a class="nav-link" href="#tab-new-component" data-bs-toggle="tab" role="tab">
+                <svg class="icon me-2">
+                    <use xlink:href="#plus" />
                 </svg>
+                {{ 'New Component'|trans }}
             </a>
         </li>
-        <li class="breadcrumb-item">
-            <a href="{{ 'extensions'|alink }}">{{ 'Extensions'|trans }}</a>
+        <li class="nav-item" role="presentation">
+            <a class="nav-link" href="#tab-new-incident" data-bs-toggle="tab" role="tab">
+                <svg class="icon me-2">
+                    <use xlink:href="#plus" />
+                </svg>
+                {{ 'New Incident'|trans }}
+            </a>
         </li>
-        <li class="breadcrumb-item active" aria-current="page">{{ 'Service Status'|trans }}</li>
-    </ol>
-{% endblock %}
+    </ul>
 
-{% block content %}
-    {% set overall = admin.servicestatus_get_overall_status %}
-    {% set statuses = admin.servicestatus_get_statuses %}
-    {% set incident_statuses = admin.servicestatus_get_incident_statuses %}
+<div class="card">
+    <div class="tab-content">
+        {# Components Tab #}
+        <div class="tab-pane fade show active" id="tab-components" role="tabpanel">
+            <table class="table card-table table-vcenter table-striped text-nowrap">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>{{ 'Name'|trans }}</th>
+                        <th>{{ 'Status'|trans }}</th>
+                        <th>{{ 'Order'|trans }}</th>
+                        <th>{{ 'Visible'|trans }}</th>
+                        <th class="w-1"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% set components = admin.servicestatus_component_list %}
+                    {% for component in components %}
+                    <tr>
+                        <td>{{ component.id }}</td>
+                        <td>
+                            <a href="{{ '/servicestatus/component'|alink }}/{{ component.id }}">{{ component.name }}</a>
+                        </td>
+                        <td>
+                            {% if component.status == 'operational' %}
+                                <span class="badge bg-success">{{ 'Operational'|trans }}</span>
+                            {% elseif component.status == 'degraded_performance' %}
+                                <span class="badge bg-warning">{{ 'Degraded'|trans }}</span>
+                            {% elseif component.status == 'partial_outage' %}
+                                <span class="badge bg-orange">{{ 'Partial Outage'|trans }}</span>
+                            {% elseif component.status == 'major_outage' %}
+                                <span class="badge bg-danger">{{ 'Major Outage'|trans }}</span>
+                            {% elseif component.status == 'maintenance' %}
+                                <span class="badge bg-info">{{ 'Maintenance'|trans }}</span>
+                            {% endif %}
+                        </td>
+                        <td>{{ component.display_order }}</td>
+                        <td>
+                            {% if component.is_visible %}
+                                <span class="badge bg-success">{{ 'Yes'|trans }}</span>
+                            {% else %}
+                                <span class="badge bg-secondary">{{ 'No'|trans }}</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <a class="btn btn-icon" href="{{ '/servicestatus/component'|alink }}/{{ component.id }}">
+                                <svg class="icon">
+                                    <use xlink:href="#edit" />
+                                </svg>
+                            </a>
+                            <a class="btn btn-icon api-link"
+                                href="{{ 'api/admin/servicestatus/component_delete'|link({ 'id': component.id, 'CSRFToken': CSRFToken }) }}"
+                                data-api-confirm="{{ 'Are you sure?'|trans }}"
+                                data-api-redirect="{{ 'servicestatus'|alink }}">
+                                <svg class="icon">
+                                    <use xlink:href="#delete" />
+                                </svg>
+                            </a>
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td class="text-muted" colspan="6">{{ 'No components created yet'|trans }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
 
-    {# Overall Status Banner #}
-    <div class="alert alert-{{ overall.color }} mb-4">
-        <div class="d-flex align-items-center">
-            <svg class="icon icon-lg me-3">
-                {% if overall.status == 'operational' %}
-                    <use xlink:href="#check" />
-                {% else %}
-                    <use xlink:href="#alert-triangle" />
-                {% endif %}
-            </svg>
-            <div>
-                <h4 class="alert-title mb-0">{{ overall.label }}</h4>
-                <div class="text-secondary">{{ 'Current system status'|trans }}</div>
+        {# Incidents Tab #}
+        <div class="tab-pane fade" id="tab-incidents" role="tabpanel">
+            <table class="table card-table table-vcenter table-striped text-nowrap">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>{{ 'Title'|trans }}</th>
+                        <th>{{ 'Status'|trans }}</th>
+                        <th>{{ 'Impact'|trans }}</th>
+                        <th>{{ 'Created'|trans }}</th>
+                        <th class="w-1"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% set incidents = admin.servicestatus_incident_list %}
+                    {% for incident in incidents %}
+                    <tr>
+                        <td>{{ incident.id }}</td>
+                        <td>
+                            <a href="{{ '/servicestatus/incident'|alink }}/{{ incident.id }}">{{ incident.title }}</a>
+                        </td>
+                        <td>
+                            {% if incident.status == 'investigating' %}
+                                <span class="badge bg-warning">{{ 'Investigating'|trans }}</span>
+                            {% elseif incident.status == 'identified' %}
+                                <span class="badge bg-info">{{ 'Identified'|trans }}</span>
+                            {% elseif incident.status == 'monitoring' %}
+                                <span class="badge bg-primary">{{ 'Monitoring'|trans }}</span>
+                            {% elseif incident.status == 'resolved' %}
+                                <span class="badge bg-success">{{ 'Resolved'|trans }}</span>
+                            {% elseif incident.status == 'scheduled' %}
+                                <span class="badge bg-secondary">{{ 'Scheduled'|trans }}</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if incident.impact == 'major_outage' %}
+                                <span class="badge bg-danger">{{ 'Major'|trans }}</span>
+                            {% elseif incident.impact == 'partial_outage' %}
+                                <span class="badge bg-orange">{{ 'Partial'|trans }}</span>
+                            {% elseif incident.impact == 'degraded_performance' %}
+                                <span class="badge bg-warning">{{ 'Degraded'|trans }}</span>
+                            {% elseif incident.impact == 'maintenance' %}
+                                <span class="badge bg-info">{{ 'Maintenance'|trans }}</span>
+                            {% endif %}
+                        </td>
+                        <td>{{ incident.created_at|format_datetime }}</td>
+                        <td>
+                            <a class="btn btn-icon" href="{{ '/servicestatus/incident'|alink }}/{{ incident.id }}">
+                                <svg class="icon">
+                                    <use xlink:href="#edit" />
+                                </svg>
+                            </a>
+                            <a class="btn btn-icon api-link"
+                                href="{{ 'api/admin/servicestatus/incident_delete'|link({ 'id': incident.id, 'CSRFToken': CSRFToken }) }}"
+                                data-api-confirm="{{ 'Are you sure?'|trans }}"
+                                data-api-redirect="{{ 'servicestatus'|alink }}">
+                                <svg class="icon">
+                                    <use xlink:href="#delete" />
+                                </svg>
+                            </a>
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td class="text-muted" colspan="6">{{ 'No incidents reported yet'|trans }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        {# New Component Tab #}
+        <div class="tab-pane fade" id="tab-new-component" role="tabpanel">
+            <div class="card-body">
+                <form method="post" action="{{ 'api/admin/servicestatus/component_create'|link }}" class="api-form" data-api-redirect="{{ 'servicestatus'|alink }}">
+                    <input type="hidden" name="CSRFToken" value="{{ CSRFToken }}"/>
+                    <div class="mb-3 row">
+                        <label class="form-label col-3 col-form-label">{{ 'Name'|trans }}:</label>
+                        <div class="col">
+                            <input class="form-control" type="text" name="name" required>
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label class="form-label col-3 col-form-label">{{ 'Description'|trans }}:</label>
+                        <div class="col">
+                            <textarea class="form-control" name="description" rows="3"></textarea>
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label class="form-label col-3 col-form-label">{{ 'Status'|trans }}:</label>
+                        <div class="col">
+                            <select class="form-select" name="status">
+                                {% set statuses = admin.servicestatus_statuses %}
+                                {% for key, label in statuses %}
+                                    <option value="{{ key }}" {{ key == 'operational' ? 'selected' : '' }}>{{ label|trans }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label class="form-label col-3 col-form-label">{{ 'Display Order'|trans }}:</label>
+                        <div class="col">
+                            <input class="form-control" type="number" name="display_order" value="0">
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label class="form-label col-3 col-form-label">{{ 'Visible'|trans }}:</label>
+                        <div class="col">
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" name="is_visible" value="1" checked>
+                            </div>
+                        </div>
+                    </div>
+                    <input type="submit" value="{{ 'Create Component'|trans }}" class="btn btn-primary w-100">
+                </form>
             </div>
-            <div class="ms-auto">
-                <a href="{{ '/status'|link }}" target="_blank" class="btn btn-outline-{{ overall.color }}">
-                    <svg class="icon me-1">
-                        <use xlink:href="#external-link" />
-                    </svg>
-                    {{ 'View Public Page'|trans }}
-                </a>
+        </div>
+
+        {# New Incident Tab #}
+        <div class="tab-pane fade" id="tab-new-incident" role="tabpanel">
+            <div class="card-body">
+                <form method="post" action="{{ 'api/admin/servicestatus/incident_create'|link }}" class="api-form" data-api-redirect="{{ 'servicestatus'|alink }}">
+                    <input type="hidden" name="CSRFToken" value="{{ CSRFToken }}"/>
+                    <div class="mb-3 row">
+                        <label class="form-label col-3 col-form-label">{{ 'Title'|trans }}:</label>
+                        <div class="col">
+                            <input class="form-control" type="text" name="title" required>
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label class="form-label col-3 col-form-label">{{ 'Status'|trans }}:</label>
+                        <div class="col">
+                            <select class="form-select" name="status">
+                                {% set incident_statuses = admin.servicestatus_incident_statuses %}
+                                {% for key, label in incident_statuses %}
+                                    <option value="{{ key }}">{{ label|trans }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label class="form-label col-3 col-form-label">{{ 'Impact'|trans }}:</label>
+                        <div class="col">
+                            <select class="form-select" name="impact">
+                                {% set statuses = admin.servicestatus_statuses %}
+                                {% for key, label in statuses %}
+                                    {% if key != 'operational' %}
+                                        <option value="{{ key }}" {{ key == 'partial_outage' ? 'selected' : '' }}>{{ label|trans }}</option>
+                                    {% endif %}
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label class="form-label col-3 col-form-label">{{ 'Affected Components'|trans }}:</label>
+                        <div class="col">
+                            {% set components = admin.servicestatus_component_list %}
+                            {% for component in components %}
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="components[]" value="{{ component.id }}" id="comp_{{ component.id }}">
+                                    <label class="form-check-label" for="comp_{{ component.id }}">{{ component.name }}</label>
+                                </div>
+                            {% else %}
+                                <p class="text-muted">{{ 'No components available. Create components first.'|trans }}</p>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label class="form-label col-3 col-form-label">{{ 'Message'|trans }}:</label>
+                        <div class="col">
+                            <textarea class="form-control" name="message" rows="4" placeholder="{{ 'Initial update message...'|trans }}"></textarea>
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label class="form-label col-3 col-form-label">{{ 'Scheduled At'|trans }}:</label>
+                        <div class="col">
+                            <input class="form-control" type="datetime-local" name="scheduled_at">
+                            <small class="form-hint">{{ 'Only for scheduled maintenance'|trans }}</small>
+                        </div>
+                    </div>
+                    <input type="submit" value="{{ 'Create Incident'|trans }}" class="btn btn-primary w-100">
+                </form>
             </div>
         </div>
     </div>
-
-    <div class="card-tabs">
-        <ul class="nav nav-tabs" role="tablist">
-            <li class="nav-item" role="presentation">
-                <a class="nav-link active" href="#tab-components" data-bs-toggle="tab" role="tab">
-                    <svg class="icon me-2">
-                        <use xlink:href="#server" />
-                    </svg>
-                    {{ 'Components'|trans }}
-                </a>
-            </li>
-            <li class="nav-item" role="presentation">
-                <a class="nav-link" href="#tab-incidents" data-bs-toggle="tab" role="tab">
-                    <svg class="icon me-2">
-                        <use xlink:href="#alert-circle" />
-                    </svg>
-                    {{ 'Incidents'|trans }}
-                </a>
-            </li>
-            <li class="nav-item" role="presentation">
-                <a class="nav-link" href="#tab-maintenance" data-bs-toggle="tab" role="tab">
-                    <svg class="icon me-2">
-                        <use xlink:href="#tool" />
-                    </svg>
-                    {{ 'Scheduled Maintenance'|trans }}
-                </a>
-            </li>
-            <li class="nav-item" role="presentation">
-                <a class="nav-link" href="#tab-new-component" data-bs-toggle="tab" role="tab">
-                    <svg class="icon me-2">
-                        <use xlink:href="#plus" />
-                    </svg>
-                    {{ 'New Component'|trans }}
-                </a>
-            </li>
-            <li class="nav-item" role="presentation">
-                <a class="nav-link" href="#tab-new-incident" data-bs-toggle="tab" role="tab">
-                    <svg class="icon me-2">
-                        <use xlink:href="#plus" />
-                    </svg>
-                    {{ 'New Incident'|trans }}
-                </a>
-            </li>
-        </ul>
-
-        <div class="card">
-            <div class="tab-content">
-                {# Components Tab #}
-                <div class="tab-pane fade show active" id="tab-components" role="tabpanel">
-                    <div class="table-responsive">
-                        <table class="table table-vcenter card-table table-striped">
-                            <thead>
-                                <tr>
-                                    <th>{{ 'Component'|trans }}</th>
-                                    <th>{{ 'Group'|trans }}</th>
-                                    <th>{{ 'Status'|trans }}</th>
-                                    <th>{{ 'Visible'|trans }}</th>
-                                    <th>{{ 'Order'|trans }}</th>
-                                    <th class="w-1"></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% set components = admin.servicestatus_component_get_list %}
-                                {% for component in components %}
-                                <tr>
-                                    <td>
-                                        <a href="{{ 'servicestatus/component'|alink }}/{{ component.id }}">
-                                            <strong>{{ component.name }}</strong>
-                                        </a>
-                                        {% if component.description %}
-                                            <div class="text-muted small">{{ component.description|truncate(50) }}</div>
-                                        {% endif %}
-                                    </td>
-                                    <td>{{ component.group_name|default('-') }}</td>
-                                    <td>
-                                        <span class="badge bg-{{ component.status_color }}">
-                                            {{ component.status_label }}
-                                        </span>
-                                    </td>
-                                    <td>
-                                        {% if component.is_visible %}
-                                            <span class="badge bg-success">{{ 'Yes'|trans }}</span>
-                                        {% else %}
-                                            <span class="badge bg-secondary">{{ 'No'|trans }}</span>
-                                        {% endif %}
-                                    </td>
-                                    <td>{{ component.display_order }}</td>
-                                    <td>
-                                        <div class="btn-group">
-                                            <a class="btn btn-sm btn-outline-primary" href="{{ 'servicestatus/component'|alink }}/{{ component.id }}">
-                                                <svg class="icon">
-                                                    <use xlink:href="#edit" />
-                                                </svg>
-                                            </a>
-                                            <a class="btn btn-sm btn-outline-danger api-link"
-                                               href="{{ 'api/admin/servicestatus/component_delete'|link({'id': component.id, 'CSRFToken': CSRFToken}) }}"
-                                               data-api-confirm="{{ 'Are you sure you want to delete this component?'|trans }}"
-                                               data-api-redirect="{{ 'servicestatus'|alink }}">
-                                                <svg class="icon">
-                                                    <use xlink:href="#delete" />
-                                                </svg>
-                                            </a>
-                                        </div>
-                                    </td>
-                                </tr>
-                                {% else %}
-                                <tr>
-                                    <td colspan="6" class="text-muted text-center">
-                                        {{ 'No components configured. Add your first component using the "New Component" tab.'|trans }}
-                                    </td>
-                                </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-
-                {# Incidents Tab #}
-                <div class="tab-pane fade" id="tab-incidents" role="tabpanel">
-                    <div class="table-responsive">
-                        <table class="table table-vcenter card-table table-striped">
-                            <thead>
-                                <tr>
-                                    <th>{{ 'Incident'|trans }}</th>
-                                    <th>{{ 'Status'|trans }}</th>
-                                    <th>{{ 'Impact'|trans }}</th>
-                                    <th>{{ 'Affected Components'|trans }}</th>
-                                    <th>{{ 'Created'|trans }}</th>
-                                    <th class="w-1"></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% set incidents = admin.servicestatus_incident_get_list({'is_scheduled': 0}) %}
-                                {% for incident in incidents %}
-                                <tr>
-                                    <td>
-                                        <a href="{{ 'servicestatus/incident'|alink }}/{{ incident.id }}">
-                                            <strong>{{ incident.title }}</strong>
-                                        </a>
-                                    </td>
-                                    <td>
-                                        <span class="badge bg-{% if incident.is_resolved %}success{% else %}warning{% endif %}">
-                                            {{ incident.status_label }}
-                                        </span>
-                                    </td>
-                                    <td>{{ incident.impact|capitalize }}</td>
-                                    <td>
-                                        {% for comp in incident.components %}
-                                            <span class="badge bg-secondary">{{ comp.name }}</span>
-                                        {% else %}
-                                            <span class="text-muted">-</span>
-                                        {% endfor %}
-                                    </td>
-                                    <td>{{ incident.created_at|format_datetime }}</td>
-                                    <td>
-                                        <div class="btn-group">
-                                            <a class="btn btn-sm btn-outline-primary" href="{{ 'servicestatus/incident'|alink }}/{{ incident.id }}">
-                                                <svg class="icon">
-                                                    <use xlink:href="#edit" />
-                                                </svg>
-                                            </a>
-                                            <a class="btn btn-sm btn-outline-danger api-link"
-                                               href="{{ 'api/admin/servicestatus/incident_delete'|link({'id': incident.id, 'CSRFToken': CSRFToken}) }}"
-                                               data-api-confirm="{{ 'Are you sure you want to delete this incident?'|trans }}"
-                                               data-api-redirect="{{ 'servicestatus'|alink }}">
-                                                <svg class="icon">
-                                                    <use xlink:href="#delete" />
-                                                </svg>
-                                            </a>
-                                        </div>
-                                    </td>
-                                </tr>
-                                {% else %}
-                                <tr>
-                                    <td colspan="6" class="text-muted text-center">
-                                        {{ 'No incidents reported.'|trans }}
-                                    </td>
-                                </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-
-                {# Scheduled Maintenance Tab #}
-                <div class="tab-pane fade" id="tab-maintenance" role="tabpanel">
-                    <div class="table-responsive">
-                        <table class="table table-vcenter card-table table-striped">
-                            <thead>
-                                <tr>
-                                    <th>{{ 'Maintenance'|trans }}</th>
-                                    <th>{{ 'Status'|trans }}</th>
-                                    <th>{{ 'Scheduled For'|trans }}</th>
-                                    <th>{{ 'Duration'|trans }}</th>
-                                    <th>{{ 'Affected Components'|trans }}</th>
-                                    <th class="w-1"></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% set maintenance = admin.servicestatus_incident_get_list({'is_scheduled': 1}) %}
-                                {% for item in maintenance %}
-                                <tr>
-                                    <td>
-                                        <a href="{{ 'servicestatus/incident'|alink }}/{{ item.id }}">
-                                            <strong>{{ item.title }}</strong>
-                                        </a>
-                                    </td>
-                                    <td>
-                                        <span class="badge bg-{% if item.is_resolved %}success{% else %}info{% endif %}">
-                                            {{ item.status_label }}
-                                        </span>
-                                    </td>
-                                    <td>{{ item.scheduled_for|format_datetime }}</td>
-                                    <td>
-                                        {% if item.scheduled_for and item.scheduled_until %}
-                                            {{ item.scheduled_for|format_datetime }} - {{ item.scheduled_until|format_datetime }}
-                                        {% else %}
-                                            -
-                                        {% endif %}
-                                    </td>
-                                    <td>
-                                        {% for comp in item.components %}
-                                            <span class="badge bg-secondary">{{ comp.name }}</span>
-                                        {% else %}
-                                            <span class="text-muted">-</span>
-                                        {% endfor %}
-                                    </td>
-                                    <td>
-                                        <div class="btn-group">
-                                            <a class="btn btn-sm btn-outline-primary" href="{{ 'servicestatus/incident'|alink }}/{{ item.id }}">
-                                                <svg class="icon">
-                                                    <use xlink:href="#edit" />
-                                                </svg>
-                                            </a>
-                                            <a class="btn btn-sm btn-outline-danger api-link"
-                                               href="{{ 'api/admin/servicestatus/incident_delete'|link({'id': item.id, 'CSRFToken': CSRFToken}) }}"
-                                               data-api-confirm="{{ 'Are you sure you want to delete this maintenance?'|trans }}"
-                                               data-api-redirect="{{ 'servicestatus'|alink }}">
-                                                <svg class="icon">
-                                                    <use xlink:href="#delete" />
-                                                </svg>
-                                            </a>
-                                        </div>
-                                    </td>
-                                </tr>
-                                {% else %}
-                                <tr>
-                                    <td colspan="6" class="text-muted text-center">
-                                        {{ 'No scheduled maintenance.'|trans }}
-                                    </td>
-                                </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-
-                {# New Component Tab #}
-                <div class="tab-pane fade" id="tab-new-component" role="tabpanel">
-                    <div class="card-body">
-                        <form method="post" action="{{ 'api/admin/servicestatus/component_create'|link }}" class="api-form" data-api-redirect="{{ 'servicestatus'|alink }}">
-                            <input type="hidden" name="CSRFToken" value="{{ CSRFToken }}">
-
-                            <div class="mb-3 row">
-                                <label class="col-md-3 col-form-label">{{ 'Component Name'|trans }} *</label>
-                                <div class="col-md-6">
-                                    <input class="form-control" type="text" name="name" required placeholder="{{ 'e.g., Web Hosting, Email Server, DNS'|trans }}">
-                                </div>
-                            </div>
-
-                            <div class="mb-3 row">
-                                <label class="col-md-3 col-form-label">{{ 'Description'|trans }}</label>
-                                <div class="col-md-6">
-                                    <textarea class="form-control" name="description" rows="2" placeholder="{{ 'Brief description of this component'|trans }}"></textarea>
-                                </div>
-                            </div>
-
-                            <div class="mb-3 row">
-                                <label class="col-md-3 col-form-label">{{ 'Group'|trans }}</label>
-                                <div class="col-md-6">
-                                    <input class="form-control" type="text" name="group_name" placeholder="{{ 'e.g., Infrastructure, Services, Network'|trans }}">
-                                    <small class="form-hint">{{ 'Components with the same group name will be displayed together.'|trans }}</small>
-                                </div>
-                            </div>
-
-                            <div class="mb-3 row">
-                                <label class="col-md-3 col-form-label">{{ 'Status'|trans }}</label>
-                                <div class="col-md-6">
-                                    <select class="form-select" name="status">
-                                        {% for key, label in statuses %}
-                                            <option value="{{ key }}" {% if key == 'operational' %}selected{% endif %}>{{ label }}</option>
-                                        {% endfor %}
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="mb-3 row">
-                                <label class="col-md-3 col-form-label">{{ 'Display Order'|trans }}</label>
-                                <div class="col-md-6">
-                                    <input class="form-control" type="number" name="display_order" value="0">
-                                    <small class="form-hint">{{ 'Lower numbers are displayed first.'|trans }}</small>
-                                </div>
-                            </div>
-
-                            <div class="mb-3 row">
-                                <label class="col-md-3 col-form-label">{{ 'Visible to Public'|trans }}</label>
-                                <div class="col-md-6">
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="is_visible" id="visible_yes" value="1" checked>
-                                        <label class="form-check-label" for="visible_yes">{{ 'Yes'|trans }}</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="is_visible" id="visible_no" value="0">
-                                        <label class="form-check-label" for="visible_no">{{ 'No'|trans }}</label>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="mb-3 row">
-                                <div class="col-md-6 offset-md-3">
-                                    <button class="btn btn-primary" type="submit">
-                                        <svg class="icon me-2">
-                                            <use xlink:href="#plus" />
-                                        </svg>
-                                        {{ 'Create Component'|trans }}
-                                    </button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-
-                {# New Incident Tab #}
-                <div class="tab-pane fade" id="tab-new-incident" role="tabpanel">
-                    <div class="card-body">
-                        <form method="post" action="{{ 'api/admin/servicestatus/incident_create'|link }}" class="api-form" data-api-redirect="{{ 'servicestatus'|alink }}">
-                            <input type="hidden" name="CSRFToken" value="{{ CSRFToken }}">
-
-                            <div class="mb-3 row">
-                                <label class="col-md-3 col-form-label">{{ 'Incident Title'|trans }} *</label>
-                                <div class="col-md-6">
-                                    <input class="form-control" type="text" name="title" required placeholder="{{ 'e.g., Website unavailable, Email delivery delays'|trans }}">
-                                </div>
-                            </div>
-
-                            <div class="mb-3 row">
-                                <label class="col-md-3 col-form-label">{{ 'Type'|trans }}</label>
-                                <div class="col-md-6">
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="is_scheduled" id="type_incident" value="0" checked>
-                                        <label class="form-check-label" for="type_incident">{{ 'Incident'|trans }}</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="is_scheduled" id="type_maintenance" value="1">
-                                        <label class="form-check-label" for="type_maintenance">{{ 'Scheduled Maintenance'|trans }}</label>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="mb-3 row" id="schedule_fields" style="display: none;">
-                                <label class="col-md-3 col-form-label">{{ 'Schedule'|trans }}</label>
-                                <div class="col-md-3">
-                                    <input class="form-control" type="datetime-local" name="scheduled_for" placeholder="{{ 'Start'|trans }}">
-                                    <small class="form-hint">{{ 'Start time'|trans }}</small>
-                                </div>
-                                <div class="col-md-3">
-                                    <input class="form-control" type="datetime-local" name="scheduled_until" placeholder="{{ 'End'|trans }}">
-                                    <small class="form-hint">{{ 'End time'|trans }}</small>
-                                </div>
-                            </div>
-
-                            <div class="mb-3 row">
-                                <label class="col-md-3 col-form-label">{{ 'Status'|trans }}</label>
-                                <div class="col-md-6">
-                                    <select class="form-select" name="status">
-                                        {% for key, label in incident_statuses %}
-                                            <option value="{{ key }}">{{ label }}</option>
-                                        {% endfor %}
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="mb-3 row">
-                                <label class="col-md-3 col-form-label">{{ 'Impact'|trans }}</label>
-                                <div class="col-md-6">
-                                    <select class="form-select" name="impact">
-                                        <option value="none">{{ 'None'|trans }}</option>
-                                        <option value="minor">{{ 'Minor'|trans }}</option>
-                                        <option value="major">{{ 'Major'|trans }}</option>
-                                        <option value="critical">{{ 'Critical'|trans }}</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="mb-3 row">
-                                <label class="col-md-3 col-form-label">{{ 'Affected Components'|trans }}</label>
-                                <div class="col-md-6">
-                                    {% set all_components = admin.servicestatus_component_get_list %}
-                                    {% for comp in all_components %}
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" name="component_ids[]" value="{{ comp.id }}" id="comp_{{ comp.id }}">
-                                            <label class="form-check-label" for="comp_{{ comp.id }}">{{ comp.name }}</label>
-                                        </div>
-                                    {% else %}
-                                        <span class="text-muted">{{ 'No components available. Create components first.'|trans }}</span>
-                                    {% endfor %}
-                                </div>
-                            </div>
-
-                            <div class="mb-3 row">
-                                <label class="col-md-3 col-form-label">{{ 'Initial Message'|trans }}</label>
-                                <div class="col-md-6">
-                                    <textarea class="form-control" name="message" rows="3" placeholder="{{ 'Describe what is happening and what you are doing about it...'|trans }}"></textarea>
-                                </div>
-                            </div>
-
-                            <div class="mb-3 row">
-                                <div class="col-md-6 offset-md-3">
-                                    <button class="btn btn-primary" type="submit">
-                                        <svg class="icon me-2">
-                                            <use xlink:href="#plus" />
-                                        </svg>
-                                        {{ 'Create Incident'|trans }}
-                                    </button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-{% endblock %}
-
-{% block js %}
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    const typeRadios = document.querySelectorAll('input[name="is_scheduled"]');
-    const scheduleFields = document.getElementById('schedule_fields');
-
-    typeRadios.forEach(function(radio) {
-        radio.addEventListener('change', function() {
-            if (this.value === '1') {
-                scheduleFields.style.display = 'flex';
-            } else {
-                scheduleFields.style.display = 'none';
-            }
-        });
-    });
-});
-</script>
+</div>
 {% endblock %}

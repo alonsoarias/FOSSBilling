@@ -1,10 +1,15 @@
 <?php
 
 /**
- * FOSSBilling.
+ * Copyright 2022-2025 FOSSBilling
+ * SPDX-License-Identifier: Apache-2.0.
  *
  * @copyright FOSSBilling (https://www.fossbilling.org)
- * @license   Apache-2.0
+ * @license http://www.apache.org/licenses/LICENSE-2.0 Apache-2.0
+ */
+
+/**
+ * Service Status Administration API.
  */
 
 namespace Box\Mod\Servicestatus\Api;
@@ -12,58 +17,64 @@ namespace Box\Mod\Servicestatus\Api;
 class Admin extends \Api_Abstract
 {
     /**
-     * Get available component statuses.
-     *
-     * @return array
-     */
-    public function get_statuses($data = [])
-    {
-        return $this->getService()->getComponentStatuses();
-    }
-
-    /**
-     * Get available incident statuses.
-     *
-     * @return array
-     */
-    public function get_incident_statuses($data = [])
-    {
-        return $this->getService()->getIncidentStatuses();
-    }
-
-    /**
      * Get overall system status.
      *
      * @return array
      */
-    public function get_overall_status($data = [])
+    public function status($data = [])
     {
-        return $this->getService()->getOverallStatus();
+        $service = $this->getService();
+        $overallStatus = $service->getOverallStatus();
+        $statuses = $service->getStatuses();
+
+        return [
+            'status' => $overallStatus,
+            'label' => $statuses[$overallStatus] ?? $overallStatus,
+        ];
+    }
+
+    /**
+     * Get available status types.
+     *
+     * @return array
+     */
+    public function statuses($data = [])
+    {
+        return $this->getService()->getStatuses();
+    }
+
+    /**
+     * Get available incident status types.
+     *
+     * @return array
+     */
+    public function incident_statuses($data = [])
+    {
+        return $this->getService()->getIncidentStatuses();
     }
 
     // ==================== COMPONENT ENDPOINTS ====================
 
     /**
-     * Get list of all components.
+     * Get list of all components (including hidden).
      *
      * @return array
      */
-    public function component_get_list($data = [])
+    public function component_list($data = [])
     {
-        return $this->getService()->getComponents();
+        return $this->getService()->getComponentsAdmin();
     }
 
     /**
-     * Get a single component by ID.
-     *
-     * @param int $id Component ID
+     * Get component by ID.
      *
      * @return array
      */
     public function component_get($data)
     {
-        $required = ['id' => 'Component ID is required'];
-        $this->di['validator']->checkRequiredParamsForArray($required, $data);
+        if (!isset($data['id'])) {
+            throw new \FOSSBilling\Exception('Component ID is required');
+        }
 
         $component = $this->getService()->getComponent((int) $data['id']);
 
@@ -77,134 +88,106 @@ class Admin extends \Api_Abstract
     /**
      * Create a new component.
      *
-     * @param string $name         Component name
-     * @param string $description  Component description (optional)
-     * @param string $status       Component status (optional, default: operational)
-     * @param int    $display_order Display order (optional)
-     * @param string $group_name   Group name for grouping components (optional)
-     * @param bool   $is_visible   Whether component is visible to public (optional, default: true)
+     * @optional string $description - component description
+     * @optional string $status - component status (default: operational)
+     * @optional int $display_order - display order (default: 0)
+     * @optional bool $is_visible - visibility status (default: true)
      *
-     * @return int Created component ID
+     * @return int - new component ID
      */
     public function component_create($data)
     {
-        $required = ['name' => 'Component name is required'];
+        $required = [
+            'name' => 'Component name is required',
+        ];
         $this->di['validator']->checkRequiredParamsForArray($required, $data);
 
-        $id = $this->getService()->createComponent($data);
-
-        $this->di['logger']->info('Created service status component #%s', $id);
-
-        return $id;
+        return $this->getService()->createComponent($data);
     }
 
     /**
      * Update a component.
      *
-     * @param int    $id           Component ID
-     * @param string $name         Component name (optional)
-     * @param string $description  Component description (optional)
-     * @param string $status       Component status (optional)
-     * @param int    $display_order Display order (optional)
-     * @param string $group_name   Group name (optional)
-     * @param bool   $is_visible   Visibility (optional)
+     * @optional string $description - component description
+     * @optional string $status - component status
+     * @optional int $display_order - display order
+     * @optional bool $is_visible - visibility status
      *
      * @return bool
      */
     public function component_update($data)
     {
-        $required = ['id' => 'Component ID is required'];
+        $required = [
+            'id' => 'Component ID is required',
+            'name' => 'Component name is required',
+        ];
         $this->di['validator']->checkRequiredParamsForArray($required, $data);
 
-        $component = $this->getService()->getComponent((int) $data['id']);
-
-        if (!$component) {
-            throw new \FOSSBilling\Exception('Component not found');
-        }
-
-        $this->getService()->updateComponent((int) $data['id'], $data);
-
-        $this->di['logger']->info('Updated service status component #%s', $data['id']);
-
-        return true;
+        return $this->getService()->updateComponent((int) $data['id'], $data);
     }
 
     /**
      * Delete a component.
      *
-     * @param int $id Component ID
-     *
      * @return bool
      */
     public function component_delete($data)
     {
-        $required = ['id' => 'Component ID is required'];
+        $required = [
+            'id' => 'Component ID is required',
+        ];
         $this->di['validator']->checkRequiredParamsForArray($required, $data);
 
-        $this->getService()->deleteComponent((int) $data['id']);
-
-        $this->di['logger']->info('Deleted service status component #%s', $data['id']);
-
-        return true;
+        return $this->getService()->deleteComponent((int) $data['id']);
     }
 
     /**
-     * Batch delete components.
-     *
-     * @param array $ids Array of component IDs
+     * Update component status quickly.
      *
      * @return bool
      */
-    public function component_batch_delete($data)
+    public function component_status_update($data)
     {
-        $required = ['ids' => 'Component IDs are required'];
+        $required = [
+            'id' => 'Component ID is required',
+            'status' => 'Status is required',
+        ];
         $this->di['validator']->checkRequiredParamsForArray($required, $data);
 
-        foreach ($data['ids'] as $id) {
-            $this->component_delete(['id' => $id]);
+        $component = $this->getService()->getComponent((int) $data['id']);
+        if (!$component) {
+            throw new \FOSSBilling\Exception('Component not found');
         }
 
-        return true;
+        $component['status'] = $data['status'];
+
+        return $this->getService()->updateComponent((int) $data['id'], $component);
     }
 
     // ==================== INCIDENT ENDPOINTS ====================
 
     /**
-     * Get list of incidents.
+     * Get list of all incidents.
      *
-     * @param string $status       Filter by status (optional)
-     * @param bool   $is_scheduled Filter by scheduled maintenance (optional)
-     * @param bool   $resolved     Filter by resolved state (optional)
-     * @param int    $limit        Limit results (optional)
+     * @optional string $status - filter by status
      *
      * @return array
      */
-    public function incident_get_list($data = [])
+    public function incident_list($data = [])
     {
-        return $this->getService()->getIncidents($data);
+        return $this->getService()->getIncidentsAdmin($data);
     }
 
     /**
-     * Get active (unresolved) incidents.
-     *
-     * @return array
-     */
-    public function incident_get_active($data = [])
-    {
-        return $this->getService()->getActiveIncidents();
-    }
-
-    /**
-     * Get a single incident by ID.
-     *
-     * @param int $id Incident ID
+     * Get incident by ID.
      *
      * @return array
      */
     public function incident_get($data)
     {
-        $required = ['id' => 'Incident ID is required'];
-        $this->di['validator']->checkRequiredParamsForArray($required, $data);
+        if (!isset($data['id'])) {
+            throw new \FOSSBilling\Exception('Incident ID is required');
+        }
 
         $incident = $this->getService()->getIncident((int) $data['id']);
 
@@ -218,143 +201,78 @@ class Admin extends \Api_Abstract
     /**
      * Create a new incident.
      *
-     * @param string $title           Incident title
-     * @param string $status          Incident status (optional)
-     * @param string $impact          Impact level: none, minor, major, critical (optional)
-     * @param string $message         Initial update message (optional)
-     * @param array  $component_ids   Affected component IDs (optional)
-     * @param bool   $is_scheduled    Is this scheduled maintenance? (optional)
-     * @param string $scheduled_for   Maintenance start time (optional)
-     * @param string $scheduled_until Maintenance end time (optional)
+     * @optional string $status - incident status (default: investigating)
+     * @optional string $impact - impact level (default: partial_outage)
+     * @optional string $message - initial update message
+     * @optional array $components - array of affected component IDs
+     * @optional string $scheduled_at - for scheduled maintenance
      *
-     * @return int Created incident ID
+     * @return int - new incident ID
      */
     public function incident_create($data)
     {
-        $required = ['title' => 'Incident title is required'];
+        $required = [
+            'title' => 'Incident title is required',
+        ];
         $this->di['validator']->checkRequiredParamsForArray($required, $data);
 
-        $id = $this->getService()->createIncident($data);
-
-        $this->di['logger']->info('Created service status incident #%s', $id);
-
-        return $id;
+        return $this->getService()->createIncident($data);
     }
 
     /**
      * Update an incident.
      *
-     * @param int    $id             Incident ID
-     * @param string $title          Incident title (optional)
-     * @param string $status         Incident status (optional)
-     * @param string $impact         Impact level (optional)
-     * @param array  $component_ids  Affected component IDs (optional)
-     * @param string $scheduled_for  Maintenance start time (optional)
-     * @param string $scheduled_until Maintenance end time (optional)
+     * @optional string $status - incident status
+     * @optional string $impact - impact level
+     * @optional array $components - array of affected component IDs
+     * @optional string $scheduled_at - for scheduled maintenance
      *
      * @return bool
      */
     public function incident_update($data)
     {
-        $required = ['id' => 'Incident ID is required'];
+        $required = [
+            'id' => 'Incident ID is required',
+            'title' => 'Incident title is required',
+        ];
         $this->di['validator']->checkRequiredParamsForArray($required, $data);
 
-        $incident = $this->getService()->getIncident((int) $data['id']);
-
-        if (!$incident) {
-            throw new \FOSSBilling\Exception('Incident not found');
-        }
-
-        $this->getService()->updateIncident((int) $data['id'], $data);
-
-        $this->di['logger']->info('Updated service status incident #%s', $data['id']);
-
-        return true;
+        return $this->getService()->updateIncident((int) $data['id'], $data);
     }
 
     /**
      * Delete an incident.
      *
-     * @param int $id Incident ID
-     *
      * @return bool
      */
     public function incident_delete($data)
     {
-        $required = ['id' => 'Incident ID is required'];
+        $required = [
+            'id' => 'Incident ID is required',
+        ];
         $this->di['validator']->checkRequiredParamsForArray($required, $data);
 
-        $this->getService()->deleteIncident((int) $data['id']);
-
-        $this->di['logger']->info('Deleted service status incident #%s', $data['id']);
-
-        return true;
-    }
-
-    /**
-     * Batch delete incidents.
-     *
-     * @param array $ids Array of incident IDs
-     *
-     * @return bool
-     */
-    public function incident_batch_delete($data)
-    {
-        $required = ['ids' => 'Incident IDs are required'];
-        $this->di['validator']->checkRequiredParamsForArray($required, $data);
-
-        foreach ($data['ids'] as $id) {
-            $this->incident_delete(['id' => $id]);
-        }
-
-        return true;
+        return $this->getService()->deleteIncident((int) $data['id']);
     }
 
     /**
      * Add an update to an incident.
      *
-     * @param int    $incident_id Incident ID
-     * @param string $status      Update status
-     * @param string $message     Update message
-     *
-     * @return int Created update ID
+     * @return int - new update ID
      */
-    public function incident_add_update($data)
+    public function incident_update_add($data)
     {
         $required = [
             'incident_id' => 'Incident ID is required',
-            'status' => 'Update status is required',
-            'message' => 'Update message is required',
+            'status' => 'Status is required',
+            'message' => 'Message is required',
         ];
         $this->di['validator']->checkRequiredParamsForArray($required, $data);
 
-        $incident = $this->getService()->getIncident((int) $data['incident_id']);
-
-        if (!$incident) {
-            throw new \FOSSBilling\Exception('Incident not found');
-        }
-
-        $id = $this->getService()->addIncidentUpdate((int) $data['incident_id'], $data);
-
-        $this->di['logger']->info('Added update to service status incident #%s', $data['incident_id']);
-
-        return $id;
-    }
-
-    /**
-     * Delete an incident update.
-     *
-     * @param int $id Update ID
-     *
-     * @return bool
-     */
-    public function incident_delete_update($data)
-    {
-        $required = ['id' => 'Update ID is required'];
-        $this->di['validator']->checkRequiredParamsForArray($required, $data);
-
-        $this->getService()->deleteIncidentUpdate((int) $data['id']);
-
-        return true;
+        return $this->getService()->addIncidentUpdate(
+            (int) $data['incident_id'],
+            $data['status'],
+            $data['message']
+        );
     }
 }

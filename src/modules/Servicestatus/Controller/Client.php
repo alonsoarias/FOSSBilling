@@ -1,10 +1,11 @@
 <?php
 
 /**
- * FOSSBilling.
+ * Copyright 2022-2025 FOSSBilling
+ * SPDX-License-Identifier: Apache-2.0.
  *
  * @copyright FOSSBilling (https://www.fossbilling.org)
- * @license   Apache-2.0
+ * @license http://www.apache.org/licenses/LICENSE-2.0 Apache-2.0
  */
 
 namespace Box\Mod\Servicestatus\Controller;
@@ -24,7 +25,7 @@ class Client implements \FOSSBilling\InjectionAwareInterface
     }
 
     /**
-     * Register client/public routes.
+     * Register public routes.
      */
     public function register(\Box_App &$app): void
     {
@@ -45,7 +46,7 @@ class Client implements \FOSSBilling\InjectionAwareInterface
     /**
      * Display incident details.
      */
-    public function get_incident(\Box_App $app, int $id): string
+    public function get_incident(\Box_App $app, $id): string
     {
         $api = $this->di['api_guest'];
         $incident = $api->servicestatus_incident_get(['id' => $id]);

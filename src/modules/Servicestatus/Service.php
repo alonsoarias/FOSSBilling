@@ -1,35 +1,31 @@
 <?php
 
 /**
- * FOSSBilling.
+ * Copyright 2022-2025 FOSSBilling
+ * SPDX-License-Identifier: Apache-2.0.
  *
  * @copyright FOSSBilling (https://www.fossbilling.org)
- * @license   Apache-2.0
- *
- * Copyright FOSSBilling 2022
- * This software may contain code previously used in the BoxBilling project.
- * Copyright BoxBilling, Inc 2011-2021
- *
- * This source file is subject to the Apache-2.0 License that is bundled
- * with this source code in the file LICENSE
+ * @license http://www.apache.org/licenses/LICENSE-2.0 Apache-2.0
  */
 
 namespace Box\Mod\Servicestatus;
 
-use FOSSBilling\InjectionAwareInterface;
-
-class Service implements InjectionAwareInterface
+class Service
 {
     protected ?\Pimple\Container $di = null;
 
-    // Status constants
+    /**
+     * Status constants.
+     */
     public const STATUS_OPERATIONAL = 'operational';
     public const STATUS_DEGRADED = 'degraded_performance';
-    public const STATUS_PARTIAL_OUTAGE = 'partial_outage';
-    public const STATUS_MAJOR_OUTAGE = 'major_outage';
+    public const STATUS_PARTIAL = 'partial_outage';
+    public const STATUS_MAJOR = 'major_outage';
     public const STATUS_MAINTENANCE = 'maintenance';
 
-    // Incident status constants
+    /**
+     * Incident status constants.
+     */
     public const INCIDENT_INVESTIGATING = 'investigating';
     public const INCIDENT_IDENTIFIED = 'identified';
     public const INCIDENT_MONITORING = 'monitoring';
@@ -51,64 +47,57 @@ class Service implements InjectionAwareInterface
      */
     public function install(): bool
     {
-        $sql = "
+        $sql = '
             CREATE TABLE IF NOT EXISTS `service_status_component` (
-                `id` INT(11) NOT NULL AUTO_INCREMENT,
-                `name` VARCHAR(255) NOT NULL,
-                `description` TEXT NULL,
-                `status` VARCHAR(50) NOT NULL DEFAULT 'operational',
-                `display_order` INT(11) NOT NULL DEFAULT 0,
-                `group_name` VARCHAR(255) NULL,
-                `is_visible` TINYINT(1) NOT NULL DEFAULT 1,
-                `created_at` DATETIME NOT NULL,
-                `updated_at` DATETIME NOT NULL,
+                `id` int(11) NOT NULL AUTO_INCREMENT,
+                `name` varchar(255) NOT NULL,
+                `description` text DEFAULT NULL,
+                `status` varchar(50) NOT NULL DEFAULT "operational",
+                `display_order` int(11) NOT NULL DEFAULT 0,
+                `is_visible` tinyint(1) NOT NULL DEFAULT 1,
+                `created_at` datetime NOT NULL,
+                `updated_at` datetime DEFAULT NULL,
                 PRIMARY KEY (`id`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+        ';
+        $this->di['db']->exec($sql);
 
+        $sql = '
             CREATE TABLE IF NOT EXISTS `service_status_incident` (
-                `id` INT(11) NOT NULL AUTO_INCREMENT,
-                `title` VARCHAR(255) NOT NULL,
-                `status` VARCHAR(50) NOT NULL DEFAULT 'investigating',
-                `impact` VARCHAR(50) NOT NULL DEFAULT 'none',
-                `is_scheduled` TINYINT(1) NOT NULL DEFAULT 0,
-                `scheduled_for` DATETIME NULL,
-                `scheduled_until` DATETIME NULL,
-                `created_at` DATETIME NOT NULL,
-                `updated_at` DATETIME NOT NULL,
-                `resolved_at` DATETIME NULL,
+                `id` int(11) NOT NULL AUTO_INCREMENT,
+                `title` varchar(255) NOT NULL,
+                `status` varchar(50) NOT NULL DEFAULT "investigating",
+                `impact` varchar(50) NOT NULL DEFAULT "partial_outage",
+                `scheduled_at` datetime DEFAULT NULL,
+                `resolved_at` datetime DEFAULT NULL,
+                `created_at` datetime NOT NULL,
+                `updated_at` datetime DEFAULT NULL,
                 PRIMARY KEY (`id`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+        ';
+        $this->di['db']->exec($sql);
 
+        $sql = '
             CREATE TABLE IF NOT EXISTS `service_status_incident_update` (
-                `id` INT(11) NOT NULL AUTO_INCREMENT,
-                `incident_id` INT(11) NOT NULL,
-                `status` VARCHAR(50) NOT NULL,
-                `message` TEXT NOT NULL,
-                `created_at` DATETIME NOT NULL,
+                `id` int(11) NOT NULL AUTO_INCREMENT,
+                `incident_id` int(11) NOT NULL,
+                `status` varchar(50) NOT NULL,
+                `message` text NOT NULL,
+                `created_at` datetime NOT NULL,
                 PRIMARY KEY (`id`),
-                KEY `incident_id` (`incident_id`),
-                CONSTRAINT `fk_incident_update_incident` FOREIGN KEY (`incident_id`)
-                    REFERENCES `service_status_incident` (`id`) ON DELETE CASCADE
+                KEY `incident_id` (`incident_id`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+        ';
+        $this->di['db']->exec($sql);
 
+        $sql = '
             CREATE TABLE IF NOT EXISTS `service_status_incident_component` (
-                `incident_id` INT(11) NOT NULL,
-                `component_id` INT(11) NOT NULL,
-                PRIMARY KEY (`incident_id`, `component_id`),
-                KEY `component_id` (`component_id`),
-                CONSTRAINT `fk_ic_incident` FOREIGN KEY (`incident_id`)
-                    REFERENCES `service_status_incident` (`id`) ON DELETE CASCADE,
-                CONSTRAINT `fk_ic_component` FOREIGN KEY (`component_id`)
-                    REFERENCES `service_status_component` (`id`) ON DELETE CASCADE
+                `incident_id` int(11) NOT NULL,
+                `component_id` int(11) NOT NULL,
+                PRIMARY KEY (`incident_id`, `component_id`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-        ";
-
-        $statements = array_filter(array_map('trim', explode(';', $sql)));
-        foreach ($statements as $statement) {
-            if (!empty($statement)) {
-                $this->di['db']->exec($statement);
-            }
-        }
+        ';
+        $this->di['db']->exec($sql);
 
         return true;
     }
@@ -118,180 +107,109 @@ class Service implements InjectionAwareInterface
      */
     public function uninstall(): bool
     {
-        $this->di['db']->exec('SET FOREIGN_KEY_CHECKS = 0');
         $this->di['db']->exec('DROP TABLE IF EXISTS `service_status_incident_component`');
         $this->di['db']->exec('DROP TABLE IF EXISTS `service_status_incident_update`');
         $this->di['db']->exec('DROP TABLE IF EXISTS `service_status_incident`');
         $this->di['db']->exec('DROP TABLE IF EXISTS `service_status_component`');
-        $this->di['db']->exec('SET FOREIGN_KEY_CHECKS = 1');
 
         return true;
     }
 
     /**
-     * Get all available statuses for components.
+     * Get all available statuses.
      */
-    public function getComponentStatuses(): array
+    public function getStatuses(): array
     {
         return [
-            self::STATUS_OPERATIONAL => __trans('Operational'),
-            self::STATUS_DEGRADED => __trans('Degraded Performance'),
-            self::STATUS_PARTIAL_OUTAGE => __trans('Partial Outage'),
-            self::STATUS_MAJOR_OUTAGE => __trans('Major Outage'),
-            self::STATUS_MAINTENANCE => __trans('Under Maintenance'),
+            self::STATUS_OPERATIONAL => 'Operational',
+            self::STATUS_DEGRADED => 'Degraded Performance',
+            self::STATUS_PARTIAL => 'Partial Outage',
+            self::STATUS_MAJOR => 'Major Outage',
+            self::STATUS_MAINTENANCE => 'Under Maintenance',
         ];
     }
 
     /**
-     * Get all available statuses for incidents.
+     * Get all incident statuses.
      */
     public function getIncidentStatuses(): array
     {
         return [
-            self::INCIDENT_INVESTIGATING => __trans('Investigating'),
-            self::INCIDENT_IDENTIFIED => __trans('Identified'),
-            self::INCIDENT_MONITORING => __trans('Monitoring'),
-            self::INCIDENT_RESOLVED => __trans('Resolved'),
-            self::INCIDENT_SCHEDULED => __trans('Scheduled'),
+            self::INCIDENT_INVESTIGATING => 'Investigating',
+            self::INCIDENT_IDENTIFIED => 'Identified',
+            self::INCIDENT_MONITORING => 'Monitoring',
+            self::INCIDENT_RESOLVED => 'Resolved',
+            self::INCIDENT_SCHEDULED => 'Scheduled',
         ];
     }
 
     /**
-     * Get status color class for display.
+     * Get overall system status.
      */
-    public function getStatusColor(string $status): string
+    public function getOverallStatus(): string
     {
-        return match ($status) {
-            self::STATUS_OPERATIONAL => 'success',
-            self::STATUS_DEGRADED => 'warning',
-            self::STATUS_PARTIAL_OUTAGE => 'orange',
-            self::STATUS_MAJOR_OUTAGE => 'danger',
-            self::STATUS_MAINTENANCE => 'info',
-            default => 'secondary',
-        };
-    }
+        $pdo = $this->di['pdo'];
+        $stmt = $pdo->prepare('SELECT status FROM service_status_component WHERE is_visible = 1');
+        $stmt->execute();
+        $statuses = $stmt->fetchAll(\PDO::FETCH_COLUMN);
 
-    /**
-     * Get overall system status based on all components.
-     */
-    public function getOverallStatus(): array
-    {
-        $components = $this->getVisibleComponents();
-
-        if (empty($components)) {
-            return [
-                'status' => self::STATUS_OPERATIONAL,
-                'label' => __trans('All Systems Operational'),
-                'color' => 'success',
-            ];
+        if (empty($statuses)) {
+            return self::STATUS_OPERATIONAL;
         }
 
-        $hasOutage = false;
-        $hasPartialOutage = false;
-        $hasDegraded = false;
-        $hasMaintenance = false;
-
-        foreach ($components as $component) {
-            match ($component['status']) {
-                self::STATUS_MAJOR_OUTAGE => $hasOutage = true,
-                self::STATUS_PARTIAL_OUTAGE => $hasPartialOutage = true,
-                self::STATUS_DEGRADED => $hasDegraded = true,
-                self::STATUS_MAINTENANCE => $hasMaintenance = true,
-                default => null,
-            };
-        }
-
-        if ($hasOutage) {
-            return [
-                'status' => self::STATUS_MAJOR_OUTAGE,
-                'label' => __trans('Major System Outage'),
-                'color' => 'danger',
-            ];
-        }
-
-        if ($hasPartialOutage) {
-            return [
-                'status' => self::STATUS_PARTIAL_OUTAGE,
-                'label' => __trans('Partial System Outage'),
-                'color' => 'orange',
-            ];
-        }
-
-        if ($hasDegraded) {
-            return [
-                'status' => self::STATUS_DEGRADED,
-                'label' => __trans('Degraded System Performance'),
-                'color' => 'warning',
-            ];
-        }
-
-        if ($hasMaintenance) {
-            return [
-                'status' => self::STATUS_MAINTENANCE,
-                'label' => __trans('Scheduled Maintenance'),
-                'color' => 'info',
-            ];
-        }
-
-        return [
-            'status' => self::STATUS_OPERATIONAL,
-            'label' => __trans('All Systems Operational'),
-            'color' => 'success',
+        $priority = [
+            self::STATUS_MAJOR => 5,
+            self::STATUS_PARTIAL => 4,
+            self::STATUS_MAINTENANCE => 3,
+            self::STATUS_DEGRADED => 2,
+            self::STATUS_OPERATIONAL => 1,
         ];
+
+        $worst = self::STATUS_OPERATIONAL;
+        foreach ($statuses as $status) {
+            if (isset($priority[$status]) && $priority[$status] > $priority[$worst]) {
+                $worst = $status;
+            }
+        }
+
+        return $worst;
     }
 
-    // ==================== COMPONENT METHODS ====================
-
     /**
-     * Get all components.
+     * Get all visible components.
      */
     public function getComponents(): array
     {
-        $sql = 'SELECT * FROM `service_status_component` ORDER BY `display_order` ASC, `name` ASC';
-        $rows = $this->di['db']->getAll($sql);
+        $pdo = $this->di['pdo'];
+        $stmt = $pdo->prepare('SELECT * FROM service_status_component WHERE is_visible = 1 ORDER BY display_order ASC, id ASC');
+        $stmt->execute();
 
-        return array_map(fn($row) => $this->componentToApiArray($row), $rows);
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
     }
 
     /**
-     * Get only visible components (for public display).
+     * Get all components (including hidden) for admin.
      */
-    public function getVisibleComponents(): array
+    public function getComponentsAdmin(): array
     {
-        $sql = 'SELECT * FROM `service_status_component` WHERE `is_visible` = 1 ORDER BY `display_order` ASC, `name` ASC';
-        $rows = $this->di['db']->getAll($sql);
+        $pdo = $this->di['pdo'];
+        $stmt = $pdo->prepare('SELECT * FROM service_status_component ORDER BY display_order ASC, id ASC');
+        $stmt->execute();
 
-        return array_map(fn($row) => $this->componentToApiArray($row), $rows);
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
     }
 
     /**
-     * Get components grouped by group_name.
-     */
-    public function getComponentsGrouped(): array
-    {
-        $components = $this->getVisibleComponents();
-        $grouped = [];
-
-        foreach ($components as $component) {
-            $group = $component['group_name'] ?: __trans('Services');
-            if (!isset($grouped[$group])) {
-                $grouped[$group] = [];
-            }
-            $grouped[$group][] = $component;
-        }
-
-        return $grouped;
-    }
-
-    /**
-     * Get a single component by ID.
+     * Get component by ID.
      */
     public function getComponent(int $id): ?array
     {
-        $sql = 'SELECT * FROM `service_status_component` WHERE `id` = :id';
-        $row = $this->di['db']->getRow($sql, ['id' => $id]);
+        $pdo = $this->di['pdo'];
+        $stmt = $pdo->prepare('SELECT * FROM service_status_component WHERE id = ?');
+        $stmt->execute([$id]);
+        $result = $stmt->fetch(\PDO::FETCH_ASSOC);
 
-        return $row ? $this->componentToApiArray($row) : null;
+        return $result ?: null;
     }
 
     /**
@@ -299,23 +217,23 @@ class Service implements InjectionAwareInterface
      */
     public function createComponent(array $data): int
     {
-        $sql = 'INSERT INTO `service_status_component`
-                (`name`, `description`, `status`, `display_order`, `group_name`, `is_visible`, `created_at`, `updated_at`)
-                VALUES (:name, :description, :status, :display_order, :group_name, :is_visible, :created_at, :updated_at)';
-
-        $now = date('Y-m-d H:i:s');
-        $this->di['db']->exec($sql, [
-            'name' => $data['name'],
-            'description' => $data['description'] ?? null,
-            'status' => $data['status'] ?? self::STATUS_OPERATIONAL,
-            'display_order' => $data['display_order'] ?? 0,
-            'group_name' => $data['group_name'] ?? null,
-            'is_visible' => isset($data['is_visible']) ? (int) $data['is_visible'] : 1,
-            'created_at' => $now,
-            'updated_at' => $now,
+        $pdo = $this->di['pdo'];
+        $stmt = $pdo->prepare('
+            INSERT INTO service_status_component (name, description, status, display_order, is_visible, created_at)
+            VALUES (?, ?, ?, ?, ?, NOW())
+        ');
+        $stmt->execute([
+            $data['name'],
+            $data['description'] ?? null,
+            $data['status'] ?? self::STATUS_OPERATIONAL,
+            $data['display_order'] ?? 0,
+            isset($data['is_visible']) ? (int) $data['is_visible'] : 1,
         ]);
 
-        return (int) $this->di['db']->lastInsertId();
+        $id = (int) $pdo->lastInsertId();
+        $this->di['logger']->info('Created service status component #%s', $id);
+
+        return $id;
     }
 
     /**
@@ -323,50 +241,24 @@ class Service implements InjectionAwareInterface
      */
     public function updateComponent(int $id, array $data): bool
     {
-        $updates = [];
-        $params = ['id' => $id];
+        $pdo = $this->di['pdo'];
+        $stmt = $pdo->prepare('
+            UPDATE service_status_component
+            SET name = ?, description = ?, status = ?, display_order = ?, is_visible = ?, updated_at = NOW()
+            WHERE id = ?
+        ');
+        $result = $stmt->execute([
+            $data['name'],
+            $data['description'] ?? null,
+            $data['status'] ?? self::STATUS_OPERATIONAL,
+            $data['display_order'] ?? 0,
+            isset($data['is_visible']) ? (int) $data['is_visible'] : 1,
+            $id,
+        ]);
 
-        if (isset($data['name'])) {
-            $updates[] = '`name` = :name';
-            $params['name'] = $data['name'];
-        }
+        $this->di['logger']->info('Updated service status component #%s', $id);
 
-        if (array_key_exists('description', $data)) {
-            $updates[] = '`description` = :description';
-            $params['description'] = $data['description'];
-        }
-
-        if (isset($data['status'])) {
-            $updates[] = '`status` = :status';
-            $params['status'] = $data['status'];
-        }
-
-        if (isset($data['display_order'])) {
-            $updates[] = '`display_order` = :display_order';
-            $params['display_order'] = (int) $data['display_order'];
-        }
-
-        if (array_key_exists('group_name', $data)) {
-            $updates[] = '`group_name` = :group_name';
-            $params['group_name'] = $data['group_name'];
-        }
-
-        if (isset($data['is_visible'])) {
-            $updates[] = '`is_visible` = :is_visible';
-            $params['is_visible'] = (int) $data['is_visible'];
-        }
-
-        if (empty($updates)) {
-            return true;
-        }
-
-        $updates[] = '`updated_at` = :updated_at';
-        $params['updated_at'] = date('Y-m-d H:i:s');
-
-        $sql = 'UPDATE `service_status_component` SET ' . implode(', ', $updates) . ' WHERE `id` = :id';
-        $this->di['db']->exec($sql, $params);
-
-        return true;
+        return $result;
     }
 
     /**
@@ -374,77 +266,41 @@ class Service implements InjectionAwareInterface
      */
     public function deleteComponent(int $id): bool
     {
-        $sql = 'DELETE FROM `service_status_component` WHERE `id` = :id';
-        $this->di['db']->exec($sql, ['id' => $id]);
+        $pdo = $this->di['pdo'];
 
-        return true;
+        // Remove from incident relationships
+        $stmt = $pdo->prepare('DELETE FROM service_status_incident_component WHERE component_id = ?');
+        $stmt->execute([$id]);
+
+        // Delete component
+        $stmt = $pdo->prepare('DELETE FROM service_status_component WHERE id = ?');
+        $result = $stmt->execute([$id]);
+
+        $this->di['logger']->info('Deleted service status component #%s', $id);
+
+        return $result;
     }
 
     /**
-     * Convert component row to API array.
-     */
-    protected function componentToApiArray(array $row): array
-    {
-        return [
-            'id' => (int) $row['id'],
-            'name' => $row['name'],
-            'description' => $row['description'],
-            'status' => $row['status'],
-            'status_label' => $this->getComponentStatuses()[$row['status']] ?? $row['status'],
-            'status_color' => $this->getStatusColor($row['status']),
-            'display_order' => (int) $row['display_order'],
-            'group_name' => $row['group_name'],
-            'is_visible' => (bool) $row['is_visible'],
-            'created_at' => $row['created_at'],
-            'updated_at' => $row['updated_at'],
-        ];
-    }
-
-    // ==================== INCIDENT METHODS ====================
-
-    /**
-     * Get incidents with optional filters.
-     */
-    public function getIncidents(array $filters = []): array
-    {
-        $sql = 'SELECT * FROM `service_status_incident` WHERE 1=1';
-        $params = [];
-
-        if (isset($filters['status'])) {
-            $sql .= ' AND `status` = :status';
-            $params['status'] = $filters['status'];
-        }
-
-        if (isset($filters['is_scheduled'])) {
-            $sql .= ' AND `is_scheduled` = :is_scheduled';
-            $params['is_scheduled'] = (int) $filters['is_scheduled'];
-        }
-
-        if (isset($filters['resolved'])) {
-            if ($filters['resolved']) {
-                $sql .= ' AND `resolved_at` IS NOT NULL';
-            } else {
-                $sql .= ' AND `resolved_at` IS NULL';
-            }
-        }
-
-        $sql .= ' ORDER BY `created_at` DESC';
-
-        if (isset($filters['limit'])) {
-            $sql .= ' LIMIT ' . (int) $filters['limit'];
-        }
-
-        $rows = $this->di['db']->getAll($sql, $params);
-
-        return array_map(fn($row) => $this->incidentToApiArray($row), $rows);
-    }
-
-    /**
-     * Get active (unresolved) incidents.
+     * Get active incidents.
      */
     public function getActiveIncidents(): array
     {
-        return $this->getIncidents(['resolved' => false, 'is_scheduled' => 0]);
+        $pdo = $this->di['pdo'];
+        $stmt = $pdo->prepare('
+            SELECT * FROM service_status_incident
+            WHERE status != ?
+            ORDER BY created_at DESC
+        ');
+        $stmt->execute([self::INCIDENT_RESOLVED]);
+        $incidents = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+
+        foreach ($incidents as &$incident) {
+            $incident['components'] = $this->getIncidentComponents($incident['id']);
+            $incident['updates'] = $this->getIncidentUpdates($incident['id']);
+        }
+
+        return $incidents;
     }
 
     /**
@@ -452,39 +308,124 @@ class Service implements InjectionAwareInterface
      */
     public function getScheduledMaintenance(): array
     {
-        $sql = 'SELECT * FROM `service_status_incident`
-                WHERE `is_scheduled` = 1
-                AND (`resolved_at` IS NULL OR `scheduled_until` > NOW())
-                ORDER BY `scheduled_for` ASC';
+        $pdo = $this->di['pdo'];
+        $stmt = $pdo->prepare('
+            SELECT * FROM service_status_incident
+            WHERE status = ? AND scheduled_at >= NOW()
+            ORDER BY scheduled_at ASC
+        ');
+        $stmt->execute([self::INCIDENT_SCHEDULED]);
+        $incidents = $stmt->fetchAll(\PDO::FETCH_ASSOC);
 
-        $rows = $this->di['db']->getAll($sql);
+        foreach ($incidents as &$incident) {
+            $incident['components'] = $this->getIncidentComponents($incident['id']);
+            $incident['updates'] = $this->getIncidentUpdates($incident['id']);
+        }
 
-        return array_map(fn($row) => $this->incidentToApiArray($row), $rows);
+        return $incidents;
     }
 
     /**
-     * Get recent incidents for history display.
+     * Get incident history.
      */
-    public function getRecentIncidents(int $days = 7): array
+    public function getIncidentHistory(int $days = 90): array
     {
-        $sql = 'SELECT * FROM `service_status_incident`
-                WHERE `created_at` >= DATE_SUB(NOW(), INTERVAL :days DAY)
-                ORDER BY `created_at` DESC';
+        $pdo = $this->di['pdo'];
+        $stmt = $pdo->prepare('
+            SELECT * FROM service_status_incident
+            WHERE created_at >= DATE_SUB(NOW(), INTERVAL ? DAY)
+            ORDER BY created_at DESC
+        ');
+        $stmt->execute([$days]);
+        $incidents = $stmt->fetchAll(\PDO::FETCH_ASSOC);
 
-        $rows = $this->di['db']->getAll($sql, ['days' => $days]);
+        foreach ($incidents as &$incident) {
+            $incident['components'] = $this->getIncidentComponents($incident['id']);
+            $incident['updates'] = $this->getIncidentUpdates($incident['id']);
+        }
 
-        return array_map(fn($row) => $this->incidentToApiArray($row), $rows);
+        return $incidents;
     }
 
     /**
-     * Get a single incident by ID.
+     * Get all incidents for admin.
+     */
+    public function getIncidentsAdmin(array $data = []): array
+    {
+        $pdo = $this->di['pdo'];
+
+        $sql = 'SELECT * FROM service_status_incident WHERE 1=1';
+        $params = [];
+
+        if (!empty($data['status'])) {
+            $sql .= ' AND status = ?';
+            $params[] = $data['status'];
+        }
+
+        $sql .= ' ORDER BY created_at DESC';
+
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute($params);
+        $incidents = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+
+        foreach ($incidents as &$incident) {
+            $incident['components'] = $this->getIncidentComponents($incident['id']);
+            $incident['updates'] = $this->getIncidentUpdates($incident['id']);
+        }
+
+        return $incidents;
+    }
+
+    /**
+     * Get incident by ID.
      */
     public function getIncident(int $id): ?array
     {
-        $sql = 'SELECT * FROM `service_status_incident` WHERE `id` = :id';
-        $row = $this->di['db']->getRow($sql, ['id' => $id]);
+        $pdo = $this->di['pdo'];
+        $stmt = $pdo->prepare('SELECT * FROM service_status_incident WHERE id = ?');
+        $stmt->execute([$id]);
+        $incident = $stmt->fetch(\PDO::FETCH_ASSOC);
 
-        return $row ? $this->incidentToApiArray($row) : null;
+        if (!$incident) {
+            return null;
+        }
+
+        $incident['components'] = $this->getIncidentComponents($id);
+        $incident['updates'] = $this->getIncidentUpdates($id);
+
+        return $incident;
+    }
+
+    /**
+     * Get components affected by an incident.
+     */
+    public function getIncidentComponents(int $incidentId): array
+    {
+        $pdo = $this->di['pdo'];
+        $stmt = $pdo->prepare('
+            SELECT c.* FROM service_status_component c
+            INNER JOIN service_status_incident_component ic ON c.id = ic.component_id
+            WHERE ic.incident_id = ?
+        ');
+        $stmt->execute([$incidentId]);
+
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+    }
+
+    /**
+     * Get incident updates.
+     */
+    public function getIncidentUpdates(int $incidentId): array
+    {
+        $pdo = $this->di['pdo'];
+        $stmt = $pdo->prepare('
+            SELECT * FROM service_status_incident_update
+            WHERE incident_id = ?
+            ORDER BY created_at DESC
+        ');
+        $stmt->execute([$incidentId]);
+
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
     }
 
     /**
@@ -492,38 +433,36 @@ class Service implements InjectionAwareInterface
      */
     public function createIncident(array $data): int
     {
-        $sql = 'INSERT INTO `service_status_incident`
-                (`title`, `status`, `impact`, `is_scheduled`, `scheduled_for`, `scheduled_until`, `created_at`, `updated_at`)
-                VALUES (:title, :status, :impact, :is_scheduled, :scheduled_for, :scheduled_until, :created_at, :updated_at)';
-
-        $now = date('Y-m-d H:i:s');
-        $isScheduled = !empty($data['is_scheduled']) ? 1 : 0;
-
-        $this->di['db']->exec($sql, [
-            'title' => $data['title'],
-            'status' => $data['status'] ?? ($isScheduled ? self::INCIDENT_SCHEDULED : self::INCIDENT_INVESTIGATING),
-            'impact' => $data['impact'] ?? 'none',
-            'is_scheduled' => $isScheduled,
-            'scheduled_for' => $data['scheduled_for'] ?? null,
-            'scheduled_until' => $data['scheduled_until'] ?? null,
-            'created_at' => $now,
-            'updated_at' => $now,
+        $pdo = $this->di['pdo'];
+        $stmt = $pdo->prepare('
+            INSERT INTO service_status_incident (title, status, impact, scheduled_at, created_at)
+            VALUES (?, ?, ?, ?, NOW())
+        ');
+        $stmt->execute([
+            $data['title'],
+            $data['status'] ?? self::INCIDENT_INVESTIGATING,
+            $data['impact'] ?? self::STATUS_PARTIAL,
+            $data['scheduled_at'] ?? null,
         ]);
 
-        $incidentId = (int) $this->di['db']->lastInsertId();
+        $incidentId = (int) $pdo->lastInsertId();
 
-        // Link affected components
-        if (!empty($data['component_ids'])) {
-            $this->linkIncidentComponents($incidentId, $data['component_ids']);
+        // Add affected components
+        if (!empty($data['components'])) {
+            $this->setIncidentComponents($incidentId, $data['components']);
         }
 
-        // Add initial update if message provided
+        // Add initial update message
         if (!empty($data['message'])) {
-            $this->addIncidentUpdate($incidentId, [
-                'status' => $data['status'] ?? ($isScheduled ? self::INCIDENT_SCHEDULED : self::INCIDENT_INVESTIGATING),
-                'message' => $data['message'],
-            ]);
+            $this->addIncidentUpdate($incidentId, $data['status'] ?? self::INCIDENT_INVESTIGATING, $data['message']);
         }
+
+        // Update component statuses based on impact
+        if (!empty($data['components'])) {
+            $this->updateComponentsStatus($data['components'], $data['impact'] ?? self::STATUS_PARTIAL);
+        }
+
+        $this->di['logger']->info('Created service status incident #%s', $incidentId);
 
         return $incidentId;
     }
@@ -533,57 +472,40 @@ class Service implements InjectionAwareInterface
      */
     public function updateIncident(int $id, array $data): bool
     {
-        $updates = [];
-        $params = ['id' => $id];
+        $pdo = $this->di['pdo'];
 
-        if (isset($data['title'])) {
-            $updates[] = '`title` = :title';
-            $params['title'] = $data['title'];
+        $resolvedAt = null;
+        if (($data['status'] ?? null) === self::INCIDENT_RESOLVED) {
+            $resolvedAt = date('Y-m-d H:i:s');
         }
 
-        if (isset($data['status'])) {
-            $updates[] = '`status` = :status';
-            $params['status'] = $data['status'];
+        $stmt = $pdo->prepare('
+            UPDATE service_status_incident
+            SET title = ?, status = ?, impact = ?, scheduled_at = ?, resolved_at = COALESCE(?, resolved_at), updated_at = NOW()
+            WHERE id = ?
+        ');
+        $result = $stmt->execute([
+            $data['title'],
+            $data['status'] ?? self::INCIDENT_INVESTIGATING,
+            $data['impact'] ?? self::STATUS_PARTIAL,
+            $data['scheduled_at'] ?? null,
+            $resolvedAt,
+            $id,
+        ]);
 
-            // Auto-set resolved_at if status is resolved
-            if ($data['status'] === self::INCIDENT_RESOLVED) {
-                $updates[] = '`resolved_at` = :resolved_at';
-                $params['resolved_at'] = date('Y-m-d H:i:s');
-            }
+        // Update affected components
+        if (isset($data['components'])) {
+            $this->setIncidentComponents($id, $data['components']);
         }
 
-        if (isset($data['impact'])) {
-            $updates[] = '`impact` = :impact';
-            $params['impact'] = $data['impact'];
+        // If resolved, reset component statuses
+        if (($data['status'] ?? null) === self::INCIDENT_RESOLVED) {
+            $this->resetComponentsStatus($id);
         }
 
-        if (isset($data['scheduled_for'])) {
-            $updates[] = '`scheduled_for` = :scheduled_for';
-            $params['scheduled_for'] = $data['scheduled_for'];
-        }
+        $this->di['logger']->info('Updated service status incident #%s', $id);
 
-        if (isset($data['scheduled_until'])) {
-            $updates[] = '`scheduled_until` = :scheduled_until';
-            $params['scheduled_until'] = $data['scheduled_until'];
-        }
-
-        if (empty($updates)) {
-            return true;
-        }
-
-        $updates[] = '`updated_at` = :updated_at';
-        $params['updated_at'] = date('Y-m-d H:i:s');
-
-        $sql = 'UPDATE `service_status_incident` SET ' . implode(', ', $updates) . ' WHERE `id` = :id';
-        $this->di['db']->exec($sql, $params);
-
-        // Update component links if provided
-        if (isset($data['component_ids'])) {
-            $this->unlinkIncidentComponents($id);
-            $this->linkIncidentComponents($id, $data['component_ids']);
-        }
-
-        return true;
+        return $result;
     }
 
     /**
@@ -591,126 +513,103 @@ class Service implements InjectionAwareInterface
      */
     public function deleteIncident(int $id): bool
     {
-        $sql = 'DELETE FROM `service_status_incident` WHERE `id` = :id';
-        $this->di['db']->exec($sql, ['id' => $id]);
+        $pdo = $this->di['pdo'];
 
-        return true;
+        // Delete updates
+        $stmt = $pdo->prepare('DELETE FROM service_status_incident_update WHERE incident_id = ?');
+        $stmt->execute([$id]);
+
+        // Delete component relationships
+        $stmt = $pdo->prepare('DELETE FROM service_status_incident_component WHERE incident_id = ?');
+        $stmt->execute([$id]);
+
+        // Delete incident
+        $stmt = $pdo->prepare('DELETE FROM service_status_incident WHERE id = ?');
+        $result = $stmt->execute([$id]);
+
+        $this->di['logger']->info('Deleted service status incident #%s', $id);
+
+        return $result;
     }
 
     /**
-     * Link components to an incident.
+     * Set incident components.
      */
-    protected function linkIncidentComponents(int $incidentId, array $componentIds): void
+    protected function setIncidentComponents(int $incidentId, array $componentIds): void
     {
+        $pdo = $this->di['pdo'];
+
+        // Remove existing relationships
+        $stmt = $pdo->prepare('DELETE FROM service_status_incident_component WHERE incident_id = ?');
+        $stmt->execute([$incidentId]);
+
+        // Add new relationships
+        $stmt = $pdo->prepare('INSERT INTO service_status_incident_component (incident_id, component_id) VALUES (?, ?)');
         foreach ($componentIds as $componentId) {
-            $sql = 'INSERT IGNORE INTO `service_status_incident_component` (`incident_id`, `component_id`) VALUES (:incident_id, :component_id)';
-            $this->di['db']->exec($sql, [
-                'incident_id' => $incidentId,
-                'component_id' => (int) $componentId,
-            ]);
+            $stmt->execute([$incidentId, $componentId]);
         }
-    }
-
-    /**
-     * Unlink all components from an incident.
-     */
-    protected function unlinkIncidentComponents(int $incidentId): void
-    {
-        $sql = 'DELETE FROM `service_status_incident_component` WHERE `incident_id` = :incident_id';
-        $this->di['db']->exec($sql, ['incident_id' => $incidentId]);
-    }
-
-    /**
-     * Get components linked to an incident.
-     */
-    public function getIncidentComponents(int $incidentId): array
-    {
-        $sql = 'SELECT c.* FROM `service_status_component` c
-                INNER JOIN `service_status_incident_component` ic ON c.id = ic.component_id
-                WHERE ic.incident_id = :incident_id
-                ORDER BY c.display_order ASC';
-
-        $rows = $this->di['db']->getAll($sql, ['incident_id' => $incidentId]);
-
-        return array_map(fn($row) => $this->componentToApiArray($row), $rows);
-    }
-
-    /**
-     * Convert incident row to API array.
-     */
-    protected function incidentToApiArray(array $row): array
-    {
-        $updates = $this->getIncidentUpdates((int) $row['id']);
-        $components = $this->getIncidentComponents((int) $row['id']);
-
-        return [
-            'id' => (int) $row['id'],
-            'title' => $row['title'],
-            'status' => $row['status'],
-            'status_label' => $this->getIncidentStatuses()[$row['status']] ?? $row['status'],
-            'impact' => $row['impact'],
-            'is_scheduled' => (bool) $row['is_scheduled'],
-            'scheduled_for' => $row['scheduled_for'],
-            'scheduled_until' => $row['scheduled_until'],
-            'created_at' => $row['created_at'],
-            'updated_at' => $row['updated_at'],
-            'resolved_at' => $row['resolved_at'],
-            'is_resolved' => !empty($row['resolved_at']),
-            'updates' => $updates,
-            'components' => $components,
-        ];
-    }
-
-    // ==================== INCIDENT UPDATE METHODS ====================
-
-    /**
-     * Get updates for an incident.
-     */
-    public function getIncidentUpdates(int $incidentId): array
-    {
-        $sql = 'SELECT * FROM `service_status_incident_update` WHERE `incident_id` = :incident_id ORDER BY `created_at` DESC';
-        $rows = $this->di['db']->getAll($sql, ['incident_id' => $incidentId]);
-
-        return array_map(fn($row) => [
-            'id' => (int) $row['id'],
-            'incident_id' => (int) $row['incident_id'],
-            'status' => $row['status'],
-            'status_label' => $this->getIncidentStatuses()[$row['status']] ?? $row['status'],
-            'message' => $row['message'],
-            'created_at' => $row['created_at'],
-        ], $rows);
     }
 
     /**
      * Add an update to an incident.
      */
-    public function addIncidentUpdate(int $incidentId, array $data): int
+    public function addIncidentUpdate(int $incidentId, string $status, string $message): int
     {
-        $sql = 'INSERT INTO `service_status_incident_update`
-                (`incident_id`, `status`, `message`, `created_at`)
-                VALUES (:incident_id, :status, :message, :created_at)';
+        $pdo = $this->di['pdo'];
+        $stmt = $pdo->prepare('
+            INSERT INTO service_status_incident_update (incident_id, status, message, created_at)
+            VALUES (?, ?, ?, NOW())
+        ');
+        $stmt->execute([$incidentId, $status, $message]);
 
-        $this->di['db']->exec($sql, [
-            'incident_id' => $incidentId,
-            'status' => $data['status'],
-            'message' => $data['message'],
-            'created_at' => date('Y-m-d H:i:s'),
-        ]);
+        // Update incident status
+        $stmt = $pdo->prepare('UPDATE service_status_incident SET status = ?, updated_at = NOW() WHERE id = ?');
+        $stmt->execute([$status, $incidentId]);
 
-        // Also update the incident's status and updated_at
-        $this->updateIncident($incidentId, ['status' => $data['status']]);
+        // If resolved, update resolved_at
+        if ($status === self::INCIDENT_RESOLVED) {
+            $stmt = $pdo->prepare('UPDATE service_status_incident SET resolved_at = NOW() WHERE id = ?');
+            $stmt->execute([$incidentId]);
+            $this->resetComponentsStatus($incidentId);
+        }
 
-        return (int) $this->di['db']->lastInsertId();
+        return (int) $pdo->lastInsertId();
     }
 
     /**
-     * Delete an incident update.
+     * Update multiple component statuses.
      */
-    public function deleteIncidentUpdate(int $updateId): bool
+    protected function updateComponentsStatus(array $componentIds, string $status): void
     {
-        $sql = 'DELETE FROM `service_status_incident_update` WHERE `id` = :id';
-        $this->di['db']->exec($sql, ['id' => $updateId]);
+        $pdo = $this->di['pdo'];
+        $stmt = $pdo->prepare('UPDATE service_status_component SET status = ?, updated_at = NOW() WHERE id = ?');
+        foreach ($componentIds as $componentId) {
+            $stmt->execute([$status, $componentId]);
+        }
+    }
 
-        return true;
+    /**
+     * Reset component statuses after incident resolution.
+     */
+    protected function resetComponentsStatus(int $incidentId): void
+    {
+        $components = $this->getIncidentComponents($incidentId);
+        foreach ($components as $component) {
+            // Check if component has other active incidents
+            $pdo = $this->di['pdo'];
+            $stmt = $pdo->prepare('
+                SELECT COUNT(*) FROM service_status_incident i
+                INNER JOIN service_status_incident_component ic ON i.id = ic.incident_id
+                WHERE ic.component_id = ? AND i.status != ? AND i.id != ?
+            ');
+            $stmt->execute([$component['id'], self::INCIDENT_RESOLVED, $incidentId]);
+            $count = $stmt->fetchColumn();
+
+            if ($count == 0) {
+                // No other active incidents, reset to operational
+                $stmt = $pdo->prepare('UPDATE service_status_component SET status = ?, updated_at = NOW() WHERE id = ?');
+                $stmt->execute([self::STATUS_OPERATIONAL, $component['id']]);
+            }
+        }
     }
 }

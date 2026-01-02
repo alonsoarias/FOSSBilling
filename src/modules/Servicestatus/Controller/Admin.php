@@ -1,10 +1,11 @@
 <?php
 
 /**
- * FOSSBilling.
+ * Copyright 2022-2025 FOSSBilling
+ * SPDX-License-Identifier: Apache-2.0.
  *
  * @copyright FOSSBilling (https://www.fossbilling.org)
- * @license   Apache-2.0
+ * @license http://www.apache.org/licenses/LICENSE-2.0 Apache-2.0
  */
 
 namespace Box\Mod\Servicestatus\Controller;
@@ -24,15 +25,15 @@ class Admin implements \FOSSBilling\InjectionAwareInterface
     }
 
     /**
-     * Fetch navigation for admin sidebar.
+     * Return admin navigation items.
      */
     public function fetchNavigation(): array
     {
         return [
             'subpages' => [
                 [
-                    'location' => 'extensions',
-                    'index' => 500,
+                    'location' => 'system',
+                    'index' => 800,
                     'label' => __trans('Service Status'),
                     'uri' => $this->di['url']->adminLink('servicestatus'),
                     'class' => '',
@@ -54,7 +55,7 @@ class Admin implements \FOSSBilling\InjectionAwareInterface
     }
 
     /**
-     * Display main status management page.
+     * Display admin index page.
      */
     public function get_index(\Box_App $app): string
     {
@@ -66,10 +67,9 @@ class Admin implements \FOSSBilling\InjectionAwareInterface
     /**
      * Display component edit page.
      */
-    public function get_component(\Box_App $app, int $id): string
+    public function get_component(\Box_App $app, $id): string
     {
         $this->di['is_admin_logged'];
-
         $api = $this->di['api_admin'];
         $component = $api->servicestatus_component_get(['id' => $id]);
 
@@ -79,10 +79,9 @@ class Admin implements \FOSSBilling\InjectionAwareInterface
     /**
      * Display incident edit page.
      */
-    public function get_incident(\Box_App $app, int $id): string
+    public function get_incident(\Box_App $app, $id): string
     {
         $this->di['is_admin_logged'];
-
         $api = $this->di['api_admin'];
         $incident = $api->servicestatus_incident_get(['id' => $id]);
 

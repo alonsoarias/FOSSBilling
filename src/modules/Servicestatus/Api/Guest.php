@@ -1,10 +1,15 @@
 <?php
 
 /**
- * FOSSBilling.
+ * Copyright 2022-2025 FOSSBilling
+ * SPDX-License-Identifier: Apache-2.0.
  *
  * @copyright FOSSBilling (https://www.fossbilling.org)
- * @license   Apache-2.0
+ * @license http://www.apache.org/licenses/LICENSE-2.0 Apache-2.0
+ */
+
+/**
+ * Public Service Status API.
  */
 
 namespace Box\Mod\Servicestatus\Api;
@@ -14,72 +19,42 @@ class Guest extends \Api_Abstract
     /**
      * Get overall system status.
      *
-     * @return array Overall status with status, label, and color
+     * @return array
      */
-    public function get_overall_status($data = [])
+    public function status($data = [])
     {
-        return $this->getService()->getOverallStatus();
+        $service = $this->getService();
+        $overallStatus = $service->getOverallStatus();
+        $statuses = $service->getStatuses();
+
+        return [
+            'status' => $overallStatus,
+            'label' => $statuses[$overallStatus] ?? $overallStatus,
+        ];
     }
 
     /**
-     * Get available component statuses for reference.
+     * Get list of all visible components.
      *
      * @return array
      */
-    public function get_statuses($data = [])
+    public function component_list($data = [])
     {
-        return $this->getService()->getComponentStatuses();
+        $service = $this->getService();
+
+        return $service->getComponents();
     }
 
     /**
-     * Get list of visible components.
+     * Get active incidents.
      *
      * @return array
      */
-    public function component_get_list($data = [])
+    public function incident_list($data = [])
     {
-        return $this->getService()->getVisibleComponents();
-    }
+        $service = $this->getService();
 
-    /**
-     * Get components grouped by group name.
-     *
-     * @return array Components grouped by group_name
-     */
-    public function component_get_grouped($data = [])
-    {
-        return $this->getService()->getComponentsGrouped();
-    }
-
-    /**
-     * Get a single visible component by ID.
-     *
-     * @param int $id Component ID
-     *
-     * @return array
-     */
-    public function component_get($data)
-    {
-        $required = ['id' => 'Component ID is required'];
-        $this->di['validator']->checkRequiredParamsForArray($required, $data);
-
-        $component = $this->getService()->getComponent((int) $data['id']);
-
-        if (!$component || !$component['is_visible']) {
-            throw new \FOSSBilling\Exception('Component not found');
-        }
-
-        return $component;
-    }
-
-    /**
-     * Get active (unresolved) incidents.
-     *
-     * @return array
-     */
-    public function incident_get_active($data = [])
-    {
-        return $this->getService()->getActiveIncidents();
+        return $service->getActiveIncidents();
     }
 
     /**
@@ -87,43 +62,66 @@ class Guest extends \Api_Abstract
      *
      * @return array
      */
-    public function maintenance_get_scheduled($data = [])
+    public function maintenance_list($data = [])
     {
-        return $this->getService()->getScheduledMaintenance();
+        $service = $this->getService();
+
+        return $service->getScheduledMaintenance();
     }
 
     /**
-     * Get recent incidents for history display.
+     * Get incident history.
      *
-     * @param int $days Number of days to look back (default: 7)
+     * @optional int $days - number of days to look back (default 90)
      *
      * @return array
      */
-    public function incident_get_recent($data = [])
+    public function incident_history($data = [])
     {
-        $days = isset($data['days']) ? (int) $data['days'] : 7;
+        $service = $this->getService();
+        $days = $data['days'] ?? 90;
 
-        return $this->getService()->getRecentIncidents($days);
+        return $service->getIncidentHistory((int) $days);
     }
 
     /**
-     * Get a single incident by ID.
-     *
-     * @param int $id Incident ID
+     * Get incident by ID.
      *
      * @return array
      */
     public function incident_get($data)
     {
-        $required = ['id' => 'Incident ID is required'];
-        $this->di['validator']->checkRequiredParamsForArray($required, $data);
+        if (!isset($data['id'])) {
+            throw new \FOSSBilling\Exception('Incident ID is required');
+        }
 
-        $incident = $this->getService()->getIncident((int) $data['id']);
+        $service = $this->getService();
+        $incident = $service->getIncident((int) $data['id']);
 
         if (!$incident) {
             throw new \FOSSBilling\Exception('Incident not found');
         }
 
         return $incident;
+    }
+
+    /**
+     * Get available status types.
+     *
+     * @return array
+     */
+    public function statuses($data = [])
+    {
+        return $this->getService()->getStatuses();
+    }
+
+    /**
+     * Get available incident status types.
+     *
+     * @return array
+     */
+    public function incident_statuses($data = [])
+    {
+        return $this->getService()->getIncidentStatuses();
     }
 }
