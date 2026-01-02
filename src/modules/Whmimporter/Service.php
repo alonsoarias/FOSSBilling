@@ -1596,6 +1596,17 @@ class Service implements InjectionAwareInterface
         $server = $this->getServer($serverId);
         $response = $this->whmRequest($server, 'listaccts');
 
+        // Get list of resellers to identify reseller accounts
+        $resellerList = [];
+        try {
+            $resellerList = $this->getRemoteResellers($serverId);
+        } catch (\Exception $e) {
+            // If we can't get resellers, continue without that info
+            $this->di['logger']->warning('Could not fetch reseller list for debug: :error', [
+                ':error' => $e->getMessage(),
+            ]);
+        }
+
         // Get raw account list
         $accountList = [];
         if (isset($response->acct) && is_array($response->acct)) {
@@ -1605,33 +1616,49 @@ class Service implements InjectionAwareInterface
         }
 
         $results = [];
+        $resellerCount = 0;
+        $subAccountCount = 0;
+
         foreach ($accountList as $acct) {
             $rawStartDate = $acct->startdate ?? null;
             $unixStartDate = $acct->unix_startdate ?? null;
+            $username = $acct->user ?? 'unknown';
+            $owner = $acct->owner ?? 'root';
+            $isReseller = in_array($username, $resellerList, true);
+            $isSubAccount = $owner !== 'root';
+
+            if ($isReseller) {
+                $resellerCount++;
+            }
+            if ($isSubAccount) {
+                $subAccountCount++;
+            }
 
             // Test our parsing function (now uses unix_startdate preferentially)
             $parsedDate = $this->parseWhmDate($unixStartDate, $rawStartDate);
 
             $results[] = [
-                'user' => $acct->user ?? 'unknown',
+                'user' => $username,
                 'domain' => $acct->domain ?? 'unknown',
+                'owner' => $owner,
+                'is_reseller' => $isReseller,
+                'is_sub_account' => $isSubAccount,
                 'raw_startdate' => $rawStartDate,
                 'unix_startdate' => $unixStartDate,
                 'unix_as_date' => $unixStartDate ? date('Y-m-d H:i:s', (int) $unixStartDate) : null,
                 'parsed_result' => $parsedDate,
                 'raw_type' => gettype($rawStartDate),
             ];
-
-            // Only show first 10 for debugging
-            if (count($results) >= 10) {
-                break;
-            }
         }
 
         return [
             'server' => $server->name,
+            'total_accounts' => count($accountList),
+            'reseller_count' => $resellerCount,
+            'sub_account_count' => $subAccountCount,
+            'reseller_list' => $resellerList,
             'accounts' => $results,
-            'note' => 'Showing first 10 accounts. raw_startdate is what WHM returns, parsed_result is what our function produces.',
+            'note' => 'Showing all accounts. is_reseller=true means the account has reseller privileges. is_sub_account=true means the account is owned by a reseller (not root).',
         ];
     }
 }
