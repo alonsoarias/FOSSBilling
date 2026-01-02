@@ -135,7 +135,7 @@
                     <span>{{ 'Delete'|trans }}</span>
                 </a>
                 {% if invoice.status == 'unpaid' %}
-                <a href="{{ 'api/admin/invoice/send_reminder'|link({ 'id': invoice.id, 'CSRFToken': CSRFToken}) }}" class="btn btn-primary api-link" data-api-msg="Payment reminder was sent">
+                <a href="{{ 'api/admin/invoice/send_reminder'|link({ 'id': invoice.id, 'CSRFToken': CSRFToken}) }}" class="btn btn-primary api-link" data-api-msg="{{ 'Payment reminder was sent'|trans }}">
                     <svg class="icon" width="24" height="24">
                         <use xlink:href="#mail" />
                     </svg>

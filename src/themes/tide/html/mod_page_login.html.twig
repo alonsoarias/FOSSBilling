@@ -33,7 +33,7 @@
                   <div class="input-group input-group-flat">
                      <input type="password" class="form-control" id="passwordField" placeholder="{{ 'Password'|trans }}" name="password" required="required" value="{{ request.password }}" autocomplete="off">
                      <span class="input-group-text">
-                        <a href="#" class="link-secondary" title="Show password" id="reveal" data-bs-toggle="tooltip">
+                        <a href="#" class="link-secondary" title="{{ 'Show password'|trans }}" id="reveal" data-bs-toggle="tooltip">
                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                               <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
                               <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
@@ -81,14 +81,14 @@
                button.innerHTML = hideIconSvg;
                tooltip.dispose();
                tooltip = new bootstrap.Tooltip(button, {
-                   title: "Hide password"
+                   title: "{{ 'Hide password'|trans }}"
                });
            } else {
                passwordField.type = "password";
                button.innerHTML = showIconSvg;
                tooltip.dispose();
                tooltip = new bootstrap.Tooltip(button, {
-                   title: "Show password"
+                   title: "{{ 'Show password'|trans }}"
                });
            }
        });

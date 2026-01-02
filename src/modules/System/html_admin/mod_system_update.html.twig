@@ -41,9 +41,9 @@
                 <a href="{{ 'api/admin/system/update_core'|link({ 'CSRFToken': CSRFToken }) }}"
                     class="btn btn-primary api-link"
                     data-api-reload="1"
-                    data-api-confirm="Proceed with automatic update?"
-                    data-api-confirm-btn="Update"
-                    data-api-confirm-content="Make sure that you have made database and files backups before proceeding with automatic update. You will automatically be redirected once the update is complete.">
+                    data-api-confirm="{{ 'Proceed with automatic update?'|trans }}"
+                    data-api-confirm-btn="{{ 'Update'|trans }}"
+                    data-api-confirm-content="{{ 'Make sure that you have made database and files backups before proceeding with automatic update. You will automatically be redirected once the update is complete.'|trans }}">
                     <svg class="icon">
                         <use xlink:href="#download" />
                     </svg>
@@ -67,7 +67,7 @@
                 </svg>
                 {{ 'Check for Updates'|trans }}
             </a>
-            <a href="{{ 'api/admin/system/manual_update'|link({ 'CSRFToken': CSRFToken }) }}" class="btn btn-primary api-link" data-api-confirm="If you run into any issues, you can revert to the old config which will be saved as config.old.php." data-api-msg="Patches applied and configuration updated.">
+            <a href="{{ 'api/admin/system/manual_update'|link({ 'CSRFToken': CSRFToken }) }}" class="btn btn-primary api-link" data-api-confirm="{{ 'If you run into any issues, you can revert to the old config which will be saved as config.old.php.'|trans }}" data-api-msg="{{ 'Patches applied and configuration updated.'|trans }}">
                 <svg class="icon">
                     <use xlink:href="#cog-play" />
                 </svg>

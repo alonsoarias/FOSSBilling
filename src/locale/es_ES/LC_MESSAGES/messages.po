@@ -4918,7 +4918,7 @@ msgid "Settings for"
 msgstr ""
 
 msgid "Settings updated"
-msgstr ""
+msgstr "Configuración actualizada"
 
 msgid "Setup Price"
 msgstr "Precio de instalación"
@@ -7831,3 +7831,43 @@ msgstr "Por favor revisa tu correo y confirma tu dirección de email"
 
 msgid "Orders"
 msgstr "Pedidos"
+
+msgid "API key was changed"
+msgstr "La clave API fue cambiada"
+
+msgid "Payment reminder was sent"
+msgstr "El recordatorio de pago fue enviado"
+
+msgid "Process again"
+msgstr "Procesar de nuevo"
+
+msgid "Service updated"
+msgstr "Servicio actualizado"
+
+msgid "Order config updated"
+msgstr "Configuración del pedido actualizada"
+
+msgid "Order was updated"
+msgstr "El pedido fue actualizado"
+
+msgid "Proceed with automatic update?"
+msgstr "¿Proceder con la actualización automática?"
+
+msgid ""
+"Make sure that you have made database and files backups before proceeding "
+"with automatic update. You will automatically be redirected once the update "
+"is complete."
+msgstr ""
+"Asegúrate de haber hecho copias de seguridad de la base de datos y archivos "
+"antes de proceder con la actualización automática. Serás redirigido "
+"automáticamente una vez que se complete la actualización."
+
+msgid ""
+"If you run into any issues, you can revert to the old config which will be "
+"saved as config.old.php."
+msgstr ""
+"Si tienes algún problema, puedes volver a la configuración anterior que se "
+"guardará como config.old.php."
+
+msgid "Patches applied and configuration updated."
+msgstr "Parches aplicados y configuración actualizada."

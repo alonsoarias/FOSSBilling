@@ -28,7 +28,7 @@
             <h3 class="card-title">{{ 'Invoice settings'|trans }}</h3>
         </div>
         <form method="post" action="{{ 'api/admin/system/update_params'|link }}" class="api-form"
-              data-api-msg="Settings updated">
+              data-api-msg="{{ 'Settings updated'|trans }}">
             <input type="hidden" name="CSRFToken" value="{{ CSRFToken }}">
             <div class="card-body">
                 {% set params = admin.system_get_params %}

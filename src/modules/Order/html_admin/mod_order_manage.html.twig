@@ -420,7 +420,7 @@
                 <h2>Order parameters</h2>
             </div>
 
-            <form method="post" action="{{ 'api/admin/order/update_config'|link }}" class="api-form" data-api-msg="Order config updated">
+            <form method="post" action="{{ 'api/admin/order/update_config'|link }}" class="api-form" data-api-msg="{{ 'Order config updated'|trans }}">
                 <input type="hidden" name="CSRFToken" value="{{ CSRFToken }}"/>
                 {% for name, value in order.config %}
                 <div class="mb-3 row">
