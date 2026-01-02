@@ -56,6 +56,16 @@ class Guest extends \Api_Abstract
     }
 
     /**
+     * Alias for component_list() - grouped format.
+     *
+     * @return array
+     */
+    public function component_get_grouped($data = [])
+    {
+        return ['components' => $this->component_list($data)];
+    }
+
+    /**
      * Get active incidents.
      *
      * @return array
