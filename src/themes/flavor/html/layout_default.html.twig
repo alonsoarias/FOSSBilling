@@ -24,6 +24,8 @@
 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Flag Icons for language selector -->
+    <link href="https://cdn.jsdelivr.net/npm/flag-icons@7.2.3/css/flag-icons.min.css" rel="stylesheet">
     <link rel='stylesheet' type='text/css' href="{{ 'css/font-awesome.css' | asset_url }}">
     <link rel='stylesheet' type='text/css' href="{{ 'css/flavor.css' | asset_url }}">
     <link rel="shortcut icon" href="{{ guest.system_company.favicon_url }}">
@@ -262,6 +264,82 @@
 {% if guest.extension_is_on({ "mod": "cookieconsent" }) %}
     {{ include('mod_cookieconsent_index.html.twig', ignore_missing: true) }}
 {% endif %}
+
+<!-- Flavor Theme JavaScript -->
+<script>
+// Global bb object for FOSSBilling compatibility
+if (typeof bb === 'undefined') {
+    window.bb = {
+        restUrl: function(url) {
+            if (url.indexOf('http://') > -1 || url.indexOf('https://') > -1) {
+                return url;
+            }
+            return $('meta[property="bb:url"]').attr('content') + 'index.php?_url=/api/' + url;
+        },
+        reload: function() {
+            window.location.reload(true);
+        },
+        redirect: function(url) {
+            window.location = url;
+        },
+        cookieCreate: function(name, value, days) {
+            var expires = '';
+            if (days) {
+                var date = new Date();
+                date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+                expires = '; expires=' + date.toGMTString();
+            }
+            document.cookie = name + '=' + value + expires + '; path=/';
+        },
+        cookieRead: function(name) {
+            var nameEQ = name + '=';
+            var ca = document.cookie.split(';');
+            for (var i = 0; i < ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0) === ' ') c = c.substring(1);
+                if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length);
+            }
+            return null;
+        }
+    };
+}
+
+// Language selector initialization
+document.addEventListener('DOMContentLoaded', function() {
+    var langSelector = document.querySelector('.js-language-selector');
+    if (langSelector) {
+        // Set current language from cookie
+        var currentLang = bb.cookieRead('BBLANG');
+        if (currentLang) {
+            langSelector.value = currentLang;
+        }
+
+        // Handle language change
+        langSelector.addEventListener('change', function() {
+            bb.cookieCreate('BBLANG', this.value, 365);
+            bb.reload();
+        });
+    }
+
+    // Enable Bootstrap tooltips
+    var tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
+    tooltipTriggerList.forEach(function(el) {
+        new bootstrap.Tooltip(el);
+    });
+
+    // Currency selector
+    var currencySelector = document.querySelectorAll('select.currency_selector');
+    currencySelector.forEach(function(select) {
+        select.addEventListener('change', function() {
+            API.guest.post('cart/set_currency', {currency: select.value}, function(response) {
+                location.reload();
+            }, function(error) {
+                console.error(error);
+            });
+        });
+    });
+});
+</script>
 
 {{ DebugBar_render() }}
 </body>
