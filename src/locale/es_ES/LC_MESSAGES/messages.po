@@ -129,10 +129,15 @@ msgstr ""
 msgid "API key"
 msgstr "Clave API"
 
+# =====================================================
+# Client/Profile Module Translations
+# =====================================================
 msgid ""
 "API key allows integration with external applications. You will need this "
 "key for authentication."
 msgstr ""
+"La clave API permite la integración con aplicaciones externas. Necesitarás "
+"esta clave para la autenticación."
 
 msgid "API key capitalization"
 msgstr ""
@@ -2839,6 +2844,8 @@ msgid ""
 "If your server has multiple network interfaces, you may select the default "
 "one for FOSSBilling to use when making requests here."
 msgstr ""
+"Si tu servidor tiene múltiples interfaces de red, puedes seleccionar la "
+"predeterminada para que FOSSBilling la use al hacer solicitudes."
 
 msgid "Image"
 msgstr "Imagen"
@@ -4216,6 +4223,9 @@ msgid ""
 "with better technical support and helps us to proactively improve "
 "FOSSBilling."
 msgstr ""
+"Por favor considera habilitar el reporte de errores. Hacerlo nos permite "
+"brindarte mejor soporte técnico y nos ayuda a mejorar FOSSBilling "
+"proactivamente."
 
 msgid "Please enter your message"
 msgstr ""
@@ -5294,6 +5304,8 @@ msgid ""
 "The currently selected network interface does not appear to be able to reach "
 "the internet!"
 msgstr ""
+"¡La interfaz de red seleccionada actualmente no parece poder acceder a "
+"internet!"
 
 msgid ""
 "The default currency is the one you define product pricing in. If your "
@@ -5456,11 +5468,15 @@ msgid ""
 "This update is considered to be a major update, you should check the release "
 "notes for any breaking changes."
 msgstr ""
+"Esta actualización se considera una actualización mayor, deberías revisar "
+"las notas de la versión para ver cambios importantes."
 
 msgid ""
 "This update is considered to be a minor update, there are low chances of "
 "incompatibilities."
 msgstr ""
+"Esta actualización se considera una actualización menor, hay pocas "
+"posibilidades de incompatibilidades."
 
 msgid "Ticket"
 msgstr "Ticket"
@@ -6127,6 +6143,8 @@ msgid ""
 "With the current settings, your FOSSBilling instance will have an external "
 "IP address of: "
 msgstr ""
+"Con la configuración actual, tu instancia de FOSSBilling tendrá una "
+"dirección IP externa de: "
 
 msgid "Year"
 msgstr "Año"
@@ -6148,6 +6166,9 @@ msgid ""
 "needed at the moment. If you think this is a mistake, you may use the button "
 "below to check again."
 msgstr ""
+"Parece que estás ejecutando la última versión de FOSSBilling, por lo que no "
+"se necesita ninguna acción en este momento. Si crees que esto es un error, "
+"puedes usar el botón de abajo para verificar de nuevo."
 
 #, fuzzy
 msgid "You are"
@@ -6779,3 +6800,120 @@ msgstr "GRATIS"
 
 msgid "You are logged out"
 msgstr "Has cerrado sesión"
+
+msgid "Back"
+msgstr "Volver"
+
+msgid "Back to Status"
+msgstr "Volver al Estado"
+
+msgid "Created"
+msgstr "Creado"
+
+msgid "Visible"
+msgstr "Visible"
+
+# =====================================================
+# System Module Translations
+# =====================================================
+msgid "Available network interfaces"
+msgstr "Interfaces de red disponibles"
+
+msgid "Enabled modules"
+msgstr "Módulos habilitados"
+
+msgid ""
+"This FOSSBilling instance is automatically sending error reports which "
+"allows us to more easily improve the software and keep it stable. Thanks!"
+msgstr ""
+"Esta instancia de FOSSBilling está enviando automáticamente reportes de "
+"errores, lo que nos permite mejorar el software más fácilmente y mantenerlo "
+"estable. ¡Gracias!"
+
+msgid "This is a core module included with FOSSBilling and cannot be disabled."
+msgstr ""
+"Este es un módulo central incluido con FOSSBilling y no puede ser "
+"deshabilitado."
+
+msgid "Add a deposit"
+msgstr "Agregar un depósito"
+
+msgid "Birth date"
+msgstr "Fecha de nacimiento"
+
+msgid ""
+"Create new client profile if you want to manage your money in other currency"
+msgstr ""
+"Crea un nuevo perfil de cliente si deseas administrar tu dinero en otra "
+"moneda"
+
+msgid "Deposit"
+msgstr "Depósito"
+
+msgid ""
+"Here you can track what you have been charged for and add more funds to your "
+"account"
+msgstr ""
+"Aquí puedes ver por qué se te ha cobrado y agregar más fondos a tu cuenta"
+
+msgid "Payment history"
+msgstr "Historial de pagos"
+
+msgid "Please enter new password two times in order avoid mistypes"
+msgstr ""
+"Por favor ingresa la nueva contraseña dos veces para evitar errores de "
+"escritura"
+
+msgid "Please register with"
+msgstr "Por favor regístrate con"
+
+msgid "Reset key"
+msgstr "Restablecer clave"
+
+msgid "Warning! Resetting the key will break existing applications using it!"
+msgstr ""
+"¡Advertencia! ¡Restablecer la clave romperá las aplicaciones existentes que "
+"la usan!"
+
+msgid ""
+"Your profile currency is defined after your first order. Once your currency "
+"is set, all your profile accounting will be managed in that currency and can "
+"not be changed."
+msgstr ""
+"La moneda de tu perfil se define después de tu primer pedido. Una vez "
+"establecida tu moneda, toda la contabilidad de tu perfil se gestionará en "
+"esa moneda y no se puede cambiar."
+
+msgid "at "
+msgstr "a las "
+
+msgid ""
+"to change your profile image. Gravatar image updates may not appear "
+"immediately."
+msgstr ""
+"para cambiar tu imagen de perfil. Las actualizaciones de imagen de Gravatar "
+"pueden no aparecer inmediatamente."
+
+# =====================================================
+# Admin Dashboard Translations
+# =====================================================
+msgid "Back to top"
+msgstr "Volver arriba"
+
+msgid "No active orders available"
+msgstr "No hay pedidos activos disponibles"
+
+msgid "Open user menu"
+msgstr "Abrir menú de usuario"
+
+msgid "Pagination"
+msgstr "Paginación"
+
+msgid "Product sales"
+msgstr "Ventas de productos"
+
+msgid "Recent client activity"
+msgstr "Actividad reciente de clientes"
+
+msgid "Toggle navigation"
+msgstr "Alternar navegación"
