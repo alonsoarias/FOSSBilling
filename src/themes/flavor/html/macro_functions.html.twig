@@ -1,0 +1,86 @@
+{% macro selectbox(name, options, selected, required, nullOption) %}
+    <select name="{{ name }}" class="form-select{% if required %} is-required{% endif %}">
+        {% if nullOption %}<option value="">{{ nullOption }}</option>{% endif %}
+        {% for val, label in options %}
+        <option value="{{ val }}" {% if selected == val %}selected{% endif %}>{{ label }}</option>
+        {% endfor %}
+    </select>
+{% endmacro %}
+
+{% macro selectboxtld(name, options, selected, required) %}
+    <select name="{{ name }}" class="form-select{% if required %} is-required{% endif %}" style="width: 100px;">
+        {% for data in options %}
+        <option value="{{ data.tld }}" {% if selected == data.tld %}selected{% endif %}>{{ data.tld }}</option>
+        {% endfor %}
+    </select>
+{% endmacro %}
+
+{# deprecated - use money filter #}
+{% macro currency_format(price, currency) %}
+    {{ price | money(currency) }}
+{% endmacro %}
+
+{# deprecated - use money_convert filter #}
+{% macro currency(price, currency) %}
+    {{ price | money_convert(currency) }}
+{% endmacro %}
+
+{% macro status_name(status) %}
+    {% set status = status|replace({'_': " "})|title|trim %}
+    {% if status == 'Active' %}
+        <span class="status-badge status-active">{{ 'Activo'|trans }}</span>
+    {% elseif status == 'Pending Setup' %}
+        <span class="status-badge status-pending">{{ 'Pendiente'|trans }}</span>
+    {% elseif status == 'Failed Setup' %}
+        <span class="status-badge status-canceled">{{ 'Error en configuración'|trans }}</span>
+    {% elseif status == 'Failed Renew' %}
+        <span class="status-badge status-canceled">{{ 'Error en renovación'|trans }}</span>
+    {% elseif status == 'Suspended' %}
+        <span class="status-badge status-suspended">{{ 'Suspendido'|trans }}</span>
+    {% elseif status == 'Canceled' %}
+        <span class="status-badge status-canceled">{{ 'Cancelado'|trans }}</span>
+    {% elseif status == 'Paid' %}
+        <span class="status-badge status-active">{{ 'Pagado'|trans }}</span>
+    {% elseif status == 'Unpaid' %}
+        <span class="status-badge status-pending">{{ 'Pendiente'|trans }}</span>
+    {% elseif status == 'Refunded' %}
+        <span class="status-badge status-canceled">{{ 'Reembolsado'|trans }}</span>
+    {% else %}
+        <span class="status-badge">{{ status|trans }}</span>
+    {% endif %}
+{% endmacro %}
+
+{# deprecated - use period_title filter #}
+{% macro period_name(period) %}
+    {{ period | period_title }}
+{% endmacro %}
+
+{% macro markdown_quote(text) %}
+
+
+{% for line in text|split('\n') %}
+> {{ line }}
+{% endfor %}
+{% endmacro %}
+
+
+{% macro recaptcha() %}
+
+{% if guest.extension_is_on({"mod":"spamchecker"}) %}
+{% set rc = guest.spamchecker_recaptcha %}
+    {% if rc.enabled %}
+        {% if rc.version == 2 %}
+            <script src='https://www.google.com/recaptcha/api.js' async defer></script>
+            <div class="g-recaptcha" data-sitekey="{{ rc.publickey }}"></div>
+        {% endif %}
+    {% endif %}
+{% endif %}
+{% endmacro %}
+
+{% macro wysiwyg(selector) %}
+{% if guest.extension_is_on({"mod":"wysiwyg"}) %}
+{{ include('mod_wysiwyg_js.html.twig', { 'class': selector|trim('.#') }) }}
+{% else %}
+<!-- No WYSIWYG -->
+{% endif %}
+{% endmacro %}

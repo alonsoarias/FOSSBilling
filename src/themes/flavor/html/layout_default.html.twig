@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="{{ settings.theme|default('light') }}">
+<head>
+    <meta charset="utf-8">
+    <title>{{ settings.meta_title_prefix }} {% block meta_title %}{% endblock %} {{ settings.meta_title_suffix }}</title>
+
+    <meta property="bb:url" content="{{ constant('SYSTEM_URL') }}">
+    <meta property="bb:client_area" content="{{ '/'|link }}">
+    <meta name="csrf-token" content="{{ CSRFToken }}">
+
+    <meta name="description" content="{% block meta_description %}{{ settings.meta_description }}{% endblock %}">
+    <meta name="keywords" content="{{ settings.meta_keywords }}">
+    <meta name="robots" content="{{ settings.meta_robots }}">
+    <meta name="author" content="{{ settings.meta_author }}">
+    <meta name="generator" content="FOSSBilling">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Google Fonts - Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    {% block opengraph %}{% endblock %}
+    <link rel='stylesheet' type='text/css' href="{{ 'css/font-awesome.css' | asset_url }}">
+    {{ encore_entry_link_tags('flavor') }}
+    <link rel="shortcut icon" href="{{ guest.system_company.favicon_url }}">
+
+    {{ "Api/API.js" | library_url | script_tag }}
+    {{ encore_entry_script_tags('flavor') }}
+
+    {{ DebugBar_renderHead() }}
+
+    {% block head %}{% endblock %}
+    {% block js %}{% endblock %}
+</head>
+
+<body class="{% block body_class %}{% endblock %}">
+
+{% block body %}
+{% if not client and settings.require_login %}
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const publicPaths = ['/news', '/tos', '/privacy-policy'];
+            const currentPath = window.location.pathname;
+            const isAllowed = publicPaths.some(path => currentPath.startsWith(path));
+            if (!isAllowed) {
+                window.location.href = '{{ "login"|link }}';
+            }
+        });
+    </script>
+{% endif %}
+
+{% if client %}
+    {% set profile = client.profile_get %}
+{% endif %}
+{% set company = guest.system_company %}
+
+{% if settings.theme == 'dark' %}
+    {% set logo_url = company.logo_url_dark %}
+{% else %}
+    {% set logo_url = company.logo_url %}
+{% endif %}
+
+<div class="wrapper">
+    <!-- Header -->
+    <header class="navbar sticky-top">
+        <div class="container">
+            <div class="d-flex align-items-center w-100">
+                <!-- Logo -->
+                <a class="navbar-brand me-auto" href="{{ '/'|link }}">
+                    {% if logo_url and settings.show_company_logo %}
+                        <img src="{{ logo_url }}" alt="{{ company.name }}" height="36">
+                    {% else %}
+                        <span class="fw-bold fs-5">{{ company.name }}</span>
+                    {% endif %}
+                </a>
+
+                <!-- Desktop Navigation -->
+                <nav class="d-none d-md-flex align-items-center gap-2">
+                    {% set languages = guest.extension_languages(true) %}
+                    {% if languages|length > 1 %}
+                        <select name="lang" class="form-select form-select-sm js-language-selector" style="width: auto;">
+                            {% for lang in languages %}
+                                <option value="{{ lang.locale }}" data-custom-properties="&lt;span class=&quot;fi fi-{{ lang.locale|split('_')[1]|lower }}&quot;&gt;&lt;/span&gt;">&nbsp;{{ lang.title }}</option>
+                            {% endfor %}
+                        </select>
+                    {% endif %}
+
+                    {% if settings.top_menu_order %}
+                        <a class="btn btn-light btn-sm" href="{{ '/order'|link }}">
+                            <i class="fa fa-shopping-cart me-1"></i> {{ 'Pedidos'|trans }}
+                        </a>
+                    {% endif %}
+
+                    {% if client %}
+                        <div class="dropdown user-dropdown">
+                            <button class="dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <img class="user-avatar" src="{{ profile.email|gravatar(64) }}" alt="{{ profile.first_name }}">
+                                <span class="d-none d-lg-inline">{{ profile.first_name }}</span>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li>
+                                    <a class="dropdown-item" href="{{ 'client/profile'|link }}">
+                                        <i class="fa fa-user me-2"></i> {{ 'Perfil'|trans }}
+                                    </a>
+                                </li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li>
+                                    <a class="dropdown-item text-danger" href="{{ 'client/logout'|link }}">
+                                        <i class="fa fa-sign-out me-2"></i> {{ 'Cerrar sesión'|trans }}
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    {% else %}
+                        <a class="btn btn-outline-primary btn-sm" href="{{ 'login'|link }}">{{ 'Iniciar sesión'|trans }}</a>
+                        <a class="btn btn-primary btn-sm" href="{{ 'signup'|link }}">{{ 'Registrarse'|trans }}</a>
+                    {% endif %}
+                </nav>
+
+                <!-- Mobile menu button -->
+                <button class="btn btn-light d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileMenu">
+                    <i class="fa fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content py-4">
+        <div class="container">
+            <div class="row g-4">
+                {% if client or not settings.hide_menu %}
+                    <!-- Sidebar -->
+                    <div class="col-lg-3 d-none d-lg-block">
+                        <div class="sidebar">
+                            {{ include('partial_menu.html.twig') }}
+                        </div>
+                    </div>
+                {% endif %}
+
+                <!-- Content Area -->
+                <div class="{% if client or not settings.hide_menu %}col-lg-9{% else %}col-12{% endif %}">
+                    {% block content_before %}{% endblock %}
+
+                    {% if settings.show_breadcrumb %}
+                        {% block breadcrumbs %}
+                            <nav aria-label="breadcrumb" class="mb-3">
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item"><a href="{{ '/'|link }}">{{ 'Inicio'|trans }}</a></li>
+                                    {% block breadcrumb %}
+                                        <li class="breadcrumb-item active">{{ 'Dashboard'|trans }}</li>
+                                    {% endblock %}
+                                </ol>
+                            </nav>
+                        {% endblock %}
+                    {% endif %}
+
+                    {% block content %}{% endblock %}
+
+                    {{ include('partial_message.html.twig') }}
+
+                    {% block content_after %}{% endblock %}
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    {% if settings.footer_enabled %}
+        <footer class="footer">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-md-6 text-center text-md-start">
+                        <span class="footer-text">
+                            &copy; {{ now|format_date(pattern='yyyy') }} {{ settings.footer_signature | default(company.signature) }}
+                        </span>
+                    </div>
+                    <div class="col-md-6 text-center text-md-end mt-2 mt-md-0">
+                        <ul class="footer-links d-inline-flex flex-wrap justify-content-center justify-content-md-end gap-3 list-unstyled mb-0">
+                            {% if settings.footer_link_1_enabled %}
+                                <li>
+                                    {% if 'http://' in settings.footer_link_1_page or 'https://' in settings.footer_link_1_page %}
+                                        <a href="{{ settings.footer_link_1_page }}">{{ settings.footer_link_1_title }}</a>
+                                    {% else %}
+                                        <a href="{{ settings.footer_link_1_page | link }}">{{ settings.footer_link_1_title }}</a>
+                                    {% endif %}
+                                </li>
+                            {% endif %}
+                            {% if settings.footer_link_2_enabled %}
+                                <li>
+                                    {% if 'http://' in settings.footer_link_2_page or 'https://' in settings.footer_link_2_page %}
+                                        <a href="{{ settings.footer_link_2_page }}">{{ settings.footer_link_2_title }}</a>
+                                    {% else %}
+                                        <a href="{{ settings.footer_link_2_page | link }}">{{ settings.footer_link_2_title }}</a>
+                                    {% endif %}
+                                </li>
+                            {% endif %}
+                            {% if settings.footer_link_3_enabled %}
+                                <li>
+                                    {% if 'http://' in settings.footer_link_3_page or 'https://' in settings.footer_link_3_page %}
+                                        <a href="{{ settings.footer_link_3_page }}">{{ settings.footer_link_3_title }}</a>
+                                    {% else %}
+                                        <a href="{{ settings.footer_link_3_page | link }}">{{ settings.footer_link_3_title }}</a>
+                                    {% endif %}
+                                </li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </div>
+                {% if guest.extension_is_on({"mod":'branding'}) %}
+                    <div class="text-center mt-3">
+                        <small class="text-muted">
+                            {{ 'Desarrollado con'|trans }} <a href="https://fossbilling.org" target="_blank" class="text-decoration-none">FOSSBilling</a>
+                        </small>
+                    </div>
+                {% endif %}
+            </div>
+        </footer>
+    {% endif %}
+</div>
+
+<!-- Mobile Menu Offcanvas -->
+<div class="offcanvas offcanvas-start" tabindex="-1" id="mobileMenu">
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title">{{ 'Menú'|trans }}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+    </div>
+    <div class="offcanvas-body">
+        {{ include('mobile_menu.html.twig') }}
+    </div>
+</div>
+
+<!-- Toast Container -->
+<div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 1070;"></div>
+
+<!-- Loading Overlay -->
+<div class="loading-overlay" style="display:none" onclick="$(this).hide();">
+    <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;"></div>
+</div>
+
+<noscript>
+    <div class="alert alert-warning m-3">
+        {{ "NOTA: Muchas funciones requieren JavaScript y cookies habilitados."|trans }}
+    </div>
+</noscript>
+
+{% endblock %}
+
+{% if settings.inject_javascript %}
+    {{ settings.inject_javascript | raw }}
+{% endif %}
+
+{{ include('partial_pending_messages.html.twig', ignore_missing: true) }}
+
+{% if guest.extension_is_on({ "mod": "cookieconsent" }) %}
+    {{ include('mod_cookieconsent_index.html.twig', ignore_missing: true) }}
+{% endif %}
+
+{{ DebugBar_render() }}
+</body>
+</html>

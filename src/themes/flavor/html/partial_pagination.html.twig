@@ -1,0 +1,61 @@
+{% if list.pages > 1 %}
+    {% set pageParam = page_param|default('page') %}
+    {% set currentPageRaw = request.(pageParam)|default(1) %}
+    {% if currentPageRaw matches '/^\\d+$/' %}
+        {% set currentPage = currentPageRaw %}
+    {% else %}
+        {% set currentPage = 1 %}
+    {% endif %}
+
+    {% set paginator = guest.system_paginator({ 'total': list.total, 'page_param': pageParam, (pageParam): currentPage, 'per_page': list.per_page }) %}
+
+    {# Removing current page parameter from the request to avoid duplication #}
+    {% set safeRequest = request|merge({ (pageParam): null }) %}
+    {% set filteredRequest = safeRequest|filter(v => v is not null) %}
+    <nav aria-label="{{ 'Paginación'|trans }}">
+        <ul class="pagination justify-content-center mb-0">
+            <li class="page-item{% if not currentPage or currentPage == 1 %} disabled{% endif %}">
+                <a class="page-link"
+                   href="{{ url|link(filteredRequest|merge({ (pageParam): 1 })) }}"
+                   aria-label="{{ 'Primera'|trans }}">
+                    <i class="fa fa-angle-double-left"></i>
+                </a>
+            </li>
+
+            <li class="page-item{% if not currentPage or currentPage == 1 %} disabled{% endif %}">
+                <a class="page-link"
+                   href="{{ url|link(filteredRequest|merge({ (pageParam): currentPage - 1 })) }}"
+                   aria-label="{{ 'Anterior'|trans }}" rel="prev">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+            </li>
+
+            {% for i in 1..list.pages %}
+                <li class="page-item{% if i == currentPage %} active{% endif %}">
+                    {% if i == currentPage or (not currentPage and i == 1) %}
+                        <span class="page-link" aria-current="page">{{ i }}</span>
+                    {% else %}
+                        <a class="page-link"
+                           href="{{ url|link(filteredRequest|merge({ (pageParam): i })) }}">{{ i }}</a>
+                    {% endif %}
+                </li>
+            {% endfor %}
+
+            <li class="page-item{% if currentPage == list.pages %} disabled{% endif %}">
+                <a class="page-link"
+                   href="{{ url|link(filteredRequest|merge({ (pageParam): currentPage + 1 })) }}"
+                   aria-label="{{ 'Siguiente'|trans }}" rel="next">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+
+            <li class="page-item{% if currentPage == list.pages %} disabled{% endif %}">
+                <a class="page-link"
+                   href="{{ url|link(filteredRequest|merge({ (pageParam): list.pages })) }}"
+                   aria-label="{{ 'Última'|trans }}">
+                    <i class="fa fa-angle-double-right"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+{% endif %}

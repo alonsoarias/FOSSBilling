@@ -1,0 +1,46 @@
+{% extends 'layout_public.html.twig' %}
+
+{% block meta_title %}{{ 'Error'|trans }}{% endblock %}
+
+{% block body %}
+{% set company = guest.system_company %}
+{% if settings.theme == 'dark' %}
+    {% set logo_url = company.logo_url_dark %}
+{% else %}
+    {% set logo_url = company.logo_url %}
+{% endif %}
+
+<div class="auth-page">
+    <div class="auth-card text-center">
+        {% if logo_url %}
+            <div class="auth-logo mb-4">
+                <a href="{{ '/'|link }}">
+                    <img src="{{ logo_url }}" alt="{{ company.name }}" height="48">
+                </a>
+            </div>
+        {% endif %}
+
+        <div class="mb-4">
+            <div class="display-1 text-primary fw-bold">{{ exception.http_code|default(500) }}</div>
+        </div>
+
+        <h1 class="auth-title">{{ 'Algo salió mal'|trans }}</h1>
+        <p class="auth-subtitle">
+            {% if exception.message %}
+                {{ exception.message }}
+            {% else %}
+                {{ 'No pudimos encontrar la página que buscas.'|trans }}
+            {% endif %}
+        </p>
+
+        <div class="d-grid gap-2">
+            <a href="{{ '/'|link }}" class="btn btn-primary">
+                <i class="fa fa-home me-2"></i>{{ 'Volver al inicio'|trans }}
+            </a>
+            <a href="javascript:history.back()" class="btn btn-light">
+                <i class="fa fa-arrow-left me-2"></i>{{ 'Volver atrás'|trans }}
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

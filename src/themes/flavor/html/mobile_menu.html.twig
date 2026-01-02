@@ -1,0 +1,57 @@
+{# Mobile Navigation Menu #}
+<nav class="mobile-nav">
+    {% if client %}
+        {% set profile = client.profile_get %}
+        <div class="d-flex align-items-center gap-3 mb-4 pb-3 border-bottom">
+            <img class="rounded-circle" src="{{ profile.email|gravatar(48) }}" alt="{{ profile.first_name }}" width="48" height="48">
+            <div>
+                <div class="fw-semibold">{{ profile.first_name }} {{ profile.last_name }}</div>
+                <small class="text-muted">{{ profile.email }}</small>
+            </div>
+        </div>
+    {% endif %}
+
+    <div class="list-group list-group-flush">
+        {% if client %}
+            <a class="list-group-item list-group-item-action" href="{{ '/'|link }}">
+                <i class="fa fa-home me-2"></i> {{ 'Dashboard'|trans }}
+            </a>
+            <a class="list-group-item list-group-item-action" href="{{ '/order'|link }}">
+                <i class="fa fa-shopping-cart me-2"></i> {{ 'Nuevo pedido'|trans }}
+            </a>
+            <a class="list-group-item list-group-item-action" href="{{ '/order/history'|link }}">
+                <i class="fa fa-list me-2"></i> {{ 'Mis pedidos'|trans }}
+            </a>
+            <a class="list-group-item list-group-item-action" href="{{ '/invoice'|link }}">
+                <i class="fa fa-file-text-o me-2"></i> {{ 'Facturas'|trans }}
+            </a>
+            <a class="list-group-item list-group-item-action" href="{{ '/support'|link }}">
+                <i class="fa fa-life-ring me-2"></i> {{ 'Tickets'|trans }}
+            </a>
+            <a class="list-group-item list-group-item-action" href="{{ '/client/profile'|link }}">
+                <i class="fa fa-user me-2"></i> {{ 'Perfil'|trans }}
+            </a>
+            <a class="list-group-item list-group-item-action" href="{{ '/client/email'|link }}">
+                <i class="fa fa-envelope me-2"></i> {{ 'Correos'|trans }}
+            </a>
+            <a class="list-group-item list-group-item-action text-danger" href="{{ '/client/logout'|link }}">
+                <i class="fa fa-sign-out me-2"></i> {{ 'Cerrar sesión'|trans }}
+            </a>
+        {% else %}
+            <a class="list-group-item list-group-item-action" href="{{ '/order'|link }}">
+                <i class="fa fa-shopping-cart me-2"></i> {{ 'Productos'|trans }}
+            </a>
+            {% if guest.extension_is_on({"mod":"kb"}) %}
+                <a class="list-group-item list-group-item-action" href="{{ '/support/kb'|link }}">
+                    <i class="fa fa-book me-2"></i> {{ 'Base de conocimiento'|trans }}
+                </a>
+            {% endif %}
+            <a class="list-group-item list-group-item-action" href="{{ '/login'|link }}">
+                <i class="fa fa-sign-in me-2"></i> {{ 'Iniciar sesión'|trans }}
+            </a>
+            <a class="list-group-item list-group-item-action" href="{{ '/signup'|link }}">
+                <i class="fa fa-user-plus me-2"></i> {{ 'Registrarse'|trans }}
+            </a>
+        {% endif %}
+    </div>
+</nav>
