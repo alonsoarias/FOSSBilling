@@ -169,7 +169,7 @@ msgid "About"
 msgstr ""
 
 msgid "About FOSSBilling"
-msgstr ""
+msgstr "Acerca de FOSSBilling"
 
 msgid "About us"
 msgstr ""
@@ -617,7 +617,7 @@ msgid "Apply"
 msgstr "Aplicar"
 
 msgid "Apply Patches & Update Configuration"
-msgstr ""
+msgstr "Aplicar parches y actualizar configuración"
 
 msgid "Apply changes"
 msgstr ""
@@ -793,10 +793,10 @@ msgid "Cache"
 msgstr "Caché"
 
 msgid "Cache control"
-msgstr ""
+msgstr "Control de caché"
 
 msgid "Cache directory is cleared"
-msgstr ""
+msgstr "El directorio de caché ha sido limpiado"
 
 msgid ""
 "Can be disabled to prevent the staff member from using any part of this "
@@ -955,7 +955,7 @@ msgid "Check domain registrar you are looking for is available at"
 msgstr ""
 
 msgid "Check for Updates"
-msgstr ""
+msgstr "Buscar actualizaciones"
 
 msgid "Check for payment gateway at"
 msgstr ""
@@ -1141,13 +1141,13 @@ msgid "Company credentials"
 msgstr ""
 
 msgid "Company details"
-msgstr ""
+msgstr "Detalles de la empresa"
 
 msgid "Company details at the moment of purchase"
 msgstr ""
 
 msgid "Company legal"
-msgstr ""
+msgstr "Legal de la empresa"
 
 msgid "Company name"
 msgstr "Nombre de la empresa"
@@ -1260,7 +1260,7 @@ msgid "Countries"
 msgstr ""
 
 msgid "Countries updated"
-msgstr ""
+msgstr "Países actualizados"
 
 msgid "Country"
 msgstr "País"
@@ -1549,7 +1549,7 @@ msgid "Disable email change"
 msgstr ""
 
 msgid "Disable error reporting"
-msgstr ""
+msgstr "Deshabilitar reporte de errores"
 
 msgid "Disable new signups"
 msgstr ""
@@ -1924,7 +1924,7 @@ msgid "Enable dark mode"
 msgstr ""
 
 msgid "Enable error reporting"
-msgstr ""
+msgstr "Habilitar reporte de errores"
 
 msgid "Enable light mode"
 msgstr ""
@@ -1971,7 +1971,7 @@ msgid "Enter Custom Transaction ID"
 msgstr ""
 
 msgid "Enter a custom interface to use:"
-msgstr ""
+msgstr "Ingresa una interfaz personalizada a usar:"
 
 msgid "Enter code"
 msgstr ""
@@ -2045,16 +2045,16 @@ msgid ""
 msgstr ""
 
 msgid "Error reporting"
-msgstr ""
+msgstr "Reporte de errores"
 
 msgid "Error reporting changelog"
-msgstr ""
+msgstr "Historial de cambios del reporte de errores"
 
 msgid "Error reporting is disabled."
-msgstr ""
+msgstr "El reporte de errores está deshabilitado."
 
 msgid "Error reporting is enabled."
-msgstr ""
+msgstr "El reporte de errores está habilitado."
 
 msgid "Error reporting is now disabled."
 msgstr ""
@@ -2270,7 +2270,7 @@ msgid ""
 msgstr ""
 
 msgid "FOSSBilling version"
-msgstr ""
+msgstr "Versión de FOSSBilling"
 
 msgid "FOSSBilling will automatically detect new plugin"
 msgstr ""
@@ -2898,7 +2898,7 @@ msgid "Install from the Extension Directory"
 msgstr ""
 
 msgid "Instance ID"
-msgstr ""
+msgstr "ID de instancia"
 
 msgid "Instant payment notification (IPN) did not pass gateway :id validation"
 msgstr ""
@@ -2953,7 +2953,7 @@ msgid "Invalid server manager. Server was not configured properly."
 msgstr ""
 
 msgid "Invalidate cache"
-msgstr ""
+msgstr "Invalidar caché"
 
 msgid "Invoice"
 msgstr "Factura"
@@ -3110,7 +3110,7 @@ msgid "Last Updated"
 msgstr ""
 
 msgid "Last applicable behavior change: "
-msgstr ""
+msgstr "Último cambio de comportamiento aplicable: "
 
 msgid "Last month"
 msgstr ""
@@ -3131,7 +3131,7 @@ msgid "Last update"
 msgstr "Última actualización"
 
 msgid "Last update check:"
-msgstr ""
+msgstr "Última verificación:"
 
 msgid "Latest news and announcements"
 msgstr "Últimas noticias y anuncios"
@@ -3143,7 +3143,7 @@ msgid "Learn more"
 msgstr "Más información"
 
 msgid "Learn more about error reporting"
-msgstr ""
+msgstr "Aprender más sobre el reporte de errores"
 
 msgid "Leave blank for unlimited uses"
 msgstr ""
@@ -3210,7 +3210,7 @@ msgid "Links"
 msgstr "Enlaces"
 
 msgid "List of countries"
-msgstr ""
+msgstr "Lista de países"
 
 msgid "List of translations on the Extension Directory"
 msgstr ""
@@ -3535,10 +3535,10 @@ msgid ""
 msgstr ""
 
 msgid "Network interface"
-msgstr ""
+msgstr "Interfaz de red"
 
 msgid "Network interface updated."
-msgstr ""
+msgstr "Interfaz de red actualizada."
 
 msgid "Never"
 msgstr "Nunca"
@@ -3693,7 +3693,7 @@ msgid "Next paid invoice number"
 msgstr ""
 
 msgid "Next update check:"
-msgstr ""
+msgstr "Próxima verificación:"
 
 msgid "No"
 msgstr "No"
@@ -5961,7 +5961,7 @@ msgid "VAT ID"
 msgstr ""
 
 msgid "VAT number"
-msgstr ""
+msgstr "Número de IVA"
 
 msgid "Valid Domains"
 msgstr ""
