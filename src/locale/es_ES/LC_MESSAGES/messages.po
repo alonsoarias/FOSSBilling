@@ -6771,14 +6771,24 @@ msgstr "Mantenimiento Programado"
 msgid "Incident History"
 msgstr "Historial de Incidentes"
 
+#, fuzzy
 msgid "Past incidents from the last 90 days"
-msgstr "Incidentes de los últimos 90 días"
+msgstr ""
+"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
+"Incidentes de los últimos 90 días\n"
+"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
+"Incidentes pasados de los últimos 90 días"
 
 msgid "No incidents in the past 90 days"
 msgstr "Sin incidentes en los últimos 90 días"
 
+#, fuzzy
 msgid "All systems have been running smoothly."
-msgstr "Todos los sistemas han funcionado correctamente."
+msgstr ""
+"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
+"Todos los sistemas han funcionado correctamente.\n"
+"#-#-#-#-#  messages.po (FOSSBilling 1.0)  #-#-#-#-#\n"
+"Todos los sistemas han estado funcionando sin problemas."
 
 msgid "All Systems Operational"
 msgstr "Todos los Sistemas Operativos"
@@ -7841,3 +7851,6 @@ msgstr "Sin nuevas notificaciones"
 
 msgid "My profile"
 msgstr "Mi perfil"
+
+msgid "All systems have been operating normally."
+msgstr "Todos los sistemas han estado operando con normalidad."
