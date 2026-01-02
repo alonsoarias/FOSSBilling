@@ -71,7 +71,7 @@
             </p>
             <address>
                {% if seller.company_vat%}
-               VAT: {{ seller.company_vat }}<br />
+               {{ 'VAT'|trans }}: {{ seller.company_vat }}<br />
                {% endif %}
                {% if seller.address%}
                {{ seller.address }}<br />
@@ -86,7 +86,7 @@
                {{ seller.account_number }}<br />
                {% endif %}
                {% if seller.note %}
-               Note: {{ seller.note }}
+               {{ 'Note'|trans }}: {{ seller.note }}
                {% endif %}
             </address>
          </div>

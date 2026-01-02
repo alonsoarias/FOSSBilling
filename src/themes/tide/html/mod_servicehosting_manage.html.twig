@@ -178,7 +178,7 @@
                'client/servicehosting/change_domain',
                $(this).serialize(),
                function(result) {
-                   bb.msg('Domain name was changed');
+                   bb.msg('{{ 'Domain name was changed'|trans }}');
                }
            );
    
@@ -190,7 +190,7 @@
                'client/servicehosting/change_username',
                $(this).serialize(),
                function(result) {
-                   bb.msg('Account Username was changed');
+                   bb.msg('{{ 'Account username was changed'|trans }}');
                }
            );
    
@@ -202,7 +202,7 @@
                'client/servicehosting/change_password',
                $(this).serialize(),
                function(result) {
-                   bb.msg('Account Password was changed');
+                   bb.msg('{{ 'Account password was changed'|trans }}');
                }
            );
    

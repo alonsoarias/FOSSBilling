@@ -33,7 +33,7 @@
                   <div class="input-group input-group-flat">
                      <input type="password" class="form-control" id="passwordField" placeholder="{{ 'Password'|trans }}" name="password" required="required" value="{{ request.password }}" autocomplete="off">
                      <span class="input-group-text">
-                        <a href="#" class="link-secondary" title="Show password" id="reveal" data-bs-toggle="tooltip">
+                        <a href="#" class="link-secondary" title="{{ 'Show password'|trans }}" id="reveal" data-bs-toggle="tooltip">
                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                               <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
                               <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
@@ -59,7 +59,7 @@
       </div>
       {% if settings.show_signup_link%}
       <div class="text-center text-secondary mt-3">
-         Don't have account yet? <a href="{{ 'signup'|link }}" tabindex="-1">{{ 'Signup'|trans }}</a>
+         {{ "Don't have account yet?"|trans }} <a href="{{ 'signup'|link }}" tabindex="-1">{{ 'Signup'|trans }}</a>
       </div>
       {% endif %}
    </div>

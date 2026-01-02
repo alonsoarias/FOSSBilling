@@ -2150,3 +2150,230 @@ msgstr "por mes"
 
 msgid "per year"
 msgstr "por año"
+
+# Tide Theme - Additional translations
+msgid "This will generate a new invoice. Are you sure you want to continue?"
+msgstr "Esto generará una nueva factura. ¿Está seguro de que desea continuar?"
+
+msgid "Email resent"
+msgstr "Correo reenviado"
+
+msgid "Email deleted"
+msgstr "Correo eliminado"
+
+msgid "No news is good news!"
+msgstr "¡Sin noticias es buena noticia!"
+
+msgid "Already have account?"
+msgstr "¿Ya tienes una cuenta?"
+
+msgid "Create new account"
+msgstr "Crear nueva cuenta"
+
+msgid "Show password"
+msgstr "Mostrar contraseña"
+
+msgid "Hide password"
+msgstr "Ocultar contraseña"
+
+msgid "Enter email"
+msgstr "Ingrese su correo"
+
+msgid "Your subject"
+msgstr "Su asunto"
+
+msgid "Ticket was submitted. If you want to track conversation please go to support section"
+msgstr "El ticket fue enviado. Si desea seguir la conversación, por favor vaya a la sección de soporte"
+
+msgid "Service cancellation request received"
+msgstr "Solicitud de cancelación de servicio recibida"
+
+msgid "Service upgrade request received"
+msgstr "Solicitud de actualización de servicio recibida"
+
+msgid "Domain name was changed"
+msgstr "El nombre de dominio fue cambiado"
+
+msgid "Account username was changed"
+msgstr "El nombre de usuario de la cuenta fue cambiado"
+
+msgid "Account password was changed"
+msgstr "La contraseña de la cuenta fue cambiada"
+
+msgid "You must verify your email address before you may access our services."
+msgstr "Debe verificar su dirección de correo electrónico antes de acceder a nuestros servicios."
+
+msgid "API key was changed"
+msgstr "La clave API fue cambiada"
+
+msgid "Profile updated"
+msgstr "Perfil actualizado"
+
+msgid "Other"
+msgstr "Otro"
+
+msgid "Sign in"
+msgstr "Iniciar sesión"
+
+msgid "VAT"
+msgstr "IVA"
+
+# Additional Tide Theme translations
+msgid "Login to client area"
+msgstr "Iniciar sesión en el área de clientes"
+
+msgid "Your email"
+msgstr "Su correo electrónico"
+
+msgid "Your password"
+msgstr "Su contraseña"
+
+msgid "Enter your domain name"
+msgstr "Ingrese su nombre de dominio"
+
+msgid "Search for your perfect domain name"
+msgstr "Busca tu nombre de dominio perfecto"
+
+msgid "or transfer an existing one"
+msgstr "o transfiere uno existente"
+
+msgid "Don't have account yet?"
+msgstr "¿Aún no tienes cuenta?"
+
+msgid "Redirect to payment gateway"
+msgstr "Redirigir a pasarela de pago"
+
+msgid "Check domain"
+msgstr "Verificar dominio"
+
+msgid "This page is obsolete."
+msgstr "Esta página está obsoleta."
+
+msgid " Year/s @ "
+msgstr " Año/s @ "
+
+msgid "N/A"
+msgstr "N/D"
+
+msgid "Back to services"
+msgstr "Volver a servicios"
+
+msgid "Payment amount"
+msgstr "Monto del pago"
+
+msgid "Order status"
+msgstr "Estado del pedido"
+
+msgid "Order created"
+msgstr "Pedido creado"
+
+msgid "Activated at"
+msgstr "Activado el"
+
+msgid "Renewal date"
+msgstr "Fecha de renovación"
+
+msgid "Order notes"
+msgstr "Notas del pedido"
+
+msgid "Active support tickets"
+msgstr "Tickets de soporte activos"
+
+msgid "Jump to control panel"
+msgstr "Ir al panel de control"
+
+msgid "Manage hosting account"
+msgstr "Administrar cuenta de alojamiento"
+
+msgid "Manage domain"
+msgstr "Administrar dominio"
+
+msgid "Reseller control panel"
+msgstr "Panel de control de revendedor"
+
+msgid "Server IP"
+msgstr "IP del servidor"
+
+msgid "Server Hostname"
+msgstr "Hostname del servidor"
+
+msgid "Hosting plan"
+msgstr "Plan de hosting"
+
+msgid "Bandwidth"
+msgstr "Ancho de banda"
+
+msgid "Disk quota"
+msgstr "Cuota de disco"
+
+msgid "Change your FTP/cPanel/SSH password."
+msgstr "Cambie su contraseña de FTP/cPanel/SSH."
+
+msgid "Password Confirm"
+msgstr "Confirmar contraseña"
+
+msgid "Change password"
+msgstr "Cambiar contraseña"
+
+msgid "Change domain"
+msgstr "Cambiar dominio"
+
+msgid "New domain"
+msgstr "Nuevo dominio"
+
+msgid "Change username"
+msgstr "Cambiar nombre de usuario"
+
+msgid "Product name"
+msgstr "Nombre del producto"
+
+msgid "Addons"
+msgstr "Complementos"
+
+msgid "Addons you have ordered with this service"
+msgstr "Complementos que has pedido con este servicio"
+
+msgid "Product/Service"
+msgstr "Producto/Servicio"
+
+msgid "Next due date"
+msgstr "Próxima fecha de vencimiento"
+
+msgid "Submit new support ticket"
+msgstr "Enviar nuevo ticket de soporte"
+
+msgid "Help desk"
+msgstr "Mesa de ayuda"
+
+msgid "Submit cancellation request"
+msgstr "Enviar solicitud de cancelación"
+
+msgid "I would like to cancel"
+msgstr "Me gustaría cancelar"
+
+msgid "Reason"
+msgstr "Razón"
+
+msgid "Submit upgrade request"
+msgstr "Enviar solicitud de actualización"
+
+msgid "I would like to upgrade"
+msgstr "Me gustaría actualizar"
+
+msgid "Upgrade to"
+msgstr "Actualizar a"
+
+msgid "Renew now"
+msgstr "Renovar ahora"
+
+msgid "Request Upgrade"
+msgstr "Solicitar Actualización"
+
+msgid "Open ticket"
+msgstr "Abrir ticket"
+
+msgid "Request Cancellation"
+msgstr "Solicitar Cancelación"
+
+msgid "Request"
+msgstr "Solicitar"

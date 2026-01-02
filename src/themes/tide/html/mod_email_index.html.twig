@@ -23,7 +23,7 @@
                   <ul class="nav nav-tabs card-header-tabs" data-bs-toggle="tabs">
                      {% for i, email in emails.list %}
                      <li class="nav-item">
-                        <a href="#tab{{email.id}}" class="nav-link {% if loop.first%}active{% endif %}" data-bs-toggle="tab">Home</a>
+                        <a href="#tab{{email.id}}" class="nav-link {% if loop.first%}active{% endif %}" data-bs-toggle="tab">{{ email.subject|truncate(20) }}</a>
                      </li>
                      {% endfor %}
                   </ul>
@@ -68,21 +68,21 @@
                {id: email_id, CSRFToken: "{{ CSRFToken }}" },
                function(result) {
                    $('.wait').hide();
-                   bb.msg('Email resent');
+                   bb.msg('{{ 'Email resent'|trans }}');
                    return false;
                }
            );
        });
        $('.email-delete').on('click', function(e){
            e.preventDefault();
-           if (confirm('Are you sure?')){
+           if (confirm('{{ 'Are you sure?'|trans }}')){
                $('.wait').show();
                var email_id = $(this).attr('mail-id');
                bb.post(
                    'client/email/delete',
                    {id: email_id, CSRFToken: "{{ CSRFToken }}" },
                    function(result) {
-                       bb.msg('Email deleted');
+                       bb.msg('{{ 'Email deleted'|trans }}');
                        bb.redirect('{{ 'email'|link }}');
                        return false;
                    }
