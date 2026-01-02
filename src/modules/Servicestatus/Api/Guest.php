@@ -98,6 +98,16 @@ class Guest extends \Api_Abstract
     }
 
     /**
+     * Alias for incident_history() - recent incidents.
+     *
+     * @return array
+     */
+    public function incident_get_recent($data = [])
+    {
+        return $this->incident_history($data);
+    }
+
+    /**
      * Get scheduled maintenance.
      *
      * @return array
