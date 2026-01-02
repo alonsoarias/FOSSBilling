@@ -37,7 +37,7 @@
             {% set r = guest.client_required %}
             <div class="mb-3">
                <label class="form-label required">{{ 'Email Address'|trans }}</label>
-               <input type="email" class="form-control" placeholder="{{ 'Enter email'|trans }}" name="email" value="{{ request.email }}" required="required" id="reg-email">
+               <input type="email" class="form-control" placeholder="Enter email" name="email" value="{{ request.email }}" required="required" id="reg-email">
             </div>
             <div class="mb-3">
                <label class="form-label required">{{ 'First Name'|trans }}</label>
@@ -65,10 +65,10 @@
             <div class="mb-3">
                <label class="form-label required">{{ 'You are'|trans }}</label>
                <select class="form-select" name="gender" id="gender">
-                  <option value="male">{{ 'Male'|trans }}</option>
-                  <option value="female">{{ 'Female'|trans }}</option>
-                  <option value="nonbinary">{{ 'Non-binary'|trans }}</option>
-                  <option value="other">{{ 'Other'|trans }}</option>
+                  <option value="male">Male</option>
+                  <option value="female">Female</option>
+                  <option value="nonbinary">Non-binary</option>
+                  <option value="other">Other</option>
                </select>
             </div>
             {% endif %}
@@ -143,7 +143,7 @@
                <div class="input-group input-group-flat">
                   <input type="password" class="form-control" name="password" value="" required="required" id="reg-password" autocomplete="off">
                   <span class="input-group-text">
-                     <a href="#" class="link-secondary" title="{{ 'Show password'|trans }}" id="reveal1" data-bs-toggle="tooltip">
+                     <a href="#" class="link-secondary" title="Show password" id="reveal1" data-bs-toggle="tooltip">
                         <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
                            <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
@@ -158,7 +158,7 @@
                <div class="input-group input-group-flat">
                   <input type="password" class="form-control" name="password_confirm" name="password-confirm" value="" id="reg-password2" required="required" autocomplete="off">
                   <span class="input-group-text">
-                     <a href="#" class="link-secondary" title="{{ 'Show password'|trans }}" id="reveal2" data-bs-toggle="tooltip">
+                     <a href="#" class="link-secondary" title="Show password" id="reveal2" data-bs-toggle="tooltip">
                         <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
                            <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
@@ -171,12 +171,12 @@
             {{ mf.recaptcha }}
             <div class="form-footer">
                <input type="hidden" name="auto_login" value="1"/>
-               <button type="submit" class="btn btn-primary w-100">{{ 'Create new account'|trans }}</button>
+               <button type="submit" class="btn btn-primary w-100">Create new account</button>
             </div>
          </div>
       </form>
       <div class="text-center text-secondary mt-3">
-         {{ 'Already have account?'|trans }} <a href="{{ 'login'|link }}" tabindex="-1">{{ 'Sign in'|trans }}</a>
+         Already have account? <a href="{{ 'login'|link }}" tabindex="-1">Sign in</a>
       </div>
    </div>
 </div>

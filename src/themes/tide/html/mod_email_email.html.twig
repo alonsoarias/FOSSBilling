@@ -54,7 +54,7 @@
                { id: email_id, CSRFToken: "{{ CSRFToken }}" },
                function(result) {
                    $('.wait').hide();
-                   bb.msg('{{ 'Email resent'|trans }}');
+                   bb.msg('Email resent');
    
                    return false;
                }
@@ -63,7 +63,7 @@
        $('.email-delete').on('click', function(e){
            e.preventDefault();
    
-           if (confirm('{{ 'Are you sure?'|trans }}')){
+           if (confirm('Are you sure?')){
                $('.wait').show();
    
                var email_id = $(this).attr('mail-id');
@@ -72,7 +72,7 @@
                    'client/email/delete',
                    { id: email_id, CSRFToken: "{{ CSRFToken }}" },
                    function(result) {
-                       bb.msg('{{ 'Email deleted'|trans }}');
+                       bb.msg('Email deleted');
                        bb.redirect('{{ 'email'|link }}');
    
                        return false;
