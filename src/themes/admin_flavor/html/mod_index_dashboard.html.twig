@@ -1,0 +1,518 @@
+{% extends 'layout_default.html.twig' %}
+
+{% import 'macro_functions.html.twig' as mf %}
+
+{% block meta_title %}{{ 'Dashboard'|trans }}{% endblock %}
+
+{% block head %}
+<!-- ApexCharts for graphs -->
+<script src="https://cdn.jsdelivr.net/npm/apexcharts@3.45.1/dist/apexcharts.min.js"></script>
+{% endblock %}
+
+{% block content %}
+    {% for alert in admin.system_cas_messages() %}
+    <div class="alert alert-{{ alert.type }} {{ alert.dismissible ? "alert-dismissible" : "" }}" role="alert">
+        <h3 class="mb-1">{{ alert.title }}</h3>
+        <p>{{ alert.message }}</p>
+        {% if alert.buttons|length > 0 %}
+            <div class="btn-list">
+            {% for button in alert.buttons %}
+                <a href="{{ button.link }}" class="btn {{ button.type ? "btn-" ~ button.type : "" }}">{{ button.text }}</a>
+            {% endfor %}
+            </div>
+        {% endif %}
+        {% if alert.dismissible %}
+            <a class="btn-close" data-bs-dismiss="alert" aria-label="{{ 'Close'|trans }}"></a>
+        {% endif %}
+    </div>
+    {% endfor %}
+    {% for msg in admin.system_messages({ 'type': 'danger' }) %}
+    <div class="alert alert-danger alert-dismissible fade show mb-3" role="alert">
+        <strong>{{ 'Danger!'|trans }}</strong> {% if msg.url is not empty %}<a href="{{ msg.url }}">{{ msg.text }}</a>{% else %} {{ msg.text }} {% endif %}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="{{ 'Close'|trans }}"></button>
+    </div>
+    {% endfor %}
+    {% for msg in admin.system_messages({ 'type': 'warning' }) %}
+    <div class="alert alert-warning alert-dismissible fade show mb-3" role="alert">
+        <strong>{{ 'Warning'|trans }}:</strong> {% if msg.url is not empty %}<a href="{{ msg.url }}">{{ msg.text }}</a>{% else %} {{ msg.text }} {% endif %}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="{{ 'Close'|trans }}"></button>
+    </div>
+    {% endfor %}
+    {% for msg in admin.system_messages({ 'type': 'info' }) %}
+    <div class="alert alert-primary alert-dismissible fade show mb-3" role="alert">
+        <strong>{{ 'Information'|trans }}:</strong> {% if msg.url is not empty %}<a href="{{ msg.url }}">{{ msg.text }}</a>{% else %} {{ msg.text }} {% endif %}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="{{ 'Close'|trans }}"></button>
+    </div>
+    {% endfor %}
+
+<div class="row row-deck row-cards g-3">
+    {% if admin.system_is_allowed({ 'mod': 'stats' }) %}
+        {% set stats = admin.stats_get_summary %}
+        {% set income = admin.stats_get_summary_income %}
+        {% set client_statuses = admin.client_get_statuses %}
+        {% set order_statuses = admin.order_get_statuses %}
+        {% set invoice_statuses = admin.invoice_get_statuses %}
+        {% set support_statuses = admin.support_ticket_get_statuses %}
+
+        <div class="col-sm-6 col-lg-3">
+            <a href="{{ 'client'|alink }}" class="card card-sm text-decoration-none">
+                <div class="card-body">
+                    {% if client_statuses.suspended > 0 %}
+                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">{{ client_statuses.suspended }}</span>
+                    {% endif %}
+                    <div class="row align-items-center">
+                        <div class="col-auto">
+                            <span class="avatar bg-primary text-white">
+                                <i class="fa fa-users"></i>
+                            </span>
+                        </div>
+                        <div class="col">
+                            <div class="fw-semibold">{{ stats.clients_total }} {{ 'clients'|trans }}</div>
+                            <div class="text-muted small">{{ client_statuses.suspended }} {{ 'suspended'|trans }}</div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-sm-6 col-lg-3">
+            <a href="{{ 'order'|alink }}" class="card card-sm text-decoration-none">
+                <div class="card-body">
+                    {% if order_statuses.suspended > 0 %}
+                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">{{ order_statuses.suspended }}</span>
+                    {% endif %}
+                    <div class="row align-items-center">
+                        <div class="col-auto">
+                            <span class="avatar bg-success text-white">
+                                <i class="fa fa-shopping-cart"></i>
+                            </span>
+                        </div>
+                        <div class="col">
+                            <div class="fw-semibold">{{ stats.orders_total }} {{ 'orders'|trans }}</div>
+                            <div class="text-muted small">{{ order_statuses.suspended }} {{ 'suspended'|trans }}</div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-sm-6 col-lg-3">
+            <a href="{{ 'invoice'|alink }}" class="card card-sm text-decoration-none">
+                <div class="card-body">
+                    {% if invoice_statuses.unpaid > 0 %}
+                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">{{ invoice_statuses.unpaid }}</span>
+                    {% endif %}
+                    <div class="row align-items-center">
+                        <div class="col-auto">
+                            <span class="avatar bg-danger text-white">
+                                <i class="fa fa-usd"></i>
+                            </span>
+                        </div>
+                        <div class="col">
+                            <div class="fw-semibold">{{ stats.invoices_total }} {{ 'invoices'|trans }}</div>
+                            <div class="text-muted small">{{ invoice_statuses.unpaid }} {{ 'unpaid'|trans }}</div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-sm-6 col-lg-3">
+            <a href="{{ 'support'|alink }}" class="card card-sm text-decoration-none">
+                <div class="card-body">
+                    {% if support_statuses.open > 0 %}
+                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">{{ support_statuses.open }}</span>
+                    {% endif %}
+                    <div class="row align-items-center">
+                        <div class="col-auto">
+                            <span class="avatar bg-warning text-white">
+                                <i class="fa fa-life-ring"></i>
+                            </span>
+                        </div>
+                        <div class="col">
+                            <div class="fw-semibold">{{ stats.tickets_total }} {{ 'tickets'|trans }}</div>
+                            <div class="text-muted small">{{ support_statuses.open }} {{ 'waiting for staff reply'|trans }}</div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">{{ 'Statistics'|trans }}</h3>
+                </div>
+                <div class="table-responsive">
+                <table class="table card-table table-vcenter table-striped text-nowrap">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th class="text-center">{{ 'Today'|trans }}</th>
+                            <th class="text-center">{{ 'Yesterday'|trans }}</th>
+                            <th class="text-center">{{ 'This month so far'|trans }}</th>
+                            <th class="text-center">{{ 'Last month'|trans }}</th>
+                            <th class="text-center">{{ 'Total'|trans }}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><i class="fa fa-usd text-success me-2"></i>{{ 'Income'|trans }}</td>
+                            <td class="text-center">
+                                <a href="{{ 'invoice'|alink({ 'paid_at': 'now'|date('Y-m-d')}) }}">{{ mf.currency_format(income.today) }}</a>
+                            </td>
+                            <td class="text-center">
+                                <a href="{{ 'invoice'|alink({ 'paid_at': 'yesterday'|date('Y-m-d')}) }}">{{ mf.currency_format(income.yesterday) }}</a>
+                            </td>
+                            <td class="text-center">
+                                <a href="{{ 'invoice'|alink }}">{{ mf.currency_format(income.this_month) }}</a>
+                            </td>
+                            <td class="text-center">
+                                <a href="{{ 'invoice'|alink }}">{{ mf.currency_format(income.last_month) }}</a>
+                            </td>
+                            <td class="text-center">
+                                <a href="{{ 'invoice'|alink }}">{{ mf.currency_format(income.total) }}</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><i class="fa fa-users text-primary me-2"></i>{{ 'Clients'|trans }}</td>
+                            <td class="text-center">
+                                <a href="{{ 'client'|alink({ 'created_at': 'now'|date('Y-m-d')}) }}">{{ stats.clients_today }}</a>
+                            </td>
+                            <td class="text-center">
+                                <a href="{{ 'client'|alink({ 'created_at': 'yesterday'|date('Y-m-d')}) }}">{{ stats.clients_yesterday }}</a>
+                            </td>
+                            <td class="text-center">
+                                <a href="{{ 'client'|alink }}">{{ stats.clients_this_month }}</a>
+                            </td>
+                            <td class="text-center">
+                                <a href="{{ 'client'|alink }}">{{ stats.clients_last_month }}</a>
+                            </td>
+                            <td class="text-center">
+                                <a href="{{ 'client'|alink }}">{{ stats.clients_total }}</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><i class="fa fa-shopping-cart text-success me-2"></i>{{ 'Orders'|trans }}</td>
+                            <td class="text-center">
+                                <a href="{{ 'order'|alink({ 'created_at': 'now'|date('Y-m-d')}) }}">{{ stats.orders_today }}</a>
+                            </td>
+                            <td class="text-center">
+                                <a href="{{ 'order'|alink({ 'created_at': 'yesterday'|date('Y-m-d')}) }}">{{ stats.orders_yesterday }}</a>
+                            </td>
+                            <td class="text-center">
+                                <a href="{{ 'order'|alink }}">{{ stats.orders_this_month }}</a>
+                            </td>
+                            <td class="text-center">
+                                <a href="{{ 'order'|alink }}">{{ stats.orders_last_month }}</a>
+                            </td>
+                            <td class="text-center">
+                                <a href="{{ 'order'|alink }}">{{ stats.orders_total }}</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><i class="fa fa-file-text-o text-danger me-2"></i>{{ 'Invoices'|trans }}</td>
+                            <td class="text-center">
+                                <a href="{{ 'invoice'|alink({ 'created_at': 'now'|date('Y-m-d')}) }}">{{ stats.invoices_today }}</a>
+                            </td>
+                            <td class="text-center">
+                                <a href="{{ 'invoice'|alink({ 'created_at': 'yesterday'|date('Y-m-d')}) }}">{{ stats.invoices_yesterday }}</a>
+                            </td>
+                            <td class="text-center">
+                                <a href="{{ 'invoice'|alink }}">{{ stats.invoices_this_month }}</a>
+                            </td>
+                            <td class="text-center">
+                                <a href="{{ 'invoice'|alink }}">{{ stats.invoices_last_month }}</a>
+                            </td>
+                            <td class="text-center">
+                                <a href="{{ 'invoice'|alink }}">{{ stats.invoices_total }}</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><i class="fa fa-life-ring text-warning me-2"></i>{{ 'Tickets'|trans }}</td>
+                            <td class="text-center">
+                                <a href="{{ 'support'|alink({ 'created_at': 'now'|date('Y-m-d')}) }}">{{ stats.tickets_today }}</a>
+                            </td>
+                            <td class="text-center">
+                                <a href="{{ 'support'|alink({ 'created_at': 'yesterday'|date('Y-m-d')}) }}">{{ stats.tickets_yesterday }}</a>
+                            </td>
+                            <td class="text-center">
+                                <a href="{{ 'support'|alink }}">{{ stats.tickets_this_month }}</a>
+                            </td>
+                            <td class="text-center">
+                                <a href="{{ 'support'|alink }}">{{ stats.tickets_last_month }}</a>
+                            </td>
+                            <td class="text-center">
+                                <a href="{{ 'support'|alink }}">{{ stats.tickets_total }}</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+    {% set invoicesUnpaid = admin.invoice_get_list({ 'status': 'unpaid' }) %}
+    {% if invoicesUnpaid.list|length > 0 %}
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title"><i class="fa fa-file-text-o text-danger me-2"></i>{{ 'Unpaid Invoices'|trans }}</h3>
+                <div class="card-actions">
+                    <a href="{{ '/invoice'|alink }}" class="btn btn-sm btn-outline-primary">
+                        {{ 'View All'|trans }}
+                    </a>
+                </div>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table card-table table-vcenter table-striped text-nowrap">
+                    <tbody>
+                        {% for invoice in invoicesUnpaid.list %}
+                        <tr>
+                            <td class="w-1">
+                                <a href="{{ '/invoice/manage'|alink }}/{{ invoice.id }}">{{ invoice.serie_nr }}</a>
+                            </td>
+                            <td class="w-1">
+                                <a href="{{ 'client'|alink }}/manage/{{ invoice.client.id }}">
+                                    <span class="avatar avatar-xs rounded-circle" style="background-image: url({{ invoice.buyer.email|gravatar }}&size=24)"></span>
+                                </a>
+                            </td>
+                            <td>
+                                <a href="{{ 'client'|alink }}/manage/{{ invoice.client.id }}">{{ invoice.buyer.first_name }} {{ invoice.buyer.last_name }}</a>
+                            </td>
+                            <td class="text-center">{{ mf.currency_format(invoice.total, invoice.currency) }}</td>
+                            <td class="text-center">{{ invoice.created_at|format_date }}</td>
+                            <td>
+                                <span class="badge bg-danger">{{ mf.status_name(invoice.status) }}</span>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    {% set orders = admin.order_get_list({ 'per_page': '5', 'status': 'active' }) %}
+    {% if orders.list|length > 0 %}
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title"><i class="fa fa-shopping-cart text-success me-2"></i>{{ 'Latest orders'|trans }}</h3>
+                    <span class="ms-2 badge bg-success">{{ orders.total }}</span>
+                    <div class="card-actions">
+                        <a href="{{ '/order'|alink }}" class="btn btn-sm btn-outline-primary">
+                            {{ 'View All'|trans }}
+                        </a>
+                    </div>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="table card-table table-vcenter table-striped text-nowrap">
+                        <tbody>
+                        {% for order in orders.list %}
+                            <tr title="{{ order.created_at|timeago }} {{ 'ago'|trans }}">
+                                <td>
+                                    <a href="{{ 'client/manage'|alink }}/{{ order.client_id }}">{{ order.client.first_name }} {{ order.client.last_name }}</a>
+                                </td>
+                                <td>
+                                    <a href="{{ 'order/manage'|alink }}/{{ order.id }}">{{ order.title|truncate(35) }}</a>
+                                </td>
+                            </tr>
+                        {% else %}
+                        <tr>
+                            <td colspan="2" class="text-center text-muted">{{ 'The list is empty'|trans }}</td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+    {% if admin.system_is_allowed({ 'mod': 'stats' }) %}
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title"><i class="fa fa-line-chart text-primary me-2"></i>{{ 'Income'|trans }}</h3>
+            </div>
+            <div class="card-body">
+                <div id="chart-income" style="width: 100%; height: 200px;"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-6 col-lg-3">
+        <div class="card">
+            <div class="card-body">
+                <div class="text-muted small mb-2">{{ 'Orders'|trans }}</div>
+            </div>
+            <div id="chart-orders" style="min-height: 80px;"></div>
+        </div>
+    </div>
+
+    <div class="col-sm-6 col-lg-3">
+        <div class="card">
+            <div class="card-body">
+                <div class="text-muted small mb-2">{{ 'Invoices'|trans }}</div>
+            </div>
+            <div id="chart-invoices" style="min-height: 80px;"></div>
+        </div>
+    </div>
+
+    <div class="col-sm-6 col-lg-3">
+        <div class="card">
+            <div class="card-body">
+                <div class="text-muted small mb-2">{{ 'Clients'|trans }}</div>
+            </div>
+            <div id="chart-clients" style="min-height: 80px;"></div>
+        </div>
+    </div>
+
+    <div class="col-sm-6 col-lg-3">
+        <div class="card">
+            <div class="card-body">
+                <div class="text-muted small mb-2">{{ 'Tickets'|trans }}</div>
+            </div>
+            <div id="chart-tickets" style="min-height: 80px;"></div>
+        </div>
+    </div>
+    {% endif %}
+
+    {% if admin.system_is_allowed({ 'mod': 'activity' }) %}
+    <div class="col-12">
+        <ul class="nav nav-tabs" role="tablist">
+            <li class="nav-item" role="presentation">
+                <a class="nav-link active" href="#tab-index" role="tab" data-bs-toggle="tab">
+                    <i class="fa fa-users me-1"></i>{{ 'Recent client activity'|trans }}
+                </a>
+            </li>
+            <li class="nav-item" role="presentation">
+                <a class="nav-link" href="#tab-staff" role="tab" data-bs-toggle="tab">
+                    <i class="fa fa-user-secret me-1"></i>{{ 'Recent staff activity'|trans }}
+                </a>
+            </li>
+        </ul>
+
+        <div class="card">
+            <div class="tab-content" id="tabs">
+                <div class="tab-pane fade show active" id="tab-index" role="tabpanel">
+                    <table class="table table-vcenter card-table table-striped">
+                        <tbody>
+                            {% set events = admin.activity_log_get_list({ 'per_page': 10, 'only_clients': 1 }) %}
+                            {% for i, event in events.list %}
+                            <tr>
+                                <td class="w-1">
+                                    <a href="{{ 'client/manage'|alink }}/{{ event.client.id }}">
+                                        <span class="avatar avatar-xs rounded-circle" style="background-image: url({{ event.client.email|gravatar }}&size=24)"></span>
+                                    </a>
+                                </td>
+                                <td>
+                                    <a href="{{ 'client/manage'|alink }}/{{ event.client.id }}">{{ event.client.name|truncate(40) }}</a>
+                                </td>
+                                <td>{{ event.message|truncate(50) }}</td>
+                                <td>{{ event.created_at|format_datetime }}</td>
+                                <td class="text-muted">{{ event.created_at|timeago }} {{ 'ago'|trans }}</td>
+                            </tr>
+                            {% else %}
+                            <tr>
+                                <td class="text-muted text-center" colspan="4">{{ 'The list is empty'|trans }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="tab-pane fade" id="tab-staff" role="tabpanel">
+                    <table class="table table-vcenter card-table table-striped">
+                        <tbody>
+                            {% set events = admin.activity_log_get_list({ 'per_page': 10, 'only_staff': 1 }) %}
+                            {% for i, event in events.list %}
+                            <tr>
+                                <td class="w-1">
+                                    <a href="{{ 'staff/manage'|alink }}/{{ event.staff.id }}">
+                                        <span class="avatar avatar-xs rounded-circle" style="background-image: url({{ event.staff.email|gravatar }}&size=24)"></span>
+                                    </a>
+                                </td>
+                                <td>
+                                    <a href="{{ 'staff/manage'|alink }}/{{ event.staff.id }}">{{ event.staff.name }}</a>
+                                </td>
+                                <td>{{ event.message|truncate(50) }}</td>
+                                <td>{{ event.created_at|format_datetime }}</td>
+                                <td class="text-muted">{{ event.created_at|timeago }} {{ 'ago'|trans }}</td>
+                            </tr>
+                            {% else %}
+                            <tr>
+                                <td class="text-muted text-center" colspan="4">{{ 'The list is empty'|trans }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block js %}
+    {% if admin.system_is_allowed({ 'mod': 'stats' }) %}
+        <script>
+            $(function() {
+                var primaryColor = getComputedStyle(document.documentElement).getPropertyValue('--primary').trim() || '#673de6';
+
+                setPlotDataData('chart-income', {{ admin.stats_get_income({ 'date_from': request.date_from, 'date_to': request.date_to })|json_encode }}, "{{ 'Income'|trans }}", primaryColor);
+                setPlotDataData('chart-orders', {{ admin.stats_get_orders({ 'date_from': request.date_from, 'date_to': request.date_to })|json_encode }}, "{{ 'Orders'|trans }}", '#28a745');
+                setPlotDataData('chart-invoices', {{ admin.stats_get_invoices({ 'date_from': request.date_from, 'date_to': request.date_to })|json_encode }},"{{ 'Invoices'|trans }}", '#dc3545');
+                setPlotDataData('chart-clients', {{ admin.stats_get_clients({ 'date_from': request.date_from, 'date_to': request.date_to })|json_encode }}, "{{ 'Clients'|trans }}", '#17a2b8');
+                setPlotDataData('chart-tickets', {{ admin.stats_get_tickets({ 'date_from': request.date_from, 'date_to': request.date_to })|json_encode }}, "{{ 'Tickets'|trans }}", '#ffc107');
+            });
+
+            function setPlotDataData(elementId, data, displayName, color) {
+                var isDark = localStorage.getItem('theme') === 'dark';
+
+                new ApexCharts(document.getElementById(elementId), {
+                    chart: {
+                        type: 'area',
+                        fontFamily: 'Inter, sans-serif',
+                        height: 120,
+                        parentHeightOffset: 0,
+                        toolbar: { show: false },
+                        animations: { enabled: true }
+                    },
+                    dataLabels: { enabled: false },
+                    fill: {
+                        opacity: 0.2,
+                        type: 'solid'
+                    },
+                    stroke: {
+                        width: 2,
+                        lineCap: 'round',
+                        curve: 'smooth'
+                    },
+                    series: [{
+                        name: displayName,
+                        data: data
+                    }],
+                    grid: {
+                        padding: { top: -20, right: 0, left: -4, bottom: -4 },
+                        strokeDashArray: 4
+                    },
+                    xaxis: {
+                        labels: { show: false },
+                        type: 'datetime'
+                    },
+                    yaxis: {
+                        labels: { show: false }
+                    },
+                    colors: [color],
+                    theme: {
+                        mode: isDark ? 'dark' : 'light'
+                    }
+                }).render();
+            }
+        </script>
+    {% endif %}
+{% endblock %}
