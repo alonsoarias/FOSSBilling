@@ -1,0 +1,393 @@
+{% extends request.ajax ? "layout_blank.html.twig" : "layout_default.html.twig" %}
+
+{% block meta_title %}{{ 'Dashboard'|trans }}{% endblock %}
+{% block page_header %}{{ 'Dashboard'|trans }}{% endblock %}
+{% block body_class %}dashboard{% endblock %}
+
+{% import "macro_functions.html.twig" as mf %}
+
+{% block content %}
+{% if client %}
+    {# Check for pending tickets #}
+    {% set pending_tickets = client.support_ticket_get_list({ "status": 'on_hold' }) %}
+    {% if pending_tickets.total > 0 %}
+        {% for ticket in pending_tickets.list %}
+        <div class="alert alert-info d-flex align-items-center justify-content-between mb-3">
+            <div class="d-flex align-items-center gap-2">
+                <i class="fa fa-comment-dots"></i>
+                <span>{{ 'Ticket'|trans }} <strong>#{{ ticket.id }}</strong> {{ 'fue respondido'|trans }} {{ ticket.updated_at|timeago }} {{ 'ago'|trans }}.</span>
+            </div>
+            <a href="{{ 'support/ticket'|link }}/{{ ticket.id }}" class="btn btn-sm btn-primary">
+                <i class="fa fa-reply me-1"></i>{{ 'Responder'|trans }}
+            </a>
+        </div>
+        {% endfor %}
+    {% endif %}
+
+    {# Welcome Banner #}
+    <div class="welcome-banner">
+        <div class="welcome-content">
+            <p class="welcome-greeting">{{ 'Bienvenido de vuelta'|trans }}</p>
+            <h1 class="welcome-title">{{ profile.first_name }} {{ profile.last_name }}</h1>
+            <p class="welcome-subtitle">{{ 'Gestiona tus servicios, facturas y solicitudes de soporte desde tu panel personal.'|trans }}</p>
+            <div class="welcome-actions">
+                <a href="{{ 'order'|link }}" class="btn btn-primary-action">
+                    <i class="fa fa-plus me-1"></i>{{ 'Nuevo Pedido'|trans }}
+                </a>
+                <a href="{{ 'support'|link({ 'ticket': 1 }) }}" class="btn">
+                    <i class="fa fa-headset me-1"></i>{{ 'Crear Ticket'|trans }}
+                </a>
+            </div>
+        </div>
+    </div>
+
+    {# Stats Grid #}
+    {% set orders = client.order_get_list({ "hide_addons": 1 }) %}
+    {% set active_orders = client.order_get_list({ "hide_addons": 1, "status": "active" }) %}
+    {% set invoices = client.invoice_get_list() %}
+    {% set unpaid_invoices = client.invoice_get_list({ "status": "unpaid" }) %}
+    {% set tickets = client.support_ticket_get_list() %}
+    {% set open_tickets = client.support_ticket_get_list({ "status": 'open' }) %}
+
+    <div class="stats-grid">
+        <a href="{{ 'order/service'|link }}" class="stat-card">
+            <div class="stat-header">
+                <span class="stat-icon primary">
+                    <i class="fa fa-server"></i>
+                </span>
+            </div>
+            <div class="stat-value">{{ active_orders.total }}</div>
+            <div class="stat-label">{{ 'Servicios Activos'|trans }}</div>
+        </a>
+
+        <a href="{{ 'invoice'|link }}" class="stat-card">
+            <div class="stat-header">
+                <span class="stat-icon {% if unpaid_invoices.total > 0 %}warning{% else %}success{% endif %}">
+                    <i class="fa fa-file-invoice-dollar"></i>
+                </span>
+            </div>
+            <div class="stat-value">{{ unpaid_invoices.total }}</div>
+            <div class="stat-label">{{ 'Facturas Pendientes'|trans }}</div>
+        </a>
+
+        <a href="{{ 'support'|link }}" class="stat-card">
+            <div class="stat-header">
+                <span class="stat-icon info">
+                    <i class="fa fa-ticket-alt"></i>
+                </span>
+            </div>
+            <div class="stat-value">{{ open_tickets.total }}</div>
+            <div class="stat-label">{{ 'Tickets Abiertos'|trans }}</div>
+        </a>
+
+        <div class="stat-card">
+            <div class="stat-header">
+                <span class="stat-icon success">
+                    <i class="fa fa-wallet"></i>
+                </span>
+            </div>
+            <div class="stat-value">{{ profile.balance | money(profile.currency) }}</div>
+            <div class="stat-label">{{ 'Saldo Disponible'|trans }}</div>
+        </div>
+    </div>
+
+    {# Quick Actions #}
+    <div class="quick-actions">
+        <a href="{{ 'order'|link }}" class="quick-action">
+            <span class="quick-action-icon" style="background: var(--primary-bg); color: var(--primary);">
+                <i class="fa fa-cart-plus"></i>
+            </span>
+            <div class="quick-action-content">
+                <div class="quick-action-title">{{ 'Ordenar Servicios'|trans }}</div>
+                <div class="quick-action-desc">{{ 'Explora nuestros productos'|trans }}</div>
+            </div>
+            <span class="quick-action-arrow"><i class="fa fa-chevron-right"></i></span>
+        </a>
+
+        <a href="{{ 'support'|link({ 'ticket': 1 }) }}" class="quick-action">
+            <span class="quick-action-icon" style="background: var(--info-bg); color: var(--info);">
+                <i class="fa fa-headset"></i>
+            </span>
+            <div class="quick-action-content">
+                <div class="quick-action-title">{{ 'Soporte Técnico'|trans }}</div>
+                <div class="quick-action-desc">{{ 'Abre un nuevo ticket'|trans }}</div>
+            </div>
+            <span class="quick-action-arrow"><i class="fa fa-chevron-right"></i></span>
+        </a>
+
+        <a href="{{ 'client/profile'|link }}" class="quick-action">
+            <span class="quick-action-icon" style="background: var(--success-bg); color: var(--success);">
+                <i class="fa fa-user-cog"></i>
+            </span>
+            <div class="quick-action-content">
+                <div class="quick-action-title">{{ 'Mi Perfil'|trans }}</div>
+                <div class="quick-action-desc">{{ 'Actualiza tus datos'|trans }}</div>
+            </div>
+            <span class="quick-action-arrow"><i class="fa fa-chevron-right"></i></span>
+        </a>
+
+        {% if guest.support_kb_enabled() %}
+        <a href="{{ 'support/kb'|link }}" class="quick-action">
+            <span class="quick-action-icon" style="background: var(--warning-bg); color: var(--warning);">
+                <i class="fa fa-book"></i>
+            </span>
+            <div class="quick-action-content">
+                <div class="quick-action-title">{{ 'Base de Conocimiento'|trans }}</div>
+                <div class="quick-action-desc">{{ 'Tutoriales y guías'|trans }}</div>
+            </div>
+            <span class="quick-action-arrow"><i class="fa fa-chevron-right"></i></span>
+        </a>
+        {% endif %}
+    </div>
+
+    {# Content Grid: Services & Tickets #}
+    <div class="content-grid">
+        {# Recent Services #}
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title">
+                    <i class="fa fa-server"></i>
+                    {{ 'Servicios Recientes'|trans }}
+                </h5>
+                <div class="card-actions">
+                    <a href="{{ 'order/service'|link }}" class="btn btn-sm btn-light">{{ 'Ver Todos'|trans }}</a>
+                </div>
+            </div>
+            {% set recent_orders = client.order_get_list({ "per_page": 5, "hide_addons": 1 }) %}
+            {% if recent_orders.list %}
+            <div class="service-list">
+                {% for order in recent_orders.list %}
+                <a href="{{ 'order/service/manage'|link }}/{{ order.id }}" class="service-item">
+                    <span class="service-icon" style="background: var(--primary-bg); color: var(--primary);">
+                        <i class="fa fa-cube"></i>
+                    </span>
+                    <div class="service-content">
+                        <div class="service-title">{{ order.title|truncate(35) }}</div>
+                        <div class="service-meta">
+                            #{{ order.id }} · {{ order.updated_at|timeago }} {{ 'ago'|trans }}
+                        </div>
+                    </div>
+                    <div class="service-status">
+                        {% if order.status == 'active' %}
+                            <span class="badge badge-active">{{ 'Activo'|trans }}</span>
+                        {% elseif order.status == 'pending_setup' %}
+                            <span class="badge badge-pending">{{ 'Pendiente'|trans }}</span>
+                        {% elseif order.status == 'suspended' %}
+                            <span class="badge badge-suspended">{{ 'Suspendido'|trans }}</span>
+                        {% elseif order.status == 'canceled' %}
+                            <span class="badge badge-canceled">{{ 'Cancelado'|trans }}</span>
+                        {% else %}
+                            <span class="badge badge-pending">{{ mf.status_name(order.status) }}</span>
+                        {% endif %}
+                    </div>
+                </a>
+                {% endfor %}
+            </div>
+            {% else %}
+            <div class="card-body">
+                <div class="empty-state">
+                    <div class="empty-icon"><i class="fa fa-server"></i></div>
+                    <h6 class="empty-title">{{ 'Sin servicios aún'|trans }}</h6>
+                    <p class="empty-text">{{ 'Comienza ordenando tu primer servicio.'|trans }}</p>
+                    <a href="{{ 'order'|link }}" class="btn btn-primary">
+                        <i class="fa fa-plus me-1"></i>{{ 'Ordenar Ahora'|trans }}
+                    </a>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+
+        {# Recent Tickets #}
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title">
+                    <i class="fa fa-ticket-alt"></i>
+                    {{ 'Tickets de Soporte'|trans }}
+                </h5>
+                <div class="card-actions">
+                    <a href="{{ 'support'|link({ 'ticket': 1 }) }}" class="btn btn-sm btn-primary">
+                        <i class="fa fa-plus me-1"></i>{{ 'Nuevo'|trans }}
+                    </a>
+                </div>
+            </div>
+            {% set recent_tickets = client.support_ticket_get_list({ "per_page": 5 }) %}
+            {% if recent_tickets.list %}
+            <div class="service-list">
+                {% for ticket in recent_tickets.list %}
+                <a href="{{ 'support/ticket'|link }}/{{ ticket.id }}" class="service-item">
+                    <span class="service-icon" style="background: var(--info-bg); color: var(--info);">
+                        <i class="fa fa-comment-alt"></i>
+                    </span>
+                    <div class="service-content">
+                        <div class="service-title">{{ ticket.subject|truncate(35) }}</div>
+                        <div class="service-meta">
+                            #{{ ticket.id }} · {{ ticket.updated_at|timeago }} {{ 'ago'|trans }}
+                        </div>
+                    </div>
+                    <div class="service-status">
+                        {% if ticket.status == 'open' %}
+                            <span class="badge badge-active">{{ 'Abierto'|trans }}</span>
+                        {% elseif ticket.status == 'on_hold' %}
+                            <span class="badge badge-pending">{{ 'En Espera'|trans }}</span>
+                        {% elseif ticket.status == 'closed' %}
+                            <span class="badge badge-canceled">{{ 'Cerrado'|trans }}</span>
+                        {% else %}
+                            <span class="badge badge-pending">{{ mf.status_name(ticket.status) }}</span>
+                        {% endif %}
+                    </div>
+                </a>
+                {% endfor %}
+            </div>
+            {% else %}
+            <div class="card-body">
+                <div class="empty-state">
+                    <div class="empty-icon"><i class="fa fa-ticket-alt"></i></div>
+                    <h6 class="empty-title">{{ 'Sin tickets'|trans }}</h6>
+                    <p class="empty-text">{{ '¿Necesitas ayuda? Crea un ticket de soporte.'|trans }}</p>
+                    <a href="{{ 'support'|link({ 'ticket': 1 }) }}" class="btn btn-primary">
+                        <i class="fa fa-plus me-1"></i>{{ 'Crear Ticket'|trans }}
+                    </a>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+    {# Recent Invoices Section #}
+    <div class="card mt-4">
+        <div class="card-header">
+            <h5 class="card-title">
+                <i class="fa fa-file-invoice-dollar"></i>
+                {{ 'Facturas Recientes'|trans }}
+            </h5>
+            <div class="card-actions">
+                <a href="{{ 'invoice'|link }}" class="btn btn-sm btn-light">{{ 'Ver Todas'|trans }}</a>
+            </div>
+        </div>
+        {% set recent_invoices = client.invoice_get_list({ "per_page": 5 }) %}
+        {% if recent_invoices.list %}
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>{{ 'Factura'|trans }}</th>
+                        <th>{{ 'Fecha'|trans }}</th>
+                        <th>{{ 'Total'|trans }}</th>
+                        <th>{{ 'Estado'|trans }}</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for invoice in recent_invoices.list %}
+                    <tr>
+                        <td>
+                            <strong>#{{ invoice.id }}</strong>
+                        </td>
+                        <td>{{ invoice.created_at|format_date }}</td>
+                        <td><strong>{{ invoice.total | money(invoice.currency) }}</strong></td>
+                        <td>
+                            {% if invoice.status == 'paid' %}
+                                <span class="badge badge-active">{{ 'Pagada'|trans }}</span>
+                            {% elseif invoice.status == 'unpaid' %}
+                                <span class="badge badge-pending">{{ 'Pendiente'|trans }}</span>
+                            {% elseif invoice.status == 'canceled' %}
+                                <span class="badge badge-canceled">{{ 'Cancelada'|trans }}</span>
+                            {% else %}
+                                <span class="badge badge-pending">{{ mf.status_name(invoice.status) }}</span>
+                            {% endif %}
+                        </td>
+                        <td class="text-end">
+                            <a href="{{ 'invoice'|link }}/{{ invoice.hash }}" class="btn btn-sm btn-light">
+                                <i class="fa fa-eye"></i>
+                            </a>
+                            {% if invoice.status == 'unpaid' %}
+                            <a href="{{ 'invoice'|link }}/{{ invoice.hash }}" class="btn btn-sm btn-primary">
+                                {{ 'Pagar'|trans }}
+                            </a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <div class="card-body">
+            <div class="empty-state">
+                <div class="empty-icon"><i class="fa fa-file-invoice-dollar"></i></div>
+                <h6 class="empty-title">{{ 'Sin facturas'|trans }}</h6>
+                <p class="empty-text">{{ 'Tus facturas aparecerán aquí.'|trans }}</p>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+
+{% else %}
+    {# Guest Dashboard #}
+    <div class="welcome-banner">
+        <div class="welcome-content">
+            <p class="welcome-greeting">{{ 'Bienvenido'|trans }}</p>
+            <h1 class="welcome-title">{{ company.name }}</h1>
+            <p class="welcome-subtitle">{{ 'Inicia sesión para gestionar tus servicios o regístrate para comenzar.'|trans }}</p>
+            <div class="welcome-actions">
+                <a href="{{ '/login'|link }}" class="btn btn-primary-action">
+                    <i class="fa fa-sign-in-alt me-1"></i>{{ 'Iniciar Sesión'|trans }}
+                </a>
+                <a href="{{ '/signup'|link }}" class="btn">
+                    <i class="fa fa-user-plus me-1"></i>{{ 'Registrarse'|trans }}
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="quick-actions">
+        <a href="{{ '/order'|link }}" class="quick-action">
+            <span class="quick-action-icon" style="background: var(--primary-bg); color: var(--primary);">
+                <i class="fa fa-shopping-cart"></i>
+            </span>
+            <div class="quick-action-content">
+                <div class="quick-action-title">{{ 'Productos'|trans }}</div>
+                <div class="quick-action-desc">{{ 'Explora nuestro catálogo'|trans }}</div>
+            </div>
+            <span class="quick-action-arrow"><i class="fa fa-chevron-right"></i></span>
+        </a>
+
+        {% if guest.extension_is_on({"mod":"news"}) %}
+        <a href="{{ '/news'|link }}" class="quick-action">
+            <span class="quick-action-icon" style="background: var(--info-bg); color: var(--info);">
+                <i class="fa fa-newspaper"></i>
+            </span>
+            <div class="quick-action-content">
+                <div class="quick-action-title">{{ 'Noticias'|trans }}</div>
+                <div class="quick-action-desc">{{ 'Últimas novedades'|trans }}</div>
+            </div>
+            <span class="quick-action-arrow"><i class="fa fa-chevron-right"></i></span>
+        </a>
+        {% endif %}
+
+        {% if guest.support_kb_enabled() %}
+        <a href="{{ '/support/kb'|link }}" class="quick-action">
+            <span class="quick-action-icon" style="background: var(--warning-bg); color: var(--warning);">
+                <i class="fa fa-book"></i>
+            </span>
+            <div class="quick-action-content">
+                <div class="quick-action-title">{{ 'Base de Conocimiento'|trans }}</div>
+                <div class="quick-action-desc">{{ 'Tutoriales y guías'|trans }}</div>
+            </div>
+            <span class="quick-action-arrow"><i class="fa fa-chevron-right"></i></span>
+        </a>
+        {% endif %}
+
+        <a href="{{ '/login'|link }}" class="quick-action">
+            <span class="quick-action-icon" style="background: var(--success-bg); color: var(--success);">
+                <i class="fa fa-sign-in-alt"></i>
+            </span>
+            <div class="quick-action-content">
+                <div class="quick-action-title">{{ 'Área de Cliente'|trans }}</div>
+                <div class="quick-action-desc">{{ 'Accede a tu cuenta'|trans }}</div>
+            </div>
+            <span class="quick-action-arrow"><i class="fa fa-chevron-right"></i></span>
+        </a>
+    </div>
+{% endif %}
+{% endblock %}
