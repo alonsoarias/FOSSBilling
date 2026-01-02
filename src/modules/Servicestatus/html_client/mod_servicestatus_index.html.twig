@@ -9,163 +9,211 @@
 {% endblock %}
 
 {% block content %}
-<div class="row">
-    <div class="col-md-12">
-        {# Overall Status #}
-        {% set status = guest.servicestatus_status %}
-        <div class="card mb-4">
-            <div class="card-body text-center py-4">
-                {% if status.status == 'operational' %}
-                    <div class="text-success mb-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                            <polyline points="22 4 12 14.01 9 11.01"></polyline>
+<div class="container">
+    {# Overall Status Banner #}
+    {% set status = guest.servicestatus_status %}
+    <div class="card mb-4">
+        <div class="card-body text-center py-5">
+            {% if status.status == 'operational' %}
+                <div class="mb-3">
+                    <div class="d-inline-flex align-items-center justify-content-center rounded" style="width: 80px; height: 80px; border: 2px solid #adb5bd;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#6c757d" stroke-width="2">
+                            <polyline points="20 6 9 17 4 12"></polyline>
                         </svg>
                     </div>
-                    <h2 class="text-success mb-0">{{ 'All Systems Operational'|trans }}</h2>
-                {% elseif status.status == 'degraded_performance' %}
-                    <div class="text-warning mb-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                </div>
+                <h2 class="mb-2">{{ 'Operational'|trans }}</h2>
+            {% elseif status.status == 'degraded_performance' %}
+                <div class="mb-3">
+                    <div class="d-inline-flex align-items-center justify-content-center rounded bg-warning" style="width: 80px; height: 80px;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
                             <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
                             <line x1="12" y1="9" x2="12" y2="13"></line>
                             <line x1="12" y1="17" x2="12.01" y2="17"></line>
                         </svg>
                     </div>
-                    <h2 class="text-warning mb-0">{{ 'Degraded Performance'|trans }}</h2>
-                {% elseif status.status == 'partial_outage' %}
-                    <div class="text-orange mb-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                </div>
+                <h2 class="text-warning mb-2">{{ 'Degraded Performance'|trans }}</h2>
+            {% elseif status.status == 'partial_outage' %}
+                <div class="mb-3">
+                    <div class="d-inline-flex align-items-center justify-content-center rounded bg-orange" style="width: 80px; height: 80px;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
                             <circle cx="12" cy="12" r="10"></circle>
                             <line x1="12" y1="8" x2="12" y2="12"></line>
                             <line x1="12" y1="16" x2="12.01" y2="16"></line>
                         </svg>
                     </div>
-                    <h2 class="text-orange mb-0">{{ 'Partial System Outage'|trans }}</h2>
-                {% elseif status.status == 'major_outage' %}
-                    <div class="text-danger mb-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                </div>
+                <h2 class="text-orange mb-2">{{ 'Partial Outage'|trans }}</h2>
+            {% elseif status.status == 'major_outage' %}
+                <div class="mb-3">
+                    <div class="d-inline-flex align-items-center justify-content-center rounded bg-danger" style="width: 80px; height: 80px;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
                             <circle cx="12" cy="12" r="10"></circle>
                             <line x1="15" y1="9" x2="9" y2="15"></line>
                             <line x1="9" y1="9" x2="15" y2="15"></line>
                         </svg>
                     </div>
-                    <h2 class="text-danger mb-0">{{ 'Major System Outage'|trans }}</h2>
-                {% elseif status.status == 'maintenance' %}
-                    <div class="text-info mb-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                </div>
+                <h2 class="text-danger mb-2">{{ 'Major Outage'|trans }}</h2>
+            {% elseif status.status == 'maintenance' %}
+                <div class="mb-3">
+                    <div class="d-inline-flex align-items-center justify-content-center rounded bg-info" style="width: 80px; height: 80px;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
                             <circle cx="12" cy="12" r="3"></circle>
                             <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
                         </svg>
                     </div>
-                    <h2 class="text-info mb-0">{{ 'Under Maintenance'|trans }}</h2>
-                {% endif %}
-            </div>
+                </div>
+                <h2 class="text-info mb-2">{{ 'Under Maintenance'|trans }}</h2>
+            {% endif %}
+            <p class="text-muted mb-0">{{ 'Last updated'|trans }}: {{ "now"|date("d/m/Y H:i") }}</p>
         </div>
+    </div>
 
-        {# Active Incidents #}
-        {% set incidents = guest.servicestatus_incident_list %}
-        {% if incidents|length > 0 %}
-        <div class="card mb-4">
-            <div class="card-header">
-                <h3 class="card-title">{{ 'Active Incidents'|trans }}</h3>
-            </div>
-            <div class="card-body">
-                {% for incident in incidents %}
-                <div class="mb-4 pb-3 {{ not loop.last ? 'border-bottom' : '' }}">
-                    <div class="d-flex justify-content-between align-items-start">
-                        <div>
-                            <h4 class="mb-1">
-                                <a href="{{ '/servicestatus/incident'|link }}/{{ incident.id }}">{{ incident.title }}</a>
-                            </h4>
-                            <div class="mb-2">
-                                {% if incident.status == 'investigating' %}
-                                    <span class="badge bg-warning">{{ 'Investigating'|trans }}</span>
-                                {% elseif incident.status == 'identified' %}
-                                    <span class="badge bg-info">{{ 'Identified'|trans }}</span>
-                                {% elseif incident.status == 'monitoring' %}
-                                    <span class="badge bg-primary">{{ 'Monitoring'|trans }}</span>
+    <div class="row">
+        {# Current Status - Components List #}
+        <div class="col-lg-7 mb-4">
+            <div class="card h-100">
+                <div class="card-header">
+                    <h3 class="card-title mb-0">{{ 'Current Status'|trans }}</h3>
+                </div>
+                <div class="card-body p-0">
+                    <div class="list-group list-group-flush">
+                        {% set components = guest.servicestatus_component_list %}
+                        {% for component in components %}
+                        <div class="list-group-item d-flex justify-content-between align-items-center">
+                            <div>
+                                <strong>{{ component.name }}</strong>
+                                {% if component.description %}
+                                    <br><small class="text-muted">{{ component.description }}</small>
                                 {% endif %}
-                                {% for component in incident.components %}
-                                    <span class="badge bg-secondary">{{ component.name }}</span>
-                                {% endfor %}
+                            </div>
+                            <div>
+                                {% if component.status == 'operational' %}
+                                    <span class="badge bg-success">{{ 'Operational'|trans }}</span>
+                                {% elseif component.status == 'degraded_performance' %}
+                                    <span class="badge bg-warning">{{ 'Degraded'|trans }}</span>
+                                {% elseif component.status == 'partial_outage' %}
+                                    <span class="badge bg-orange">{{ 'Partial Outage'|trans }}</span>
+                                {% elseif component.status == 'major_outage' %}
+                                    <span class="badge bg-danger">{{ 'Major Outage'|trans }}</span>
+                                {% elseif component.status == 'maintenance' %}
+                                    <span class="badge bg-info">{{ 'Maintenance'|trans }}</span>
+                                {% endif %}
                             </div>
                         </div>
-                        <small class="text-muted">{{ incident.created_at|format_datetime }}</small>
+                        {% else %}
+                        <div class="list-group-item text-muted">{{ 'No components configured'|trans }}</div>
+                        {% endfor %}
                     </div>
-                    {% if incident.updates|length > 0 %}
-                        <p class="mb-0 text-muted">{{ incident.updates[0].message|truncate(200) }}</p>
-                    {% endif %}
                 </div>
-                {% endfor %}
             </div>
         </div>
-        {% endif %}
 
-        {# Scheduled Maintenance #}
-        {% set maintenance = guest.servicestatus_maintenance_list %}
-        {% if maintenance|length > 0 %}
-        <div class="card mb-4">
-            <div class="card-header">
-                <h3 class="card-title">{{ 'Scheduled Maintenance'|trans }}</h3>
+        {# Past Incidents #}
+        <div class="col-lg-5 mb-4">
+            <div class="card h-100">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h3 class="card-title mb-0">{{ 'Past Incidents'|trans }}</h3>
+                    <a href="{{ '/servicestatus/history'|link }}" class="btn btn-sm btn-outline-primary">{{ 'View All'|trans }}</a>
+                </div>
+                <div class="card-body">
+                    {% set recent_incidents = guest.servicestatus_incident_history({'per_page': 5}) %}
+                    {% if recent_incidents.list is defined and recent_incidents.list|length > 0 %}
+                        {% for incident in recent_incidents.list %}
+                        <div class="mb-3 {{ not loop.last ? 'border-bottom pb-3' : '' }}">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <a href="{{ '/servicestatus/incident'|link }}/{{ incident.id }}">{{ incident.title }}</a>
+                                    <div class="small text-muted">{{ incident.created_at|format_datetime }}</div>
+                                </div>
+                                {% if incident.status == 'resolved' %}
+                                    <span class="badge bg-success h-100">{{ 'Resolved'|trans }}</span>
+                                {% else %}
+                                    <span class="badge bg-warning h-100">{{ incident.status|trans }}</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                        {% endfor %}
+                    {% else %}
+                        <div class="text-center py-4">
+                            <div class="text-success mb-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                            </div>
+                            <p class="text-muted mb-0">{{ 'No incidents in the past 7 days'|trans }}</p>
+                        </div>
+                    {% endif %}
+                </div>
             </div>
-            <div class="card-body">
-                {% for item in maintenance %}
-                <div class="mb-3 {{ not loop.last ? 'border-bottom pb-3' : '' }}">
-                    <div class="d-flex justify-content-between align-items-start">
-                        <div>
-                            <h5 class="mb-1">{{ item.title }}</h5>
-                            <span class="badge bg-info">{{ 'Scheduled'|trans }}</span>
-                            {% for component in item.components %}
+        </div>
+    </div>
+
+    {# Active Incidents #}
+    {% set incidents = guest.servicestatus_incident_list %}
+    {% if incidents|length > 0 %}
+    <div class="card mb-4">
+        <div class="card-header">
+            <h3 class="card-title">{{ 'Active Incidents'|trans }}</h3>
+        </div>
+        <div class="card-body">
+            {% for incident in incidents %}
+            <div class="mb-4 pb-3 {{ not loop.last ? 'border-bottom' : '' }}">
+                <div class="d-flex justify-content-between align-items-start">
+                    <div>
+                        <h4 class="mb-1">
+                            <a href="{{ '/servicestatus/incident'|link }}/{{ incident.id }}">{{ incident.title }}</a>
+                        </h4>
+                        <div class="mb-2">
+                            {% if incident.status == 'investigating' %}
+                                <span class="badge bg-warning">{{ 'Investigating'|trans }}</span>
+                            {% elseif incident.status == 'identified' %}
+                                <span class="badge bg-info">{{ 'Identified'|trans }}</span>
+                            {% elseif incident.status == 'monitoring' %}
+                                <span class="badge bg-primary">{{ 'Monitoring'|trans }}</span>
+                            {% endif %}
+                            {% for component in incident.components %}
                                 <span class="badge bg-secondary">{{ component.name }}</span>
                             {% endfor %}
                         </div>
-                        <small class="text-muted">{{ item.scheduled_at|format_datetime }}</small>
                     </div>
+                    <small class="text-muted">{{ incident.created_at|format_datetime }}</small>
                 </div>
-                {% endfor %}
+                {% if incident.updates|length > 0 %}
+                    <p class="mb-0 text-muted">{{ incident.updates[0].message|truncate(200) }}</p>
+                {% endif %}
             </div>
-        </div>
-        {% endif %}
-
-        {# Components List #}
-        <div class="card mb-4">
-            <div class="card-header">
-                <h3 class="card-title">{{ 'Components'|trans }}</h3>
-            </div>
-            <div class="list-group list-group-flush">
-                {% set components = guest.servicestatus_component_list %}
-                {% for component in components %}
-                <div class="list-group-item d-flex justify-content-between align-items-center">
-                    <div>
-                        <strong>{{ component.name }}</strong>
-                        {% if component.description %}
-                            <br><small class="text-muted">{{ component.description }}</small>
-                        {% endif %}
-                    </div>
-                    <div>
-                        {% if component.status == 'operational' %}
-                            <span class="badge bg-success">{{ 'Operational'|trans }}</span>
-                        {% elseif component.status == 'degraded_performance' %}
-                            <span class="badge bg-warning">{{ 'Degraded'|trans }}</span>
-                        {% elseif component.status == 'partial_outage' %}
-                            <span class="badge bg-orange">{{ 'Partial Outage'|trans }}</span>
-                        {% elseif component.status == 'major_outage' %}
-                            <span class="badge bg-danger">{{ 'Major Outage'|trans }}</span>
-                        {% elseif component.status == 'maintenance' %}
-                            <span class="badge bg-info">{{ 'Maintenance'|trans }}</span>
-                        {% endif %}
-                    </div>
-                </div>
-                {% else %}
-                <div class="list-group-item text-muted">{{ 'No components configured'|trans }}</div>
-                {% endfor %}
-            </div>
-        </div>
-
-        {# Link to History #}
-        <div class="text-center">
-            <a href="{{ '/servicestatus/history'|link }}" class="btn btn-outline-primary">{{ 'View Incident History'|trans }}</a>
+            {% endfor %}
         </div>
     </div>
+    {% endif %}
+
+    {# Scheduled Maintenance #}
+    {% set maintenance = guest.servicestatus_maintenance_list %}
+    {% if maintenance|length > 0 %}
+    <div class="card mb-4">
+        <div class="card-header">
+            <h3 class="card-title">{{ 'Scheduled Maintenance'|trans }}</h3>
+        </div>
+        <div class="card-body">
+            {% for item in maintenance %}
+            <div class="mb-3 {{ not loop.last ? 'border-bottom pb-3' : '' }}">
+                <div class="d-flex justify-content-between align-items-start">
+                    <div>
+                        <h5 class="mb-1">{{ item.title }}</h5>
+                        <span class="badge bg-info">{{ 'Scheduled'|trans }}</span>
+                        {% for component in item.components %}
+                            <span class="badge bg-secondary">{{ component.name }}</span>
+                        {% endfor %}
+                    </div>
+                    <small class="text-muted">{{ item.scheduled_at|format_datetime }}</small>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
 </div>
 {% endblock %}
