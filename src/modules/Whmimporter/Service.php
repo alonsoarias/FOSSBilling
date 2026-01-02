@@ -864,11 +864,17 @@ class Service implements InjectionAwareInterface
         if ($existingClient) {
             switch ($duplicateAction) {
                 case 'update_existing':
-                    // Update existing client with WHM data
+                    // Update existing client with WHM data including creation date
                     $existingClient->first_name = ucfirst($acct['user']);
+                    // Update created_at with WHM date (prefer unix timestamp)
+                    $createdAt = $this->parseWhmDate($acct['unix_startdate'] ?? null, $acct['startdate'] ?? null);
+                    $existingClient->created_at = $createdAt;
                     $existingClient->updated_at = date('Y-m-d H:i:s');
                     $this->di['db']->store($existingClient);
-                    $this->di['logger']->info('Updated existing client :email during WHM import', [':email' => $email]);
+                    $this->di['logger']->info('Updated existing client :email during WHM import with date :date', [
+                        ':email' => $email,
+                        ':date' => $createdAt,
+                    ]);
 
                     return $existingClient;
 
