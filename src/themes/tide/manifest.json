@@ -1,10 +1,10 @@
 {
-    "name": "IngeWeb Tide",
+    "name": "FOSSBilling Tide",
     "version": "1.0.0",
-    "description": "Modern client area theme powered by IngeWeb",
+    "description": "Modern client area theme",
     "icon": "tide.png",
-    "author": "IngeWeb",
-    "author_url": "https://ingeweb.co/",
+    "author": "FOSSBilling",
+    "author_url": "https://fossbilling.org/",
     "markdown_attributes": {
         "\\League\\CommonMark\\Extension\\Table\\Table": {
             "class": "table table-hover"
