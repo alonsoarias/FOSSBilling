@@ -29,10 +29,10 @@ class Client implements \FOSSBilling\InjectionAwareInterface
      */
     public function register(\Box_App &$app)
     {
-        $app->get('/status', 'get_index', [], static::class);
-        $app->get('/status/', 'get_index', [], static::class);
-        $app->get('/status/incident/:id', 'get_incident', ['id' => '[0-9]+'], static::class);
-        $app->get('/status/history', 'get_history', [], static::class);
+        $app->get('/servicestatus', 'get_index', [], static::class);
+        $app->get('/servicestatus/', 'get_index', [], static::class);
+        $app->get('/servicestatus/incident/:id', 'get_incident', ['id' => '[0-9]+'], static::class);
+        $app->get('/servicestatus/history', 'get_history', [], static::class);
     }
 
     /**

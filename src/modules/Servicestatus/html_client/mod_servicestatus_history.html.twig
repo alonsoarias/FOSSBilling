@@ -5,7 +5,7 @@
 {% block body_class %}status-history{% endblock %}
 
 {% block breadcrumb %}
-    <li class="breadcrumb-item"><a href="{{ '/status'|link }}">{{ 'System Status'|trans }}</a></li>
+    <li class="breadcrumb-item"><a href="{{ '/servicestatus'|link }}">{{ 'System Status'|trans }}</a></li>
     <li class="breadcrumb-item active" aria-current="page">{{ 'History'|trans }}</li>
 {% endblock %}
 
@@ -38,7 +38,7 @@
                                 <div class="d-flex justify-content-between align-items-start">
                                     <div>
                                         <h5 class="mb-1">
-                                            <a href="{{ '/status/incident'|link }}/{{ incident.id }}">{{ incident.title }}</a>
+                                            <a href="{{ '/servicestatus/incident'|link }}/{{ incident.id }}">{{ incident.title }}</a>
                                         </h5>
                                         <div class="mb-2">
                                             {% if incident.status == 'resolved' %}
@@ -98,7 +98,7 @@
         </div>
 
         <div class="text-center">
-            <a href="{{ '/status'|link }}" class="btn btn-outline-primary">{{ 'Back to Status'|trans }}</a>
+            <a href="{{ '/servicestatus'|link }}" class="btn btn-outline-primary">{{ 'Back to Status'|trans }}</a>
         </div>
     </div>
 </div>
