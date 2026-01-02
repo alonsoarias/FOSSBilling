@@ -1,6 +1,7 @@
 /**
  * FOSSBilling Flavor Theme
- * Inspired by Hostinger hPanel with IngeWeb Branding
+ * Powered by IngeWeb - https://ingeweb.co
+ * Modern client portal with hPanel-inspired UX
  */
 
 /* ========================================
@@ -10,14 +11,22 @@
     /* Primary Colors - IngeWeb Blue */
     --primary: #0080FE;
     --primary-dark: #2B4D99;
+    --primary-darker: #1a3a6e;
     --primary-hover: #0066cc;
     --primary-light: #e8f4ff;
+    --primary-lighter: #f0f7ff;
     --primary-rgb: 0, 128, 254;
 
     /* Accent Colors - IngeWeb Orange */
     --accent: #FD5E1F;
     --accent-hover: #e54d0f;
     --accent-light: #fff5f0;
+    --accent-rgb: 253, 94, 31;
+
+    /* IngeWeb Gradient */
+    --gradient-primary: linear-gradient(135deg, #0080FE 0%, #2B4D99 100%);
+    --gradient-accent: linear-gradient(135deg, #FD5E1F 0%, #ff8c42 100%);
+    --gradient-dark: linear-gradient(135deg, #1a1a2e 0%, #2B4D99 100%);
 
     /* Neutral Colors */
     --dark: #1a1a2e;
@@ -112,7 +121,7 @@ h6, .h6 { font-size: 0.875rem; }
 }
 
 /* ========================================
-   Sidebar
+   Sidebar - IngeWeb Style
    ======================================== */
 .app-sidebar {
     position: fixed;
@@ -128,8 +137,20 @@ h6, .h6 { font-size: 0.875rem; }
     transition: var(--transition);
 }
 
+/* IngeWeb branded top bar */
+.app-sidebar::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: var(--gradient-primary);
+}
+
 .sidebar-header {
     padding: 1rem 1.25rem;
+    padding-top: 1.25rem; /* Extra padding for top bar */
     border-bottom: 1px solid var(--border);
     display: flex;
     align-items: center;
@@ -153,7 +174,10 @@ h6, .h6 { font-size: 0.875rem; }
     font-family: 'Rubik', sans-serif;
     font-size: 1.25rem;
     font-weight: 700;
-    color: var(--primary);
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
 }
 
 .sidebar-close {
@@ -1381,4 +1405,192 @@ h6, .h6 { font-size: 0.875rem; }
 .showcase .btn:hover {
     background: var(--light);
     color: var(--primary-dark);
+}
+
+/* ========================================
+   IngeWeb Brand Enhancements
+   ======================================== */
+
+/* Branded page titles */
+.page-title {
+    font-family: 'Rubik', sans-serif;
+    font-weight: 700;
+    color: var(--dark);
+    margin-bottom: 1.5rem;
+}
+
+.page-title::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 4px;
+    background: var(--gradient-primary);
+    margin-top: 0.5rem;
+    border-radius: 2px;
+}
+
+/* Accent buttons with IngeWeb orange */
+.btn-accent {
+    background: var(--gradient-accent);
+    border: none;
+    color: var(--white);
+    font-weight: 500;
+}
+
+.btn-accent:hover {
+    background: var(--accent-hover);
+    color: var(--white);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(var(--accent-rgb), 0.35);
+}
+
+/* Primary buttons with gradient */
+.btn-primary-gradient {
+    background: var(--gradient-primary);
+    border: none;
+    color: var(--white);
+}
+
+.btn-primary-gradient:hover {
+    opacity: 0.9;
+    color: var(--white);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(var(--primary-rgb), 0.35);
+}
+
+/* Feature cards with accent border on hover */
+.feature-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--border-radius-lg);
+    padding: 1.5rem;
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+}
+
+.feature-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 0;
+    background: var(--gradient-primary);
+    transition: height 0.3s ease;
+}
+
+.feature-card:hover {
+    border-color: var(--primary);
+    box-shadow: var(--shadow);
+}
+
+.feature-card:hover::before {
+    height: 100%;
+}
+
+/* Branded footer link */
+.footer-powered a {
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 600;
+}
+
+/* IngeWeb themed scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--light);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--primary-light);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--primary);
+}
+
+/* Dark mode scrollbar */
+[data-bs-theme="dark"] ::-webkit-scrollbar-track {
+    background: var(--dark);
+}
+
+[data-bs-theme="dark"] ::-webkit-scrollbar-thumb {
+    background: var(--primary-dark);
+}
+
+/* Selection color */
+::selection {
+    background: var(--primary);
+    color: var(--white);
+}
+
+/* Focus rings with brand color */
+:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+}
+
+/* Animated gradient background for special sections */
+.bg-gradient-animated {
+    background: linear-gradient(-45deg, #0080FE, #2B4D99, #FD5E1F, #0080FE);
+    background-size: 400% 400%;
+    animation: gradientShift 15s ease infinite;
+}
+
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Pulse animation for important elements */
+.pulse-accent {
+    animation: pulseAccent 2s infinite;
+}
+
+@keyframes pulseAccent {
+    0% { box-shadow: 0 0 0 0 rgba(var(--accent-rgb), 0.4); }
+    70% { box-shadow: 0 0 0 10px rgba(var(--accent-rgb), 0); }
+    100% { box-shadow: 0 0 0 0 rgba(var(--accent-rgb), 0); }
+}
+
+/* Card with IngeWeb accent */
+.card-accent {
+    border-top: 4px solid;
+    border-image: var(--gradient-primary) 1;
+}
+
+/* Highlight text with accent */
+.text-gradient {
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Price highlight */
+.price-highlight {
+    font-family: 'Rubik', sans-serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--primary);
+}
+
+.price-highlight .currency {
+    font-size: 1rem;
+    vertical-align: super;
+}
+
+.price-highlight .period {
+    font-size: 0.875rem;
+    font-weight: 400;
+    color: var(--text-muted);
 }
