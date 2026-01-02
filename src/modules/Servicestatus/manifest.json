@@ -6,5 +6,5 @@
     "homepage_url": "https://github.com/FOSSBilling/FOSSBilling",
     "author": "FOSSBilling",
     "version": "1.0.0",
-    "minimum_boxbilling_version": "4.22"
+    "minimum_boxbilling_version": "0.0.1"
 }
