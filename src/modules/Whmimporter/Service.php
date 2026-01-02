@@ -968,15 +968,25 @@ class Service implements InjectionAwareInterface
         // Find or create client
         $client = $this->findOrCreateClient($acct, $clientGroupId, $duplicateAction);
 
-        // Update existing service
+        // Parse cPanel account creation date
+        $createdAt = $this->parseWhmDate($acct['startdate'] ?? null);
+
+        // Update existing service with ALL data including dates
         $existingService->client_id = $client->id;
         $existingService->service_hosting_hp_id = $hostingPlan->id;
         $existingService->sld = $sld;
         $existingService->tld = $tld;
         $existingService->ip = $acct['ip'];
         $existingService->reseller = $acct['is_reseller'] ?? false;
+        $existingService->created_at = $createdAt;  // Update creation date from cPanel
         $existingService->updated_at = date('Y-m-d H:i:s');
         $this->di['db']->store($existingService);
+
+        // Also update client created_at if needed
+        if ($client->created_at > $createdAt) {
+            $client->created_at = $createdAt;
+            $this->di['db']->store($client);
+        }
 
         // Find and update existing order, or create new one
         $existingOrder = $this->di['db']->findOne('ClientOrder', 'service_id = ? AND service_type = ?', [
@@ -1001,13 +1011,19 @@ class Service implements InjectionAwareInterface
                     'owndomain_tld' => $tld,
                 ],
             ]);
+            // Update ALL dates from cPanel
+            $existingOrder->created_at = $createdAt;
+            $existingOrder->activated_at = $acct['suspended'] ? null : $createdAt;
             $existingOrder->updated_at = date('Y-m-d H:i:s');
             $orderId = $this->di['db']->store($existingOrder);
         } else {
             $orderId = $this->createOrderForService($client, $existingService, $acct, $product);
         }
 
-        $this->di['logger']->info('Updated existing account :username during WHM import', [':username' => $acct['user']]);
+        $this->di['logger']->info('Updated existing account :username during WHM import with date :date', [
+            ':username' => $acct['user'],
+            ':date' => $createdAt,
+        ]);
 
         return [
             'username' => $acct['user'],
