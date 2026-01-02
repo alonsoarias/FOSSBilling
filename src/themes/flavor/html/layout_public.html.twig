@@ -2,46 +2,53 @@
 <html lang="en" data-bs-theme="{{ settings.theme|default('light') }}">
 <head>
     <meta charset="utf-8">
-    <title>{{ settings.meta_title_prefix }} {% block meta_title %}{% endblock %} {{ settings.meta_title_suffix }}</title>
+    <title>{% block meta_title %}{% endblock %} - {{ guest.system_company.name }}</title>
 
     <meta property="bb:url" content="{{ constant('SYSTEM_URL') }}">
     <meta property="bb:client_area" content="{{ '/'|link }}">
     <meta name="csrf-token" content="{{ CSRFToken }}">
 
     <meta name="description" content="{% block meta_description %}{{ settings.meta_description }}{% endblock %}">
-    <meta name="keywords" content="{{ settings.meta_keywords }}">
-    <meta name="robots" content="{{ settings.meta_robots }}">
-    <meta name="author" content="{{ settings.meta_author }}">
-    <meta name="generator" content="FOSSBilling">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="FOSSBilling">
+
+    {% block opengraph %}{% endblock %}
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="{{ guest.system_company.favicon_url }}">
 
     <!-- Google Fonts - Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-    {% block opengraph %}{% endblock %}
-
-    <!-- Bootstrap CSS -->
+    <!-- Bootstrap 5.3 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel='stylesheet' type='text/css' href="{{ 'css/font-awesome.css' | asset_url }}">
-    <link rel='stylesheet' type='text/css' href="{{ 'css/flavor.css' | asset_url }}">
 
-    <link rel="shortcut icon" href="{{ guest.system_company.favicon_url }}">
+    <!-- Font Awesome 6 -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
 
+    <!-- Theme CSS -->
+    <link rel="stylesheet" href="{{ 'css/flavor.css' | asset_url }}">
+
+    <!-- API -->
     {{ "Api/API.js" | library_url | script_tag }}
 
-    <!-- jQuery and Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     {% block head %}{% endblock %}
-    {% block js %}{% endblock %}
 </head>
-<body class="{% block body_class %}{% endblock %}">
+
+<body class="page-public {% block body_class %}{% endblock %}">
     {% block body %}{% endblock %}
-    <div aria-live="polite" aria-atomic="true" class="position-relative">
-        <div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 1070;"></div>
-    </div>
+
+    <!-- Toast Container -->
+    <div class="toast-container position-fixed bottom-0 end-0 p-3"></div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Theme JS -->
+    <script src="{{ 'js/flavor.js' | asset_url }}"></script>
+
     {{ include('partial_pending_messages.html.twig', ignore_missing: true) }}
 </body>
 </html>

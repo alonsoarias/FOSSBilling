@@ -1,9 +1,0 @@
-{
-  "name": "@fossbilling/flavor",
-  "version": "1.0.0",
-  "private": true,
-  "scripts": {
-    "build": "encore production",
-    "dev": "encore dev --watch"
-  }
-}

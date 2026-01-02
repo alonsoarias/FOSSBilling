@@ -15,57 +15,53 @@
     </select>
 {% endmacro %}
 
-{# deprecated - use money filter #}
-{% macro currency_format(price, currency) %}
-    {{ price | money(currency) }}
-{% endmacro %}
-
-{# deprecated - use money_convert filter #}
-{% macro currency(price, currency) %}
-    {{ price | money_convert(currency) }}
-{% endmacro %}
-
 {% macro status_name(status) %}
     {% set status = status|replace({'_': " "})|title|trim %}
     {% if status == 'Active' %}
-        <span class="status-badge status-active">{{ 'Activo'|trans }}</span>
+        {{ 'Active'|trans }}
     {% elseif status == 'Pending Setup' %}
-        <span class="status-badge status-pending">{{ 'Pendiente'|trans }}</span>
+        {{ 'Pending Setup'|trans }}
     {% elseif status == 'Failed Setup' %}
-        <span class="status-badge status-canceled">{{ 'Error en configuración'|trans }}</span>
+        {{ 'Failed Setup'|trans }}
     {% elseif status == 'Failed Renew' %}
-        <span class="status-badge status-canceled">{{ 'Error en renovación'|trans }}</span>
+        {{ 'Failed Renewal'|trans }}
     {% elseif status == 'Suspended' %}
-        <span class="status-badge status-suspended">{{ 'Suspendido'|trans }}</span>
+        {{ 'Suspended'|trans }}
     {% elseif status == 'Canceled' %}
-        <span class="status-badge status-canceled">{{ 'Cancelado'|trans }}</span>
+        {{ 'Canceled'|trans }}
     {% elseif status == 'Paid' %}
-        <span class="status-badge status-active">{{ 'Pagado'|trans }}</span>
+        {{ 'Paid'|trans }}
     {% elseif status == 'Unpaid' %}
-        <span class="status-badge status-pending">{{ 'Pendiente'|trans }}</span>
+        {{ 'Unpaid'|trans }}
     {% elseif status == 'Refunded' %}
-        <span class="status-badge status-canceled">{{ 'Reembolsado'|trans }}</span>
+        {{ 'Refunded'|trans }}
+    {% elseif status == 'Open' %}
+        {{ 'Open'|trans }}
+    {% elseif status == 'On Hold' %}
+        {{ 'On Hold'|trans }}
+    {% elseif status == 'Closed' %}
+        {{ 'Closed'|trans }}
     {% else %}
-        <span class="status-badge">{{ status|trans }}</span>
+        {{ status|trans }}
     {% endif %}
 {% endmacro %}
 
-{# deprecated - use period_title filter #}
-{% macro period_name(period) %}
-    {{ period | period_title }}
+{% macro status_badge(status) %}
+    {% set status_lower = status|lower|replace({' ': '_'}) %}
+    {% if status_lower == 'active' or status_lower == 'paid' or status_lower == 'open' %}
+        <span class="badge badge-success">{{ _self.status_name(status) }}</span>
+    {% elseif status_lower == 'pending_setup' or status_lower == 'unpaid' or status_lower == 'on_hold' %}
+        <span class="badge badge-warning">{{ _self.status_name(status) }}</span>
+    {% elseif status_lower == 'failed_setup' or status_lower == 'suspended' or status_lower == 'failed_renew' %}
+        <span class="badge badge-danger">{{ _self.status_name(status) }}</span>
+    {% elseif status_lower == 'canceled' or status_lower == 'closed' or status_lower == 'refunded' %}
+        <span class="badge badge-secondary">{{ _self.status_name(status) }}</span>
+    {% else %}
+        <span class="badge badge-info">{{ _self.status_name(status) }}</span>
+    {% endif %}
 {% endmacro %}
-
-{% macro markdown_quote(text) %}
-
-
-{% for line in text|split('\n') %}
-> {{ line }}
-{% endfor %}
-{% endmacro %}
-
 
 {% macro recaptcha() %}
-
 {% if guest.extension_is_on({"mod":"spamchecker"}) %}
 {% set rc = guest.spamchecker_recaptcha %}
     {% if rc.enabled %}
@@ -81,6 +77,21 @@
 {% if guest.extension_is_on({"mod":"wysiwyg"}) %}
 {{ include('mod_wysiwyg_js.html.twig', { 'class': selector|trim('.#') }) }}
 {% else %}
-<!-- No WYSIWYG -->
+<!-- WYSIWYG not enabled -->
 {% endif %}
+{% endmacro %}
+
+{% macro empty_state(icon, title, description, action_url, action_text) %}
+<div class="empty-state">
+    <div class="empty-state-icon">
+        <i class="fa-solid fa-{{ icon }}"></i>
+    </div>
+    <h5 class="empty-state-title">{{ title }}</h5>
+    <p class="empty-state-text">{{ description }}</p>
+    {% if action_url and action_text %}
+    <a href="{{ action_url }}" class="btn btn-primary">
+        <i class="fa-solid fa-plus me-2"></i>{{ action_text }}
+    </a>
+    {% endif %}
+</div>
 {% endmacro %}

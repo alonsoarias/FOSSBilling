@@ -1,44 +1,31 @@
-{% extends 'layout_public.html.twig' %}
+{% extends "layout_default.html.twig" %}
 
-{% block meta_title %}{{ 'Error'|trans }}{% endblock %}
+{% block meta_title %}{{ 'Error'|trans }} {{ exception.getCode }}{% endblock %}
 
-{% block body %}
-{% set company = guest.system_company %}
-{% if settings.theme == 'dark' %}
-    {% set logo_url = company.logo_url_dark %}
-{% else %}
-    {% set logo_url = company.logo_url %}
-{% endif %}
+{% block body_class %}error-page{% endblock %}
 
-<div class="auth-page">
-    <div class="auth-card text-center">
-        {% if logo_url %}
-            <div class="auth-logo mb-4">
-                <a href="{{ '/'|link }}">
-                    <img src="{{ logo_url }}" alt="{{ company.name }}" height="48">
-                </a>
-            </div>
-        {% endif %}
+{% block breadcrumb %}
+    <li class="breadcrumb-item active" aria-current="page">{{ 'Error'|trans }}</li>
+{% endblock %}
 
-        <div class="mb-4">
-            <div class="display-1 text-primary fw-bold">{{ exception.http_code|default(500) }}</div>
-        </div>
-
-        <h1 class="auth-title">{{ 'Algo salió mal'|trans }}</h1>
-        <p class="auth-subtitle">
-            {% if exception.message %}
-                {{ exception.message }}
+{% block content %}
+<div class="error-container">
+    <div class="error-content">
+        <div class="error-code">
+            {% if exception.getCode %}
+                {{ exception.getCode }}
             {% else %}
-                {{ 'No pudimos encontrar la página que buscas.'|trans }}
+                404
             {% endif %}
-        </p>
-
-        <div class="d-grid gap-2">
-            <a href="{{ '/'|link }}" class="btn btn-primary">
-                <i class="fa fa-home me-2"></i>{{ 'Volver al inicio'|trans }}
+        </div>
+        <h1 class="error-title">{{ 'Oops! Something went wrong'|trans }}</h1>
+        <p class="error-message">{{ exception.getMessage|default("The page you are looking for could not be found."|trans) }}</p>
+        <div class="error-actions">
+            <a href="{{ '/' | link }}" class="btn btn-primary">
+                <i class="fa-solid fa-house me-2"></i>{{ 'Go to Dashboard'|trans }}
             </a>
-            <a href="javascript:history.back()" class="btn btn-light">
-                <i class="fa fa-arrow-left me-2"></i>{{ 'Volver atrás'|trans }}
+            <a href="{{ '/support'|link({ 'ticket': 1 }) }}" class="btn btn-outline-primary">
+                <i class="fa-solid fa-headset me-2"></i>{{ 'Contact Support'|trans }}
             </a>
         </div>
     </div>

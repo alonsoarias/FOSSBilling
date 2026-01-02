@@ -12,48 +12,66 @@
     {# Removing current page parameter from the request to avoid duplication #}
     {% set safeRequest = request|merge({ (pageParam): null }) %}
     {% set filteredRequest = safeRequest|filter(v => v is not null) %}
-    <nav aria-label="{{ 'Paginación'|trans }}">
+
+    <nav aria-label="{{ 'Pagination'|trans }}" class="mt-4">
         <ul class="pagination justify-content-center mb-0">
+            <!-- First Page -->
             <li class="page-item{% if not currentPage or currentPage == 1 %} disabled{% endif %}">
-                <a class="page-link"
-                   href="{{ url|link(filteredRequest|merge({ (pageParam): 1 })) }}"
-                   aria-label="{{ 'Primera'|trans }}">
-                    <i class="fa fa-angle-double-left"></i>
+                <a class="page-link" href="{{ url|link(filteredRequest|merge({ (pageParam): 1 })) }}" aria-label="{{ 'First'|trans }}">
+                    <i class="fa-solid fa-angles-left"></i>
                 </a>
             </li>
 
+            <!-- Previous Page -->
             <li class="page-item{% if not currentPage or currentPage == 1 %} disabled{% endif %}">
-                <a class="page-link"
-                   href="{{ url|link(filteredRequest|merge({ (pageParam): currentPage - 1 })) }}"
-                   aria-label="{{ 'Anterior'|trans }}" rel="prev">
-                    <i class="fa fa-angle-left"></i>
+                <a class="page-link" href="{{ url|link(filteredRequest|merge({ (pageParam): currentPage - 1 })) }}" aria-label="{{ 'Previous'|trans }}" rel="prev">
+                    <i class="fa-solid fa-angle-left"></i>
                 </a>
             </li>
 
-            {% for i in 1..list.pages %}
+            <!-- Page Numbers -->
+            {% set startPage = max(1, currentPage - 2) %}
+            {% set endPage = min(list.pages, currentPage + 2) %}
+
+            {% if startPage > 1 %}
+                <li class="page-item">
+                    <a class="page-link" href="{{ url|link(filteredRequest|merge({ (pageParam): 1 })) }}">1</a>
+                </li>
+                {% if startPage > 2 %}
+                <li class="page-item disabled"><span class="page-link">...</span></li>
+                {% endif %}
+            {% endif %}
+
+            {% for i in startPage..endPage %}
                 <li class="page-item{% if i == currentPage %} active{% endif %}">
                     {% if i == currentPage or (not currentPage and i == 1) %}
                         <span class="page-link" aria-current="page">{{ i }}</span>
                     {% else %}
-                        <a class="page-link"
-                           href="{{ url|link(filteredRequest|merge({ (pageParam): i })) }}">{{ i }}</a>
+                        <a class="page-link" href="{{ url|link(filteredRequest|merge({ (pageParam): i })) }}">{{ i }}</a>
                     {% endif %}
                 </li>
             {% endfor %}
 
+            {% if endPage < list.pages %}
+                {% if endPage < list.pages - 1 %}
+                <li class="page-item disabled"><span class="page-link">...</span></li>
+                {% endif %}
+                <li class="page-item">
+                    <a class="page-link" href="{{ url|link(filteredRequest|merge({ (pageParam): list.pages })) }}">{{ list.pages }}</a>
+                </li>
+            {% endif %}
+
+            <!-- Next Page -->
             <li class="page-item{% if currentPage == list.pages %} disabled{% endif %}">
-                <a class="page-link"
-                   href="{{ url|link(filteredRequest|merge({ (pageParam): currentPage + 1 })) }}"
-                   aria-label="{{ 'Siguiente'|trans }}" rel="next">
-                    <i class="fa fa-angle-right"></i>
+                <a class="page-link" href="{{ url|link(filteredRequest|merge({ (pageParam): currentPage + 1 })) }}" aria-label="{{ 'Next'|trans }}" rel="next">
+                    <i class="fa-solid fa-angle-right"></i>
                 </a>
             </li>
 
+            <!-- Last Page -->
             <li class="page-item{% if currentPage == list.pages %} disabled{% endif %}">
-                <a class="page-link"
-                   href="{{ url|link(filteredRequest|merge({ (pageParam): list.pages })) }}"
-                   aria-label="{{ 'Última'|trans }}">
-                    <i class="fa fa-angle-double-right"></i>
+                <a class="page-link" href="{{ url|link(filteredRequest|merge({ (pageParam): list.pages })) }}" aria-label="{{ 'Last'|trans }}">
+                    <i class="fa-solid fa-angles-right"></i>
                 </a>
             </li>
         </ul>

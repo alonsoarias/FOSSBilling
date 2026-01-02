@@ -2,7 +2,7 @@
 {% if pending_messages %}
 <script>
     {% for message in pending_messages %}
-        FOSSBilling.message('{{ message }}');
+        FOSSBilling.message('{{ message|e('js') }}');
     {% endfor %}
 </script>
 {% endif %}
