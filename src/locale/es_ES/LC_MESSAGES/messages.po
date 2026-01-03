@@ -816,7 +816,7 @@ msgid "Cancel sending email after unsuccessful tries (0 = do not cancel)"
 msgstr ""
 
 msgid "Canceled"
-msgstr ""
+msgstr "Cancelado"
 
 msgid "Canned Response"
 msgstr ""
@@ -2177,7 +2177,7 @@ msgid ""
 msgstr ""
 
 msgid "Export Clients"
-msgstr ""
+msgstr "Exportar clientes"
 
 msgid "Export Invoices"
 msgstr ""
@@ -2421,16 +2421,16 @@ msgid "Filter Support Tickets"
 msgstr "Filtrar"
 
 msgid "Filter clients"
-msgstr ""
+msgstr "Filtrar clientes"
 
 msgid "Filter invoices"
-msgstr ""
+msgstr "Filtrar facturas"
 
 msgid "Filter orders"
-msgstr ""
+msgstr "Filtrar pedidos"
 
 msgid "Filter transactions"
-msgstr ""
+msgstr "Filtrar transacciones"
 
 msgid "Find answers to frequent questions"
 msgstr ""
@@ -3554,7 +3554,7 @@ msgid "New Category"
 msgstr ""
 
 msgid "New Client"
-msgstr ""
+msgstr "Nuevo cliente"
 
 msgid "New Client Ticket"
 msgstr ""
@@ -3563,7 +3563,7 @@ msgid "New Custom Page"
 msgstr ""
 
 msgid "New Group"
-msgstr ""
+msgstr "Nuevo grupo"
 
 msgid "New Helpdesk"
 msgstr "Nueva mesa de ayuda"
@@ -4565,7 +4565,7 @@ msgid "Registration"
 msgstr "Registro"
 
 msgid "Registration date"
-msgstr ""
+msgstr "Fecha de registro"
 
 msgid "Registration price"
 msgstr ""
